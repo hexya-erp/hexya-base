@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<yep>
+    <data>
+
+        <view id="base_view_partner_tree">
+            <name>res.partner.tree</name>
+            <model>ResPartner</model>
+            <arch>
+                <tree string="Partners">
+                    <field name="Name"/>
+                    <field name="Function"/>
+                    <field name="Lang"/>
+                    <field name="Ref"/>
+                </tree>
+            </arch>
+        </view>
+
+        <view id="base_view_partner_form">
+            <name>res.partner.form</name>
+            <model>ResPartner</model>
+            <arch>
+                <form>
+                    <h1><label for="Name"/> : <field name="Name"/></h1>
+                    <group>
+                        <field name="Function"/>
+                        <field name="Lang"/>
+                        <field name="Ref"/>
+                    </group>
+                </form>
+            </arch>
+        </view>
+
+        <view id="base_view_partner_search">
+            <name>res.partner.search</name>
+            <model>ResPartner</model>
+            <arch>
+                <search string="Partners">
+                    <field name="Name" filter_domain="['|', '|', ('Name','ilike',self), ('Email','ilike',self)]"
+                           string="Partner"/>
+                </search>
+            </arch>
+        </view>
+
+        <action id="base_action_res_partner">
+            <type>ir.actions.act_window</type>
+            <name>Partners</name>
+            <model>ResPartner</model>
+            <view_id>base_view_partner_tree</view_id>
+            <search_view_id>base_view_partner_search</search_view_id>
+            <view_mode>tree,form</view_mode>
+        </action>
+
+        <menuitem id="base_menu_action_partner" name="Partners" parent="base_menu_partners" sequence="1"
+                  action="base_action_res_partner"/>
+
+    </data>
+</yep>

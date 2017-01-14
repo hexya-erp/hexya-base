@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<yep>
+    <data>
+
+        <menuitem id="base_menu_administration" name="Settings" sequence="255"/>
+        <menuitem id="base_menu_users" name="Users" parent="base_menu_administration" sequence="4"/>
+        <menuitem id="base_menu_partners" name="Partners" parent="base_menu_administration" sequence="5"/>
+
+    </data>
+</yep>

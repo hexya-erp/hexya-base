@@ -1,0 +1,148 @@
+{{ define "web.layout" }}
+    <!DOCTYPE html>
+        <html style="height: 100%">
+        <head>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+            <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+            <title>YEP</title>
+            <link rel="shortcut icon" href="/static/web/src/img/favicon.ico" type="image/x-icon"/>
+            <link rel="stylesheet" href="/static/web/src/css/full.css"/>
+            {{ template "web.webclient_bootstrap.head" . }}
+        </head>
+        <body class="body_classname">
+            {{ template "web.webclient_bootstrap.body" . }}
+        </body>
+    </html>
+{{ end }}
+
+{{ define "web.menu" }}
+    <ul class="nav navbar-nav navbar-left oe_application_menu_placeholder">
+        {{ range .Menus }}
+        <li>
+            {{ template "web.menu_link" .}}
+        </li>
+        {{ end }}
+        <li id="menu_more_container" class="dropdown" style="display: none;">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+            <ul id="menu_more" class="dropdown-menu"></ul>
+        </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right oe_user_menu_placeholder" style="display: none;"></ul>
+    <ul class="nav navbar-nav navbar-right oe_systray" style="display: none;"></ul>
+{{ end }}
+
+{{ define "web.menu_link" }}
+    <a href="{{ if .HasAction }}{{ printf `/web#menu_id=%s&action=%s` (.ID) (.Action.ID) }}{{ end }}"
+        class="{{ if .HasChildren }}oe_menu_toggler{{ else }}oe_menu_leaf{{ end }}"
+        data-menu="{{ .ID }}"
+        data-action-model="{{ if .HasAction }}{{ .Action.Model }}{{ end }}"
+        data-action-id="{{ if .HasAction }}{{ .Action.ID }}{{ end }}">
+        <span class="oe_menu_text">
+            {{ .Name }}
+        </span>
+    </a>
+{{ end }}
+
+{{ define "web.menu_secondary" }}
+    <a class="oe_logo" href="/web">
+        <span class="oe_logo_edit">Edit Company data</span>
+        <img src='/web/binary/company_logo'/>
+    </a>
+    <div class="oe_secondary_menus_container">
+        {{ range .Menus }}
+            <div style="display: none" class="oe_secondary_menu" data-menu-parent="{{ .ID }}">
+                {{ if .HasChildren }}
+                    {{ range .Children.Menus }}
+                        <div class="oe_secondary_menu_section">
+                            {{ .Name }}
+                        </div>
+                        {{ template "web.menu_secondary_submenu" .}}
+                    {{ end }}
+                {{ end }}
+            </div>
+        {{ end }}
+    </div>
+    <div class="oe_footer">
+        Powered by <a href="http://github.com/npiganeau/yep" target="_blank"><span>YEP</span></a>
+    </div>
+{{ end }}
+
+{{ define "web.menu_secondary_submenu" }}
+    {{ if .HasChildren }}
+        <ul class="oe_secondary_submenu nav nav-pills nav-stacked">
+            {{ range .Children.Menus }}
+                <li>
+                    {{ template "web.menu_link" . }}
+                    {{ template "web.menu_secondary_submenu" . }}
+                </li>
+            {{ end }}
+        </ul>
+    {{ end }}
+{{ end }}
+
+{{ define "web.webclient_bootstrap" }}
+    {{ template "web.layout" . }}
+{{ end }}
+
+{{ define "web.webclient_bootstrap.head" }}
+    {{ range .CSS }}
+        <link rel="stylesheet" href="{{ . }}"/>{{ end }}
+
+    {{ range .CommonJS }}
+        <script type="text/javascript" src="{{ . }}"></script>{{ end }}
+
+    <script type="text/javascript" charset="utf-8">
+        odoo._modules = {{ .Modules }};
+    </script>
+
+    {{ range .BackendJS }}
+        <script type="text/javascript" src="{{ . }}"></script>{{ end }}
+
+    <script type="text/javascript" charset="utf-8">
+        odoo.define('web.csrf', function (require) {
+            var token = " request.csrf_token(None) ";
+            require('web.core').csrf_token = token;
+            require('qweb').default_dict.csrf_token = token;
+        });
+        //odoo.db_info = <t t-raw="db_info"/>;
+        odoo._modules = {{ .Modules }};
+    </script>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/static/web/src/css/ie.css"/> <![endif]-->
+    <script type="text/javascript">
+        $(function () {
+    //        ifinit
+            odoo.define('web.web_client', function (require) {
+                var WebClient = require('web.WebClient');
+                var web_client = new WebClient();
+                web_client.setElement($(document.body));
+                web_client.start();
+                return web_client;
+            });
+        });
+    </script>
+{{ end }}
+
+{{ define "web.webclient_bootstrap.body" }}
+    <nav id="oe_main_menu_navbar" class="navbar navbar-inverse" role="navigation">
+         <!--groups="base.group_user,base.group_portal">-->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse" id="oe_main_menu_placeholder">
+            {{ template "web.menu" .Menu }}
+        </div>
+    </nav>
+    <div class="openerp openerp_webclient_container oe_webclient">
+        <div class="oe_leftbar">
+            {{ template "web.menu_secondary" .Menu }}
+        </div>
+        <div class="oe_application"></div>
+    </div>
+{{ end }}
