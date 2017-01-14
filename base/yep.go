@@ -20,8 +20,8 @@ import (
 	"path"
 
 	"github.com/inconshreveable/log15"
-	_ "github.com/npiganeau/yep-addons/base/defs"
-	_ "github.com/npiganeau/yep-addons/base/methods"
+	_ "github.com/npiganeau/yep-base/base/defs"
+	_ "github.com/npiganeau/yep-base/base/methods"
 	"github.com/npiganeau/yep/pool"
 	"github.com/npiganeau/yep/yep/ir"
 	"github.com/npiganeau/yep/yep/models"

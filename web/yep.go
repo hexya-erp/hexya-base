@@ -15,8 +15,8 @@
 package web
 
 import (
-	_ "github.com/npiganeau/yep-addons/base"
-	_ "github.com/npiganeau/yep-addons/web/controllers"
+	_ "github.com/npiganeau/yep-base/base"
+	_ "github.com/npiganeau/yep-base/web/controllers"
 	"github.com/npiganeau/yep/yep/server"
 )
 
