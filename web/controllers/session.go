@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/npiganeau/yep/pool"
 	"github.com/npiganeau/yep/yep/models"
 	"github.com/npiganeau/yep/yep/models/security"
 	"github.com/npiganeau/yep/yep/models/types"
@@ -18,8 +19,8 @@ func SessionInfo(sess sessions.Session) gin.H {
 	var userContext *types.Context
 	if sess.Get("uid") != nil {
 		models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
-			user := env.Pool("ResUsers").Filter("ID", "=", sess.Get("uid"))
-			userContext = user.Call("ContextGet").(*types.Context)
+			user := pool.ResUsers().NewSet(env).Search(pool.ResUsers().ID().Equals(sess.Get("uid").(int64)))
+			userContext = user.ContextGet()
 		})
 	}
 	return gin.H{

@@ -56,17 +56,17 @@ func init() {
 func PostInit() {
 	models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 
-		mainCompany := pool.NewResCompanySet(env).Filter("ID", "=", 1)
+		mainCompany := pool.ResCompany().NewSet(env).Search(pool.ResCompany().ID().Equals(1))
 		if mainCompany.IsEmpty() {
-			mainCompany = pool.NewResCompanySet(env).Create(&pool.ResCompany{
+			mainCompany = pool.ResCompany().NewSet(env).Create(&pool.ResCompanyData{
 				ID:   1,
 				Name: "Your Company",
 			})
 		}
 
-		adminPartner := pool.NewResPartnerSet(env).Filter("ID", "=", 1)
+		adminPartner := pool.ResPartner().NewSet(env).Search(pool.ResPartner().ID().Equals(1))
 		if adminPartner.IsEmpty() {
-			adminPartner = pool.NewResPartnerSet(env).Create(&pool.ResPartner{
+			adminPartner = pool.ResPartner().NewSet(env).Create(&pool.ResPartnerData{
 				ID:       1,
 				Lang:     "en_US",
 				Name:     "Administrator",
@@ -76,10 +76,10 @@ func PostInit() {
 
 		avatarImg, _ := ioutil.ReadFile(path.Join(generate.YEPDir, "yep", "server", "static", "base", "src", "img", "avatar.png"))
 
-		adminUser := pool.NewResUsersSet(env).Filter("ID", "=", 1)
+		adminUser := pool.ResUsers().NewSet(env).Search(pool.ResUsers().ID().Equals(1))
 		ActionID := ir.MakeActionRef("base_action_res_users")
 		if adminUser.IsEmpty() {
-			pool.NewResUsersSet(env).Create(&pool.ResUsers{
+			pool.ResUsers().NewSet(env).Create(&pool.ResUsersData{
 				ID:         1,
 				Name:       "Administrator",
 				Active:     true,

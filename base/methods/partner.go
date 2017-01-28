@@ -6,11 +6,10 @@ package methods
 import (
 	"fmt"
 	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/models"
 )
 
 func initPartner() {
-	models.ExtendMethod("ResPartner", "NameGet", "",
+	pool.ResPartner().ExtendMethod("NameGet", "",
 		func(rs pool.ResPartnerSet) string {
 			res := rs.Super()
 			return fmt.Sprintf("%s (%d)", res, rs.ID())

@@ -5,12 +5,9 @@ package defs
 
 import "github.com/npiganeau/yep/yep/models"
 
-type ResCompany struct {
-	ID   int64
-	Name string
-}
-
 func initCompany() {
-	models.CreateModel("ResCompany")
-	models.ExtendModel("ResCompany", new(ResCompany))
+	models.NewModel("ResCompany", new(struct {
+		ID   int64
+		Name string
+	}))
 }
