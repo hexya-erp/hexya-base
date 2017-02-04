@@ -23,7 +23,7 @@ import (
 	_ "github.com/npiganeau/yep-base/base/defs"
 	_ "github.com/npiganeau/yep-base/base/methods"
 	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/ir"
+	"github.com/npiganeau/yep/yep/actions"
 	"github.com/npiganeau/yep/yep/models"
 	"github.com/npiganeau/yep/yep/models/security"
 	"github.com/npiganeau/yep/yep/server"
@@ -77,7 +77,7 @@ func PostInit() {
 		avatarImg, _ := ioutil.ReadFile(path.Join(generate.YEPDir, "yep", "server", "static", "base", "src", "img", "avatar.png"))
 
 		adminUser := pool.ResUsers().NewSet(env).Search(pool.ResUsers().ID().Equals(1))
-		ActionID := ir.MakeActionRef("base_action_res_users")
+		ActionID := actions.MakeActionRef("base_action_res_users")
 		if adminUser.IsEmpty() {
 			pool.ResUsers().NewSet(env).Create(&pool.ResUsersData{
 				ID:         1,

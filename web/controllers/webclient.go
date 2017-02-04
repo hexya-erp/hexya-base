@@ -10,12 +10,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/npiganeau/yep/yep/server"
 	"github.com/npiganeau/yep/yep/tools"
+	"github.com/npiganeau/yep/yep/tools/xmlutils"
 )
 
 func QWeb(c *gin.Context) {
 	mods := strings.Split(c.Query("mods"), ",")
 	fileNames := tools.ListStaticFiles("src/xml", mods, true)
-	res, _ := tools.ConcatXML(fileNames)
+	res, _ := xmlutils.ConcatXML(fileNames)
 	c.String(http.StatusOK, string(res))
 }
 

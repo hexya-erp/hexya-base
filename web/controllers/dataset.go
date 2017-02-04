@@ -14,17 +14,17 @@ import (
 func CallKW(c *gin.Context) {
 	sess := sessions.Default(c)
 	uid := sess.Get("uid").(int64)
-	var params server.CallParams
+	var params CallParams
 	server.BindRPCParams(c, &params)
-	res, err := server.Execute(uid, params)
+	res, err := Execute(uid, params)
 	server.RPC(c, http.StatusOK, res, err)
 }
 
 func SearchRead(c *gin.Context) {
 	sess := sessions.Default(c)
 	uid := sess.Get("uid").(int64)
-	var params server.SearchReadParams
+	var params searchReadParams
 	server.BindRPCParams(c, &params)
-	res, err := server.SearchRead(uid, params)
+	res, err := searchRead(uid, params)
 	server.RPC(c, http.StatusOK, res, err)
 }

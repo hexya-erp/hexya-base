@@ -5,7 +5,7 @@ package defs
 
 import (
 	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/ir"
+	"github.com/npiganeau/yep/yep/actions"
 	"github.com/npiganeau/yep/yep/models"
 )
 
@@ -18,6 +18,6 @@ func initFilters() {
 		Name      string
 		IsDefault bool
 		User      pool.ResUsersSet `yep:"type(many2one)"`
-		ActionID  ir.ActionRef
+		ActionID  actions.ActionRef
 	}))
 }

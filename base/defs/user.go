@@ -5,7 +5,7 @@ package defs
 
 import (
 	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/ir"
+	"github.com/npiganeau/yep/yep/actions"
 	"github.com/npiganeau/yep/yep/models"
 )
 
@@ -20,7 +20,7 @@ func initUsers() {
 		NewPassword string
 		Signature   string
 		Active      bool
-		ActionID    ir.ActionRef
+		ActionID    actions.ActionRef
 		//GroupIds []*ir.Group `yep:"json(groups_id)"`
 		Company    pool.ResCompanySet `yep:"type(many2one)"`
 		CompanyIds pool.ResCompanySet `yep:"json(company_ids);type(many2many)"`

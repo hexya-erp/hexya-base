@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/npiganeau/yep/yep/ir"
+	"github.com/npiganeau/yep/yep/actions"
 	"github.com/npiganeau/yep/yep/models/types"
 	"github.com/npiganeau/yep/yep/server"
 )
@@ -18,6 +18,6 @@ func ActionLoad(c *gin.Context) {
 		AdditionalContext *types.Context `json:"additional_context"`
 	}{}
 	server.BindRPCParams(c, &params)
-	action := ir.ActionsRegistry.GetActionById(params.ActionID)
+	action := actions.Registry.GetActionById(params.ActionID)
 	server.RPC(c, http.StatusOK, action)
 }

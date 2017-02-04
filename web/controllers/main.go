@@ -9,7 +9,7 @@ import (
 
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/npiganeau/yep/yep/ir"
+	"github.com/npiganeau/yep/yep/menus"
 	"github.com/npiganeau/yep/yep/server"
 	"github.com/npiganeau/yep/yep/tools/generate"
 )
@@ -30,7 +30,7 @@ var (
 )
 
 type templateData struct {
-	Menu      *ir.MenuCollection
+	Menu      *menus.MenuCollection
 	CSS       []string
 	BackendJS []string
 	CommonJS  []string
@@ -45,7 +45,7 @@ func WebClient(c *gin.Context) {
 	sess.Set("login", "admin")
 	sess.Save()
 	data := templateData{
-		Menu:      ir.MenusRegistry,
+		Menu:      menus.Registry,
 		Modules:   server.Modules.Names(),
 		CSS:       append(CommonCSS, BackendCSS...),
 		CommonJS:  CommonJS,

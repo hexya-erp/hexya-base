@@ -12,7 +12,6 @@ import (
 
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/npiganeau/yep/yep/server"
 	"github.com/npiganeau/yep/yep/tools/generate"
 )
 
@@ -26,7 +25,7 @@ func Image(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Query("id"), 10, 64)
 	sess := sessions.Default(c)
 	uid := sess.Get("uid").(int64)
-	img, gErr := server.GetFieldValue(uid, id, model, field)
+	img, gErr := getFieldValue(uid, id, model, field)
 	res, err := base64.StdEncoding.DecodeString(img.(string))
 	if err != nil || gErr != nil {
 		c.Error(errors.New("Unable to fetch image"))

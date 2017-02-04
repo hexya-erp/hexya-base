@@ -5,7 +5,7 @@ package methods
 
 import (
 	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/ir"
+	"github.com/npiganeau/yep/yep/actions"
 )
 
 func initFilters() {
@@ -13,7 +13,7 @@ func initFilters() {
 		`GetFilters returns the filters for the given model and actionID for the current user`,
 		func(rs pool.IrFiltersSet, modelName, actionID string) []pool.IrFiltersData {
 			condition := pool.IrFilters().ResModel().Equals(modelName).
-				And().ActionID().Equals(ir.MakeActionRef(actionID)).
+				And().ActionID().Equals(actions.MakeActionRef(actionID)).
 				And().UserFilteredOn(pool.ResUsers().ID().Equals(rs.Env().Uid()))
 			res := rs.Search(condition).All()
 			return res
