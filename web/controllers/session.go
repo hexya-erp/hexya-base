@@ -33,15 +33,14 @@ func SessionInfo(sess sessions.Session) gin.H {
 	}
 }
 
-func GetSessionInfo(c *gin.Context) {
-	sess := sessions.Default(c)
-	server.RPC(c, http.StatusOK, SessionInfo(sess))
+func GetSessionInfo(c *server.Context) {
+	c.RPC(http.StatusOK, SessionInfo(c.Session()))
 }
 
-func Modules(c *gin.Context) {
+func Modules(c *server.Context) {
 	mods := make([]string, len(server.Modules))
 	for i, m := range server.Modules {
 		mods[i] = m.Name
 	}
-	server.RPC(c, http.StatusOK, mods)
+	c.RPC(http.StatusOK, mods)
 }

@@ -8,16 +8,15 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/gin-gonic/gin"
 	"github.com/npiganeau/yep/yep/server"
 	"github.com/npiganeau/yep/yep/tools"
 )
 
-func Load(c *gin.Context) {
+func Load(c *server.Context) {
 	qwebParams := struct {
 		Path string `json:"path"`
 	}{}
-	server.BindRPCParams(c, &qwebParams)
+	c.BindRPCParams(&qwebParams)
 	path, _ := url.ParseRequestURI(qwebParams.Path)
 	targetURL := tools.AbsolutizeURL(c.Request, path.RequestURI())
 	resp, err := http.Get(targetURL)
@@ -27,5 +26,5 @@ func Load(c *gin.Context) {
 	}
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
-	server.RPC(c, http.StatusOK, string(body))
+	c.RPC(http.StatusOK, string(body))
 }

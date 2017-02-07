@@ -13,14 +13,14 @@ import (
 	"github.com/npiganeau/yep/yep/tools/xmlutils"
 )
 
-func QWeb(c *gin.Context) {
+func QWeb(c *server.Context) {
 	mods := strings.Split(c.Query("mods"), ",")
 	fileNames := tools.ListStaticFiles("src/xml", mods, true)
 	res, _ := xmlutils.ConcatXML(fileNames)
 	c.String(http.StatusOK, string(res))
 }
 
-func BootstrapTranslations(c *gin.Context) {
+func BootstrapTranslations(c *server.Context) {
 	res := gin.H{
 		"lang_parameters": tools.LangParameters{
 			DateFormat:   "%m/%d/%Y",
@@ -33,40 +33,40 @@ func BootstrapTranslations(c *gin.Context) {
 		},
 		"modules": gin.H{},
 	}
-	server.RPC(c, http.StatusOK, res)
+	c.RPC(http.StatusOK, res)
 }
 
-func CSSList(c *gin.Context) {
+func CSSList(c *server.Context) {
 	Params := struct {
 		Mods string `json:"mods"`
 	}{}
-	server.BindRPCParams(c, &Params)
+	c.BindRPCParams(&Params)
 	mods := strings.Split(Params.Mods, ",")
 	fileNames := tools.ListStaticFiles("src/css", mods, false)
-	server.RPC(c, http.StatusOK, fileNames)
+	c.RPC(http.StatusOK, fileNames)
 }
 
-func JSList(c *gin.Context) {
+func JSList(c *server.Context) {
 	Params := struct {
 		Mods string `json:"mods"`
 	}{}
-	server.BindRPCParams(c, &Params)
+	c.BindRPCParams(&Params)
 	mods := strings.Split(Params.Mods, ",")
 	fileNames := tools.ListStaticFiles("src/js", mods, false)
-	server.RPC(c, http.StatusOK, fileNames)
+	c.RPC(http.StatusOK, fileNames)
 }
 
-func VersionInfo(c *gin.Context) {
+func VersionInfo(c *server.Context) {
 	data := gin.H{
 		"server_serie":        "9.0",
 		"server_version_info": []int8{9, 0, 0, 0, 0},
 		"server_version":      "9.0c",
 		"protocol":            1,
 	}
-	server.RPC(c, http.StatusOK, data)
+	c.RPC(http.StatusOK, data)
 }
 
-func LoadLocale(c *gin.Context) {
+func LoadLocale(c *server.Context) {
 	// TODO Implement Loadlocale
 	//langFull := strings.ToLower(strings.Replace(lang, "_", "-", -1))
 	//langShort := strings.Split(lang, "_")[0]

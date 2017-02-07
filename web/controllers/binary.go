@@ -10,21 +10,19 @@ import (
 	"path"
 	"strconv"
 
-	"github.com/gin-gonic/contrib/sessions"
-	"github.com/gin-gonic/gin"
+	"github.com/npiganeau/yep/yep/server"
 	"github.com/npiganeau/yep/yep/tools/generate"
 )
 
-func CompanyLogo(c *gin.Context) {
+func CompanyLogo(c *server.Context) {
 	c.File(path.Join(generate.YEPDir, "yep", "server", "static", "web", "src", "img", "logo.png"))
 }
 
-func Image(c *gin.Context) {
+func Image(c *server.Context) {
 	model := c.Query("model")
 	field := c.Query("field")
 	id, err := strconv.ParseInt(c.Query("id"), 10, 64)
-	sess := sessions.Default(c)
-	uid := sess.Get("uid").(int64)
+	uid := c.Session().Get("uid").(int64)
 	img, gErr := getFieldValue(uid, id, model, field)
 	res, err := base64.StdEncoding.DecodeString(img.(string))
 	if err != nil || gErr != nil {

@@ -7,8 +7,6 @@ import (
 	"net/http"
 	"path"
 
-	"github.com/gin-gonic/contrib/sessions"
-	"github.com/gin-gonic/gin"
 	"github.com/npiganeau/yep/yep/menus"
 	"github.com/npiganeau/yep/yep/server"
 	"github.com/npiganeau/yep/yep/tools/generate"
@@ -38,8 +36,8 @@ type templateData struct {
 }
 
 // WebClient is the controller for the application main page
-func WebClient(c *gin.Context) {
-	sess := sessions.Default(c)
+func WebClient(c *server.Context) {
+	sess := c.Session()
 	sess.Set("uid", int64(1))
 	sess.Set("ID", 123)
 	sess.Set("login", "admin")
@@ -189,7 +187,7 @@ func initStaticPaths() {
 
 func initRoutes() {
 	yepServ := server.GetServer()
-	yepServ.GET("/", func(c *gin.Context) {
+	yepServ.GET("/", func(c *server.Context) {
 		c.Redirect(http.StatusSeeOther, "/web")
 	})
 	yepServ.Static("/static", path.Join(generate.YEPDir, "yep", "server", "static"))

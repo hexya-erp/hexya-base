@@ -6,16 +6,15 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/npiganeau/yep/yep/server"
 )
 
-func MenuLoadNeedaction(c *gin.Context) {
+func MenuLoadNeedaction(c *server.Context) {
 	type lnaParams struct {
 		MenuIds []string `json:"menu_ids"`
 	}
 	var params lnaParams
-	server.BindRPCParams(c, &params)
+	c.BindRPCParams(&params)
 
 	// TODO: update with real needaction support
 	type lnaResponse struct {
@@ -26,5 +25,5 @@ func MenuLoadNeedaction(c *gin.Context) {
 	for _, menu := range params.MenuIds {
 		res[menu] = lnaResponse{}
 	}
-	server.RPC(c, http.StatusOK, res)
+	c.RPC(http.StatusOK, res)
 }

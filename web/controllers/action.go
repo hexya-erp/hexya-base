@@ -6,18 +6,17 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/npiganeau/yep/yep/actions"
 	"github.com/npiganeau/yep/yep/models/types"
 	"github.com/npiganeau/yep/yep/server"
 )
 
-func ActionLoad(c *gin.Context) {
+func ActionLoad(c *server.Context) {
 	params := struct {
 		ActionID          string         `json:"action_id"`
 		AdditionalContext *types.Context `json:"additional_context"`
 	}{}
-	server.BindRPCParams(c, &params)
+	c.BindRPCParams(&params)
 	action := actions.Registry.GetActionById(params.ActionID)
-	server.RPC(c, http.StatusOK, action)
+	c.RPC(http.StatusOK, action)
 }
