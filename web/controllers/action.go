@@ -17,6 +17,6 @@ func ActionLoad(c *server.Context) {
 		AdditionalContext *types.Context `json:"additional_context"`
 	}{}
 	c.BindRPCParams(&params)
-	action := actions.Registry.GetActionById(params.ActionID)
+	action := actions.Registry.GetById(params.ActionID)
 	c.RPC(http.StatusOK, action)
 }

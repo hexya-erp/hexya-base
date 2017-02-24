@@ -49,9 +49,9 @@ func createMixinMethods() {
 		gets the detailed composition of the requested view like fields, mixin,
 		view architecture.`,
 		func(rc models.RecordCollection, args webdata.FieldsViewGetParams) *webdata.FieldsViewData {
-			view := views.ViewsRegistry.GetViewById(args.ViewID)
+			view := views.Registry.GetByID(args.ViewID)
 			if view == nil {
-				view = views.ViewsRegistry.GetFirstViewForModel(rc.ModelName(), views.ViewType(args.ViewType))
+				view = views.Registry.GetFirstViewForModel(rc.ModelName(), views.ViewType(args.ViewType))
 			}
 			cols := make([]models.FieldName, len(view.Fields))
 			for i, f := range view.Fields {

@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"path"
 
+	"github.com/npiganeau/yep/yep/controllers"
 	"github.com/npiganeau/yep/yep/menus"
 	"github.com/npiganeau/yep/yep/server"
 	"github.com/npiganeau/yep/yep/tools/generate"
@@ -28,7 +29,7 @@ var (
 )
 
 type templateData struct {
-	Menu      *menus.MenuCollection
+	Menu      *menus.collection
 	CSS       []string
 	BackendJS []string
 	CommonJS  []string
@@ -186,52 +187,53 @@ func initStaticPaths() {
 }
 
 func initRoutes() {
-	yepServ := server.GetServer()
-	yepServ.GET("/", func(c *server.Context) {
+	root := controllers.Registry
+	root.AddController(http.MethodGet, "/", func(c *server.Context) {
 		c.Redirect(http.StatusSeeOther, "/web")
 	})
-	yepServ.Static("/static", path.Join(generate.YEPDir, "yep", "server", "static"))
-	web := yepServ.Group("/web")
+
+	root.AddStatic("/static", path.Join(generate.YEPDir, "yep", "server", "static"))
+	web := root.AddGroup("/web")
 	{
-		web.GET("/", WebClient)
-		web.GET("/image", Image)
-		binary := web.Group("/binary")
+		web.AddController(http.MethodGet, "/", WebClient)
+		web.AddController(http.MethodGet, "/image", Image)
+		binary := web.AddGroup("/binary")
 		{
-			binary.GET("/company_logo", CompanyLogo)
+			binary.AddController(http.MethodGet, "/company_logo", CompanyLogo)
 		}
 
-		sess := web.Group("/session")
+		sess := web.AddGroup("/session")
 		{
-			sess.POST("/get_session_info", GetSessionInfo)
-			sess.POST("/modules", Modules)
+			sess.AddController(http.MethodPost, "/get_session_info", GetSessionInfo)
+			sess.AddController(http.MethodPost, "/modules", Modules)
 		}
 
-		proxy := web.Group("/proxy")
+		proxy := web.AddGroup("/proxy")
 		{
-			proxy.POST("/load", Load)
+			proxy.AddController(http.MethodPost, "/load", Load)
 		}
 
-		webClient := web.Group("/webclient")
+		webClient := web.AddGroup("/webclient")
 		{
-			webClient.GET("/qweb", QWeb)
-			webClient.GET("/locale/:lang", LoadLocale)
-			webClient.POST("/translations", BootstrapTranslations)
-			webClient.POST("/csslist", CSSList)
-			webClient.POST("/jslist", JSList)
-			webClient.POST("/version_info", VersionInfo)
+			webClient.AddController(http.MethodGet, "/qweb", QWeb)
+			webClient.AddController(http.MethodGet, "/locale/:lang", LoadLocale)
+			webClient.AddController(http.MethodPost, "/translations", BootstrapTranslations)
+			webClient.AddController(http.MethodPost, "/csslist", CSSList)
+			webClient.AddController(http.MethodPost, "/jslist", JSList)
+			webClient.AddController(http.MethodPost, "/version_info", VersionInfo)
 		}
-		dataset := web.Group("/dataset")
+		dataset := web.AddGroup("/dataset")
 		{
-			dataset.POST("/call_kw/*path", CallKW)
-			dataset.POST("/search_read", SearchRead)
+			dataset.AddController(http.MethodPost, "/call_kw/*path", CallKW)
+			dataset.AddController(http.MethodPost, "/search_read", SearchRead)
 		}
-		action := web.Group("/action")
+		action := web.AddGroup("/action")
 		{
-			action.POST("/load", ActionLoad)
+			action.AddController(http.MethodPost, "/load", ActionLoad)
 		}
-		menu := web.Group("/menu")
+		menu := web.AddGroup("/menu")
 		{
-			menu.POST("/load_needaction", MenuLoadNeedaction)
+			menu.AddController(http.MethodPost, "/load_needaction", MenuLoadNeedaction)
 		}
 	}
 }
