@@ -29,7 +29,7 @@ var (
 )
 
 type templateData struct {
-	Menu      *menus.collection
+	Menu      *menus.Collection
 	CSS       []string
 	BackendJS []string
 	CommonJS  []string
