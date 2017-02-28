@@ -1,0 +1,14 @@
+{
+  "name": "underscore.string",
+  "homepage": "https://github.com/epeli/underscore.string",
+  "version": "2.2.1",
+  "_release": "2.2.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.2.1",
+    "commit": "55f78a292113662c299c29a25066d8cfbe5b248b"
+  },
+  "_source": "https://github.com/epeli/underscore.string.git",
+  "_target": "2.2.1",
+  "_originalSource": "underscore.string"
+}

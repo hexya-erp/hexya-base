@@ -1,0 +1,133 @@
+{{ define "web.login" }}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"/>
+    <title>YEP</title>
+    <link rel="shortcut icon" href="/static/web/src/img/favicon.ico" type="image/x-icon"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <script src="/static/web/lib/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="/static/web/lib/paper-input/paper-input.html"/>
+    <link rel="import" href="/static/web/lib/paper-button/paper-button.html"/>
+    <link rel="import" href="/static/web/lib/iron-image/iron-image.html"/>
+    <link rel="stylesheet" href="/static/web/src/css/login.css"/>
+</head>
+<body class="fullbleed loading">
+<div id="loadingScreen">
+    <div class="spinner"></div>
+</div>
+<template is="dom-bind">
+    <style>
+        :host {
+            background: var(--dark-primary-color);
+            min-height: 400px;
+        }
+
+        .login paper-input {
+            width: 100%;
+            --paper-input-container-input-color: var(--text-primary-color);
+            --paper-input-container-underline: {
+                background: rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        #login-button {
+            margin: 20px 0 0 0;
+            padding-left: 30px;
+            padding-right: 30px;
+            background: var(--primary-color);
+            color: var(--text-primary-color);
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        .header {
+            height: 36%;
+            display: flex;
+            flex-direction: column;
+            /*flex: 1;*/
+            justify-content: flex-end;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: rgba(0, 0, 0, 0) url("/static/web/src/img/background.jpg") repeat scroll 0 0 / cover;
+        }
+
+        .header::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            top: 36%;
+            border-bottom: 2px solid #074ac6;
+        }
+
+        .header h1 {
+            color: var(--text-primary-color);
+            font-size: 24px;
+            font-weight: 300;
+            margin: 0 auto 16px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .login {
+            width: 300px;
+            margin: 16px auto;
+            padding: 15px;
+            background: #a2c7ff none repeat scroll 0 0;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+        }
+
+        #footer {
+            font-size: 14px;
+            padding: 14px 26px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            box-sizing: border-box;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            color: var(--text-primary-color);
+            background: rgba(0, 0, 0, 0) url("/static/web/src/img/background.jpg") repeat scroll 0 0 / cover;
+        }
+
+        .web_login_logo {
+            text-align: center;
+        }
+
+        #footer a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+    </style>
+    <div id="header" class="header">
+        <h1>YEP</h1>
+        <div class="web_login_logo">
+            <img src="/web/binary/company_logo"/>
+        </div>
+    </div>
+    <form class="login" role="form" action="/web/login" method="post"
+          onsubmit="this.action = this.action + location.hash">
+        <span class="error-message">{{ .ErrorMsg }}</span>
+        <paper-input label="Username" name="login"></paper-input>
+        <paper-input label="Password" name="password" type="password"></paper-input>
+        <paper-button id="login-button" onclick="document.getElementsByTagName('form')[0].submit();" raised="1">
+            Log in
+        </paper-button>
+        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+    </form>
+    <div id="footer">
+        <span class="built-with">
+            <a href="https://www.ndp-systemes.fr" target="_blank">Powered by <span>YEP</span></a>
+        </span>
+    </div>
+</template>
+</body>
+</html>
+</template>
+{{ end }}

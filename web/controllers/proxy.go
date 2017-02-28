@@ -9,7 +9,6 @@ import (
 	"net/url"
 
 	"github.com/npiganeau/yep/yep/server"
-	"github.com/npiganeau/yep/yep/tools"
 )
 
 func Load(c *server.Context) {
@@ -18,8 +17,7 @@ func Load(c *server.Context) {
 	}{}
 	c.BindRPCParams(&qwebParams)
 	path, _ := url.ParseRequestURI(qwebParams.Path)
-	targetURL := tools.AbsolutizeURL(c.Request, path.RequestURI())
-	resp, err := http.Get(targetURL)
+	resp, err := c.HTTPGet(path.RequestURI())
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return

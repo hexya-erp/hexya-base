@@ -38,11 +38,6 @@ type templateData struct {
 
 // WebClient is the controller for the application main page
 func WebClient(c *server.Context) {
-	sess := c.Session()
-	sess.Set("uid", int64(1))
-	sess.Set("ID", 123)
-	sess.Set("login", "admin")
-	sess.Save()
 	data := templateData{
 		Menu:      menus.Registry,
 		Modules:   server.Modules.Names(),
@@ -78,7 +73,7 @@ func initStaticPaths() {
 		"/static/web/lib/autosize/autosize.js",
 		"/static/web/lib/jquery/jquery.js",
 		"/static/web/lib/jquery.ui/jquery-ui.js",
-		"/static/web/lib/jquery/jquery.browser.js",
+		"/static/web/lib/jquery.browser/dist/jquery.browser.js",
 		"/static/web/lib/jquery.blockUI/jquery.blockUI.js",
 		"/static/web/lib/jquery.hotkeys/jquery.hotkeys.js",
 		"/static/web/lib/jquery.placeholder/jquery.placeholder.js",
@@ -191,21 +186,22 @@ func initRoutes() {
 	root.AddController(http.MethodGet, "/", func(c *server.Context) {
 		c.Redirect(http.StatusSeeOther, "/web")
 	})
+	root.AddController(http.MethodGet, "/web/login", LoginGet)
+	root.AddController(http.MethodPost, "/web/login", LoginPost)
+	root.AddController(http.MethodGet, "/web/binary/company_logo", CompanyLogo)
 
 	root.AddStatic("/static", path.Join(generate.YEPDir, "yep", "server", "static"))
 	web := root.AddGroup("/web")
 	{
+		web.AddMiddleWare(LoginRequired)
 		web.AddController(http.MethodGet, "/", WebClient)
 		web.AddController(http.MethodGet, "/image", Image)
-		binary := web.AddGroup("/binary")
-		{
-			binary.AddController(http.MethodGet, "/company_logo", CompanyLogo)
-		}
 
 		sess := web.AddGroup("/session")
 		{
 			sess.AddController(http.MethodPost, "/get_session_info", GetSessionInfo)
 			sess.AddController(http.MethodPost, "/modules", Modules)
+			sess.AddController(http.MethodGet, "/logout", Logout)
 		}
 
 		proxy := web.AddGroup("/proxy")
