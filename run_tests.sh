@@ -6,7 +6,12 @@ for module_dir in */; do
     echo "############# TESTING $module_dir ###############"
     echo ">>>> Generating pool"
     yep generate -t ./$module_dir 2>/dev/null
-    let "retStatus=retStatus + $?"
+    retVal=$?
+    let "retStatus=retStatus + $retVal"
+    if (( $retVal > 0 )); then
+        echo "FAILED!"
+        continue
+    fi
     echo ""
     echo ">>>> Executing tests"
     go test -v ./$module_dir/...

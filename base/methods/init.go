@@ -12,6 +12,7 @@ var log log15.Logger
 
 func init() {
 	log = logging.GetLogger("base")
+	initGroups()
 	initFilters()
 	initUsers()
 	initPartner()

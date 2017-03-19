@@ -8,6 +8,6 @@ import (
 )
 
 func initBaseMixin() {
-	models.NewMixinModel("WebMixin", new(struct{}))
-	models.MixInAllModels("WebMixin")
+	webMixIn := models.NewMixinModel("WebMixin")
+	models.MixInAllModels(webMixIn)
 }

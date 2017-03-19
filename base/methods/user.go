@@ -24,16 +24,6 @@ func (bab *BaseAuthBackend) Authenticate(login, secret string, context *types.Co
 	return
 }
 
-// UserGroups returns the list of groups the given uid belongs to.
-// It returns an empty slice if the user is not part of any group.
-// It returns nil if the given uid is not known to this auth backend.
-func (bab *BaseAuthBackend) UserGroups(uid int64) (groups []*security.Group) {
-	models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
-		groups = pool.ResUsers().NewSet(env).UserGroups(uid)
-	})
-	return
-}
-
 func initUsers() {
 	pool.ResUsers().ExtendMethod("NameGet", "",
 		func(rs pool.ResUsersSet) string {
@@ -41,7 +31,7 @@ func initUsers() {
 			return fmt.Sprintf("%s (%s)", res, rs.Login())
 		})
 
-	pool.ResUsers().CreateMethod("ContextGet",
+	pool.ResUsers().AddMethod("ContextGet",
 		`UsersContextGet returns a context with the user's lang, tz and uid
 		This method must be called on a singleton.`,
 		func(rs pool.ResUsersSet) *types.Context {
@@ -53,7 +43,7 @@ func initUsers() {
 			return res
 		})
 
-	pool.ResUsers().CreateMethod("Authenticate",
+	pool.ResUsers().AddMethod("Authenticate",
 		"Authenticate the user defined by login and secret",
 		func(rs pool.ResUsersSet, login, secret string) (uid int64, err error) {
 			user := rs.Search(pool.ResUsers().Login().Equals(login))
@@ -67,12 +57,6 @@ func initUsers() {
 			}
 			uid = user.ID()
 			return
-		})
-
-	pool.ResUsers().CreateMethod("UserGroups",
-		`UserGroups returns the security groups that the user with the given uid belongs to`,
-		func(rs pool.ResUsersSet, uid int64) []*security.Group {
-			return nil
 		})
 
 	security.AuthenticationRegistry.RegisterBackend(new(BaseAuthBackend))

@@ -4,6 +4,7 @@
 package defs
 
 func init() {
+	initGroups()
 	initPartner()
 	initCompany()
 	initUsers()

@@ -47,7 +47,7 @@
                     <field name="Name"
                            filter_domain="['|', ('Name','ilike',self), ('Login','ilike',self)]"
                            string="User"/><!--, ('Email','ilike',self)]"-->
-                    <field name="CompanyIds" string="Company"/><!-- groups="base_group_multi_company"/>-->
+                    <field name="Companies" string="Company"/><!-- groups="base_group_multi_company"/>-->
                 </search>
             </arch>
         </view>

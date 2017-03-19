@@ -9,7 +9,7 @@ import (
 )
 
 func initFilters() {
-	pool.IrFilters().CreateMethod("GetFilters",
+	pool.IrFilters().AddMethod("GetFilters",
 		`GetFilters returns the filters for the given model and actionID for the current user`,
 		func(rs pool.IrFiltersSet, modelName, actionID string) []pool.IrFiltersData {
 			condition := pool.IrFilters().ResModel().Equals(modelName).

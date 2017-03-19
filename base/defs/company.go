@@ -6,8 +6,6 @@ package defs
 import "github.com/npiganeau/yep/yep/models"
 
 func initCompany() {
-	models.NewModel("ResCompany", new(struct {
-		ID   int64
-		Name string
-	}))
+	resCompany := models.NewModel("ResCompany")
+	resCompany.AddCharField("Name", models.StringFieldParams{})
 }

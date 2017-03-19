@@ -4,20 +4,17 @@
 package defs
 
 import (
-	"github.com/npiganeau/yep/pool"
 	"github.com/npiganeau/yep/yep/actions"
 	"github.com/npiganeau/yep/yep/models"
 )
 
 func initFilters() {
-	models.NewModel("IrFilters", new(struct {
-		ID        int64
-		ResModel  string
-		Domain    string
-		Context   string
-		Name      string
-		IsDefault bool
-		User      pool.ResUsersSet `yep:"type(many2one)"`
-		ActionID  actions.ActionRef
-	}))
+	irFilters := models.NewModel("IrFilters")
+	irFilters.AddCharField("ResModel", models.StringFieldParams{})
+	irFilters.AddCharField("Domain", models.StringFieldParams{})
+	irFilters.AddCharField("Context", models.StringFieldParams{})
+	irFilters.AddCharField("Name", models.StringFieldParams{})
+	irFilters.AddBooleanField("IsDefault", models.SimpleFieldParams{})
+	irFilters.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: "ResUsers"})
+	irFilters.AddCharField("ActionID", models.StringFieldParams{GoType: new(actions.ActionRef)})
 }

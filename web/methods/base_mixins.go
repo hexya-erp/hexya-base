@@ -18,7 +18,7 @@ import (
 
 func createMixinMethods() {
 	mixin := pool.WebMixin()
-	mixin.CreateMethod("GetFormviewId",
+	mixin.AddMethod("GetFormviewId",
 		`GetFormviewId returns an view id to open the document with.
 		This method is meant to be overridden in addons that want
  		to give specific view ids for example.`,
@@ -26,7 +26,7 @@ func createMixinMethods() {
 			return ""
 		})
 
-	mixin.CreateMethod("GetFormviewAction",
+	mixin.AddMethod("GetFormviewAction",
 		`GetFormviewAction returns an action to open the document.
 		This method is meant to be overridden in addons that want
 		to give specific view ids for example.`,
@@ -44,7 +44,7 @@ func createMixinMethods() {
 			}
 		})
 
-	mixin.CreateMethod("FieldsViewGet",
+	mixin.AddMethod("FieldsViewGet",
 		`FieldsViewGet is the base implementation of the 'FieldsViewGet' method which
 		gets the detailed composition of the requested view like fields, mixin,
 		view architecture.`,
@@ -70,7 +70,7 @@ func createMixinMethods() {
 			return &res
 		})
 
-	mixin.CreateMethod("ProcessView",
+	mixin.AddMethod("ProcessView",
 		`ProcessView makes all the necessary modifications to the view
 		arch and returns the new xml string.`,
 		func(rc models.RecordCollection, arch string, fieldInfos map[string]*models.FieldInfo) string {
@@ -90,7 +90,7 @@ func createMixinMethods() {
 			return res
 		})
 
-	mixin.CreateMethod("AddModifiers",
+	mixin.AddMethod("AddModifiers",
 		`AddModifiers adds the modifiers attribute nodes to given xml doc.`,
 		func(rc models.RecordCollection, doc *etree.Document, fieldInfos map[string]*models.FieldInfo) {
 			for _, fieldTag := range doc.FindElements("//field") {
@@ -104,7 +104,7 @@ func createMixinMethods() {
 			}
 		})
 
-	mixin.CreateMethod("UpdateFieldNames",
+	mixin.AddMethod("UpdateFieldNames",
 		`UpdateFieldNames changes the field names in the view to the column names.
 		If a field name is already column names then it does nothing.`,
 		func(rc models.RecordCollection, doc *etree.Document) {
@@ -122,7 +122,7 @@ func createMixinMethods() {
 			}
 		})
 
-	mixin.CreateMethod("SearchRead",
+	mixin.AddMethod("SearchRead",
 		`SearchRead retrieves database records according to the filters defined in params.`,
 		func(rc models.RecordCollection, params webdata.SearchParams) []models.FieldMap {
 			if searchCond := models.ParseDomain(params.Domain); searchCond != nil {

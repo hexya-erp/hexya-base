@@ -3,26 +3,21 @@
 
 package defs
 
-import (
-	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/models"
-)
+import "github.com/npiganeau/yep/yep/models"
 
 func initAttachment() {
-	models.NewModel("IrAttachment", new(struct {
-		ID          int64
-		Name        string `yep:"string(Attachment Name)"`
-		DatasFname  string `yep:"string(File Name)"`
-		Description string
-		//ResName     string      `yep:"string(Resource Name);compute(NameGetResName);store(true)"`
-		ResModel string             `yep:"string(Resource Model);help(The database object this attachment will be attached to)"`
-		ResId    int64              `yep:"string(Resource ID);help(The record id this is attached to)"`
-		Company  pool.ResCompanySet `yep:"type(many2one)"`
-		Type     string             `yep:"help(Binary File or URL)"`
-		Url      string
-		//Datas       string      `yep:"compute(DataGet);string(File Content)"`
-		StoreFname string `yep:"string(Stored Filename)"`
-		DbDatas    string `yep:"string(Database Data)"`
-		FileSize   int    `yep:"string(File Size)"`
-	}))
+	irAttachment := models.NewModel("IrAttachment")
+	irAttachment.AddCharField("Name", models.StringFieldParams{String: "Attachment Name"})
+	irAttachment.AddCharField("DatasFname", models.StringFieldParams{String: "File Name"})
+	irAttachment.AddTextField("Description", models.StringFieldParams{})
+	irAttachment.AddCharField("ResName", models.StringFieldParams{String: "Resource Name"}) //, Compute: "NameGetResName", Stored: true})
+	irAttachment.AddCharField("ResModel", models.StringFieldParams{String: "Resource Model", Help: "The database object this attachment will be attached to"})
+	irAttachment.AddIntegerField("ResID", models.SimpleFieldParams{String: "Resource ID", Help: "The record id this is attached to"})
+	irAttachment.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "ResCompany"})
+	irAttachment.AddSelectionField("Type", models.SelectionFieldParams{Selection: models.Selection{"binary": "Binary", "url": "URL"}})
+	irAttachment.AddCharField("URL", models.StringFieldParams{})
+	irAttachment.AddBinaryField("Datas", models.SimpleFieldParams{String: "File Content"}) //, Compute: "DataGet"})
+	irAttachment.AddCharField("StoreFname", models.StringFieldParams{String: "Stored Filename"})
+	irAttachment.AddCharField("DBDatas", models.StringFieldParams{String: "Database Data"})
+	irAttachment.AddIntegerField("FileSize", models.SimpleFieldParams{})
 }
