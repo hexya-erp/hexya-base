@@ -20,10 +20,10 @@ var (
 	// CommonJS is the list of JavaScript assets to import by the web client
 	// that are common to the frontend and the backend
 	CommonJS []string
-	// CommonCSS is the list of CSS assets to import by the web client
+	// BackendCSS is the list of CSS assets to import by the web client
 	// that are specific to the backend
 	BackendCSS []string
-	// CommonJS is the list of JavaScript assets to import by the web client
+	// BackendJS is the list of JavaScript assets to import by the web client
 	// that are specific to the backend
 	BackendJS []string
 )
