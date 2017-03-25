@@ -3,63 +3,44 @@
     <data>
 
         <!-- Users -->
-        <view id="base_view_users_tree">
-            <name>res.users.tree</name>
-            <model>ResUsers</model>
-            <arch>
-                <tree string="Users">
-                    <field name="Name"/>
-                    <field name="Login"/>
-                    <!--    <field name="Lang"/> -->
-                    <!--	<field name="LoginDate"/> -->
-                    <field name="Active"/>
-                </tree>
-            </arch>
+        <view id="base_view_users_tree" model="ResUsers">
+            <tree string="Users">
+                <field name="Name"/>
+                <field name="Login"/>
+                <field name="Lang"/>
+                <field name="LoginDate"/>
+            </tree>
         </view>
 
-        <view id="base_view_users_form">
-            <name>res.users.form</name>
-            <model>ResUsers</model>
-            <arch>
-                <form string="Users">
-                    <header></header>
-                    <sheet>
-                        <group>
-                            <field name="Name"/>
-                            <field name="Login"/>
-                            <field name="Lang"/>
-                            <field name="LoginDate"/>
-                            <field name="Active"/>
-                        </group>
-                        <group>
-                            <field name="Partner"/>
-                        </group>
-                    </sheet>
-                </form>
-            </arch>
+        <view id="base_view_users_form" model="ResUsers">
+            <form string="Users">
+                <header></header>
+                <sheet>
+                    <group>
+                        <field name="Name"/>
+                        <field name="Login"/>
+                        <field name="Lang"/>
+                        <field name="LoginDate"/>
+                        <field name="Active"/>
+                    </group>
+                    <group>
+                        <field name="Partner"/>
+                    </group>
+                </sheet>
+            </form>
         </view>
 
-        <view id="base_view_users_search">
-            <name>res.users.search</name>
-            <model>ResUsers</model>
-            <arch>
-                <search string="Users">
-                    <field name="Name"
-                           filter_domain="['|', ('Name','ilike',self), ('Login','ilike',self)]"
-                           string="User"/><!--, ('Email','ilike',self)]"-->
-                    <field name="Companies" string="Company"/><!-- groups="base_group_multi_company"/>-->
-                </search>
-            </arch>
+        <view id="base_view_users_search" model="ResUsers">
+            <search string="Users">
+                <field name="Name"
+                       filter_domain="['|', '|', ('Name','ilike',self), ('Login','ilike',self), ('Email','ilike',self)]"
+                       string="User"/>
+                <field name="Companies" string="Company"/><!-- groups="base_group_multi_company"/>-->
+            </search>
         </view>
 
-        <action id="base_action_res_users">
-            <type>ir.actions.act_window</type>
-            <name>Users</name>
-            <model>ResUsers</model>
-            <view_id>base_view_users_tree</view_id>
-            <search_view_id>base_view_users_search</search_view_id>
-            <view_mode>tree,form</view_mode>
-        </action>
+        <action id="base_action_res_users" type="ir.actions.act_window" name="Users" model="ResUsers"
+                view_id="base_view_users_tree" search_view_id="base_view_users_search" view_mode="tree,form"/>
 
         <menuitem id="base_menu_action_users" name="Users" sequence="1" action="base_action_res_users"
                   parent="base_menu_users"/>

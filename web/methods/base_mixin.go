@@ -59,15 +59,30 @@ func createMixinMethods() {
 			}
 			fInfos := rc.Call("FieldsGet", models.FieldsGetArgs{AllFields: cols}).(map[string]*models.FieldInfo)
 			arch := rc.Call("ProcessView", view.Arch, fInfos).(string)
+			toolbar := rc.Call("GetToolbar").(webdata.Toolbar)
 			res := webdata.FieldsViewData{
-				Name:   view.Name,
-				Arch:   arch,
-				ViewID: args.ViewID,
-				Model:  view.Model,
-				Type:   view.Type,
-				Fields: fInfos,
+				Name:    view.Name,
+				Arch:    arch,
+				ViewID:  args.ViewID,
+				Model:   view.Model,
+				Type:    view.Type,
+				Toolbar: toolbar,
+				Fields:  fInfos,
 			}
 			return &res
+		})
+
+	mixin.AddMethod("GetToolbar",
+		`GetToolbar returns a toolbar populated with the actions linked to this model`,
+		func(rs pool.BaseMixinSet) webdata.Toolbar {
+			var res webdata.Toolbar
+			for _, a := range actions.Registry.GetActionLinksForModel(rs.ModelName()) {
+				switch a.Type {
+				case actions.ActionActWindow, actions.ActionServer:
+					res.Action = append(res.Action, a)
+				}
+			}
+			return res
 		})
 
 	mixin.AddMethod("ProcessView",

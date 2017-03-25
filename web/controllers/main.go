@@ -226,6 +226,7 @@ func initRoutes() {
 		action := web.AddGroup("/action")
 		{
 			action.AddController(http.MethodPost, "/load", ActionLoad)
+			action.AddController(http.MethodPost, "/run", ActionRun)
 		}
 		menu := web.AddGroup("/menu")
 		{

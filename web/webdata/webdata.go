@@ -24,7 +24,7 @@ type FieldsViewData struct {
 	Model       string                       `json:"model"`
 	Type        views.ViewType               `json:"type"`
 	Fields      map[string]*models.FieldInfo `json:"fields"`
-	Toolbar     actions.Toolbar              `json:"toolbar"`
+	Toolbar     Toolbar                      `json:"toolbar"`
 	FieldParent string                       `json:"field_parent"`
 }
 
@@ -35,4 +35,11 @@ type SearchParams struct {
 	Offset int           `json:"offset"`
 	Limit  interface{}   `json:"limit"`
 	Order  string        `json:"order"`
+}
+
+// A Toolbar holds the actions in the toolbar of the action manager
+type Toolbar struct {
+	Print  []*actions.BaseAction `json:"print"`
+	Action []*actions.BaseAction `json:"action"`
+	Relate []*actions.BaseAction `json:"relate"`
 }
