@@ -9,6 +9,7 @@ import (
 	"github.com/npiganeau/yep/yep/server"
 )
 
+// CallKW executes the given method of the given model
 func CallKW(c *server.Context) {
 	uid := c.Session().Get("uid").(int64)
 	var params CallParams
@@ -17,6 +18,7 @@ func CallKW(c *server.Context) {
 	c.RPC(http.StatusOK, res, err)
 }
 
+// SearchRead returns Records from the database
 func SearchRead(c *server.Context) {
 	uid := c.Session().Get("uid").(int64)
 	var params searchReadParams

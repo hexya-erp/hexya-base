@@ -13,6 +13,7 @@ import (
 	"github.com/npiganeau/yep/yep/tools/xmlutils"
 )
 
+// QWeb returns a concatenation of all client qweb templates
 func QWeb(c *server.Context) {
 	mods := strings.Split(c.Query("mods"), ",")
 	fileNames := tools.ListStaticFiles("src/xml", mods, true)
@@ -20,6 +21,7 @@ func QWeb(c *server.Context) {
 	c.String(http.StatusOK, string(res))
 }
 
+// BootstrapTranslations returns data about the current language
 func BootstrapTranslations(c *server.Context) {
 	res := gin.H{
 		"lang_parameters": tools.LangParameters{
@@ -36,6 +38,7 @@ func BootstrapTranslations(c *server.Context) {
 	c.RPC(http.StatusOK, res)
 }
 
+// CSSList returns the list of CSS files
 func CSSList(c *server.Context) {
 	Params := struct {
 		Mods string `json:"mods"`
@@ -46,6 +49,7 @@ func CSSList(c *server.Context) {
 	c.RPC(http.StatusOK, fileNames)
 }
 
+// JSList returns the list of JS files
 func JSList(c *server.Context) {
 	Params := struct {
 		Mods string `json:"mods"`
@@ -56,6 +60,7 @@ func JSList(c *server.Context) {
 	c.RPC(http.StatusOK, fileNames)
 }
 
+// VersionInfo returns server version information to the client
 func VersionInfo(c *server.Context) {
 	data := gin.H{
 		"server_serie":        "9.0",
@@ -66,6 +71,7 @@ func VersionInfo(c *server.Context) {
 	c.RPC(http.StatusOK, data)
 }
 
+// LoadLocale returns the locale's JS file
 func LoadLocale(c *server.Context) {
 	// TODO Implement Loadlocale
 	//langFull := strings.ToLower(strings.Replace(lang, "_", "-", -1))

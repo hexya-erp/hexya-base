@@ -14,10 +14,13 @@ import (
 	"github.com/npiganeau/yep/yep/tools/generate"
 )
 
+// CompanyLogo serves the logo of the company
 func CompanyLogo(c *server.Context) {
 	c.File(path.Join(generate.YEPDir, "yep", "server", "static", "web", "src", "img", "logo.png"))
 }
 
+// Image serves the image stored in the database (base64 encoded)
+// in the given model and given field
 func Image(c *server.Context) {
 	model := c.Query("model")
 	field := c.Query("field")

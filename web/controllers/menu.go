@@ -9,6 +9,8 @@ import (
 	"github.com/npiganeau/yep/yep/server"
 )
 
+// MenuLoadNeedaction serves the number of objects that need an action
+// in the given menu IDs
 func MenuLoadNeedaction(c *server.Context) {
 	type lnaParams struct {
 		MenuIds []string `json:"menu_ids"`

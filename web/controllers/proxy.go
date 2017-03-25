@@ -11,6 +11,7 @@ import (
 	"github.com/npiganeau/yep/yep/server"
 )
 
+// Load executes a GET request and returns the values
 func Load(c *server.Context) {
 	qwebParams := struct {
 		Path string `json:"path"`

@@ -47,7 +47,7 @@ func ActionRun(c *server.Context) {
 	}
 
 	// Process context into kwargs
-	contextJSON, err := json.Marshal(params.Context)
+	contextJSON, _ := json.Marshal(params.Context)
 	kwargs := make(map[string]json.RawMessage)
 	kwargs["context"] = contextJSON
 
