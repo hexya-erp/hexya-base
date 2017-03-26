@@ -22,5 +22,5 @@ func initUsers() {
 	resUsers.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "ResCompany"})
 	resUsers.AddMany2ManyField("Companies", models.Many2ManyFieldParams{RelationModel: "ResCompany", JSON: "company_ids"})
 	resUsers.AddBinaryField("ImageSmall", models.SimpleFieldParams{})
-	//GroupIds []*ir.Group `yep:"json(groups_id)"`
+	resUsers.AddMany2ManyField("Groups", models.Many2ManyFieldParams{RelationModel: "ResGroups", JSON: "group_ids"})
 }

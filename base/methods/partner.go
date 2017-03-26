@@ -5,13 +5,14 @@ package methods
 
 import (
 	"fmt"
+
 	"github.com/npiganeau/yep/pool"
 )
 
 func initPartner() {
 	pool.ResPartner().ExtendMethod("NameGet", "",
 		func(rs pool.ResPartnerSet) string {
-			res := rs.Super()
+			res := rs.Super().NameGet()
 			return fmt.Sprintf("%s (%d)", res, rs.ID())
 		})
 }

@@ -6,6 +6,8 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/gin-gonic/contrib/sessions"
+	"github.com/gin-gonic/gin"
 	"github.com/npiganeau/yep/pool"
 	"github.com/npiganeau/yep/yep/models"
 	"github.com/npiganeau/yep/yep/models/security"
@@ -13,39 +15,34 @@ import (
 	"github.com/npiganeau/yep/yep/server"
 )
 
-// A SessionInfo holds data about an application session
-type SessionInfo struct {
-	SessionID   int64                  `json:"session_id"`
-	UID         int64                  `json:"uid"`
-	UserContext map[string]interface{} `json:"user_context"`
-	DB          string                 `json:"db"`
-	Username    string                 `json:"username"`
-	CompanyID   int64                  `json:"company_id"`
-}
-
-// GetSessionInfo returns session info to the client
-func GetSessionInfo(c *server.Context) {
+// SessionInfo returns a map with information about the given session
+func SessionInfo(sess sessions.Session) gin.H {
 	var (
 		userContext *types.Context
 		companyID   int64
 	)
-	sess := c.Session()
 	if sess.Get("uid") != nil {
 		models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 			user := pool.ResUsers().NewSet(env).Search(pool.ResUsers().ID().Equals(sess.Get("uid").(int64)))
 			userContext = user.ContextGet()
 			companyID = user.Company().ID()
 		})
-		c.RPC(http.StatusOK, SessionInfo{
-			SessionID:   sess.Get("ID").(int64),
-			UID:         sess.Get("uid").(int64),
-			UserContext: userContext.ToMap(),
-			DB:          "default",
-			Username:    sess.Get("login").(string),
-			CompanyID:   companyID,
-		})
+		return gin.H{
+			"session_id":   sess.Get("ID"),
+			"uid":          sess.Get("uid"),
+			"user_context": userContext.ToMap(),
+			"db":           "default",
+			"username":     sess.Get("login"),
+			"company_id":   companyID,
+		}
 	}
-	c.RPC(http.StatusOK, SessionInfo{})
+	return gin.H{}
+}
+
+// GetSessionInfo returns the information fo the current session
+// to the client
+func GetSessionInfo(c *server.Context) {
+	c.RPC(http.StatusOK, SessionInfo(c.Session()))
 }
 
 // Modules returns the list of installed modules to the client

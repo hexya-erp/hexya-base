@@ -27,7 +27,7 @@ func (bab *BaseAuthBackend) Authenticate(login, secret string, context *types.Co
 func initUsers() {
 	pool.ResUsers().ExtendMethod("NameGet", "",
 		func(rs pool.ResUsersSet) string {
-			res := rs.Super()
+			res := rs.Super().NameGet()
 			return fmt.Sprintf("%s (%s)", res, rs.Login())
 		})
 

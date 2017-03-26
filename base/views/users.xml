@@ -17,14 +17,19 @@
                 <header></header>
                 <sheet>
                     <group>
-                        <field name="Name"/>
-                        <field name="Login"/>
-                        <field name="Lang"/>
-                        <field name="LoginDate"/>
-                        <field name="Active"/>
+                        <group>
+                            <field name="Name"/>
+                            <field name="Login"/>
+                            <field name="Partner"/>
+                        </group>
+                        <group>
+                            <field name="Lang"/>
+                            <field name="LoginDate"/>
+                            <field name="Active"/>
+                        </group>
                     </group>
                     <group>
-                        <field name="Partner"/>
+                        <field name="Groups"/>
                     </group>
                 </sheet>
             </form>
