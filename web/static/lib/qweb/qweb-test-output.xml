@@ -3,49 +3,36 @@
     <t t-name="esc-literal">
         <t t-esc="'ok'"/>
     </t>
-    <t t-name="esc-variable">
-        <t t-esc="ok"/>
-    </t>
-    <t t-name="esc-toescape">
-        <t t-esc="ok"/>
-    </t>
+    <result id="esc-literal">ok</result>
 
-    <!-- escf, same as t-esc, but @t-escf is a format string -->
-    <t t-name="escf-noformat-literal">
-        <t t-escf="ok"/>
+    <t t-name="esc-variable">
+        <t t-esc="var"/>
     </t>
-    <t t-name="escf-simpleformat-variable">
-        <t t-escf="#{value}"/>
+    <params id="esc-variable">{"var": "ok"}</params>
+    <result id="esc-variable">ok</result>
+
+    <t t-name="esc-toescape">
+        <t t-esc="var"/>
     </t>
-    <t t-name="escf-format-variable">
-        <t t-escf="[#{value}]"/>
-    </t>
-    <t t-name="escf-format-variable-with-escapes">
-        <t t-escf="[#{value}]"/>
-    </t>
+    <params id="esc-toescape"><![CDATA[{"var": "<ok>"}]]></params>
+    <result id="esc-toescape"><![CDATA[&lt;ok&gt;]]></result>
+
 
     <!-- raw, evaluates and returns @t-raw directly (no escaping) -->
     <t t-name="raw-literal">
         <t t-raw="'ok'"/>
     </t>
-    <t t-name="raw-variable">
-        <t t-raw="ok"/>
-    </t>
-    <t t-name="raw-notescaped">
-        <t t-raw="ok"/>
-    </t>
+    <result id="raw-literal">ok</result>
 
-    <!-- rawf, same as t-raw, but @t-rawf is a format string -->
-    <t t-name="rawf-noformat-literal">
-        <t t-escf="ok"/>
+    <t t-name="raw-variable">
+        <t t-raw="var"/>
     </t>
-    <t t-name="rawf-simpleformat-variable">
-        <t t-escf="#{value}"/>
+    <params id="raw-variable">{"var": "ok"}</params>
+    <result id="raw-variable">ok</result>
+
+    <t t-name="raw-notescaped">
+        <t t-raw="var"/>
     </t>
-    <t t-name="rawf-format-variable">
-        <t t-escf="[#{value}]"/>
-    </t>
-    <t t-name="rawf-format-variable-notescaped">
-        <t t-rawf="[#{value}]"/>
-    </t>
+    <params id="raw-notescaped"><![CDATA[{"var": "<ok>"}]]></params>
+    <result id="raw-notescaped"><![CDATA[<ok>]]></result>
 </templates>

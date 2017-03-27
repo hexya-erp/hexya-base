@@ -12,7 +12,6 @@
     "jquery": "1.8.3",
     "underscore": "^1.8.3",
     "underscore.string": "2.2.1",
-    "qweb": "git@github.com:OpenERP/qweb.git#~1.0.0",
     "iron-elements": "PolymerElements/iron-elements#^1.0.10",
     "paper-badge": "PolymerElements/paper-badge#^1.1.4",
     "paper-card": "PolymerElements/paper-card#^1.1.4",
