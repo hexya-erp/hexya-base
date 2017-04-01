@@ -3,11 +3,5 @@
 
 package defs
 
-import (
-	"github.com/npiganeau/yep/yep/models"
-)
-
 func initBaseMixin() {
-	webMixIn := models.NewMixinModel("WebMixin")
-	models.MixInAllModels(webMixIn)
 }

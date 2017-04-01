@@ -11,14 +11,66 @@ import (
 	"github.com/npiganeau/yep/pool"
 	"github.com/npiganeau/yep/yep/actions"
 	"github.com/npiganeau/yep/yep/models"
+	"github.com/npiganeau/yep/yep/models/types"
 	"github.com/npiganeau/yep/yep/tools/etree"
 	"github.com/npiganeau/yep/yep/tools/logging"
 	"github.com/npiganeau/yep/yep/views"
 )
 
 func createMixinMethods() {
-	mixin := pool.WebMixin()
-	mixin.AddMethod("GetFormviewId",
+	baseMixin := pool.BaseMixin()
+
+	baseMixin.ExtendMethod("Write", "",
+		func(rs pool.BaseMixinSet, data interface{}, fieldsToUnset ...models.FieldNamer) bool {
+			fMap := models.ConvertInterfaceToFieldMap(data)
+			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
+			for f, v := range fMap {
+				fJSON := string(rs.Model().JSONizeFieldName(models.FieldName(f)))
+				if _, exists := fInfos[fJSON]; !exists {
+					logging.LogAndPanic(log, "Unable to find field", "model", rs.ModelName(), "field", f)
+				}
+				switch fInfos[fJSON].Type {
+				case types.Many2Many:
+					nd := rs.NormalizeM2MData(f, fInfos[fJSON], v)
+					fMap[f] = nd
+				}
+			}
+			res := rs.Super().Write(fMap, fieldsToUnset...)
+			return res
+		})
+
+	baseMixin.AddMethod("NormalizeM2MData",
+		`NormalizeM2MData converts the list of triplets received from the client into the final list of ids
+		to keep in the Many2Many relationship of this model through the given field.`,
+		func(rs pool.BaseMixinSet, fieldName string, info *models.FieldInfo, value interface{}) interface{} {
+			switch v := value.(type) {
+			case []interface{}:
+				// We assume we have a list of triplets from client
+				for _, triplet := range v {
+					// TODO manage effectively multi-tuple input
+					action := int(triplet.([]interface{})[0].(float64))
+					switch action {
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+					case 6:
+						idList := triplet.([]interface{})[2].([]interface{})
+						ids := make([]int64, len(idList))
+						for i, id := range idList {
+							ids[i] = int64(id.(float64))
+						}
+						resSet := rs.Env().Pool(info.Relation)
+						return resSet.Search(resSet.Model().All().And().Field("ID").In(ids))
+					}
+				}
+			}
+			return value
+		})
+
+	baseMixin.AddMethod("GetFormviewId",
 		`GetFormviewId returns an view id to open the document with.
 		This method is meant to be overridden in addons that want
  		to give specific view ids for example.`,
@@ -26,7 +78,7 @@ func createMixinMethods() {
 			return ""
 		})
 
-	mixin.AddMethod("GetFormviewAction",
+	baseMixin.AddMethod("GetFormviewAction",
 		`GetFormviewAction returns an action to open the document.
 		This method is meant to be overridden in addons that want
 		to give specific view ids for example.`,
@@ -44,7 +96,7 @@ func createMixinMethods() {
 			}
 		})
 
-	mixin.AddMethod("FieldsViewGet",
+	baseMixin.AddMethod("FieldsViewGet",
 		`FieldsViewGet is the base implementation of the 'FieldsViewGet' method which
 		gets the detailed composition of the requested view like fields, mixin,
 		view architecture.`,
@@ -57,7 +109,7 @@ func createMixinMethods() {
 			for i, f := range view.Fields {
 				cols[i] = rc.Model().JSONizeFieldName(f)
 			}
-			fInfos := rc.Call("FieldsGet", models.FieldsGetArgs{AllFields: cols}).(map[string]*models.FieldInfo)
+			fInfos := rc.Call("FieldsGet", models.FieldsGetArgs{Fields: cols}).(map[string]*models.FieldInfo)
 			arch := rc.Call("ProcessView", view.Arch, fInfos).(string)
 			toolbar := rc.Call("GetToolbar").(webdata.Toolbar)
 			res := webdata.FieldsViewData{
@@ -72,7 +124,7 @@ func createMixinMethods() {
 			return &res
 		})
 
-	mixin.AddMethod("GetToolbar",
+	baseMixin.AddMethod("GetToolbar",
 		`GetToolbar returns a toolbar populated with the actions linked to this model`,
 		func(rs pool.BaseMixinSet) webdata.Toolbar {
 			var res webdata.Toolbar
@@ -85,7 +137,7 @@ func createMixinMethods() {
 			return res
 		})
 
-	mixin.AddMethod("ProcessView",
+	baseMixin.AddMethod("ProcessView",
 		`ProcessView makes all the necessary modifications to the view
 		arch and returns the new xml string.`,
 		func(rc models.RecordCollection, arch string, fieldInfos map[string]*models.FieldInfo) string {
@@ -105,7 +157,7 @@ func createMixinMethods() {
 			return res
 		})
 
-	mixin.AddMethod("AddModifiers",
+	baseMixin.AddMethod("AddModifiers",
 		`AddModifiers adds the modifiers attribute nodes to given xml doc.`,
 		func(rc models.RecordCollection, doc *etree.Document, fieldInfos map[string]*models.FieldInfo) {
 			for _, fieldTag := range doc.FindElements("//field") {
@@ -119,7 +171,7 @@ func createMixinMethods() {
 			}
 		})
 
-	mixin.AddMethod("UpdateFieldNames",
+	baseMixin.AddMethod("UpdateFieldNames",
 		`UpdateFieldNames changes the field names in the view to the column names.
 		If a field name is already column names then it does nothing.`,
 		func(rc models.RecordCollection, doc *etree.Document) {
@@ -137,7 +189,7 @@ func createMixinMethods() {
 			}
 		})
 
-	mixin.AddMethod("SearchRead",
+	baseMixin.AddMethod("SearchRead",
 		`SearchRead retrieves database records according to the filters defined in params.`,
 		func(rc models.RecordCollection, params webdata.SearchParams) []models.FieldMap {
 			if searchCond := models.ParseDomain(params.Domain); searchCond != nil {

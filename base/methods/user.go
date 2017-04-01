@@ -25,13 +25,32 @@ func (bab *BaseAuthBackend) Authenticate(login, secret string, context *types.Co
 }
 
 func initUsers() {
-	pool.ResUsers().ExtendMethod("NameGet", "",
+	resUsers := pool.ResUsers()
+
+	resUsers.ExtendMethod("Write", "",
+		func(rs pool.ResUsersSet, data interface{}, fieldsToUnset ...models.FieldNamer) bool {
+			res := rs.Super().Write(data, fieldsToUnset...)
+			fMap := models.ConvertInterfaceToFieldMap(data)
+			_, exists := fMap["Groups"]
+			if exists {
+				// We get groups before removing all memberships otherwise we might get stuck with permissions if we
+				// are modifying our own user memberships.
+				groups := rs.Groups().Records()
+				security.Registry.RemoveAllMembershipsForUser(rs.ID())
+				for _, group := range groups {
+					security.Registry.AddMembership(rs.ID(), security.Registry.GetGroup(group.GroupID()))
+				}
+			}
+			return res
+		})
+
+	resUsers.ExtendMethod("NameGet", "",
 		func(rs pool.ResUsersSet) string {
 			res := rs.Super().NameGet()
 			return fmt.Sprintf("%s (%s)", res, rs.Login())
 		})
 
-	pool.ResUsers().AddMethod("ContextGet",
+	resUsers.AddMethod("ContextGet",
 		`UsersContextGet returns a context with the user's lang, tz and uid
 		This method must be called on a singleton.`,
 		func(rs pool.ResUsersSet) *types.Context {
@@ -43,7 +62,7 @@ func initUsers() {
 			return res
 		})
 
-	pool.ResUsers().AddMethod("Authenticate",
+	resUsers.AddMethod("Authenticate",
 		"Authenticate the user defined by login and secret",
 		func(rs pool.ResUsersSet, login, secret string) (uid int64, err error) {
 			user := rs.Search(pool.ResUsers().Login().Equals(login))

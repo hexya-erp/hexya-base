@@ -28,15 +28,29 @@ func initGroups() {
 		})
 
 	resGroups.AddMethod("ReloadGroups",
-		`ReloadGroups populates the ResGroups table with groups from the security.Registry.`,
+		`ReloadGroups populates the ResGroups table with groups from the security.Registry
+		and refresh all memberships.`,
 		func(rs pool.ResGroupsSet) {
 			log.Debug("Reloading groups")
+			// Sync groups
 			pool.ResGroups().NewSet(rs.Env()).Search(pool.ResGroups().All()).Unlink()
 			for _, group := range security.Registry.AllGroups() {
 				rs.WithContext("GroupForceCreate", true).Create(&pool.ResGroupsData{
 					GroupID: group.ID,
 					Name:    group.Name,
 				})
+			}
+			// Sync memberships
+			for _, user := range pool.ResUsers().NewSet(rs.Env()).Search(pool.ResUsers().All()).Records() {
+				secGroups := security.Registry.UserGroups(user.ID())
+				grpIds := make([]string, len(secGroups))
+				i := 0
+				for grp := range secGroups {
+					grpIds[i] = grp.ID
+					i++
+				}
+				groups := pool.ResGroups().NewSet(rs.Env()).Search(pool.ResGroups().GroupID().In(grpIds))
+				user.SetGroups(groups)
 			}
 		})
 

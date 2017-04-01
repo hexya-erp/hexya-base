@@ -29,7 +29,7 @@
                         </group>
                     </group>
                     <group>
-                        <field name="Groups"/>
+                        <field name="Groups" widget="many2many_tags"/>
                     </group>
                 </sheet>
             </form>
