@@ -16,12 +16,12 @@ func TestGroupLoading(t *testing.T) {
 	models.SimulateInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 		Convey("Testing Group Loading", t, func() {
 			pool.ResGroups().NewSet(env).ReloadGroups()
-			groups := pool.ResGroups().NewSet(env).Search(pool.ResGroups().All())
+			groups := pool.ResGroups().NewSet(env).Load()
 			So(groups.Len(), ShouldEqual, len(security.Registry.AllGroups()))
 		})
 		Convey("Testing Group ReLoading", t, func() {
 			pool.ResGroups().NewSet(env).ReloadGroups()
-			groups := pool.ResGroups().NewSet(env).Search(pool.ResGroups().All())
+			groups := pool.ResGroups().NewSet(env).Load()
 			So(groups.Len(), ShouldEqual, len(security.Registry.AllGroups()))
 		})
 	})

@@ -27,9 +27,8 @@ const (
 )
 
 func init() {
-	server.RegisterModule(&server.Module{Name: MODULE_NAME, PostInit: PostInit})
-}
-
-func PostInit() {
-
+	server.RegisterModule(&server.Module{
+		Name:     MODULE_NAME,
+		PostInit: func() {},
+	})
 }

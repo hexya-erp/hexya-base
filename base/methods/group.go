@@ -33,7 +33,7 @@ func initGroups() {
 		func(rs pool.ResGroupsSet) {
 			log.Debug("Reloading groups")
 			// Sync groups
-			pool.ResGroups().NewSet(rs.Env()).Search(pool.ResGroups().All()).Unlink()
+			pool.ResGroups().NewSet(rs.Env()).Load().Unlink()
 			for _, group := range security.Registry.AllGroups() {
 				rs.WithContext("GroupForceCreate", true).Create(&pool.ResGroupsData{
 					GroupID: group.ID,
@@ -41,7 +41,7 @@ func initGroups() {
 				})
 			}
 			// Sync memberships
-			for _, user := range pool.ResUsers().NewSet(rs.Env()).Search(pool.ResUsers().All()).Records() {
+			for _, user := range pool.ResUsers().NewSet(rs.Env()).Load().Records() {
 				secGroups := security.Registry.UserGroups(user.ID())
 				grpIds := make([]string, len(secGroups))
 				i := 0

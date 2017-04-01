@@ -50,47 +50,48 @@ var log log15.Logger
 
 func init() {
 	log = logging.GetLogger("base")
-	server.RegisterModule(&server.Module{Name: MODULE_NAME, PostInit: PostInit})
-}
+	server.RegisterModule(&server.Module{
+		Name: MODULE_NAME,
+		PostInit: func() {
+			models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 
-func PostInit() {
-	models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
+				mainCompany := pool.ResCompany().NewSet(env).Search(pool.ResCompany().ID().Equals(1))
+				if mainCompany.IsEmpty() {
+					mainCompany = pool.ResCompany().NewSet(env).Create(&pool.ResCompanyData{
+						ID:   1,
+						Name: "Your Company",
+					})
+				}
 
-		mainCompany := pool.ResCompany().NewSet(env).Search(pool.ResCompany().ID().Equals(1))
-		if mainCompany.IsEmpty() {
-			mainCompany = pool.ResCompany().NewSet(env).Create(&pool.ResCompanyData{
-				ID:   1,
-				Name: "Your Company",
+				adminPartner := pool.ResPartner().NewSet(env).Search(pool.ResPartner().ID().Equals(1))
+				if adminPartner.IsEmpty() {
+					adminPartner = pool.ResPartner().NewSet(env).Create(&pool.ResPartnerData{
+						ID:       1,
+						Lang:     "en_US",
+						Name:     "Administrator",
+						Function: "IT Manager",
+					})
+				}
+
+				avatarImg, _ := ioutil.ReadFile(path.Join(generate.YEPDir, "yep", "server", "static", "base", "src", "img", "avatar.png"))
+
+				adminUser := pool.ResUsers().NewSet(env).Search(pool.ResUsers().ID().Equals(1))
+				ActionID := actions.MakeActionRef("base_action_res_users")
+				if adminUser.IsEmpty() {
+					pool.ResUsers().NewSet(env).Create(&pool.ResUsersData{
+						ID:         1,
+						Name:       "Administrator",
+						Active:     true,
+						Company:    mainCompany,
+						Login:      "admin",
+						LoginDate:  models.DateTime{},
+						Password:   "admin",
+						Partner:    adminPartner,
+						ActionID:   ActionID,
+						ImageSmall: base64.StdEncoding.EncodeToString(avatarImg),
+					})
+				}
 			})
-		}
-
-		adminPartner := pool.ResPartner().NewSet(env).Search(pool.ResPartner().ID().Equals(1))
-		if adminPartner.IsEmpty() {
-			adminPartner = pool.ResPartner().NewSet(env).Create(&pool.ResPartnerData{
-				ID:       1,
-				Lang:     "en_US",
-				Name:     "Administrator",
-				Function: "IT Manager",
-			})
-		}
-
-		avatarImg, _ := ioutil.ReadFile(path.Join(generate.YEPDir, "yep", "server", "static", "base", "src", "img", "avatar.png"))
-
-		adminUser := pool.ResUsers().NewSet(env).Search(pool.ResUsers().ID().Equals(1))
-		ActionID := actions.MakeActionRef("base_action_res_users")
-		if adminUser.IsEmpty() {
-			pool.ResUsers().NewSet(env).Create(&pool.ResUsersData{
-				ID:         1,
-				Name:       "Administrator",
-				Active:     true,
-				Company:    mainCompany,
-				Login:      "admin",
-				LoginDate:  models.DateTime{},
-				Password:   "admin",
-				Partner:    adminPartner,
-				ActionID:   ActionID,
-				ImageSmall: base64.StdEncoding.EncodeToString(avatarImg),
-			})
-		}
+		},
 	})
 }
