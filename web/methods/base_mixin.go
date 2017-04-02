@@ -63,7 +63,7 @@ func createMixinMethods() {
 							ids[i] = int64(id.(float64))
 						}
 						resSet := rs.Env().Pool(info.Relation)
-						return resSet.Search(resSet.Model().All().And().Field("ID").In(ids))
+						return resSet.Search(resSet.Model().Field("ID").In(ids))
 					}
 				}
 			}
