@@ -31,8 +31,10 @@ func initUsers() {
 		func(rs pool.ResUsersSet, data interface{}, fieldsToUnset ...models.FieldNamer) bool {
 			res := rs.Super().Write(data, fieldsToUnset...)
 			fMap := models.ConvertInterfaceToFieldMap(data)
-			_, exists := fMap["Groups"]
-			if exists {
+			_, ok1 := fMap["Groups"]
+			_, ok2 := fMap["group_ids"]
+			if ok1 || ok2 {
+				log.Debug("Updating user groups", "user", rs.Name(), "uid", rs.ID(), "groups", rs.Groups())
 				// We get groups before removing all memberships otherwise we might get stuck with permissions if we
 				// are modifying our own user memberships.
 				groups := rs.Groups().Records()

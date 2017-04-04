@@ -20,8 +20,24 @@ import (
 func createMixinMethods() {
 	baseMixin := pool.BaseMixin()
 
+	baseMixin.ExtendMethod("Create", "",
+		func(rc models.RecordCollection, data interface{}) models.RecordCollection {
+			fMap := rc.Call("ProcessDataValues", data).(models.FieldMap)
+			res := rc.Super().Call("Create", fMap).(models.RecordCollection)
+			return res
+		})
+
 	baseMixin.ExtendMethod("Write", "",
 		func(rs pool.BaseMixinSet, data interface{}, fieldsToUnset ...models.FieldNamer) bool {
+			fMap := rs.ProcessDataValues(data)
+			res := rs.Super().Write(fMap, fieldsToUnset...)
+			return res
+		})
+
+	baseMixin.AddMethod("ProcessDataValues",
+		`ProcessDataValues updates the given data values for Write and Create methods to be
+		compatible with the ORM`,
+		func(rs pool.BaseMixinSet, data interface{}) models.FieldMap {
 			fMap := models.ConvertInterfaceToFieldMap(data)
 			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
 			for f, v := range fMap {
@@ -31,12 +47,10 @@ func createMixinMethods() {
 				}
 				switch fInfos[fJSON].Type {
 				case types.Many2Many:
-					nd := rs.NormalizeM2MData(f, fInfos[fJSON], v)
-					fMap[f] = nd
+					fMap[f] = rs.NormalizeM2MData(f, fInfos[fJSON], v)
 				}
 			}
-			res := rs.Super().Write(fMap, fieldsToUnset...)
-			return res
+			return fMap
 		})
 
 	baseMixin.AddMethod("NormalizeM2MData",
@@ -45,6 +59,10 @@ func createMixinMethods() {
 		func(rs pool.BaseMixinSet, fieldName string, info *models.FieldInfo, value interface{}) interface{} {
 			switch v := value.(type) {
 			case []interface{}:
+				resSet := rs.Env().Pool(info.Relation)
+				if len(v) == 0 {
+					return resSet
+				}
 				// We assume we have a list of triplets from client
 				for _, triplet := range v {
 					// TODO manage effectively multi-tuple input
@@ -62,7 +80,6 @@ func createMixinMethods() {
 						for i, id := range idList {
 							ids[i] = int64(id.(float64))
 						}
-						resSet := rs.Env().Pool(info.Relation)
 						return resSet.Search(resSet.Model().Field("ID").In(ids))
 					}
 				}

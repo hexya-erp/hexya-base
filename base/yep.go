@@ -61,6 +61,7 @@ func init() {
 						ID:   1,
 						Name: "Your Company",
 					})
+					env.Cr().Execute("ALTER SEQUENCE res_company_id_seq RESTART WITH 2")
 				}
 
 				adminPartner := pool.ResPartner().NewSet(env).Search(pool.ResPartner().ID().Equals(1))
@@ -71,6 +72,7 @@ func init() {
 						Name:     "Administrator",
 						Function: "IT Manager",
 					})
+					env.Cr().Execute("ALTER SEQUENCE res_partner_id_seq RESTART WITH 2")
 				}
 
 				avatarImg, _ := ioutil.ReadFile(path.Join(generate.YEPDir, "yep", "server", "static", "base", "src", "img", "avatar.png"))
@@ -90,7 +92,10 @@ func init() {
 						ActionID:   ActionID,
 						ImageSmall: base64.StdEncoding.EncodeToString(avatarImg),
 					})
+					env.Cr().Execute("ALTER SEQUENCE res_users_id_seq RESTART WITH 2")
 				}
+
+				pool.ResGroups().NewSet(env).ReloadGroups()
 			})
 		},
 	})

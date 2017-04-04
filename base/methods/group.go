@@ -15,7 +15,7 @@ func initGroups() {
 	resGroups := pool.ResGroups()
 	resGroups.ExtendMethod("Create", "",
 		func(rs pool.ResGroupsSet, data *pool.ResGroupsData) pool.ResGroupsSet {
-			if rs.Env().Context().Get("GroupForceCreate").(bool) {
+			if rs.Env().Context().HasKey("GroupForceCreate") {
 				return rs.Super().Create(data)
 			}
 			logging.LogAndPanic(log, "Trying to create a security group")
@@ -33,7 +33,7 @@ func initGroups() {
 		func(rs pool.ResGroupsSet) {
 			log.Debug("Reloading groups")
 			// Sync groups
-			pool.ResGroups().NewSet(rs.Env()).Load().Unlink()
+			pool.ResGroups().NewSet(rs.Env()).FetchAll().Unlink()
 			for _, group := range security.Registry.AllGroups() {
 				rs.WithContext("GroupForceCreate", true).Create(&pool.ResGroupsData{
 					GroupID: group.ID,
@@ -41,7 +41,7 @@ func initGroups() {
 				})
 			}
 			// Sync memberships
-			for _, user := range pool.ResUsers().NewSet(rs.Env()).Load().Records() {
+			for _, user := range pool.ResUsers().NewSet(rs.Env()).FetchAll().Records() {
 				secGroups := security.Registry.UserGroups(user.ID())
 				grpIds := make([]string, len(secGroups))
 				i := 0
