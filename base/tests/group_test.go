@@ -35,6 +35,7 @@ func TestGroupLoading(t *testing.T) {
 			someGroup = pool.ResGroups().NewSet(env).Search(pool.ResGroups().GroupID().Equals("some_group"))
 			user = pool.ResUsers().NewSet(env).Create(&pool.ResUsersData{
 				Name:   "Test User",
+				Login:  "test_user",
 				Groups: someGroup,
 			})
 			So(user.Groups().Ids(), ShouldHaveLength, 1)

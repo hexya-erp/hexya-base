@@ -43,8 +43,9 @@ func initPartner() {
 	resPartner.AddDateField("Birthdate", models.SimpleFieldParams{})
 	resPartner.AddBooleanField("IsCompany", models.SimpleFieldParams{})
 	resPartner.AddBooleanField("UseParentAddress", models.SimpleFieldParams{})
-	//Image            image.Image
-	//Company          *Company
+	resPartner.AddBinaryField("Image", models.SimpleFieldParams{})
+	resPartner.AddBinaryField("ImageMedium", models.SimpleFieldParams{})
+	resPartner.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "ResCompany"})
 	//Color            color.Color
 	//Users []*ResUsers `orm:"reverse(many)"`
 

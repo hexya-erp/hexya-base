@@ -4,7 +4,7 @@
 package methods
 
 import (
-	"fmt"
+	"encoding/json"
 	"strings"
 
 	"github.com/npiganeau/yep-base/web/webdata"
@@ -41,7 +41,7 @@ func createMixinMethods() {
 			fMap := models.ConvertInterfaceToFieldMap(data)
 			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
 			for f, v := range fMap {
-				fJSON := string(rs.Model().JSONizeFieldName(models.FieldName(f)))
+				fJSON := rs.Model().JSONizeFieldName(f)
 				if _, exists := fInfos[fJSON]; !exists {
 					logging.LogAndPanic(log, "Unable to find field", "model", rs.ModelName(), "field", f)
 				}
@@ -124,7 +124,7 @@ func createMixinMethods() {
 			}
 			cols := make([]models.FieldName, len(view.Fields))
 			for i, f := range view.Fields {
-				cols[i] = rc.Model().JSONizeFieldName(f)
+				cols[i] = models.FieldName(rc.Model().JSONizeFieldName(string(f)))
 			}
 			fInfos := rc.Call("FieldsGet", models.FieldsGetArgs{Fields: cols}).(map[string]*models.FieldInfo)
 			arch := rc.Call("ProcessView", view.Arch, fInfos).(string)
@@ -164,7 +164,7 @@ func createMixinMethods() {
 				logging.LogAndPanic(log, "Unable to parse view arch", "arch", arch, "error", err)
 			}
 			// Apply changes
-			rc.Call("UpdateFieldNames", doc)
+			rc.Call("UpdateFieldNames", doc, &fieldInfos)
 			rc.Call("AddModifiers", doc, fieldInfos)
 			// Dump xml to string and return
 			res, err := doc.WriteToString()
@@ -177,32 +177,98 @@ func createMixinMethods() {
 	baseMixin.AddMethod("AddModifiers",
 		`AddModifiers adds the modifiers attribute nodes to given xml doc.`,
 		func(rc models.RecordCollection, doc *etree.Document, fieldInfos map[string]*models.FieldInfo) {
-			for _, fieldTag := range doc.FindElements("//field") {
-				fieldName := fieldTag.SelectAttr("name").Value
-				var mods []string
-				if fieldInfos[fieldName].ReadOnly {
-					mods = append(mods, "&quot;readonly&quot;: true")
-				}
-				modStr := fmt.Sprintf("{%s}", strings.Join(mods, ","))
-				fieldTag.CreateAttr("modifiers", modStr)
+			allModifiers := make(map[*etree.Element]map[string]interface{})
+			// Process attrs on all nodes
+			for _, attrsTag := range doc.FindElements("[@attrs]") {
+				allModifiers[attrsTag] = rc.Call("ProcessElementAttrs", attrsTag).(map[string]interface{})
 			}
+			// Process field nodes
+			for _, fieldTag := range doc.FindElements("//field") {
+				mods, exists := allModifiers[fieldTag]
+				if !exists {
+					mods = map[string]interface{}{"readonly": false, "required": false, "invisible": false}
+
+				}
+				allModifiers[fieldTag] = rc.Call("ProcessFieldElementModifiers", fieldTag, fieldInfos, mods).(map[string]interface{})
+			}
+			// Set modifier attributes on elements
+			for element, modifiers := range allModifiers {
+				// Remove false keys
+				for mod, val := range modifiers {
+					v, ok := val.(bool)
+					if ok && !v {
+						delete(modifiers, mod)
+					}
+				}
+				modJSON, _ := json.Marshal(modifiers)
+				element.CreateAttr("modifiers", string(modJSON))
+			}
+		})
+
+	baseMixin.AddMethod("ProcessFieldElementModifiers",
+		`ProcessFieldElementModifiers modifies the given modifiers map by taking into account:
+		- 'invisible', 'readonly' and 'required' attributes in field tags
+		- 'ReadOnly' and 'Required' parameters of the model's field'
+		It returns the modified map.`,
+		func(rc models.RecordCollection, element *etree.Element, fieldInfos map[string]*models.FieldInfo, modifiers map[string]interface{}) map[string]interface{} {
+			fieldName := element.SelectAttr("name").Value
+			// Check if we have the modifier as attribute in the field node
+			for modifier := range modifiers {
+				modTag := element.SelectAttrValue(modifier, "")
+				if modTag != "" && modTag != "0" && modTag != "false" {
+					modifiers[modifier] = true
+				}
+			}
+			// Force modifiers if defined in the model
+			if fieldInfos[fieldName].ReadOnly {
+				modifiers["readonly"] = true
+			}
+			if fieldInfos[fieldName].Required {
+				modifiers["required"] = true
+			}
+			return modifiers
+		})
+
+	baseMixin.AddMethod("ProcessElementAttrs",
+		`ProcessElementAttrs returns a modifiers map according to the domain
+		in attrs of the given element`,
+		func(rc models.RecordCollection, element *etree.Element) map[string]interface{} {
+			modifiers := map[string]interface{}{"readonly": false, "required": false, "invisible": false}
+			attrStr := element.SelectAttrValue("attrs", "")
+			if attrStr == "" {
+				return modifiers
+			}
+			var attrs map[string]models.Domain
+			err := json.Unmarshal([]byte(attrStr), &attrs)
+			if err != nil {
+				logging.LogAndPanic(log, "Invalid attrs definition", "model", rc.ModelName(), "attrs", attrStr)
+			}
+			for modifier := range modifiers {
+				cond := models.ParseDomain(attrs[modifier])
+				if cond == nil {
+					continue
+				}
+				modifiers[modifier] = attrs[modifier]
+			}
+			return modifiers
 		})
 
 	baseMixin.AddMethod("UpdateFieldNames",
 		`UpdateFieldNames changes the field names in the view to the column names.
-		If a field name is already column names then it does nothing.`,
-		func(rc models.RecordCollection, doc *etree.Document) {
+		If a field name is already column names then it does nothing.
+		This method also modifies the fields in the given fieldInfo to match the new name.`,
+		func(rc models.RecordCollection, doc *etree.Document, fieldInfos *map[string]*models.FieldInfo) {
 			for _, fieldTag := range doc.FindElements("//field") {
 				fieldName := fieldTag.SelectAttr("name").Value
-				fieldJSON := rc.Model().JSONizeFieldName(models.FieldName(fieldName))
+				fieldJSON := rc.Model().JSONizeFieldName(fieldName)
 				fieldTag.RemoveAttr("name")
-				fieldTag.CreateAttr("name", string(fieldJSON))
+				fieldTag.CreateAttr("name", fieldJSON)
 			}
 			for _, labelTag := range doc.FindElements("//label") {
 				fieldName := labelTag.SelectAttr("for").Value
-				fieldJSON := rc.Model().JSONizeFieldName(models.FieldName(fieldName))
+				fieldJSON := rc.Model().JSONizeFieldName(fieldName)
 				labelTag.RemoveAttr("for")
-				labelTag.CreateAttr("for", string(fieldJSON))
+				labelTag.CreateAttr("for", fieldJSON)
 			}
 		})
 
