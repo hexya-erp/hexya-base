@@ -6,6 +6,7 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/npiganeau/yep/yep/actions"
 	"github.com/npiganeau/yep/yep/server"
 )
 
@@ -15,6 +16,19 @@ func CallKW(c *server.Context) {
 	var params CallParams
 	c.BindRPCParams(&params)
 	res, err := Execute(uid, params)
+	c.RPC(http.StatusOK, res, err)
+}
+
+// CallButton executes the given method of the given model
+// and returns the result only if it is an action
+func CallButton(c *server.Context) {
+	uid := c.Session().Get("uid").(int64)
+	var params CallParams
+	c.BindRPCParams(&params)
+	res, err := Execute(uid, params)
+	if _, isAction := res.(actions.BaseAction); !isAction {
+		res = false
+	}
 	c.RPC(http.StatusOK, res, err)
 }
 

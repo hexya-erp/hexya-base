@@ -294,4 +294,14 @@ func createMixinMethods() {
 			rSet := rc.Fetch()
 			return rSet.Call("Read", params.Fields).([]models.FieldMap)
 		})
+
+	baseMixin.AddMethod("ToggleActive",
+		`ToggleActive toggles the Active field of this object`,
+		func(rs pool.BaseMixinSet) {
+			if rs.Active() {
+				rs.SetActive(false)
+			} else {
+				rs.SetActive(true)
+			}
+		})
 }

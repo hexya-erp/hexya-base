@@ -3,5 +3,9 @@
 
 package defs
 
+import "github.com/npiganeau/yep/yep/models"
+
 func initBaseMixin() {
+	baseMixin := models.Registry.MustGet("BaseMixin")
+	baseMixin.AddBooleanField("Active", models.SimpleFieldParams{})
 }
