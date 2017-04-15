@@ -18,26 +18,26 @@ import (
 )
 
 func createMixinMethods() {
-	baseMixin := pool.BaseMixin()
+	commonMixin := pool.CommonMixin()
 
-	baseMixin.ExtendMethod("Create", "",
+	commonMixin.ExtendMethod("Create", "",
 		func(rc models.RecordCollection, data interface{}) models.RecordCollection {
 			fMap := rc.Call("ProcessDataValues", data).(models.FieldMap)
 			res := rc.Super().Call("Create", fMap).(models.RecordCollection)
 			return res
 		})
 
-	baseMixin.ExtendMethod("Write", "",
-		func(rs pool.BaseMixinSet, data interface{}, fieldsToUnset ...models.FieldNamer) bool {
+	commonMixin.ExtendMethod("Write", "",
+		func(rs pool.CommonMixinSet, data interface{}, fieldsToUnset ...models.FieldNamer) bool {
 			fMap := rs.ProcessDataValues(data)
 			res := rs.Super().Write(fMap, fieldsToUnset...)
 			return res
 		})
 
-	baseMixin.AddMethod("ProcessDataValues",
+	commonMixin.AddMethod("ProcessDataValues",
 		`ProcessDataValues updates the given data values for Write and Create methods to be
 		compatible with the ORM`,
-		func(rs pool.BaseMixinSet, data interface{}) models.FieldMap {
+		func(rs pool.CommonMixinSet, data interface{}) models.FieldMap {
 			fMap := models.ConvertInterfaceToFieldMap(data)
 			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
 			for f, v := range fMap {
@@ -53,7 +53,7 @@ func createMixinMethods() {
 			return fMap
 		})
 
-	baseMixin.AddMethod("NormalizeM2MData",
+	commonMixin.AddMethod("NormalizeM2MData",
 		`NormalizeM2MData converts the list of triplets received from the client into the final list of ids
 		to keep in the Many2Many relationship of this model through the given field.`,
 		func(rs pool.BaseMixinSet, fieldName string, info *models.FieldInfo, value interface{}) interface{} {
@@ -87,7 +87,7 @@ func createMixinMethods() {
 			return value
 		})
 
-	baseMixin.AddMethod("GetFormviewId",
+	commonMixin.AddMethod("GetFormviewId",
 		`GetFormviewId returns an view id to open the document with.
 		This method is meant to be overridden in addons that want
  		to give specific view ids for example.`,
@@ -95,7 +95,7 @@ func createMixinMethods() {
 			return ""
 		})
 
-	baseMixin.AddMethod("GetFormviewAction",
+	commonMixin.AddMethod("GetFormviewAction",
 		`GetFormviewAction returns an action to open the document.
 		This method is meant to be overridden in addons that want
 		to give specific view ids for example.`,
@@ -113,7 +113,7 @@ func createMixinMethods() {
 			}
 		})
 
-	baseMixin.AddMethod("FieldsViewGet",
+	commonMixin.AddMethod("FieldsViewGet",
 		`FieldsViewGet is the base implementation of the 'FieldsViewGet' method which
 		gets the detailed composition of the requested view like fields, mixin,
 		view architecture.`,
@@ -141,7 +141,7 @@ func createMixinMethods() {
 			return &res
 		})
 
-	baseMixin.AddMethod("GetToolbar",
+	commonMixin.AddMethod("GetToolbar",
 		`GetToolbar returns a toolbar populated with the actions linked to this model`,
 		func(rs pool.BaseMixinSet) webdata.Toolbar {
 			var res webdata.Toolbar
@@ -154,7 +154,7 @@ func createMixinMethods() {
 			return res
 		})
 
-	baseMixin.AddMethod("ProcessView",
+	commonMixin.AddMethod("ProcessView",
 		`ProcessView makes all the necessary modifications to the view
 		arch and returns the new xml string.`,
 		func(rc models.RecordCollection, arch string, fieldInfos map[string]*models.FieldInfo) string {
@@ -174,7 +174,7 @@ func createMixinMethods() {
 			return res
 		})
 
-	baseMixin.AddMethod("AddModifiers",
+	commonMixin.AddMethod("AddModifiers",
 		`AddModifiers adds the modifiers attribute nodes to given xml doc.`,
 		func(rc models.RecordCollection, doc *etree.Document, fieldInfos map[string]*models.FieldInfo) {
 			allModifiers := make(map[*etree.Element]map[string]interface{})
@@ -205,7 +205,7 @@ func createMixinMethods() {
 			}
 		})
 
-	baseMixin.AddMethod("ProcessFieldElementModifiers",
+	commonMixin.AddMethod("ProcessFieldElementModifiers",
 		`ProcessFieldElementModifiers modifies the given modifiers map by taking into account:
 		- 'invisible', 'readonly' and 'required' attributes in field tags
 		- 'ReadOnly' and 'Required' parameters of the model's field'
@@ -229,7 +229,7 @@ func createMixinMethods() {
 			return modifiers
 		})
 
-	baseMixin.AddMethod("ProcessElementAttrs",
+	commonMixin.AddMethod("ProcessElementAttrs",
 		`ProcessElementAttrs returns a modifiers map according to the domain
 		in attrs of the given element`,
 		func(rc models.RecordCollection, element *etree.Element) map[string]interface{} {
@@ -253,7 +253,7 @@ func createMixinMethods() {
 			return modifiers
 		})
 
-	baseMixin.AddMethod("UpdateFieldNames",
+	commonMixin.AddMethod("UpdateFieldNames",
 		`UpdateFieldNames changes the field names in the view to the column names.
 		If a field name is already column names then it does nothing.
 		This method also modifies the fields in the given fieldInfo to match the new name.`,
@@ -272,7 +272,7 @@ func createMixinMethods() {
 			}
 		})
 
-	baseMixin.AddMethod("SearchRead",
+	commonMixin.AddMethod("SearchRead",
 		`SearchRead retrieves database records according to the filters defined in params.`,
 		func(rc models.RecordCollection, params webdata.SearchParams) []models.FieldMap {
 			if searchCond := models.ParseDomain(params.Domain); searchCond != nil {
@@ -294,6 +294,8 @@ func createMixinMethods() {
 			rSet := rc.Fetch()
 			return rSet.Call("Read", params.Fields).([]models.FieldMap)
 		})
+
+	baseMixin := pool.BaseMixin()
 
 	baseMixin.AddMethod("ToggleActive",
 		`ToggleActive toggles the Active field of this object`,
