@@ -48,7 +48,7 @@ type Toolbar struct {
 	Relate []*actions.BaseAction `json:"relate"`
 }
 
-// SearchParams is the args struct for the ReadGroup method
+// ReadGroupParams is the args struct for the ReadGroup method
 type ReadGroupParams struct {
 	//domain, fields, groupby, offset=0, limit=None, context=None, orderby=False, lazy=True
 	Domain  domains.Domain `json:"domain"`
