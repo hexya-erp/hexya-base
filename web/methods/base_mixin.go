@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"strings"
 
+	"github.com/npiganeau/yep-base/web/domains"
 	"github.com/npiganeau/yep-base/web/webdata"
 	"github.com/npiganeau/yep/pool"
 	"github.com/npiganeau/yep/yep/actions"
@@ -31,6 +32,69 @@ func createMixinMethods() {
 		func(rs pool.CommonMixinSet, data interface{}, fieldsToUnset ...models.FieldNamer) bool {
 			fMap := rs.ProcessDataValues(data)
 			res := rs.Super().Write(fMap, fieldsToUnset...)
+			return res
+		})
+
+	commonMixin.ExtendMethod("Read", "",
+		func(rc models.RecordCollection, fields []string) []models.FieldMap {
+			res := rc.Super().Call("Read", fields).([]models.FieldMap)
+			for i, fMap := range res {
+				rec := rc.Env().Pool(rc.ModelName()).Search(rc.Model().Field("id").Equals(fMap["id"]))
+				fInfos := rec.Call("FieldsGet", models.FieldsGetArgs{}).(map[string]*models.FieldInfo)
+				res[i] = rc.Call("AddNamesToRelations", fMap, fInfos).(models.FieldMap)
+			}
+			return res
+		})
+
+	commonMixin.AddMethod("AddNamesToRelations",
+		`AddNameToRelations returns the given FieldMap after getting the name of all 2one relation ids`,
+		func(rc models.RecordCollection, fMap models.FieldMap, fInfos map[string]*models.FieldInfo) models.FieldMap {
+			for fName, value := range fMap {
+				fi := fInfos[fName]
+				switch v := value.(type) {
+				case models.RecordCollection:
+					switch {
+					case fi.Type.Is2OneRelationType():
+						if rcId := v.Get("id"); rcId != int64(0) {
+							value = [2]interface{}{rcId, v.Call("NameGet").(string)}
+						} else {
+							value = nil
+						}
+					case fi.Type.Is2ManyRelationType():
+						value = v.Ids()
+					}
+				case int64:
+					if fi.Type.Is2OneRelationType() {
+						rSet := rc.Env().Pool(fi.Relation).Search(rc.Model().Field("id").Equals(v))
+						value = [2]interface{}{v, rSet.Call("NameGet").(string)}
+					}
+				}
+				fMap[fName] = value
+			}
+			return fMap
+		})
+
+	commonMixin.AddMethod("NameSearch",
+		`NameSearch searches for records that have a display name matching the given
+		"name" pattern when compared with the given "operator", while also
+		matching the optional search domain ("args").
+
+		This is used for example to provide suggestions based on a partial
+		value for a relational field. Sometimes be seen as the inverse
+		function of NameGet but it is not guaranteed to be.`,
+		func(rc models.RecordCollection, params webdata.NameSearchParams) []webdata.RecordIDWithName {
+			searchRs := rc.Search(rc.Model().Field("Name").AddOperator(params.Operator, params.Name)).Limit(models.ConvertLimitToInt(params.Limit))
+			if extraCondition := domains.ParseDomain(params.Args); extraCondition != nil {
+				searchRs = searchRs.Search(extraCondition)
+			}
+
+			searchRs.Load("ID", "DisplayName")
+
+			res := make([]webdata.RecordIDWithName, searchRs.Len())
+			for i, rec := range searchRs.Records() {
+				res[i].ID = rec.Get("id").(int64)
+				res[i].Name = rec.Get("display_name").(string)
+			}
 			return res
 		})
 
@@ -187,7 +251,6 @@ func createMixinMethods() {
 				mods, exists := allModifiers[fieldTag]
 				if !exists {
 					mods = map[string]interface{}{"readonly": false, "required": false, "invisible": false}
-
 				}
 				allModifiers[fieldTag] = rc.Call("ProcessFieldElementModifiers", fieldTag, fieldInfos, mods).(map[string]interface{})
 			}
@@ -223,7 +286,7 @@ func createMixinMethods() {
 			if fieldInfos[fieldName].ReadOnly {
 				modifiers["readonly"] = true
 			}
-			if fieldInfos[fieldName].Required {
+			if fieldInfos[fieldName].Required && fieldName != "id" {
 				modifiers["required"] = true
 			}
 			return modifiers
@@ -238,13 +301,13 @@ func createMixinMethods() {
 			if attrStr == "" {
 				return modifiers
 			}
-			var attrs map[string]models.Domain
+			var attrs map[string]domains.Domain
 			err := json.Unmarshal([]byte(attrStr), &attrs)
 			if err != nil {
 				logging.LogAndPanic(log, "Invalid attrs definition", "model", rc.ModelName(), "attrs", attrStr)
 			}
 			for modifier := range modifiers {
-				cond := models.ParseDomain(attrs[modifier])
+				cond := domains.ParseDomain(attrs[modifier])
 				if cond == nil {
 					continue
 				}
@@ -275,24 +338,48 @@ func createMixinMethods() {
 	commonMixin.AddMethod("SearchRead",
 		`SearchRead retrieves database records according to the filters defined in params.`,
 		func(rc models.RecordCollection, params webdata.SearchParams) []models.FieldMap {
-			if searchCond := models.ParseDomain(params.Domain); searchCond != nil {
+			rSet := rc.Call("AddDomainLimitOffset", params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order).(models.RecordCollection).Fetch()
+			records := rSet.Call("Read", params.Fields).([]models.FieldMap)
+			return records
+		})
+
+	commonMixin.AddMethod("AddDomainLimitOffset",
+		`AddDomainLimitOffsetOrder adds the given domain, limit, offset
+		and order to the current RecordSet query.`,
+		func(rc models.RecordCollection, domain domains.Domain, limit int, offset int, order string) models.RecordCollection {
+			if searchCond := domains.ParseDomain(domain); searchCond != nil {
 				rc = rc.Search(searchCond)
 			}
 			// Limit
-			rc = rc.Limit(models.ConvertLimitToInt(params.Limit))
+			rc = rc.Limit(limit)
 
 			// Offset
-			if params.Offset != 0 {
-				rc = rc.Offset(params.Offset)
+			if offset != 0 {
+				rc = rc.Offset(offset)
 			}
 
 			// Order
-			if params.Order != "" {
-				rc = rc.OrderBy(strings.Split(params.Order, ",")...)
+			if order != "" {
+				rc = rc.OrderBy(strings.Split(order, ",")...)
 			}
+			return rc
+		})
 
-			rSet := rc.Fetch()
-			return rSet.Call("Read", params.Fields).([]models.FieldMap)
+	commonMixin.AddMethod("ReadGroup",
+		`Get a list of record aggregates according to the given parameters.`,
+		func(rc models.RecordCollection, params webdata.ReadGroupParams) []models.FieldMap {
+			rSet := rc.Call("AddDomainLimitOffset", params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order).(models.RecordCollection)
+			rSet = rSet.GroupBy(models.ConvertToFieldNameSlice(params.GroupBy)...)
+			aggregates := rSet.Aggregates(models.ConvertToFieldNameSlice(params.Fields)...)
+			res := make([]models.FieldMap, len(aggregates))
+			fInfos := rSet.Call("FieldsGet", models.FieldsGetArgs{}).(map[string]*models.FieldInfo)
+			for i, ag := range aggregates {
+				line := rc.Call("AddNamesToRelations", ag.Values, fInfos).(models.FieldMap)
+				line["__count"] = ag.Count
+				line["__domain"] = ag.Condition.Serialize()
+				res[i] = line
+			}
+			return res
 		})
 
 	baseMixin := pool.BaseMixin()

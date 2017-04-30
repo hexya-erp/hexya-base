@@ -20,6 +20,7 @@ import (
 	"reflect"
 
 	"github.com/inconshreveable/log15"
+	"github.com/npiganeau/yep-base/web/domains"
 	"github.com/npiganeau/yep-base/web/webdata"
 	"github.com/npiganeau/yep/yep/models"
 	"github.com/npiganeau/yep/yep/models/types"
@@ -231,23 +232,17 @@ func getFieldValue(uid, id int64, model, field string) (res interface{}, rError 
 
 // searchReadParams is the args struct for the searchRead function.
 type searchReadParams struct {
-	Context types.Context `json:"context"`
-	Domain  models.Domain `json:"domain"`
-	Fields  []string      `json:"fields"`
-	Limit   interface{}   `json:"limit"`
-	Model   string        `json:"model"`
-	Offset  int           `json:"offset"`
-	Sort    string        `json:"sort"`
-}
-
-// searchReadResult is the result struct for the searchRead function.
-type searchReadResult struct {
-	Records []models.FieldMap `json:"records"`
-	Length  int               `json:"length"`
+	Context types.Context  `json:"context"`
+	Domain  domains.Domain `json:"domain"`
+	Fields  []string       `json:"fields"`
+	Limit   interface{}    `json:"limit"`
+	Model   string         `json:"model"`
+	Offset  int            `json:"offset"`
+	Sort    string         `json:"sort"`
 }
 
 // searchRead retrieves database records according to the filters defined in params.
-func searchRead(uid int64, params searchReadParams) (res *searchReadResult, rError error) {
+func searchRead(uid int64, params searchReadParams) (res *webdata.SearchReadResult, rError error) {
 	checkUser(uid)
 	rError = models.ExecuteInNewEnvironment(uid, func(env models.Environment) {
 		model := tools.ConvertModelName(params.Model)
@@ -260,8 +255,9 @@ func searchRead(uid int64, params searchReadParams) (res *searchReadResult, rErr
 			Order:  params.Sort,
 		}
 		records := rs.Call("SearchRead", srp).([]models.FieldMap)
-		length := rs.SearchCount()
-		res = &searchReadResult{
+		rSet := rs.Call("AddDomainLimitOffset", srp.Domain, models.ConvertLimitToInt(srp.Limit), srp.Offset, srp.Order).(models.RecordCollection).Fetch()
+		length := rSet.SearchCount()
+		res = &webdata.SearchReadResult{
 			Records: records,
 			Length:  length,
 		}
