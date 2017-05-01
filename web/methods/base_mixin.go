@@ -36,19 +36,19 @@ func createMixinMethods() {
 		})
 
 	commonMixin.ExtendMethod("Read", "",
-		func(rc models.RecordCollection, fields []string) []models.FieldMap {
-			res := rc.Super().Call("Read", fields).([]models.FieldMap)
+		func(rs pool.CommonMixinSet, fields []string) []models.FieldMap {
+			res := rs.Super().Read(fields)
 			for i, fMap := range res {
-				rec := rc.Env().Pool(rc.ModelName()).Search(rc.Model().Field("id").Equals(fMap["id"]))
-				fInfos := rec.Call("FieldsGet", models.FieldsGetArgs{}).(map[string]*models.FieldInfo)
-				res[i] = rc.Call("AddNamesToRelations", fMap, fInfos).(models.FieldMap)
+				rec := pool.CommonMixin().Search(rs.Env(), pool.CommonMixin().ID().Equals(fMap["id"].(int64)))
+				fInfos := rec.FieldsGet(models.FieldsGetArgs{})
+				res[i] = rs.AddNamesToRelations(fMap, fInfos)
 			}
 			return res
 		})
 
 	commonMixin.AddMethod("AddNamesToRelations",
 		`AddNameToRelations returns the given FieldMap after getting the name of all 2one relation ids`,
-		func(rc models.RecordCollection, fMap models.FieldMap, fInfos map[string]*models.FieldInfo) models.FieldMap {
+		func(rs pool.CommonMixinSet, fMap models.FieldMap, fInfos map[string]*models.FieldInfo) models.FieldMap {
 			for fName, value := range fMap {
 				fi := fInfos[fName]
 				switch v := value.(type) {
@@ -65,7 +65,7 @@ func createMixinMethods() {
 					}
 				case int64:
 					if fi.Type.Is2OneRelationType() {
-						rSet := rc.Env().Pool(fi.Relation).Search(rc.Model().Field("id").Equals(v))
+						rSet := rs.Env().Pool(fi.Relation).Search(rs.Model().Field("id").Equals(v))
 						value = [2]interface{}{v, rSet.Call("NameGet").(string)}
 					}
 				}
@@ -83,7 +83,7 @@ func createMixinMethods() {
 		value for a relational field. Sometimes be seen as the inverse
 		function of NameGet but it is not guaranteed to be.`,
 		func(rc models.RecordCollection, params webdata.NameSearchParams) []webdata.RecordIDWithName {
-			searchRs := rc.Search(rc.Model().Field("Name").AddOperator(params.Operator, params.Name)).Limit(models.ConvertLimitToInt(params.Limit))
+			searchRs := rc.Model().Search(rc.Env(), rc.Model().Field("Name").AddOperator(params.Operator, params.Name)).Limit(models.ConvertLimitToInt(params.Limit))
 			if extraCondition := domains.ParseDomain(params.Args); extraCondition != nil {
 				searchRs = searchRs.Search(extraCondition)
 			}
@@ -120,7 +120,7 @@ func createMixinMethods() {
 	commonMixin.AddMethod("NormalizeM2MData",
 		`NormalizeM2MData converts the list of triplets received from the client into the final list of ids
 		to keep in the Many2Many relationship of this model through the given field.`,
-		func(rs pool.BaseMixinSet, fieldName string, info *models.FieldInfo, value interface{}) interface{} {
+		func(rs pool.CommonMixinSet, fieldName string, info *models.FieldInfo, value interface{}) interface{} {
 			switch v := value.(type) {
 			case []interface{}:
 				resSet := rs.Env().Pool(info.Relation)
@@ -155,7 +155,7 @@ func createMixinMethods() {
 		`GetFormviewId returns an view id to open the document with.
 		This method is meant to be overridden in addons that want
  		to give specific view ids for example.`,
-		func(rc models.RecordCollection) string {
+		func(rs pool.CommonMixinSet) string {
 			return ""
 		})
 
@@ -163,17 +163,17 @@ func createMixinMethods() {
 		`GetFormviewAction returns an action to open the document.
 		This method is meant to be overridden in addons that want
 		to give specific view ids for example.`,
-		func(rc models.RecordCollection) *actions.BaseAction {
-			viewID := rc.Call("GetFormviewId").(string)
+		func(rs pool.CommonMixinSet) *actions.BaseAction {
+			viewID := rs.GetFormviewId()
 			return &actions.BaseAction{
 				Type:        actions.ActionActWindow,
-				Model:       rc.ModelName(),
+				Model:       rs.ModelName(),
 				ActViewType: actions.ActionViewTypeForm,
 				ViewMode:    "form",
 				Views:       []views.ViewTuple{{ID: viewID, Type: views.VIEW_TYPE_FORM}},
 				Target:      "current",
-				ResID:       rc.Get("id").(int64),
-				Context:     rc.Env().Context(),
+				ResID:       rs.ID(),
+				Context:     rs.Env().Context(),
 			}
 		})
 
@@ -181,18 +181,18 @@ func createMixinMethods() {
 		`FieldsViewGet is the base implementation of the 'FieldsViewGet' method which
 		gets the detailed composition of the requested view like fields, mixin,
 		view architecture.`,
-		func(rc models.RecordCollection, args webdata.FieldsViewGetParams) *webdata.FieldsViewData {
+		func(rs pool.CommonMixinSet, args webdata.FieldsViewGetParams) *webdata.FieldsViewData {
 			view := views.Registry.GetByID(args.ViewID)
 			if view == nil {
-				view = views.Registry.GetFirstViewForModel(rc.ModelName(), views.ViewType(args.ViewType))
+				view = views.Registry.GetFirstViewForModel(rs.ModelName(), views.ViewType(args.ViewType))
 			}
 			cols := make([]models.FieldName, len(view.Fields))
 			for i, f := range view.Fields {
-				cols[i] = models.FieldName(rc.Model().JSONizeFieldName(string(f)))
+				cols[i] = models.FieldName(rs.Model().JSONizeFieldName(string(f)))
 			}
-			fInfos := rc.Call("FieldsGet", models.FieldsGetArgs{Fields: cols}).(map[string]*models.FieldInfo)
-			arch := rc.Call("ProcessView", view.Arch, fInfos).(string)
-			toolbar := rc.Call("GetToolbar").(webdata.Toolbar)
+			fInfos := rs.FieldsGet(models.FieldsGetArgs{Fields: cols})
+			arch := rs.ProcessView(view.Arch, fInfos)
+			toolbar := rs.GetToolbar()
 			res := webdata.FieldsViewData{
 				Name:    view.Name,
 				Arch:    arch,
@@ -207,7 +207,7 @@ func createMixinMethods() {
 
 	commonMixin.AddMethod("GetToolbar",
 		`GetToolbar returns a toolbar populated with the actions linked to this model`,
-		func(rs pool.BaseMixinSet) webdata.Toolbar {
+		func(rs pool.CommonMixinSet) webdata.Toolbar {
 			var res webdata.Toolbar
 			for _, a := range actions.Registry.GetActionLinksForModel(rs.ModelName()) {
 				switch a.Type {
@@ -221,15 +221,15 @@ func createMixinMethods() {
 	commonMixin.AddMethod("ProcessView",
 		`ProcessView makes all the necessary modifications to the view
 		arch and returns the new xml string.`,
-		func(rc models.RecordCollection, arch string, fieldInfos map[string]*models.FieldInfo) string {
+		func(rs pool.CommonMixinSet, arch string, fieldInfos map[string]*models.FieldInfo) string {
 			// Load arch as etree
 			doc := etree.NewDocument()
 			if err := doc.ReadFromString(arch); err != nil {
 				logging.LogAndPanic(log, "Unable to parse view arch", "arch", arch, "error", err)
 			}
 			// Apply changes
-			rc.Call("UpdateFieldNames", doc, &fieldInfos)
-			rc.Call("AddModifiers", doc, fieldInfos)
+			rs.UpdateFieldNames(doc, &fieldInfos)
+			rs.AddModifiers(doc, fieldInfos)
 			// Dump xml to string and return
 			res, err := doc.WriteToString()
 			if err != nil {
@@ -240,11 +240,11 @@ func createMixinMethods() {
 
 	commonMixin.AddMethod("AddModifiers",
 		`AddModifiers adds the modifiers attribute nodes to given xml doc.`,
-		func(rc models.RecordCollection, doc *etree.Document, fieldInfos map[string]*models.FieldInfo) {
+		func(rs pool.CommonMixinSet, doc *etree.Document, fieldInfos map[string]*models.FieldInfo) {
 			allModifiers := make(map[*etree.Element]map[string]interface{})
 			// Process attrs on all nodes
 			for _, attrsTag := range doc.FindElements("[@attrs]") {
-				allModifiers[attrsTag] = rc.Call("ProcessElementAttrs", attrsTag).(map[string]interface{})
+				allModifiers[attrsTag] = rs.ProcessElementAttrs(attrsTag)
 			}
 			// Process field nodes
 			for _, fieldTag := range doc.FindElements("//field") {
@@ -252,7 +252,7 @@ func createMixinMethods() {
 				if !exists {
 					mods = map[string]interface{}{"readonly": false, "required": false, "invisible": false}
 				}
-				allModifiers[fieldTag] = rc.Call("ProcessFieldElementModifiers", fieldTag, fieldInfos, mods).(map[string]interface{})
+				allModifiers[fieldTag] = rs.ProcessFieldElementModifiers(fieldTag, fieldInfos, mods)
 			}
 			// Set modifier attributes on elements
 			for element, modifiers := range allModifiers {
@@ -282,7 +282,7 @@ func createMixinMethods() {
 		- 'invisible', 'readonly' and 'required' attributes in field tags
 		- 'ReadOnly' and 'Required' parameters of the model's field'
 		It returns the modified map.`,
-		func(rc models.RecordCollection, element *etree.Element, fieldInfos map[string]*models.FieldInfo, modifiers map[string]interface{}) map[string]interface{} {
+		func(rs pool.CommonMixinSet, element *etree.Element, fieldInfos map[string]*models.FieldInfo, modifiers map[string]interface{}) map[string]interface{} {
 			fieldName := element.SelectAttr("name").Value
 			// Check if we have the modifier as attribute in the field node
 			for modifier := range modifiers {
@@ -346,9 +346,9 @@ func createMixinMethods() {
 
 	commonMixin.AddMethod("SearchRead",
 		`SearchRead retrieves database records according to the filters defined in params.`,
-		func(rc models.RecordCollection, params webdata.SearchParams) []models.FieldMap {
-			rSet := rc.Call("AddDomainLimitOffset", params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order).(models.RecordCollection).Fetch()
-			records := rSet.Call("Read", params.Fields).([]models.FieldMap)
+		func(rs pool.CommonMixinSet, params webdata.SearchParams) []models.FieldMap {
+			rSet := rs.AddDomainLimitOffset(params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order).Fetch()
+			records := rSet.Read(params.Fields)
 			return records
 		})
 
@@ -376,14 +376,14 @@ func createMixinMethods() {
 
 	commonMixin.AddMethod("ReadGroup",
 		`Get a list of record aggregates according to the given parameters.`,
-		func(rc models.RecordCollection, params webdata.ReadGroupParams) []models.FieldMap {
-			rSet := rc.Call("AddDomainLimitOffset", params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order).(models.RecordCollection)
+		func(rs pool.CommonMixinSet, params webdata.ReadGroupParams) []models.FieldMap {
+			rSet := rs.AddDomainLimitOffset(params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order)
 			rSet = rSet.GroupBy(models.ConvertToFieldNameSlice(params.GroupBy)...)
 			aggregates := rSet.Aggregates(models.ConvertToFieldNameSlice(params.Fields)...)
 			res := make([]models.FieldMap, len(aggregates))
-			fInfos := rSet.Call("FieldsGet", models.FieldsGetArgs{}).(map[string]*models.FieldInfo)
+			fInfos := rSet.FieldsGet(models.FieldsGetArgs{})
 			for i, ag := range aggregates {
-				line := rc.Call("AddNamesToRelations", ag.Values, fInfos).(models.FieldMap)
+				line := rs.AddNamesToRelations(ag.Values, fInfos)
 				line["__count"] = ag.Count
 				line["__domain"] = ag.Condition.Serialize()
 				res[i] = line
