@@ -263,6 +263,15 @@ func createMixinMethods() {
 						delete(modifiers, mod)
 					}
 				}
+				// Remove required if field is invisible or readonly
+				if req, ok := modifiers["required"].(bool); ok && req {
+					inv, ok2 := modifiers["invisible"].(bool)
+					ro, ok3 := modifiers["readonly"].(bool)
+					if ok2 && inv || ok3 && ro {
+						delete(modifiers, "required")
+					}
+				}
+
 				modJSON, _ := json.Marshal(modifiers)
 				element.CreateAttr("modifiers", string(modJSON))
 			}
@@ -286,7 +295,7 @@ func createMixinMethods() {
 			if fieldInfos[fieldName].ReadOnly {
 				modifiers["readonly"] = true
 			}
-			if fieldInfos[fieldName].Required && fieldName != "id" {
+			if fieldInfos[fieldName].Required {
 				modifiers["required"] = true
 			}
 			return modifiers

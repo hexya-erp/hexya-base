@@ -53,7 +53,7 @@ func TestViewModifiers(t *testing.T) {
 <view id="my_id" name="My View" model="ResUSers">
 	<form>
 		<group>
-			<field required="1" readonly="1" name="name" modifiers="{&quot;readonly&quot;:true,&quot;required&quot;:true}"/>
+			<field required="1" readonly="1" name="name" modifiers="{&quot;readonly&quot;:true}"/>
 			<field invisible="1" name="tz" modifiers="{&quot;invisible&quot;:true}"/>
 		</group>
 	</form>
