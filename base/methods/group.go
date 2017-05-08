@@ -7,7 +7,6 @@ import (
 	"github.com/npiganeau/yep/pool"
 	"github.com/npiganeau/yep/yep/models"
 	"github.com/npiganeau/yep/yep/models/security"
-	"github.com/npiganeau/yep/yep/tools/logging"
 )
 
 func initGroups() {
@@ -18,13 +17,13 @@ func initGroups() {
 			if rs.Env().Context().HasKey("GroupForceCreate") {
 				return rs.Super().Create(data)
 			}
-			logging.LogAndPanic(log, "Trying to create a security group")
+			log.Panic("Trying to create a security group")
 			panic("Unreachable")
 		})
 
 	resGroups.ExtendMethod("Write", "",
 		func(rs pool.ResGroupsSet, data *pool.ResGroupsData, fieldsToUnset ...models.FieldNamer) {
-			logging.LogAndPanic(log, "Trying to modify a security group")
+			log.Panic("Trying to modify a security group")
 		})
 
 	resGroups.AddMethod("ReloadGroups",

@@ -4,14 +4,12 @@
 package controllers
 
 import (
-	"net/http"
-
 	"encoding/json"
+	"net/http"
 
 	"github.com/npiganeau/yep/yep/actions"
 	"github.com/npiganeau/yep/yep/models/types"
 	"github.com/npiganeau/yep/yep/server"
-	"github.com/npiganeau/yep/yep/tools/logging"
 )
 
 // ActionLoad returns the action with the given id
@@ -43,7 +41,7 @@ func ActionRun(c *server.Context) {
 	}
 	idsJSON, err := json.Marshal(ids)
 	if err != nil {
-		logging.LogAndPanic(log, "Unable to marshal ids")
+		log.Panic("Unable to marshal ids")
 	}
 
 	// Process context into kwargs

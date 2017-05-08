@@ -14,7 +14,6 @@ import (
 	"github.com/npiganeau/yep/yep/models"
 	"github.com/npiganeau/yep/yep/models/types"
 	"github.com/npiganeau/yep/yep/tools/etree"
-	"github.com/npiganeau/yep/yep/tools/logging"
 	"github.com/npiganeau/yep/yep/views"
 )
 
@@ -36,12 +35,12 @@ func createMixinMethods() {
 		})
 
 	commonMixin.ExtendMethod("Read", "",
-		func(rs pool.CommonMixinSet, fields []string) []models.FieldMap {
-			res := rs.Super().Read(fields)
+		func(rc models.RecordCollection, fields []string) []models.FieldMap {
+			res := rc.Super().Call("Read", fields).([]models.FieldMap)
 			for i, fMap := range res {
-				rec := pool.CommonMixin().Search(rs.Env(), pool.CommonMixin().ID().Equals(fMap["id"].(int64)))
-				fInfos := rec.FieldsGet(models.FieldsGetArgs{})
-				res[i] = rs.AddNamesToRelations(fMap, fInfos)
+				rec := rc.Model().Search(rc.Env(), rc.Model().Field("ID").Equals(fMap["id"].(int64)))
+				fInfos := rec.Call("FieldsGet", models.FieldsGetArgs{})
+				res[i] = rc.Call("AddNamesToRelations", fMap, fInfos).(models.FieldMap)
 			}
 			return res
 		})
@@ -107,7 +106,7 @@ func createMixinMethods() {
 			for f, v := range fMap {
 				fJSON := rs.Model().JSONizeFieldName(f)
 				if _, exists := fInfos[fJSON]; !exists {
-					logging.LogAndPanic(log, "Unable to find field", "model", rs.ModelName(), "field", f)
+					log.Panic("Unable to find field", "model", rs.ModelName(), "field", f)
 				}
 				switch fInfos[fJSON].Type {
 				case types.Many2Many:
@@ -225,7 +224,7 @@ func createMixinMethods() {
 			// Load arch as etree
 			doc := etree.NewDocument()
 			if err := doc.ReadFromString(arch); err != nil {
-				logging.LogAndPanic(log, "Unable to parse view arch", "arch", arch, "error", err)
+				log.Panic("Unable to parse view arch", "arch", arch, "error", err)
 			}
 			// Apply changes
 			rs.UpdateFieldNames(doc, &fieldInfos)
@@ -233,7 +232,7 @@ func createMixinMethods() {
 			// Dump xml to string and return
 			res, err := doc.WriteToString()
 			if err != nil {
-				logging.LogAndPanic(log, "Unable to render XML", "error", err)
+				log.Panic("Unable to render XML", "error", err)
 			}
 			return res
 		})
@@ -313,7 +312,7 @@ func createMixinMethods() {
 			var attrs map[string]domains.Domain
 			err := json.Unmarshal([]byte(attrStr), &attrs)
 			if err != nil {
-				logging.LogAndPanic(log, "Invalid attrs definition", "model", rc.ModelName(), "attrs", attrStr)
+				log.Panic("Invalid attrs definition", "model", rc.ModelName(), "attrs", attrStr)
 			}
 			for modifier := range modifiers {
 				cond := domains.ParseDomain(attrs[modifier])

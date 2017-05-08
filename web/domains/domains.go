@@ -17,7 +17,6 @@ package domains
 import (
 	"fmt"
 
-	"github.com/inconshreveable/log15"
 	"github.com/npiganeau/yep/yep/models"
 	"github.com/npiganeau/yep/yep/models/operator"
 	"github.com/npiganeau/yep/yep/tools/logging"
@@ -51,7 +50,7 @@ func (d Domain) String() string {
 			}
 			res += fmt.Sprintf(`["%s", "%s", %s]`, t[0], t[1], argStr)
 		default:
-			logging.LogAndPanic(log, "Unexpected Domain term", "domain", d)
+			log.Panic("Unexpected Domain term", "domain", d)
 		}
 		res += ","
 	}
@@ -72,7 +71,7 @@ const (
 	PREFIX_NOT DomainPrefixOperator = "!"
 )
 
-var log log15.Logger
+var log *logging.Logger
 
 // ParseDomain gets Domain and parses it into a RecordSet query Condition.
 // Returns nil if the domain is []
@@ -143,7 +142,7 @@ func parseDomain(dom *Domain) *models.Condition {
 // prefix operator. Returns the new condition.
 func addTerm(cond *models.Condition, term DomainTerm, op DomainPrefixOperator) *models.Condition {
 	if len(term) != 3 {
-		logging.LogAndPanic(log, "Malformed domain term", "term", term)
+		log.Panic("Malformed domain term", "term", term)
 	}
 	fieldName := term[0].(string)
 	optr := operator.Operator(term[1].(string))
@@ -162,7 +161,7 @@ func getConditionMethod(cond *models.Condition, op DomainPrefixOperator) func() 
 	case PREFIX_OR:
 		return cond.Or
 	default:
-		logging.LogAndPanic(log, "Unknown prefix operator", "operator", op)
+		log.Panic("Unknown prefix operator", "operator", op)
 	}
 	return nil
 }

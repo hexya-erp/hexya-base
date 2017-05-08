@@ -19,7 +19,6 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/inconshreveable/log15"
 	"github.com/npiganeau/yep-base/web/domains"
 	"github.com/npiganeau/yep-base/web/webdata"
 	"github.com/npiganeau/yep/yep/models"
@@ -28,7 +27,7 @@ import (
 	"github.com/npiganeau/yep/yep/tools/logging"
 )
 
-var log log15.Logger
+var log *logging.Logger
 
 // CallParams is the arguments' struct for the Execute function.
 // It defines a method to call on a model with the given args and keyword args.
@@ -75,7 +74,7 @@ func Execute(uid int64, params CallParams) (res interface{}, rError error) {
 				fnArgs = make([]interface{}, len(parms))
 				err := putParamsValuesInArgs(&fnArgs, rs.MethodType(methodName), parms)
 				if err != nil {
-					logging.LogAndPanic(log, err.Error(), "method", methodName, "args", parms)
+					log.Panic(err.Error(), "method", methodName, "args", parms)
 				}
 			}
 		}
@@ -205,7 +204,7 @@ func extractContext(params CallParams) types.Context {
 	var ctx types.Context
 	if ok {
 		if err := json.Unmarshal(ctxStr, &ctx); err != nil {
-			logging.LogAndPanic(log, "Unable to JSON unmarshal context", "context_string", ctxStr)
+			log.Panic("Unable to JSON unmarshal context", "context_string", ctxStr)
 		}
 	}
 	return ctx
@@ -214,7 +213,7 @@ func extractContext(params CallParams) types.Context {
 // checkUser panics if the given uid is 0 (i.e. no user is logged in).
 func checkUser(uid int64) {
 	if uid == 0 {
-		logging.LogAndPanic(log, "User must be logged in to call model method")
+		log.Panic("User must be logged in to call model method")
 	}
 }
 

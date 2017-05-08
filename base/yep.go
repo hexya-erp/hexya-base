@@ -19,7 +19,6 @@ import (
 	"io/ioutil"
 	"path"
 
-	"github.com/inconshreveable/log15"
 	_ "github.com/npiganeau/yep-base/base/defs"
 	_ "github.com/npiganeau/yep-base/base/methods"
 	"github.com/npiganeau/yep/pool"
@@ -46,7 +45,7 @@ The kernel of YEP, needed for all installation
 	WEBSITE    string = "http://www.ndp-systemes.fr"
 )
 
-var log log15.Logger
+var log *logging.Logger
 
 func init() {
 	log = logging.GetLogger("base")
@@ -98,7 +97,7 @@ func init() {
 				pool.ResGroups().NewSet(env).ReloadGroups()
 			})
 			if err != nil {
-				logging.LogAndPanic(log, "Error while initializing", "error", err)
+				log.Panic("Error while initializing", "error", err)
 			}
 		},
 	})
