@@ -49,7 +49,7 @@ func initGroups() {
 					grpIds[i] = grp.ID
 					i++
 				}
-				groups := pool.ResGroups().NewSet(rs.Env()).Search(pool.ResGroups().GroupID().In(grpIds))
+				groups := pool.ResGroups().Search(rs.Env(), pool.ResGroups().GroupID().In(grpIds))
 				user.SetGroups(groups)
 			}
 		})

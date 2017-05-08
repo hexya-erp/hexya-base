@@ -21,7 +21,7 @@ func TestMain(m *testing.M) {
 func TestUserAuthentication(t *testing.T) {
 	Convey("Testing User Authentication", t, func() {
 		models.SimulateInNewEnvironment(security.SuperUserID, func(env models.Environment) {
-			userJohn := pool.ResUsers().NewSet(env).Create(&pool.ResUsersData{
+			userJohn := pool.ResUsers().Create(env, &pool.ResUsersData{
 				Name:     "John Smith",
 				Login:    "jsmith",
 				Password: "secret",

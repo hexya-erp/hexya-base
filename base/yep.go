@@ -55,18 +55,18 @@ func init() {
 		PostInit: func() {
 			err := models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 
-				mainCompany := pool.ResCompany().NewSet(env).Search(pool.ResCompany().ID().Equals(1))
+				mainCompany := pool.ResCompany().Search(env, pool.ResCompany().ID().Equals(1))
 				if mainCompany.IsEmpty() {
-					mainCompany = pool.ResCompany().NewSet(env).Create(&pool.ResCompanyData{
+					mainCompany = pool.ResCompany().Create(env, &pool.ResCompanyData{
 						ID:   1,
 						Name: "Your Company",
 					})
 					env.Cr().Execute("ALTER SEQUENCE res_company_id_seq RESTART WITH 2")
 				}
 
-				adminPartner := pool.ResPartner().NewSet(env).Search(pool.ResPartner().ID().Equals(1))
+				adminPartner := pool.ResPartner().Search(env, pool.ResPartner().ID().Equals(1))
 				if adminPartner.IsEmpty() {
-					adminPartner = pool.ResPartner().NewSet(env).Create(&pool.ResPartnerData{
+					adminPartner = pool.ResPartner().Create(env, &pool.ResPartnerData{
 						ID:       1,
 						Lang:     "en_US",
 						Name:     "Administrator",
@@ -77,10 +77,10 @@ func init() {
 
 				avatarImg, _ := ioutil.ReadFile(path.Join(generate.YEPDir, "yep", "server", "static", "base", "src", "img", "avatar.png"))
 
-				adminUser := pool.ResUsers().NewSet(env).Search(pool.ResUsers().ID().Equals(security.SuperUserID))
+				adminUser := pool.ResUsers().Search(env, pool.ResUsers().ID().Equals(security.SuperUserID))
 				ActionID := actions.MakeActionRef("base_action_res_users")
 				if adminUser.IsEmpty() {
-					pool.ResUsers().NewSet(env).Create(&pool.ResUsersData{
+					pool.ResUsers().Create(env, &pool.ResUsersData{
 						ID:         security.SuperUserID,
 						Name:       "Administrator",
 						Active:     true,
