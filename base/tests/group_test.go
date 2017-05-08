@@ -22,6 +22,9 @@ func TestGroupLoading(t *testing.T) {
 			pool.ResGroups().NewSet(env).ReloadGroups()
 			groups := pool.ResGroups().NewSet(env).FetchAll()
 			So(groups.Len(), ShouldEqual, len(security.Registry.AllGroups()))
+			adminUser = pool.ResUsers().Search(env, pool.ResUsers().ID().Equals(security.SuperUserID))
+			So(adminUser.Groups().Ids(), ShouldHaveLength, 1)
+			So(adminUser.Groups().ID(), ShouldEqual, groups.ID())
 		})
 		Convey("Testing Group ReLoading with a new group", t, func() {
 			security.Registry.NewGroup("some_group", "Some Group")
@@ -54,13 +57,13 @@ func TestGroupLoading(t *testing.T) {
 		})
 		Convey("Removing rights and checking that after reload, we get admin right", t, func() {
 			user.SetGroups(pool.ResGroups().NewSet(env))
-			adminUser = pool.ResUsers().NewSet(env).Search(pool.ResUsers().ID().Equals(security.SuperUserID))
+			adminUser = pool.ResUsers().Search(env, pool.ResUsers().ID().Equals(security.SuperUserID))
 			adminUser.SetGroups(pool.ResGroups().NewSet(env))
 			So(user.Groups().Ids(), ShouldBeEmpty)
 			So(adminUser.Groups().Ids(), ShouldBeEmpty)
 			pool.ResGroups().NewSet(env).ReloadGroups()
 			// We need to reload admin group because it changed id
-			adminGrp = pool.ResGroups().NewSet(env).Search(pool.ResGroups().GroupID().Equals(security.AdminGroupID))
+			adminGrp = pool.ResGroups().Search(env, pool.ResGroups().GroupID().Equals(security.AdminGroupID))
 			So(user.Groups().Ids(), ShouldBeEmpty)
 			So(adminUser.Groups().Ids(), ShouldHaveLength, 1)
 			So(adminUser.Groups().Ids(), ShouldContain, adminGrp.ID())

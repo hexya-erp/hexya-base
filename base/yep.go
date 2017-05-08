@@ -53,7 +53,7 @@ func init() {
 	server.RegisterModule(&server.Module{
 		Name: MODULE_NAME,
 		PostInit: func() {
-			models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
+			err := models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 
 				mainCompany := pool.ResCompany().NewSet(env).Search(pool.ResCompany().ID().Equals(1))
 				if mainCompany.IsEmpty() {
@@ -77,11 +77,11 @@ func init() {
 
 				avatarImg, _ := ioutil.ReadFile(path.Join(generate.YEPDir, "yep", "server", "static", "base", "src", "img", "avatar.png"))
 
-				adminUser := pool.ResUsers().NewSet(env).Search(pool.ResUsers().ID().Equals(1))
+				adminUser := pool.ResUsers().NewSet(env).Search(pool.ResUsers().ID().Equals(security.SuperUserID))
 				ActionID := actions.MakeActionRef("base_action_res_users")
 				if adminUser.IsEmpty() {
 					pool.ResUsers().NewSet(env).Create(&pool.ResUsersData{
-						ID:         1,
+						ID:         security.SuperUserID,
 						Name:       "Administrator",
 						Active:     true,
 						Company:    mainCompany,
@@ -97,6 +97,9 @@ func init() {
 
 				pool.ResGroups().NewSet(env).ReloadGroups()
 			})
+			if err != nil {
+				logging.LogAndPanic(log, "Error while initializing", "error", err)
+			}
 		},
 	})
 }

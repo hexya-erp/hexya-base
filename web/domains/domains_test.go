@@ -17,10 +17,10 @@ package domains
 import (
 	"testing"
 
-	_ "github.com/npiganeau/yep-base/web/domains/testmodule"
 	"github.com/npiganeau/yep/yep/models"
 	"github.com/npiganeau/yep/yep/models/security"
 	"github.com/npiganeau/yep/yep/tests"
+	_ "github.com/npiganeau/yep/yep/tests/testllmodule"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
