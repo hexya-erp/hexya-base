@@ -23,5 +23,5 @@ func initCurrency() {
 	resCurrency.AddFloatField("Rounding", models.FloatFieldParams{String: "Rounding Factor", Digits: types.Digits{Precision: 12, Scale: 6}})
 	resCurrency.AddIntegerField("DecimalPlaces", models.SimpleFieldParams{}) //Compute: "ComputeDecimalPlaces"})
 	resCurrency.AddBooleanField("Active", models.SimpleFieldParams{})
-	resCurrency.AddSelectionField("Position", models.SelectionFieldParams{Selection: models.Selection{"after": "After Amount", "before": "Before Amount"}, String: "Symbol Position", Help: "Determines where the currency symbol should be placed after or before the amount."})
+	resCurrency.AddSelectionField("Position", models.SelectionFieldParams{Selection: types.Selection{"after": "After Amount", "before": "Before Amount"}, String: "Symbol Position", Help: "Determines where the currency symbol should be placed after or before the amount."})
 }

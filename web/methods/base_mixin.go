@@ -12,7 +12,7 @@ import (
 	"github.com/npiganeau/yep/pool"
 	"github.com/npiganeau/yep/yep/actions"
 	"github.com/npiganeau/yep/yep/models"
-	"github.com/npiganeau/yep/yep/models/types"
+	"github.com/npiganeau/yep/yep/models/fieldtype"
 	"github.com/npiganeau/yep/yep/tools/etree"
 	"github.com/npiganeau/yep/yep/views"
 )
@@ -109,7 +109,7 @@ func createMixinMethods() {
 					log.Panic("Unable to find field", "model", rs.ModelName(), "field", f)
 				}
 				switch fInfos[fJSON].Type {
-				case types.Many2Many:
+				case fieldtype.Many2Many:
 					fMap[f] = rs.NormalizeM2MData(f, fInfos[fJSON], v)
 				}
 			}

@@ -3,7 +3,10 @@
 
 package defs
 
-import "github.com/npiganeau/yep/yep/models"
+import (
+	"github.com/npiganeau/yep/yep/models"
+	"github.com/npiganeau/yep/yep/models/types"
+)
 
 func initAttachment() {
 	irAttachment := models.NewModel("IrAttachment")
@@ -14,7 +17,7 @@ func initAttachment() {
 	irAttachment.AddCharField("ResModel", models.StringFieldParams{String: "Resource Model", Help: "The database object this attachment will be attached to"})
 	irAttachment.AddIntegerField("ResID", models.SimpleFieldParams{String: "Resource ID", Help: "The record id this is attached to"})
 	irAttachment.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "ResCompany"})
-	irAttachment.AddSelectionField("Type", models.SelectionFieldParams{Selection: models.Selection{"binary": "Binary", "url": "URL"}})
+	irAttachment.AddSelectionField("Type", models.SelectionFieldParams{Selection: types.Selection{"binary": "Binary", "url": "URL"}})
 	irAttachment.AddCharField("URL", models.StringFieldParams{})
 	irAttachment.AddBinaryField("Datas", models.SimpleFieldParams{String: "File Content"}) //, Compute: "DataGet"})
 	irAttachment.AddCharField("StoreFname", models.StringFieldParams{String: "Stored Filename"})

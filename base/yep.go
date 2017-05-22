@@ -25,6 +25,7 @@ import (
 	"github.com/npiganeau/yep/yep/actions"
 	"github.com/npiganeau/yep/yep/models"
 	"github.com/npiganeau/yep/yep/models/security"
+	"github.com/npiganeau/yep/yep/models/types"
 	"github.com/npiganeau/yep/yep/server"
 	"github.com/npiganeau/yep/yep/tools/generate"
 	"github.com/npiganeau/yep/yep/tools/logging"
@@ -85,7 +86,7 @@ func init() {
 						Active:     true,
 						Company:    mainCompany,
 						Login:      "admin",
-						LoginDate:  models.DateTime{},
+						LoginDate:  types.DateTime{},
 						Password:   "admin",
 						Partner:    adminPartner,
 						ActionID:   ActionID,
