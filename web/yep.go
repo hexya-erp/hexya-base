@@ -18,7 +18,6 @@ import (
 	_ "github.com/npiganeau/yep-base/base"
 	_ "github.com/npiganeau/yep-base/web/controllers"
 	_ "github.com/npiganeau/yep-base/web/defs"
-	_ "github.com/npiganeau/yep-base/web/methods"
 	"github.com/npiganeau/yep/yep/server"
 )
 

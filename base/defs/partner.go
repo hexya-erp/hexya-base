@@ -3,7 +3,12 @@
 
 package defs
 
-import "github.com/npiganeau/yep/yep/models"
+import (
+	"fmt"
+
+	"github.com/npiganeau/yep/pool"
+	"github.com/npiganeau/yep/yep/models"
+)
 
 func initPartner() {
 	resPartner := models.NewModel("ResPartner")
@@ -57,5 +62,11 @@ func initPartner() {
 	//
 	//# technical field used for managing commercial fields
 	//'commercial_partner_id': fields.function(_commercial_partner_id, type='many2one', relation='res.partner', string='Commercial Entity', store=_commercial_partner_store_triggers)
+
+	resPartner.ExtendMethod("NameGet", "",
+		func(rs pool.ResPartnerSet) string {
+			res := rs.Super().NameGet()
+			return fmt.Sprintf("%s (%d)", res, rs.ID())
+		})
 
 }

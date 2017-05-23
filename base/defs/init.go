@@ -3,7 +3,12 @@
 
 package defs
 
+import "github.com/npiganeau/yep/yep/tools/logging"
+
+var log *logging.Logger
+
 func init() {
+	log = logging.GetLogger("base")
 	initGroups()
 	initPartner()
 	initCompany()

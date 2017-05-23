@@ -19,8 +19,8 @@ import (
 	"io/ioutil"
 	"path"
 
+	// Import this module's defs
 	_ "github.com/npiganeau/yep-base/base/defs"
-	_ "github.com/npiganeau/yep-base/base/methods"
 	"github.com/npiganeau/yep/pool"
 	"github.com/npiganeau/yep/yep/actions"
 	"github.com/npiganeau/yep/yep/models"

@@ -9,5 +9,6 @@ var log *logging.Logger
 
 func init() {
 	log = logging.GetLogger("web")
+	initCommonMixin()
 	initBaseMixin()
 }
