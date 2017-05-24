@@ -11,7 +11,9 @@ import (
 )
 
 func initPartner() {
-	resPartner := models.NewModel("ResPartner")
+	models.NewModel("ResPartner")
+
+	resPartner := pool.ResPartner()
 	resPartner.AddCharField("Name", models.StringFieldParams{})
 	resPartner.AddDateField("Date", models.SimpleFieldParams{})
 	//Title            *PartnerTitle
@@ -63,7 +65,7 @@ func initPartner() {
 	//# technical field used for managing commercial fields
 	//'commercial_partner_id': fields.function(_commercial_partner_id, type='many2one', relation='res.partner', string='Commercial Entity', store=_commercial_partner_store_triggers)
 
-	resPartner.ExtendMethod("NameGet", "",
+	resPartner.Methods().NameGet().Extend("",
 		func(rs pool.ResPartnerSet) string {
 			res := rs.Super().NameGet()
 			return fmt.Sprintf("%s (%d)", res, rs.ID())

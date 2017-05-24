@@ -20,21 +20,21 @@ import (
 func initCommonMixin() {
 	commonMixin := pool.CommonMixin()
 
-	commonMixin.ExtendMethod("Create", "",
-		func(rc models.RecordCollection, data interface{}) models.RecordCollection {
-			fMap := rc.Call("ProcessDataValues", data).(models.FieldMap)
-			res := rc.Super().Call("Create", fMap).(models.RecordCollection)
+	commonMixin.Methods().Create().Extend("",
+		func(rs pool.CommonMixinSet, data models.FieldMapper) pool.CommonMixinSet {
+			fMap := rs.ProcessDataValues(data)
+			res := rs.Super().Create(fMap)
 			return res
 		})
 
-	commonMixin.ExtendMethod("Write", "",
-		func(rs pool.CommonMixinSet, data interface{}, fieldsToUnset ...models.FieldNamer) bool {
+	commonMixin.Methods().Write().Extend("",
+		func(rs pool.CommonMixinSet, data models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {
 			fMap := rs.ProcessDataValues(data)
 			res := rs.Super().Write(fMap, fieldsToUnset...)
 			return res
 		})
 
-	commonMixin.ExtendMethod("Read", "",
+	commonMixin.Methods().Read().Extend("",
 		func(rc models.RecordCollection, fields []string) []models.FieldMap {
 			res := rc.Super().Call("Read", fields).([]models.FieldMap)
 			for i, fMap := range res {
@@ -100,8 +100,8 @@ func initCommonMixin() {
 	commonMixin.AddMethod("ProcessDataValues",
 		`ProcessDataValues updates the given data values for Write and Create methods to be
 		compatible with the ORM`,
-		func(rs pool.CommonMixinSet, data interface{}) models.FieldMap {
-			fMap := models.ConvertInterfaceToFieldMap(data)
+		func(rs pool.CommonMixinSet, data models.FieldMapper) models.FieldMap {
+			fMap := data.FieldMap()
 			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
 			for f, v := range fMap {
 				fJSON := rs.Model().JSONizeFieldName(f)

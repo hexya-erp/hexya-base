@@ -26,7 +26,9 @@ func (bab *BaseAuthBackend) Authenticate(login, secret string, context *types.Co
 }
 
 func initUsers() {
-	resUsers := models.NewModel("ResUsers")
+	models.NewModel("ResUsers")
+
+	resUsers := pool.ResUsers()
 	resUsers.AddDateTimeField("LoginDate", models.SimpleFieldParams{})
 	resUsers.AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: "ResPartner", Embed: true})
 	resUsers.AddCharField("Login", models.StringFieldParams{Required: true})
@@ -40,10 +42,10 @@ func initUsers() {
 	resUsers.AddBinaryField("ImageSmall", models.SimpleFieldParams{})
 	resUsers.AddMany2ManyField("Groups", models.Many2ManyFieldParams{RelationModel: "ResGroups", JSON: "group_ids"})
 
-	resUsers.ExtendMethod("Write", "",
-		func(rs pool.ResUsersSet, data interface{}, fieldsToUnset ...models.FieldNamer) bool {
+	resUsers.Methods().Write().Extend("",
+		func(rs pool.ResUsersSet, data models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {
 			res := rs.Super().Write(data, fieldsToUnset...)
-			fMap := models.ConvertInterfaceToFieldMap(data)
+			fMap := data.FieldMap()
 			_, ok1 := fMap["Groups"]
 			_, ok2 := fMap["group_ids"]
 			if ok1 || ok2 {
@@ -59,7 +61,7 @@ func initUsers() {
 			return res
 		})
 
-	resUsers.ExtendMethod("NameGet", "",
+	resUsers.Methods().NameGet().Extend("",
 		func(rs pool.ResUsersSet) string {
 			res := rs.Super().NameGet()
 			return fmt.Sprintf("%s (%s)", res, rs.Login())

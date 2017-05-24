@@ -10,11 +10,12 @@ import (
 )
 
 func initGroups() {
-	resGroups := models.NewModel("ResGroups")
+	models.NewModel("ResGroups")
+	resGroups := pool.ResGroups()
 	resGroups.AddCharField("GroupID", models.StringFieldParams{Required: true})
 	resGroups.AddCharField("Name", models.StringFieldParams{Required: true, Translate: true})
 
-	resGroups.ExtendMethod("Create", "",
+	resGroups.Methods().Create().Extend("",
 		func(rs pool.ResGroupsSet, data *pool.ResGroupsData) pool.ResGroupsSet {
 			if rs.Env().Context().HasKey("GroupForceCreate") {
 				return rs.Super().Create(data)
@@ -23,7 +24,7 @@ func initGroups() {
 			panic("Unreachable")
 		})
 
-	resGroups.ExtendMethod("Write", "",
+	resGroups.Methods().Write().Extend("",
 		func(rs pool.ResGroupsSet, data *pool.ResGroupsData, fieldsToUnset ...models.FieldNamer) {
 			log.Panic("Trying to modify a security group")
 		})

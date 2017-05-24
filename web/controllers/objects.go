@@ -27,7 +27,12 @@ import (
 	"github.com/npiganeau/yep/yep/tools/logging"
 )
 
-var log *logging.Logger
+var (
+	log               *logging.Logger
+	typeSubstitutions map[reflect.Type]reflect.Type = map[reflect.Type]reflect.Type{
+		reflect.TypeOf((*models.FieldMapper)(nil)).Elem(): reflect.TypeOf(models.FieldMap{}),
+	}
+)
 
 // CallParams is the arguments' struct for the Execute function.
 // It defines a method to call on a model with the given args and keyword args.
@@ -91,7 +96,7 @@ func Execute(uid int64, params CallParams) (res interface{}, rError error) {
 			res = newRes.Interface()
 		}
 		// Return ID(s) if res is a *RecordSet
-		if rec, ok := res.(models.RecordCollection); ok {
+		if rec, ok := res.(models.RecordSet); ok {
 			if len(rec.Ids()) == 1 {
 				res = rec.Ids()[0]
 			} else {
@@ -151,8 +156,12 @@ func putParamsValuesInArgs(fnArgs *[]interface{}, methodType reflect.Type, parms
 			// We have less arguments than the arguments of the method
 			return fmt.Errorf("Wrong number of args in non-struct function args (%d instead of %d)", len(parms), numArgs)
 		}
+		methInType := methodType.In(i + 1)
+		if val, ok := typeSubstitutions[methInType]; ok {
+			methInType = val
+		}
 		argsValue := reflect.ValueOf(parms[i])
-		resValue := reflect.New(methodType.In(i + 1))
+		resValue := reflect.New(methInType)
 		if err := tools.UnmarshalJSONValue(argsValue, resValue); err != nil {
 			// Same remark as above
 			log.Debug("Unable to unmarshal argument", "error", err)
