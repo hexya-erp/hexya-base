@@ -10,13 +10,13 @@ import (
 )
 
 func initGroups() {
-	models.NewModel("ResGroups")
-	resGroups := pool.ResGroups()
-	resGroups.AddCharField("GroupID", models.StringFieldParams{Required: true})
-	resGroups.AddCharField("Name", models.StringFieldParams{Required: true, Translate: true})
+	models.NewModel("Group")
+	group := pool.Group()
+	group.AddCharField("GroupID", models.StringFieldParams{Required: true})
+	group.AddCharField("Name", models.StringFieldParams{Required: true, Translate: true})
 
-	resGroups.Methods().Create().Extend("",
-		func(rs pool.ResGroupsSet, data *pool.ResGroupsData) pool.ResGroupsSet {
+	group.Methods().Create().Extend("",
+		func(rs pool.GroupSet, data *pool.GroupData) pool.GroupSet {
 			if rs.Env().Context().HasKey("GroupForceCreate") {
 				return rs.Super().Create(data)
 			}
@@ -24,26 +24,26 @@ func initGroups() {
 			panic("Unreachable")
 		})
 
-	resGroups.Methods().Write().Extend("",
-		func(rs pool.ResGroupsSet, data *pool.ResGroupsData, fieldsToUnset ...models.FieldNamer) {
+	group.Methods().Write().Extend("",
+		func(rs pool.GroupSet, data *pool.GroupData, fieldsToUnset ...models.FieldNamer) {
 			log.Panic("Trying to modify a security group")
 		})
 
-	resGroups.AddMethod("ReloadGroups",
-		`ReloadGroups populates the ResGroups table with groups from the security.Registry
+	group.AddMethod("ReloadGroups",
+		`ReloadGroups populates the Group table with groups from the security.Registry
 		and refresh all memberships.`,
-		func(rs pool.ResGroupsSet) {
+		func(rs pool.GroupSet) {
 			log.Debug("Reloading groups")
 			// Sync groups
-			pool.ResGroups().NewSet(rs.Env()).FetchAll().Unlink()
+			pool.Group().NewSet(rs.Env()).FetchAll().Unlink()
 			for _, group := range security.Registry.AllGroups() {
-				rs.WithContext("GroupForceCreate", true).Create(&pool.ResGroupsData{
+				rs.WithContext("GroupForceCreate", true).Create(&pool.GroupData{
 					GroupID: group.ID,
 					Name:    group.Name,
 				})
 			}
 			// Sync memberships
-			for _, user := range pool.ResUsers().NewSet(rs.Env()).FetchAll().Records() {
+			for _, user := range pool.User().NewSet(rs.Env()).FetchAll().Records() {
 				secGroups := security.Registry.UserGroups(user.ID())
 				grpIds := make([]string, len(secGroups))
 				i := 0
@@ -51,7 +51,7 @@ func initGroups() {
 					grpIds[i] = grp.ID
 					i++
 				}
-				groups := pool.ResGroups().Search(rs.Env(), pool.ResGroups().GroupID().In(grpIds))
+				groups := pool.Group().Search(rs.Env(), pool.Group().GroupID().In(grpIds))
 				user.SetGroups(groups)
 			}
 		})

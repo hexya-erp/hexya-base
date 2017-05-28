@@ -20,10 +20,10 @@ import (
 	"reflect"
 
 	"github.com/npiganeau/yep-base/web/domains"
+	"github.com/npiganeau/yep-base/web/odooproxy"
 	"github.com/npiganeau/yep-base/web/webdata"
 	"github.com/npiganeau/yep/yep/models"
 	"github.com/npiganeau/yep/yep/models/types"
-	"github.com/npiganeau/yep/yep/tools"
 	"github.com/npiganeau/yep/yep/tools/logging"
 )
 
@@ -55,7 +55,7 @@ func Execute(uid int64, params CallParams) (res interface{}, rError error) {
 		ctx := extractContext(params)
 		rs = rs.WithNewContext(&ctx)
 
-		methodName := tools.ConvertMethodName(params.Method)
+		methodName := odooproxy.ConvertMethodName(params.Method)
 
 		// Parse Args and KWArgs using the following logic:
 		// - If 2nd argument of the function is a struct, then:
@@ -119,7 +119,7 @@ func putParamsValuesInStruct(structValue *reflect.Value, parms []json.RawMessage
 		}
 		argsValue := reflect.ValueOf(parms[i])
 		fieldPtrValue := reflect.New(argStructValue.Type().Field(i).Type)
-		if err := tools.UnmarshalJSONValue(argsValue, fieldPtrValue); err != nil {
+		if err := unmarshalJSONValue(argsValue, fieldPtrValue); err != nil {
 			// We deliberately continue here to have default value if there is an error
 			// This is to manage cases where the given data type is inconsistent (such
 			// false instead of [] or object{}).
@@ -134,9 +134,9 @@ func putParamsValuesInStruct(structValue *reflect.Value, parms []json.RawMessage
 func putKWValuesInStruct(structValue *reflect.Value, kwArgs map[string]json.RawMessage) {
 	argStructValue := *structValue
 	for k, v := range kwArgs {
-		field := tools.GetStructFieldByJSONTag(argStructValue, k)
+		field := getStructFieldByJSONTag(argStructValue, k)
 		if field.IsValid() {
-			if err := tools.UnmarshalJSONValue(reflect.ValueOf(v), field); err != nil {
+			if err := unmarshalJSONValue(reflect.ValueOf(v), field); err != nil {
 				// We deliberately continue here to have default value if there is an error
 				// This is to manage cases where the given data type is inconsistent (such
 				// false instead of [] or object{}).
@@ -162,7 +162,7 @@ func putParamsValuesInArgs(fnArgs *[]interface{}, methodType reflect.Type, parms
 		}
 		argsValue := reflect.ValueOf(parms[i])
 		resValue := reflect.New(methInType)
-		if err := tools.UnmarshalJSONValue(argsValue, resValue); err != nil {
+		if err := unmarshalJSONValue(argsValue, resValue); err != nil {
 			// Same remark as above
 			log.Debug("Unable to unmarshal argument", "error", err)
 			continue
@@ -178,7 +178,7 @@ func putParamsValuesInArgs(fnArgs *[]interface{}, methodType reflect.Type, parms
 // RecordCollection. This function also returns the remaining arguments after id(s) have been
 // parsed, and a boolean value set to true if the RecordSet has only one ID.
 func createRecordCollection(env models.Environment, params CallParams) (rc models.RecordCollection, remainingParams []json.RawMessage, single bool) {
-	modelName := tools.ConvertModelName(params.Model)
+	modelName := odooproxy.ConvertModelName(params.Model)
 	rc = env.Pool(modelName)
 
 	// Try to parse the first argument of Args as id or ids.
@@ -230,7 +230,7 @@ func checkUser(uid int64) {
 func getFieldValue(uid, id int64, model, field string) (res interface{}, rError error) {
 	checkUser(uid)
 	rError = models.ExecuteInNewEnvironment(uid, func(env models.Environment) {
-		model = tools.ConvertModelName(model)
+		model = odooproxy.ConvertModelName(model)
 		rc := env.Pool(model)
 		res = rc.Search(rc.Model().Field("ID").Equals(id)).Get(field)
 	})
@@ -253,7 +253,7 @@ type searchReadParams struct {
 func searchRead(uid int64, params searchReadParams) (res *webdata.SearchReadResult, rError error) {
 	checkUser(uid)
 	rError = models.ExecuteInNewEnvironment(uid, func(env models.Environment) {
-		model := tools.ConvertModelName(params.Model)
+		model := odooproxy.ConvertModelName(params.Model)
 		rs := env.Pool(model)
 		srp := webdata.SearchParams{
 			Domain: params.Domain,
@@ -270,6 +270,36 @@ func searchRead(uid int64, params searchReadParams) (res *webdata.SearchReadResu
 			Length:  length,
 		}
 	})
+	return
+}
+
+// unmarshalJSONValue unmarshals the given data as a Value of type []byte into
+// the dst Value. dst must be a pointer Value.
+func unmarshalJSONValue(data, dst reflect.Value) error {
+	if dst.Type().Kind() != reflect.Ptr {
+		log.Panic("dst must be a pointer value", "data", data, "dst", dst)
+	}
+	umArgs := []reflect.Value{data, reflect.New(dst.Type().Elem())}
+	res := reflect.ValueOf(json.Unmarshal).Call(umArgs)[0]
+	if res.Interface() != nil {
+		return res.Interface().(error)
+	}
+	dst.Elem().Set(umArgs[1].Elem())
+	return nil
+}
+
+// getStructFieldByJSONTag returns a pointer value of the struct field of the given structValue
+// with the given JSON tag. If several are found, it returns the first one. If none are
+// found it returns the zero value. If structType is not a Type of Kind struct, then it panics.
+func getStructFieldByJSONTag(structValue reflect.Value, tag string) (sf reflect.Value) {
+	for i := 0; i < structValue.NumField(); i++ {
+		sField := structValue.Field(i)
+		sfTag := structValue.Type().Field(i).Tag.Get("json")
+		if sfTag == tag {
+			sf = sField.Addr()
+			return
+		}
+	}
 	return
 }
 

@@ -55,32 +55,32 @@ func init() {
 		PostInit: func() {
 			err := models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 
-				mainCompany := pool.ResCompany().Search(env, pool.ResCompany().ID().Equals(1))
+				mainCompany := pool.Company().Search(env, pool.Company().ID().Equals(1))
 				if mainCompany.IsEmpty() {
-					mainCompany = pool.ResCompany().Create(env, &pool.ResCompanyData{
+					mainCompany = pool.Company().Create(env, &pool.CompanyData{
 						ID:   1,
 						Name: "Your Company",
 					})
-					env.Cr().Execute("ALTER SEQUENCE res_company_id_seq RESTART WITH 2")
+					env.Cr().Execute("ALTER SEQUENCE company_id_seq RESTART WITH 2")
 				}
 
-				adminPartner := pool.ResPartner().Search(env, pool.ResPartner().ID().Equals(1))
+				adminPartner := pool.Partner().Search(env, pool.Partner().ID().Equals(1))
 				if adminPartner.IsEmpty() {
-					adminPartner = pool.ResPartner().Create(env, &pool.ResPartnerData{
+					adminPartner = pool.Partner().Create(env, &pool.PartnerData{
 						ID:       1,
 						Lang:     "en_US",
 						Name:     "Administrator",
 						Function: "IT Manager",
 					})
-					env.Cr().Execute("ALTER SEQUENCE res_partner_id_seq RESTART WITH 2")
+					env.Cr().Execute("ALTER SEQUENCE partner_id_seq RESTART WITH 2")
 				}
 
 				avatarImg, _ := ioutil.ReadFile(path.Join(generate.YEPDir, "yep", "server", "static", "base", "src", "img", "avatar.png"))
 
-				adminUser := pool.ResUsers().Search(env, pool.ResUsers().ID().Equals(security.SuperUserID))
+				adminUser := pool.User().Search(env, pool.User().ID().Equals(security.SuperUserID))
 				ActionID := actions.MakeActionRef("base_action_res_users")
 				if adminUser.IsEmpty() {
-					pool.ResUsers().Create(env, &pool.ResUsersData{
+					pool.User().Create(env, &pool.UserData{
 						ID:         security.SuperUserID,
 						Name:       "Administrator",
 						Active:     true,
@@ -92,10 +92,10 @@ func init() {
 						ActionID:   ActionID,
 						ImageSmall: base64.StdEncoding.EncodeToString(avatarImg),
 					})
-					env.Cr().Execute("ALTER SEQUENCE res_users_id_seq RESTART WITH 2")
+					env.Cr().Execute("ALTER SEQUENCE user_id_seq RESTART WITH 2")
 				}
 
-				pool.ResGroups().NewSet(env).ReloadGroups()
+				pool.Group().NewSet(env).ReloadGroups()
 			})
 			if err != nil {
 				log.Panic("Error while initializing", "error", err)

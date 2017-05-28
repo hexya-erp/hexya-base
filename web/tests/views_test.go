@@ -48,7 +48,7 @@ func TestViewModifiers(t *testing.T) {
 	Convey("Testing correct modifiers injection in views", t, func() {
 		models.SimulateInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 			Convey("'invisible', 'required' and 'readonly' field attributes should be set in modifiers", func() {
-				view := pool.ResUsers().NewSet(env).ProcessView(viewDef1, viewFieldInfos1)
+				view := pool.User().NewSet(env).ProcessView(viewDef1, viewFieldInfos1)
 				So(view, ShouldEqual, `
 <view id="my_id" name="My View" model="ResUSers">
 	<form>
@@ -61,7 +61,7 @@ func TestViewModifiers(t *testing.T) {
 `)
 			})
 			Convey("attrs should be set in modifiers", func() {
-				view := pool.ResUsers().NewSet(env).ProcessView(viewDef2, viewFieldInfos1)
+				view := pool.User().NewSet(env).ProcessView(viewDef2, viewFieldInfos1)
 				So(view, ShouldEqual, `
 <view id="my_id" name="My View" model="ResUSers">
 	<form>
@@ -74,7 +74,7 @@ func TestViewModifiers(t *testing.T) {
 `)
 			})
 			Convey("'Readonly' and 'Required' field data should be taken into account", func() {
-				view := pool.ResUsers().NewSet(env).ProcessView(viewDef2, viewFieldInfos2)
+				view := pool.User().NewSet(env).ProcessView(viewDef2, viewFieldInfos2)
 				So(view, ShouldEqual, `
 <view id="my_id" name="My View" model="ResUSers">
 	<form>

@@ -2,7 +2,7 @@
 <yep>
     <data>
 
-        <view id="base_view_partner_tree" model="ResPartner">
+        <view id="base_view_partner_tree" model="Partner">
             <tree string="Partners">
                 <field name="Name"/>
                 <field name="Function"/>
@@ -11,7 +11,7 @@
             </tree>
         </view>
 
-        <view id="base_view_partner_form" model="ResPartner">
+        <view id="base_view_partner_form" model="Partner">
             <form>
                 <h1>
                     <label for="Name"/>
@@ -26,14 +26,14 @@
             </form>
         </view>
 
-        <view id="base_view_partner_search" model="ResPartner">
+        <view id="base_view_partner_search" model="Partner">
             <search string="Partners">
                 <field name="Name" filter_domain="['|', '|', ('Name','ilike',self), ('Email','ilike',self)]"
                        string="Partner"/>
             </search>
         </view>
 
-        <action id="base_action_res_partner" type="ir.actions.act_window" name="Partners" model="ResPartner"
+        <action id="base_action_res_partner" type="ir.actions.act_window" name="Partners" model="Partner"
                 view_id="base_view_partner_tree" search_view_id="base_view_partner_search" view_mode="tree,form"/>
 
         <menuitem id="base_menu_action_partner" name="Partners" parent="base_menu_partners" sequence="1"

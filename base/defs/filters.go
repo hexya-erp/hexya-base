@@ -10,21 +10,23 @@ import (
 )
 
 func initFilters() {
-	irFilters := models.NewModel("IrFilters")
-	irFilters.AddCharField("ResModel", models.StringFieldParams{})
-	irFilters.AddCharField("Domain", models.StringFieldParams{})
-	irFilters.AddCharField("Context", models.StringFieldParams{})
-	irFilters.AddCharField("Name", models.StringFieldParams{})
-	irFilters.AddBooleanField("IsDefault", models.SimpleFieldParams{})
-	irFilters.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: "ResUsers"})
-	irFilters.AddCharField("ActionID", models.StringFieldParams{GoType: new(actions.ActionRef)})
+	models.NewModel("Filter")
 
-	irFilters.AddMethod("GetFilters",
+	filter := pool.Filter()
+	filter.AddCharField("ResModel", models.StringFieldParams{})
+	filter.AddCharField("Domain", models.StringFieldParams{})
+	filter.AddCharField("Context", models.StringFieldParams{})
+	filter.AddCharField("Name", models.StringFieldParams{})
+	filter.AddBooleanField("IsDefault", models.SimpleFieldParams{})
+	filter.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: "User"})
+	filter.AddCharField("ActionID", models.StringFieldParams{GoType: new(actions.ActionRef)})
+
+	filter.AddMethod("GetFilters",
 		`GetFilters returns the filters for the given model and actionID for the current user`,
-		func(rs pool.IrFiltersSet, modelName, actionID string) []pool.IrFiltersData {
-			condition := pool.IrFilters().ResModel().Equals(modelName).
+		func(rs pool.FilterSet, modelName, actionID string) []pool.FilterData {
+			condition := pool.Filter().ResModel().Equals(modelName).
 				And().ActionID().Equals(actions.MakeActionRef(actionID)).
-				And().UserFilteredOn(pool.ResUsers().ID().Equals(rs.Env().Uid()))
+				And().UserFilteredOn(pool.User().ID().Equals(rs.Env().Uid()))
 			res := rs.Search(condition).All()
 			return res
 		})

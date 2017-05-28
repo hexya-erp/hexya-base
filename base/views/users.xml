@@ -3,7 +3,7 @@
     <data>
 
         <!-- Users -->
-        <view id="base_view_users_tree" model="ResUsers">
+        <view id="base_view_users_tree" model="User">
             <tree string="Users">
                 <field name="Name"/>
                 <field name="Login"/>
@@ -12,7 +12,7 @@
             </tree>
         </view>
 
-        <view id="base_view_users_form" model="ResUsers">
+        <view id="base_view_users_form" model="User">
             <form string="Users">
                 <header>
                     <button string="Change Password" type="action" name="%(change_password_wizard_action)d" help="Change the user password."/>
@@ -65,7 +65,7 @@
             </form>
         </view>
 
-        <view id="base_view_users_search" model="ResUsers">
+        <view id="base_view_users_search" model="User">
             <search string="Users">
                 <field name="Name"
                        filter_domain="['|', '|', ('Name','ilike',self), ('Login','ilike',self), ('Email','ilike',self)]"
@@ -74,7 +74,7 @@
             </search>
         </view>
 
-        <action id="base_action_res_users" type="ir.actions.act_window" name="Users" model="ResUsers"
+        <action id="base_action_res_users" type="ir.actions.act_window" name="Users" model="User"
                 view_id="base_view_users_tree" search_view_id="base_view_users_search" view_mode="tree,form"/>
 
         <menuitem id="base_menu_action_users" name="Users" sequence="1" action="base_action_res_users"

@@ -11,50 +11,50 @@ import (
 )
 
 func initPartner() {
-	models.NewModel("ResPartner")
+	models.NewModel("Partner")
 
-	resPartner := pool.ResPartner()
-	resPartner.AddCharField("Name", models.StringFieldParams{})
-	resPartner.AddDateField("Date", models.SimpleFieldParams{})
+	partner := pool.Partner()
+	partner.AddCharField("Name", models.StringFieldParams{})
+	partner.AddDateField("Date", models.SimpleFieldParams{})
 	//Title            *PartnerTitle
-	resPartner.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: "ResPartner"})
-	resPartner.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: "ResPartner", ReverseFK: "Parent"})
-	resPartner.AddCharField("Ref", models.StringFieldParams{})
-	resPartner.AddCharField("Lang", models.StringFieldParams{})
-	resPartner.AddCharField("TZ", models.StringFieldParams{})
-	resPartner.AddCharField("TZOffset", models.StringFieldParams{})
-	resPartner.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: "ResUsers"})
-	resPartner.AddCharField("VAT", models.StringFieldParams{})
+	partner.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: "Partner"})
+	partner.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: "Partner", ReverseFK: "Parent"})
+	partner.AddCharField("Ref", models.StringFieldParams{})
+	partner.AddCharField("Lang", models.StringFieldParams{})
+	partner.AddCharField("TZ", models.StringFieldParams{})
+	partner.AddCharField("TZOffset", models.StringFieldParams{})
+	partner.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: "User"})
+	partner.AddCharField("VAT", models.StringFieldParams{})
 	//Banks            []*PartnerBank
-	resPartner.AddCharField("Website", models.StringFieldParams{})
-	resPartner.AddCharField("Comment", models.StringFieldParams{})
+	partner.AddCharField("Website", models.StringFieldParams{})
+	partner.AddCharField("Comment", models.StringFieldParams{})
 	//Categories       []*PartnerCategory
-	resPartner.AddFloatField("CreditLimit", models.FloatFieldParams{})
-	resPartner.AddCharField("EAN13", models.StringFieldParams{})
-	resPartner.AddBooleanField("Active", models.SimpleFieldParams{})
-	resPartner.AddBooleanField("Customer", models.SimpleFieldParams{})
-	resPartner.AddBooleanField("Supplier", models.SimpleFieldParams{})
-	resPartner.AddBooleanField("Employee", models.SimpleFieldParams{})
-	resPartner.AddCharField("Function", models.StringFieldParams{})
-	resPartner.AddCharField("Type", models.StringFieldParams{})
-	resPartner.AddCharField("Street", models.StringFieldParams{})
-	resPartner.AddCharField("Street2", models.StringFieldParams{})
-	resPartner.AddCharField("ZIP", models.StringFieldParams{})
-	resPartner.AddCharField("City", models.StringFieldParams{})
+	partner.AddFloatField("CreditLimit", models.FloatFieldParams{})
+	partner.AddCharField("EAN13", models.StringFieldParams{})
+	partner.AddBooleanField("Active", models.SimpleFieldParams{})
+	partner.AddBooleanField("Customer", models.SimpleFieldParams{})
+	partner.AddBooleanField("Supplier", models.SimpleFieldParams{})
+	partner.AddBooleanField("Employee", models.SimpleFieldParams{})
+	partner.AddCharField("Function", models.StringFieldParams{})
+	partner.AddCharField("Type", models.StringFieldParams{})
+	partner.AddCharField("Street", models.StringFieldParams{})
+	partner.AddCharField("Street2", models.StringFieldParams{})
+	partner.AddCharField("ZIP", models.StringFieldParams{})
+	partner.AddCharField("City", models.StringFieldParams{})
 	//State            *CountryState
 	//Country          *Country
-	resPartner.AddCharField("Email", models.StringFieldParams{})
-	resPartner.AddCharField("Phone", models.StringFieldParams{})
-	resPartner.AddCharField("Fax", models.StringFieldParams{})
-	resPartner.AddCharField("Mobile", models.StringFieldParams{})
-	resPartner.AddDateField("Birthdate", models.SimpleFieldParams{})
-	resPartner.AddBooleanField("IsCompany", models.SimpleFieldParams{})
-	resPartner.AddBooleanField("UseParentAddress", models.SimpleFieldParams{})
-	resPartner.AddBinaryField("Image", models.SimpleFieldParams{})
-	resPartner.AddBinaryField("ImageMedium", models.SimpleFieldParams{})
-	resPartner.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "ResCompany"})
+	partner.AddCharField("Email", models.StringFieldParams{})
+	partner.AddCharField("Phone", models.StringFieldParams{})
+	partner.AddCharField("Fax", models.StringFieldParams{})
+	partner.AddCharField("Mobile", models.StringFieldParams{})
+	partner.AddDateField("Birthdate", models.SimpleFieldParams{})
+	partner.AddBooleanField("IsCompany", models.SimpleFieldParams{})
+	partner.AddBooleanField("UseParentAddress", models.SimpleFieldParams{})
+	partner.AddBinaryField("Image", models.SimpleFieldParams{})
+	partner.AddBinaryField("ImageMedium", models.SimpleFieldParams{})
+	partner.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "Company"})
 	//Color            color.Color
-	//Users []*ResUsers `orm:"reverse(many)"`
+	//Users []*User `orm:"reverse(many)"`
 
 	//'has_image': fields.function(_has_image, type="boolean"),
 	//'company_id': fields.many2one('res.company', 'Company', select=1),
@@ -65,8 +65,8 @@ func initPartner() {
 	//# technical field used for managing commercial fields
 	//'commercial_partner_id': fields.function(_commercial_partner_id, type='many2one', relation='res.partner', string='Commercial Entity', store=_commercial_partner_store_triggers)
 
-	resPartner.Methods().NameGet().Extend("",
-		func(rs pool.ResPartnerSet) string {
+	partner.Methods().NameGet().Extend("",
+		func(rs pool.PartnerSet) string {
 			res := rs.Super().NameGet()
 			return fmt.Sprintf("%s (%d)", res, rs.ID())
 		})

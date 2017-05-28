@@ -23,7 +23,7 @@ func SessionInfo(sess sessions.Session) gin.H {
 	)
 	if sess.Get("uid") != nil {
 		models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
-			user := pool.ResUsers().Search(env, pool.ResUsers().ID().Equals(sess.Get("uid").(int64)))
+			user := pool.User().Search(env, pool.User().ID().Equals(sess.Get("uid").(int64)))
 			userContext = user.ContextGet()
 			companyID = user.Company().ID()
 		})

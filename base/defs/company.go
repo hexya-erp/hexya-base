@@ -3,9 +3,13 @@
 
 package defs
 
-import "github.com/npiganeau/yep/yep/models"
+import (
+	"github.com/npiganeau/yep/pool"
+	"github.com/npiganeau/yep/yep/models"
+)
 
 func initCompany() {
-	resCompany := models.NewModel("ResCompany")
-	resCompany.AddCharField("Name", models.StringFieldParams{})
+	models.NewModel("Company")
+	company := pool.Company()
+	company.AddCharField("Name", models.StringFieldParams{})
 }

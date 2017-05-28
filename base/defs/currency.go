@@ -4,24 +4,27 @@
 package defs
 
 import (
+	"github.com/npiganeau/yep/pool"
 	"github.com/npiganeau/yep/yep/models"
 	"github.com/npiganeau/yep/yep/models/types"
 )
 
 func initCurrency() {
-	resCurrencyRate := models.NewModel("ResCurrencyRate")
-	resCurrencyRate.AddDateTimeField("Name", models.SimpleFieldParams{String: "Date", Required: true, Index: true})
-	resCurrencyRate.AddFloatField("Rate", models.FloatFieldParams{Digits: types.Digits{Precision: 12, Scale: 6}, Help: "The rate of the currency to the currency of rate 1"})
-	resCurrencyRate.AddMany2OneField("Currency", models.ForeignKeyFieldParams{RelationModel: "ResCurrency"})
-	resCurrencyRate.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "ResCompany"})
+	models.NewModel("CurrencyRate")
+	currencyRate := pool.CurrencyRate()
+	currencyRate.AddDateTimeField("Name", models.SimpleFieldParams{String: "Date", Required: true, Index: true})
+	currencyRate.AddFloatField("Rate", models.FloatFieldParams{Digits: types.Digits{Precision: 12, Scale: 6}, Help: "The rate of the currency to the currency of rate 1"})
+	currencyRate.AddMany2OneField("Currency", models.ForeignKeyFieldParams{RelationModel: "Currency"})
+	currencyRate.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "Company"})
 
-	resCurrency := models.NewModel("ResCurrency")
-	resCurrency.AddCharField("Name", models.StringFieldParams{String: "Currency", Help: "Currency Code [ISO 4217]", Size: 3, Unique: true})
-	resCurrency.AddCharField("Symbol", models.StringFieldParams{Help: "urrency sign, to be used when printing amounts", Size: 4})
-	resCurrency.AddFloatField("Rate", models.FloatFieldParams{String: "Current Rate", Help: "The rate of the currency to the currency of rate 1", Digits: types.Digits{Precision: 12, Scale: 6}}) //, Compute: "ComputeCurrentRate"})
-	resCurrency.AddOne2ManyField("Rates", models.ReverseFieldParams{RelationModel: "ResCurrencyRate", ReverseFK: "Currency"})
-	resCurrency.AddFloatField("Rounding", models.FloatFieldParams{String: "Rounding Factor", Digits: types.Digits{Precision: 12, Scale: 6}})
-	resCurrency.AddIntegerField("DecimalPlaces", models.SimpleFieldParams{}) //Compute: "ComputeDecimalPlaces"})
-	resCurrency.AddBooleanField("Active", models.SimpleFieldParams{})
-	resCurrency.AddSelectionField("Position", models.SelectionFieldParams{Selection: types.Selection{"after": "After Amount", "before": "Before Amount"}, String: "Symbol Position", Help: "Determines where the currency symbol should be placed after or before the amount."})
+	models.NewModel("Currency")
+	currency := pool.Currency()
+	currency.AddCharField("Name", models.StringFieldParams{String: "Currency", Help: "Currency Code [ISO 4217]", Size: 3, Unique: true})
+	currency.AddCharField("Symbol", models.StringFieldParams{Help: "urrency sign, to be used when printing amounts", Size: 4})
+	currency.AddFloatField("Rate", models.FloatFieldParams{String: "Current Rate", Help: "The rate of the currency to the currency of rate 1", Digits: types.Digits{Precision: 12, Scale: 6}}) //, Compute: "ComputeCurrentRate"})
+	currency.AddOne2ManyField("Rates", models.ReverseFieldParams{RelationModel: "CurrencyRate", ReverseFK: "Currency"})
+	currency.AddFloatField("Rounding", models.FloatFieldParams{String: "Rounding Factor", Digits: types.Digits{Precision: 12, Scale: 6}})
+	currency.AddIntegerField("DecimalPlaces", models.SimpleFieldParams{}) //Compute: "ComputeDecimalPlaces"})
+	currency.AddBooleanField("Active", models.SimpleFieldParams{})
+	currency.AddSelectionField("Position", models.SelectionFieldParams{Selection: types.Selection{"after": "After Amount", "before": "Before Amount"}, String: "Symbol Position", Help: "Determines where the currency symbol should be placed after or before the amount."})
 }

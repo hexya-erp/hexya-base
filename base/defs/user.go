@@ -14,36 +14,36 @@ import (
 )
 
 // BaseAuthBackend is the authentication backend of the Base module
-// Users are authenticated against the ResUsers model in the database
+// Users are authenticated against the User model in the database
 type BaseAuthBackend struct{}
 
 // Authenticate the user defined by login and secret.
 func (bab *BaseAuthBackend) Authenticate(login, secret string, context *types.Context) (uid int64, err error) {
 	models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
-		uid, err = pool.ResUsers().NewSet(env).WithNewContext(context).Authenticate(login, secret)
+		uid, err = pool.User().NewSet(env).WithNewContext(context).Authenticate(login, secret)
 	})
 	return
 }
 
 func initUsers() {
-	models.NewModel("ResUsers")
+	models.NewModel("User")
 
-	resUsers := pool.ResUsers()
-	resUsers.AddDateTimeField("LoginDate", models.SimpleFieldParams{})
-	resUsers.AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: "ResPartner", Embed: true})
-	resUsers.AddCharField("Login", models.StringFieldParams{Required: true})
-	resUsers.AddCharField("Password", models.StringFieldParams{})
-	resUsers.AddCharField("NewPassword", models.StringFieldParams{})
-	resUsers.AddTextField("Signature", models.StringFieldParams{})
-	resUsers.AddBooleanField("Active", models.SimpleFieldParams{})
-	resUsers.AddCharField("ActionID", models.StringFieldParams{GoType: new(actions.ActionRef)})
-	resUsers.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "ResCompany"})
-	resUsers.AddMany2ManyField("Companies", models.Many2ManyFieldParams{RelationModel: "ResCompany", JSON: "company_ids"})
-	resUsers.AddBinaryField("ImageSmall", models.SimpleFieldParams{})
-	resUsers.AddMany2ManyField("Groups", models.Many2ManyFieldParams{RelationModel: "ResGroups", JSON: "group_ids"})
+	user := pool.User()
+	user.AddDateTimeField("LoginDate", models.SimpleFieldParams{})
+	user.AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: "Partner", Embed: true})
+	user.AddCharField("Login", models.StringFieldParams{Required: true})
+	user.AddCharField("Password", models.StringFieldParams{})
+	user.AddCharField("NewPassword", models.StringFieldParams{})
+	user.AddTextField("Signature", models.StringFieldParams{})
+	user.AddBooleanField("Active", models.SimpleFieldParams{})
+	user.AddCharField("ActionID", models.StringFieldParams{GoType: new(actions.ActionRef)})
+	user.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "Company"})
+	user.AddMany2ManyField("Companies", models.Many2ManyFieldParams{RelationModel: "Company", JSON: "company_ids"})
+	user.AddBinaryField("ImageSmall", models.SimpleFieldParams{})
+	user.AddMany2ManyField("Groups", models.Many2ManyFieldParams{RelationModel: "Group", JSON: "group_ids"})
 
-	resUsers.Methods().Write().Extend("",
-		func(rs pool.ResUsersSet, data models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {
+	user.Methods().Write().Extend("",
+		func(rs pool.UserSet, data models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {
 			res := rs.Super().Write(data, fieldsToUnset...)
 			fMap := data.FieldMap()
 			_, ok1 := fMap["Groups"]
@@ -61,16 +61,16 @@ func initUsers() {
 			return res
 		})
 
-	resUsers.Methods().NameGet().Extend("",
-		func(rs pool.ResUsersSet) string {
+	user.Methods().NameGet().Extend("",
+		func(rs pool.UserSet) string {
 			res := rs.Super().NameGet()
 			return fmt.Sprintf("%s (%s)", res, rs.Login())
 		})
 
-	resUsers.AddMethod("ContextGet",
+	user.AddMethod("ContextGet",
 		`UsersContextGet returns a context with the user's lang, tz and uid
 		This method must be called on a singleton.`,
-		func(rs pool.ResUsersSet) *types.Context {
+		func(rs pool.UserSet) *types.Context {
 			rs.EnsureOne()
 			res := types.NewContext()
 			res = res.WithKey("lang", rs.Lang())
@@ -79,10 +79,10 @@ func initUsers() {
 			return res
 		})
 
-	resUsers.AddMethod("Authenticate",
+	user.AddMethod("Authenticate",
 		"Authenticate the user defined by login and secret",
-		func(rs pool.ResUsersSet, login, secret string) (uid int64, err error) {
-			user := rs.Search(pool.ResUsers().Login().Equals(login))
+		func(rs pool.UserSet, login, secret string) (uid int64, err error) {
+			user := rs.Search(pool.User().Login().Equals(login))
 			if user.Len() == 0 {
 				err = security.UserNotFoundError(login)
 				return
