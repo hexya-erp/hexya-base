@@ -9,6 +9,7 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/pool"
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 var viewDef1 string = `

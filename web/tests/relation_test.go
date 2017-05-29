@@ -11,6 +11,7 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/pool"
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 func Test2ManyRelations(t *testing.T) {

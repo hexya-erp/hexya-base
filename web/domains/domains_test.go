@@ -21,6 +21,7 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/tests"
 	_ "github.com/hexya-erp/hexya/hexya/tests/testllmodule"
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 func TestMain(m *testing.M) {
