@@ -6,8 +6,8 @@ package tests
 import (
 	"testing"
 
-	_ "github.com/npiganeau/yep-base/web"
-	"github.com/npiganeau/yep/yep/tests"
+	_ "github.com/hexya-erp/hexya-base/web"
+	"github.com/hexya-erp/hexya/hexya/tests"
 )
 
 func TestMain(m *testing.M) {

@@ -7,9 +7,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/npiganeau/yep/yep/actions"
-	"github.com/npiganeau/yep/yep/models/types"
-	"github.com/npiganeau/yep/yep/server"
+	"github.com/hexya-erp/hexya/hexya/actions"
+	"github.com/hexya-erp/hexya/hexya/models/types"
+	"github.com/hexya-erp/hexya/hexya/server"
 )
 
 // ActionLoad returns the action with the given id

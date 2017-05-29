@@ -8,10 +8,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/models"
-	"github.com/npiganeau/yep/yep/models/security"
-	. "github.com/smartystreets/goconvey/convey"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/security"
+	"github.com/hexya-erp/hexya/pool"
 )
 
 func Test2ManyRelations(t *testing.T) {

@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/npiganeau/yep-base.svg?branch=master)](https://travis-ci.org/npiganeau/yep-base)
-[![Go Report Card](https://goreportcard.com/badge/npiganeau/yep-base)](https://goreportcard.com/report/npiganeau/yep-base)
+[![Build Status](https://travis-ci.org/hexya-erp/hexya-base.svg?branch=master)](https://travis-ci.org/hexya-erp/hexya-base)
+[![Go Report Card](https://goreportcard.com/badge/hexya-erp/hexya-base)](https://goreportcard.com/report/hexya-erp/hexya-base)
 
-YEP BASE ADDONS
+Hexya BASE ADDONS
 ===============
-YEP is a proof of concept for a modular ERP written in go.
+Hexya is a proof of concept for a modular ERP written in go.
 
-This repository holds modules the base modules for YEP.
+This repository holds modules the base modules for Hexya.

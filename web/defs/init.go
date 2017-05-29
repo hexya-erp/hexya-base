@@ -3,7 +3,7 @@
 
 package defs
 
-import "github.com/npiganeau/yep/yep/tools/logging"
+import "github.com/hexya-erp/hexya/hexya/tools/logging"
 
 var log *logging.Logger
 

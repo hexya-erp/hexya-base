@@ -6,9 +6,9 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/npiganeau/yep/yep/models/security"
-	"github.com/npiganeau/yep/yep/models/types"
-	"github.com/npiganeau/yep/yep/server"
+	"github.com/hexya-erp/hexya/hexya/models/security"
+	"github.com/hexya-erp/hexya/hexya/models/types"
+	"github.com/hexya-erp/hexya/hexya/server"
 )
 
 // LoginGet is called when the client calls the login page

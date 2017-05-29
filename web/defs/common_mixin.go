@@ -7,14 +7,14 @@ import (
 	"encoding/json"
 	"strings"
 
-	"github.com/npiganeau/yep-base/web/domains"
-	"github.com/npiganeau/yep-base/web/webdata"
-	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/actions"
-	"github.com/npiganeau/yep/yep/models"
-	"github.com/npiganeau/yep/yep/models/fieldtype"
-	"github.com/npiganeau/yep/yep/tools/etree"
-	"github.com/npiganeau/yep/yep/views"
+	"github.com/hexya-erp/hexya-base/web/domains"
+	"github.com/hexya-erp/hexya-base/web/webdata"
+	"github.com/hexya-erp/hexya/hexya/actions"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/fieldtype"
+	"github.com/hexya-erp/hexya/hexya/tools/etree"
+	"github.com/hexya-erp/hexya/hexya/views"
+	"github.com/hexya-erp/hexya/pool"
 )
 
 func initCommonMixin() {

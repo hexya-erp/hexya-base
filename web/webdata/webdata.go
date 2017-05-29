@@ -6,11 +6,11 @@ package webdata
 import (
 	"encoding/json"
 
-	"github.com/npiganeau/yep-base/web/domains"
-	"github.com/npiganeau/yep/yep/actions"
-	"github.com/npiganeau/yep/yep/models"
-	"github.com/npiganeau/yep/yep/models/operator"
-	"github.com/npiganeau/yep/yep/views"
+	"github.com/hexya-erp/hexya-base/web/domains"
+	"github.com/hexya-erp/hexya/hexya/actions"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/operator"
+	"github.com/hexya-erp/hexya/hexya/views"
 )
 
 // FieldsViewGetParams is the args struct for the FieldsViewGet function

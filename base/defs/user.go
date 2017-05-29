@@ -6,11 +6,11 @@ package defs
 import (
 	"fmt"
 
-	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/actions"
-	"github.com/npiganeau/yep/yep/models"
-	"github.com/npiganeau/yep/yep/models/security"
-	"github.com/npiganeau/yep/yep/models/types"
+	"github.com/hexya-erp/hexya/hexya/actions"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/security"
+	"github.com/hexya-erp/hexya/hexya/models/types"
+	"github.com/hexya-erp/hexya/pool"
 )
 
 // BaseAuthBackend is the authentication backend of the Base module

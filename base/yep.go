@@ -19,16 +19,15 @@ import (
 	"io/ioutil"
 	"path"
 
-	// Import this module's defs
-	_ "github.com/npiganeau/yep-base/base/defs"
-	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/actions"
-	"github.com/npiganeau/yep/yep/models"
-	"github.com/npiganeau/yep/yep/models/security"
-	"github.com/npiganeau/yep/yep/models/types"
-	"github.com/npiganeau/yep/yep/server"
-	"github.com/npiganeau/yep/yep/tools/generate"
-	"github.com/npiganeau/yep/yep/tools/logging"
+	_ "github.com/hexya-erp/hexya-base/base/defs"
+	"github.com/hexya-erp/hexya/hexya/actions"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/security"
+	"github.com/hexya-erp/hexya/hexya/models/types"
+	"github.com/hexya-erp/hexya/hexya/server"
+	"github.com/hexya-erp/hexya/hexya/tools/generate"
+	"github.com/hexya-erp/hexya/hexya/tools/logging"
+	"github.com/hexya-erp/hexya/pool"
 )
 
 const (
@@ -38,7 +37,7 @@ const (
 	VERSION     string = "0.1"
 	CATEGORY    string = "Hidden"
 	DESCRIPTION string = `
-The kernel of YEP, needed for all installation
+The kernel of Hexya, needed for all installation
 ==============================================
 	`
 	AUTHOR     string = "NDP Systèmes"
@@ -75,7 +74,7 @@ func init() {
 					env.Cr().Execute("ALTER SEQUENCE partner_id_seq RESTART WITH 2")
 				}
 
-				avatarImg, _ := ioutil.ReadFile(path.Join(generate.YEPDir, "yep", "server", "static", "base", "src", "img", "avatar.png"))
+				avatarImg, _ := ioutil.ReadFile(path.Join(generate.HexyaDir, "hexya", "server", "static", "base", "src", "img", "avatar.png"))
 
 				adminUser := pool.User().Search(env, pool.User().ID().Equals(security.SuperUserID))
 				ActionID := actions.MakeActionRef("base_action_res_users")

@@ -4,8 +4,8 @@
 package defs
 
 import (
-	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/models"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/pool"
 )
 
 func initCompany() {

@@ -17,11 +17,10 @@ package domains
 import (
 	"testing"
 
-	"github.com/npiganeau/yep/yep/models"
-	"github.com/npiganeau/yep/yep/models/security"
-	"github.com/npiganeau/yep/yep/tests"
-	_ "github.com/npiganeau/yep/yep/tests/testllmodule"
-	. "github.com/smartystreets/goconvey/convey"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/security"
+	"github.com/hexya-erp/hexya/hexya/tests"
+	_ "github.com/hexya-erp/hexya/hexya/tests/testllmodule"
 )
 
 func TestMain(m *testing.M) {

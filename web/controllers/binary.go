@@ -10,13 +10,13 @@ import (
 	"path"
 	"strconv"
 
-	"github.com/npiganeau/yep/yep/server"
-	"github.com/npiganeau/yep/yep/tools/generate"
+	"github.com/hexya-erp/hexya/hexya/server"
+	"github.com/hexya-erp/hexya/hexya/tools/generate"
 )
 
 // CompanyLogo serves the logo of the company
 func CompanyLogo(c *server.Context) {
-	c.File(path.Join(generate.YEPDir, "yep", "server", "static", "web", "src", "img", "logo.png"))
+	c.File(path.Join(generate.HexyaDir, "hexya", "server", "static", "web", "src", "img", "logo.png"))
 }
 
 // Image serves the image stored in the database (base64 encoded)

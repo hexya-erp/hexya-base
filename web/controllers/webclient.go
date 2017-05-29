@@ -8,9 +8,9 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/npiganeau/yep/yep/server"
-	"github.com/npiganeau/yep/yep/tools"
-	"github.com/npiganeau/yep/yep/tools/xmlutils"
+	"github.com/hexya-erp/hexya/hexya/server"
+	"github.com/hexya-erp/hexya/hexya/tools"
+	"github.com/hexya-erp/hexya/hexya/tools/xmlutils"
 )
 
 // QWeb returns a concatenation of all client qweb templates

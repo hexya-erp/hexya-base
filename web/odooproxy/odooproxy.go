@@ -6,7 +6,7 @@ package odooproxy
 import "strings"
 
 //ConvertModelName converts an Odoo dotted style model name (e.g. res.partner) into
-//a YEP Pascal cased style (e.g. Partner).
+//a Hexya Pascal cased style (e.g. Partner).
 func ConvertModelName(val string) string {
 	var res string
 	switch val {
@@ -36,7 +36,7 @@ func ConvertModelName(val string) string {
 }
 
 // ConvertMethodName converts an Odoo snake style method name (e.g. search_read) into
-// a YEP Pascal cased style (e.g. SearchRead).
+// a Hexya Pascal cased style (e.g. SearchRead).
 func ConvertMethodName(val string) string {
 	var res string
 	tokens := strings.Split(val, "_")

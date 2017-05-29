@@ -17,9 +17,9 @@ package domains
 import (
 	"fmt"
 
-	"github.com/npiganeau/yep/yep/models"
-	"github.com/npiganeau/yep/yep/models/operator"
-	"github.com/npiganeau/yep/yep/tools/logging"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/operator"
+	"github.com/hexya-erp/hexya/hexya/tools/logging"
 )
 
 // A Domain is a list of search criteria (DomainTerm) in the form of

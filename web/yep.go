@@ -15,10 +15,10 @@
 package web
 
 import (
-	_ "github.com/npiganeau/yep-base/base"
-	_ "github.com/npiganeau/yep-base/web/controllers"
-	_ "github.com/npiganeau/yep-base/web/defs"
-	"github.com/npiganeau/yep/yep/server"
+	_ "github.com/hexya-erp/hexya-base/base"
+	_ "github.com/hexya-erp/hexya-base/web/controllers"
+	_ "github.com/hexya-erp/hexya-base/web/defs"
+	"github.com/hexya-erp/hexya/hexya/server"
 )
 
 const (

@@ -6,8 +6,8 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/npiganeau/yep/yep/actions"
-	"github.com/npiganeau/yep/yep/server"
+	"github.com/hexya-erp/hexya/hexya/actions"
+	"github.com/hexya-erp/hexya/hexya/server"
 )
 
 // CallKW executes the given method of the given model

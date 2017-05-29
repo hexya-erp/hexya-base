@@ -6,12 +6,11 @@ package tests
 import (
 	"testing"
 
-	_ "github.com/npiganeau/yep-base/base"
-	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/models"
-	"github.com/npiganeau/yep/yep/models/security"
-	"github.com/npiganeau/yep/yep/tests"
-	. "github.com/smartystreets/goconvey/convey"
+	_ "github.com/hexya-erp/hexya-base/base"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/security"
+	"github.com/hexya-erp/hexya/hexya/tests"
+	"github.com/hexya-erp/hexya/pool"
 )
 
 func TestMain(m *testing.M) {

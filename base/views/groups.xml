@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<yep>
+<hexya>
     <data>
 
         <!-- res.groups -->
@@ -29,4 +29,4 @@
                   parent="base_menu_users"/>
 
     </data>
-</yep>
+</hexya>

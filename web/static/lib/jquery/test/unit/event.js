@@ -1340,13 +1340,13 @@ test("Delegated events in forms (#10844; #11145; #8165; #11382, #11764)", functi
 			ok( true, "mouse on enabled/disabled button with nesty elements" );
 		})
 		.find( "span" )
-			.trigger( "click" )		// yep
-			.trigger( "mouseover" )	// yep
+			.trigger( "click" )		// hexya
+			.trigger( "mouseover" )	// hexya
 		.end()
 		.find( "#nestyDisabledBtn" ).prop( "disabled", true ).end()
 		.find( "span" )
 			.trigger( "click" )		// nope
-			.trigger( "mouseover" )	// yep
+			.trigger( "mouseover" )	// hexya
 		.end()
 		.off( "click" );
 
@@ -2358,7 +2358,7 @@ test( "delegated event with delegateTarget-relative selector", function() {
 		.end()
 		.find("a").click().end()
 		.find("#ul0").off();
-	
+
 	// Non-positional selector (#12383)
 	markup = markup.wrap("<div />").parent();
 	markup
@@ -2373,7 +2373,7 @@ test( "delegated event with delegateTarget-relative selector", function() {
 			ok( true, "li.test is below the delegation point." );
 		})
 		.find("#a0_0").click();
-	
+
 	markup.remove();
 });
 

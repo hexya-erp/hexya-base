@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"path"
 
-	"github.com/npiganeau/yep/yep/controllers"
-	"github.com/npiganeau/yep/yep/menus"
-	"github.com/npiganeau/yep/yep/server"
-	"github.com/npiganeau/yep/yep/tools/generate"
+	"github.com/hexya-erp/hexya/hexya/controllers"
+	"github.com/hexya-erp/hexya/hexya/menus"
+	"github.com/hexya-erp/hexya/hexya/server"
+	"github.com/hexya-erp/hexya/hexya/tools/generate"
 )
 
 var (
@@ -190,7 +190,7 @@ func initRoutes() {
 	root.AddController(http.MethodPost, "/web/login", LoginPost)
 	root.AddController(http.MethodGet, "/web/binary/company_logo", CompanyLogo)
 
-	root.AddStatic("/static", path.Join(generate.YEPDir, "yep", "server", "static"))
+	root.AddStatic("/static", path.Join(generate.HexyaDir, "hexya", "server", "static"))
 	web := root.AddGroup("/web")
 	{
 		web.AddMiddleWare(LoginRequired)

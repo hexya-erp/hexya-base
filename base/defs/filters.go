@@ -4,9 +4,9 @@
 package defs
 
 import (
-	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/actions"
-	"github.com/npiganeau/yep/yep/models"
+	"github.com/hexya-erp/hexya/hexya/actions"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/pool"
 )
 
 func initFilters() {

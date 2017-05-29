@@ -6,10 +6,9 @@ package tests
 import (
 	"testing"
 
-	"github.com/npiganeau/yep/pool"
-	"github.com/npiganeau/yep/yep/models"
-	"github.com/npiganeau/yep/yep/models/security"
-	. "github.com/smartystreets/goconvey/convey"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/security"
+	"github.com/hexya-erp/hexya/pool"
 )
 
 var viewDef1 string = `

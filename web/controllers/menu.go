@@ -6,7 +6,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/npiganeau/yep/yep/server"
+	"github.com/hexya-erp/hexya/hexya/server"
 )
 
 // MenuLoadNeedaction serves the number of objects that need an action

@@ -19,12 +19,12 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/npiganeau/yep-base/web/domains"
-	"github.com/npiganeau/yep-base/web/odooproxy"
-	"github.com/npiganeau/yep-base/web/webdata"
-	"github.com/npiganeau/yep/yep/models"
-	"github.com/npiganeau/yep/yep/models/types"
-	"github.com/npiganeau/yep/yep/tools/logging"
+	"github.com/hexya-erp/hexya-base/web/domains"
+	"github.com/hexya-erp/hexya-base/web/odooproxy"
+	"github.com/hexya-erp/hexya-base/web/webdata"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/types"
+	"github.com/hexya-erp/hexya/hexya/tools/logging"
 )
 
 var (

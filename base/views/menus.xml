@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<yep>
+<hexya>
     <data>
 
         <menuitem id="base_menu_administration" name="Settings" sequence="255"/>
@@ -7,4 +7,4 @@
         <menuitem id="base_menu_partners" name="Partners" parent="base_menu_administration" sequence="5"/>
 
     </data>
-</yep>
+</hexya>
