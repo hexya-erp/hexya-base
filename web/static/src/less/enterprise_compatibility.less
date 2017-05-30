@@ -5,11 +5,9 @@
 // client compatible with the enterprise edition.  
 // The problem is that we have two web clients in parallel, and every
 // addons should behave properly with both.
-@import "variables";
 @import "utils";
-@import "import_bootstrap";
-
-@brand-primary: @hexya-brand-primary;
+@import "bootswatch";
+@import "variables";
 
 .oe-view-manager {
   background-color: @hexya-webclient-background-color !important;
@@ -295,7 +293,6 @@ div.o_checkbox {
   }
 
   &.oe_form_editable .o_form_field_many2manytags {
-    border: 1px solid #CCC;
     border-radius: 3px;
 
     &.o_form_field_empty {

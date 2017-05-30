@@ -1,17 +1,19 @@
 @charset "utf-8"
 
 // Variables {{{
+$brand-primary: #2c2e83
+$link-color: $brand-primary
 $facets-border: #afafb6
-$section-title-color: #7C7BAD
+$section-title-color: $brand-primary
 $tag-bg-light: #f0f0fa
-$tag-bg-dark: #7C7BAD
+$tag-bg-dark: $brand-primary
 $tag-border: #afafb6
-$tag-border-selected: #a6a6fe
+$tag-border-selected: rgba(44, 46, 131, 0.7)
 $hover-background: #f0f0fa
-$link-color: #7C7BAD
 $sheet-max-width: 860px
 $sheet-min-width: 650px
 $sheet-padding: 16px
+$form-required: rgba(64, 66, 189, 0.2)
 // }}}
 // Mixins {{{
 @font-face
@@ -133,7 +135,7 @@ $sheet-padding: 16px
     .oe_topbar_avatar
         max-height: 18px
         width: 18px
-        
+
 #oe_main_menu_navbar.navbar
     margin-bottom: 0px
 
@@ -165,7 +167,7 @@ $sheet-padding: 16px
 
 .oe_notification
     z-index: 1600
-    
+
 .oe_timezone_systray
     span
         margin-top: 1px
@@ -246,7 +248,7 @@ $sheet-padding: 16px
         display: block
         height: 0
         clear: both
-        visibility: hidden    
+        visibility: hidden
     .oe_form_group
         clear: both
     .zebra tbody tr:nth-child(odd) td
@@ -256,7 +258,7 @@ $sheet-padding: 16px
         @include vertical-gradient(#eee, #dedede)
     input, textarea, select
         padding: 2px 4px
-        border: 1px solid #ccc
+        //border: 1px solid #ccc
         @include radius(3px)
         background: white
     img
@@ -340,7 +342,7 @@ $sheet-padding: 16px
             padding: 0
             line-height: 120%
         .o_button_icon
-            color: #7C7BAD
+            color: $brand-primary
             font-size: 24px
             padding: 0px 3px
             width: 37px
@@ -402,7 +404,7 @@ $sheet-padding: 16px
     .oe_grey
         color: #aaa
     // Added for generic error message and customize bootstrap3 <pre>,<hr>
-    .oe_error_detail 
+    .oe_error_detail
         hr
             display: block
             -webkit-margin-before: 0.5em
@@ -630,7 +632,7 @@ $sheet-padding: 16px
             a
                 font-weight: bold
                 span
-                    color: #a24689
+                    color: $brand-primary
     // }}}
     // Webclient.leftbar items {{{
 
@@ -681,7 +683,7 @@ $sheet-padding: 16px
             margin-left: 20px
     // }}}
     // About hexyaerp {{{
-    $link-color-hexya: #a24689
+    $link-color-hexya: $brand-primary
     .oe_about
         .label
             background-color: $link-color-hexya
@@ -743,7 +745,7 @@ $sheet-padding: 16px
         display: flex
         -ms-flex-direction: column
         -webkit-flex-direction: column
-        flex-direction: column        
+        flex-direction: column
         .oe_application
             width: 100%
 
@@ -992,7 +994,7 @@ $sheet-padding: 16px
                 li.oe-indent
                     margin-left: 20px
                 li.oe-selection-focus
-                    background-color: #7c7bad
+                    background-color: $brand-primary
                     color: white
                 li.oe-separator
                     margin-top: 2px
@@ -1044,7 +1046,7 @@ $sheet-padding: 16px
             display: inline
             width: -webkic-calc(100% - 20px)
             width: calc(100% - 20px)
-        
+
         .searchview_extended_prop_op
             margin: 3px 0
             width: -webkit-calc(100% - 20px)
@@ -1097,7 +1099,7 @@ $sheet-padding: 16px
     input.oe-save-name
         width: auto
     .oe_pager_value
-        display: inline-block  
+        display: inline-block
 
     // }}}
     // Views Common {{{
@@ -1137,7 +1139,7 @@ $sheet-padding: 16px
         table
             width: auto
         col.hover
-            background-color: #f5f5f5    
+            background-color: #f5f5f5
         th
             background-color: #ffffff
             font-weight: normal
@@ -1160,7 +1162,7 @@ $sheet-padding: 16px
             text-align: left
             &:hover
                 background-color: #e6e6e6
-        &.oe-enable-linking 
+        &.oe-enable-linking
             td:not(.oe-closed):not(.oe-opened):not(.oe-empty)
                 cursor: pointer
                 &:hover
@@ -1307,8 +1309,8 @@ $sheet-padding: 16px
         padding-left: 2px
         @include vertical-gradient(#fcfcfc, #dedede)
         > span
-            margin-left: 4px        
-        
+            margin-left: 4px
+
     // }}}
     // FormView.custom tags and classes {{{
     .oe_form
@@ -1512,7 +1514,7 @@ $sheet-padding: 16px
                 cursor: pointer
         .oe_form_required
             input:not([disabled]):not([readonly]), select:not([disabled]):not([readonly]), textarea:not([disabled]):not([readonly])
-                background-color: #D2D2FF !important
+                background-color: $form-required !important
         .oe_form_invalid
             input, select, textarea
                 background-color: #F66 !important
@@ -1546,7 +1548,7 @@ $sheet-padding: 16px
             position: relative
             width: 100%
             margin: auto
-            overflow: auto            
+            overflow: auto
             text-align: justify
         .oe_form_field_html .oe_input_icon
             float: right
@@ -1632,7 +1634,7 @@ $sheet-padding: 16px
             button.oe_attach
                 width: 24px
                 background: transparent
-                color: #7C7BAD
+                color: $brand-primary
                 box-shadow: none
                 border: none
                 text-shadow: none
@@ -1647,7 +1649,7 @@ $sheet-padding: 16px
                 margin-top: -24px
                 cursor: pointer
             .oe_attach_label
-                color: #7C7BAD
+                color: $brand-primary
                 margin-left: -3px
         .oe_attachments
             margin-bottom: 4px
@@ -1699,7 +1701,7 @@ $sheet-padding: 16px
             float: right
             padding-left: 2px
             font-size: 19px
-            color: #7C7BAD
+            color: $brand-primary
             cursor: pointer
         input
             padding-right: 13px
@@ -1855,7 +1857,7 @@ $sheet-padding: 16px
         .oe_list_editable
             .oe_list_content
                 td.oe_required
-                    background-color: #d2d2ff
+                    background-color: $form-required
                 td.oe_readonly
                     background-color: #eee
     $row-height: 27px
@@ -2164,19 +2166,19 @@ $sheet-padding: 16px
             padding-left: 16px
     .nav-pills > li.active,a.list-group-item.active
         > a
-            background-color: #7c7bad
+            background-color: $brand-primary
             color: white
             border-radius: 0
         a:hover,a:focus
-            background-color: #7c7bad
+            background-color: $brand-primary
         .badge
             background-color: white
-            color: #7c7bad
+            color: $brand-primary
             text-shadow: none
     .badge
         font-weight: normal
         font-size: 11px
-        background-color: #7c7bad
+        background-color: $brand-primary
 
     // Customize for global tags
     h1,h2
@@ -2211,7 +2213,7 @@ $sheet-padding: 16px
     height: auto !important
     width: auto !important
     padding: 0
-        
+
 @-moz-document url-prefix()
     .hexyaerp
         .oe_form_field_many2one .oe_m2o_cm_button
@@ -2258,8 +2260,8 @@ div.ui-widget-overlay
         a.ui-corner-all
             @include radius(0)
     .ui-state-focus, .ui-state-active
-        background: #7c7bad !important
-        border: 1px solid #7c7bad !important
+        background: $brand-primary !important
+        border: 1px solid $brand-primary !important
         a
             color: #ffffff !important
             font-weight: normal !important
@@ -2384,7 +2386,7 @@ body.oe_single_form
                     filter: alpha(opacity = 0)
                     border: none
                     width: 0
-                    border-right: none 
+                    border-right: none
             > .label
                 border-bottom: 1px solid #cacaca
                 background: transparent
@@ -2555,7 +2557,7 @@ div.tour-backdrop
 body
     overflow: hidden
 
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) 
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none)
     .oe-view-manager-content
         > div
             position: absolute !important

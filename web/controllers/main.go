@@ -107,6 +107,7 @@ func initStaticPaths() {
 		"/static/web/src/css/base.css",
 		"/static/web/src/css/data_export.css",
 		"/static/base/src/css/modules.css",
+		"/static/web/src/less/bootswatch.css",
 		"/static/web/src/less/import_bootstrap.css",
 		"/static/web/src/less/enterprise_compatibility.css",
 		"/static/web/src/less/utils.css",
