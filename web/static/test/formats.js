@@ -1,4 +1,4 @@
-odoo.define_section('web-formats', ['web.formats', 'web.time'], function (test) {
+hexya.define_section('web-formats', ['web.formats', 'web.time'], function (test) {
 
     test("format_datetime", function (assert, formats, time) {
         var date = time.str_to_datetime("2009-05-04 12:34:23");

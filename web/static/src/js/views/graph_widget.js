@@ -1,4 +1,4 @@
-odoo.define('web.GraphWidget', function (require) {
+hexya.define('web.GraphWidget', function (require) {
 "use strict";
 
 var config = require('web.config');
@@ -309,7 +309,7 @@ return Widget.extend({
         });
         chart.xAxis.tickValues(tickValues)
             .tickFormat(tickFormat);
-        chart.yAxis.tickFormat(function(d) { return openerp.web.format_value(d, { type : 'float' });});
+        chart.yAxis.tickFormat(function(d) { return hexyaerp.web.format_value(d, { type : 'float' });});
 
         chart(svg);
         this.to_remove = chart.update;

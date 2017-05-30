@@ -1,4 +1,4 @@
-odoo.define('web.Dialog', function (require) {
+hexya.define('web.Dialog', function (require) {
 "use strict";
 
 var core = require('web.core');
@@ -33,7 +33,7 @@ var Dialog = Widget.extend({
         this._super(parent);
 
         options = _.defaults(options || {}, {
-            title: _t('Odoo'), subtitle: '',
+            title: _t('Hexya'), subtitle: '',
             size: 'large',
             dialogClass: '',
             $content: false,

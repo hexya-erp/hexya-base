@@ -1,4 +1,4 @@
-odoo.define('web.Widget', function (require) {
+hexya.define('web.Widget', function (require) {
 "use strict";
 
 var core = require('web.core');
@@ -22,7 +22,7 @@ var mixins = core.mixins;
  *
  * Here is a sample child class:
  *
- * MyWidget = openerp.base.Widget.extend({
+ * MyWidget = hexyaerp.base.Widget.extend({
  *     // the name of the QWeb template to use for rendering
  *     template: "MyQWebTemplate",
  *
@@ -75,9 +75,9 @@ var Widget = core.Class.extend(mixins.PropertiesMixin, {
     /**
      * Constructs the widget and sets its parent if a parent is given.
      *
-     * @constructs openerp.Widget
+     * @constructs hexyaerp.Widget
      *
-     * @param {openerp.Widget} parent Binds the current instance to the given Widget instance.
+     * @param {hexyaerp.Widget} parent Binds the current instance to the given Widget instance.
      * When that widget is destroyed by calling destroy(), the current instance will be
      * destroyed too. Can be null.
      */

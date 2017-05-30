@@ -93,20 +93,20 @@
         <script type="text/javascript" src="{{ . }}"></script>{{ end }}
 
     <script type="text/javascript" charset="utf-8">
-        odoo._modules = {{ .Modules }};
+        hexya._modules = {{ .Modules }};
     </script>
 
     {{ range .BackendJS }}
         <script type="text/javascript" src="{{ . }}"></script>{{ end }}
 
     <script type="text/javascript" charset="utf-8">
-        odoo.define('web.csrf', function (require) {
+        hexya.define('web.csrf', function (require) {
             var token = " request.csrf_token(None) ";
             require('web.core').csrf_token = token;
             require('qweb').default_dict.csrf_token = token;
         });
-        //odoo.db_info = <t t-raw="db_info"/>;
-        odoo._modules = {{ .Modules }};
+        //hexya.db_info = <t t-raw="db_info"/>;
+        hexya._modules = {{ .Modules }};
     </script>
 
     <!--[if lte IE 9]>
@@ -114,7 +114,7 @@
     <script type="text/javascript">
         $(function () {
     //        ifinit
-            odoo.define('web.web_client', function (require) {
+            hexya.define('web.web_client', function (require) {
                 var WebClient = require('web.WebClient');
                 var web_client = new WebClient();
                 web_client.setElement($(document.body));
@@ -139,7 +139,7 @@
             {{ template "web.menu" .Menu }}
         </div>
     </nav>
-    <div class="openerp openerp_webclient_container oe_webclient">
+    <div class="hexyaerp hexyaerp_webclient_container oe_webclient">
         <div class="oe_leftbar">
             {{ template "web.menu_secondary" .Menu }}
         </div>

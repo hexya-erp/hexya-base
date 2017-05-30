@@ -1,4 +1,4 @@
-odoo.define('web.notification', function (require) {
+hexya.define('web.notification', function (require) {
 "use strict";
 
 var core = require('web.core');

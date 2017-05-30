@@ -63,9 +63,9 @@ func JSList(c *server.Context) {
 // VersionInfo returns server version information to the client
 func VersionInfo(c *server.Context) {
 	data := gin.H{
-		"server_serie":        "9.0",
-		"server_version_info": []int8{9, 0, 0, 0, 0},
-		"server_version":      "9.0c",
+		"server_serie":        "0.9beta",
+		"server_version_info": []int8{0, 9, 0, 0, 0},
+		"server_version":      "0.9beta",
 		"protocol":            1,
 	}
 	c.RPC(http.StatusOK, data)

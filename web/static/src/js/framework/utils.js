@@ -1,4 +1,4 @@
-odoo.define('web.utils', function (require) {
+hexya.define('web.utils', function (require) {
 "use strict";
 
 var Class = require('web.Class');
@@ -449,7 +449,7 @@ return {
 
 });
 
-odoo.define('web.dom_utils', function (require) {
+hexya.define('web.dom_utils', function (require) {
 "use strict";
 
 var core = require('web.core');

@@ -1,5 +1,5 @@
 
-odoo.define('web.translation', function (require) {
+hexya.define('web.translation', function (require) {
 "use strict";
 
 var Class = require('web.Class');
@@ -55,7 +55,7 @@ var TranslationDataBase = Class.extend(/** @lends instance.TranslationDataBase# 
     /**
         Loads the translations from an OpenERP server.
 
-        @param {openerp.Session} session The session object to contact the server.
+        @param {hexyaerp.Session} session The session object to contact the server.
         @param {Array} [modules] The list of modules to load the translation. If not specified,
         it will default to all the modules installed in the current database.
         @param {Object} [lang] lang The language. If not specified it will default to the language

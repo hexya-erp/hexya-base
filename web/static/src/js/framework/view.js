@@ -1,4 +1,4 @@
-odoo.define('web.View', function (require) {
+hexya.define('web.View', function (require) {
 "use strict";
 
 var core = require('web.core');

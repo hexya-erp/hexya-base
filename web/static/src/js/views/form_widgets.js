@@ -1,4 +1,4 @@
-odoo.define('web.form_widgets', function (require) {
+hexya.define('web.form_widgets', function (require) {
 "use strict";
 
 var core = require('web.core');
@@ -963,7 +963,7 @@ var TimezoneMismatch = FieldSelection.extend({
             this.$label.find('.oe_tz_warning').remove();
             var options = _.extend({
                 delay: { show: 501, hide: 0 },
-                title: _t("Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Odoo is displayed according to your field timezone."),
+                title: _t("Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Hexya is displayed according to your field timezone."),
             });
             this.$label.css('white-space', 'normal');
             $(QWeb.render('WebClient.timezone_warning')).appendTo(this.$label);
@@ -1216,7 +1216,7 @@ var FieldBinary = common.AbstractField.extend(common.ReinitializeFieldMixin, {
     on_file_uploaded: function(size, name, content_type, file_base64) {
         if (size === false) {
             this.do_warn(_t("File Upload"), _t("There was a problem while uploading your file"));
-            // TODO: use openerp web crashmanager
+            // TODO: use hexyaerp web crashmanager
             console.warn("Error while uploading file : ", name);
         } else {
             this.filename = name;
@@ -1359,7 +1359,7 @@ var FieldBinaryImage = FieldBinary.extend({
         $($img).click(function(e) {
             if(self.view.get("actual_mode") == "view") {
                 var $button = $(".oe_form_button_edit");
-                $button.openerpBounce();
+                $button.hexyaerpBounce();
                 e.stopPropagation();
             }
         });
@@ -1719,13 +1719,13 @@ var AbstractFieldUpgrade = {
             $content: $('<div>', {
                 html: message,
             }),
-            title: _t("Odoo Enterprise"),
+            title: _t("Hexya Enterprise"),
         }).open();
     },
   
     confirm_upgrade: function() {
         new Model("res.users").call("search_count", [[["share", "=", false]]]).then(function(data) {
-            framework.redirect("https://www.odoo.com/odoo-enterprise/upgrade?num_users=" + data);
+            framework.redirect("https://hexya.io/hexya-enterprise/upgrade?num_users=" + data);
         });
     },
     

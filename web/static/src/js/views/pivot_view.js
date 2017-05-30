@@ -1,7 +1,7 @@
-odoo.define('web.PivotView', function (require) {
+hexya.define('web.PivotView', function (require) {
 "use strict";
 /*---------------------------------------------------------
- * Odoo Pivot Table view
+ * Hexya Pivot Table view
  *---------------------------------------------------------*/
 
 var core = require('web.core');

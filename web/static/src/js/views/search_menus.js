@@ -1,4 +1,4 @@
-odoo.define('web.FavoriteMenu', function (require) {
+hexya.define('web.FavoriteMenu', function (require) {
 "use strict";
 
 var core = require('web.core');
@@ -257,7 +257,7 @@ return Widget.extend({
 
 });
 
-odoo.define('web.FilterMenu', function (require) {
+hexya.define('web.FilterMenu', function (require) {
 "use strict";
 
 var search_filters = require('web.search_filters');
@@ -365,7 +365,7 @@ return Widget.extend({
 
 });
 
-odoo.define('web.GroupByMenu', function (require) {
+hexya.define('web.GroupByMenu', function (require) {
 "use strict";
 
 var Widget = require('web.Widget');

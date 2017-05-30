@@ -1,4 +1,4 @@
-odoo.define('web.framework', function (require) {
+hexya.define('web.framework', function (require) {
 "use strict";
 
 var core = require('web.core');
@@ -80,7 +80,7 @@ $.async_when = function() {
 /** Setup blockui */
 if ($.blockUI) {
     $.blockUI.defaults.baseZ = 1100;
-    $.blockUI.defaults.message = '<div class="openerp oe_blockui_spin_container" style="background-color: transparent;">';
+    $.blockUI.defaults.message = '<div class="hexyaerp oe_blockui_spin_container" style="background-color: transparent;">';
     $.blockUI.defaults.css.border = '0';
     $.blockUI.defaults.css["background-color"] = '';
 }
@@ -137,7 +137,7 @@ function redirect (url, wait) {
 
 //  * Client action to reload the whole interface.
 //  * If params.menu_id, it opens the given menu entry.
-//  * If params.wait, reload will wait the openerp server to be reachable before reloading
+//  * If params.wait, reload will wait the hexyaerp server to be reachable before reloading
  
 function Reload(parent, action) {
     var params = action.params || {};
@@ -278,17 +278,17 @@ $.fn.getAttributes = function() {
     }
     return o;
 };
-$.fn.openerpClass = function(additionalClass) {
+$.fn.hexyaerpClass = function(additionalClass) {
     // This plugin should be applied on top level elements
     additionalClass = additionalClass || '';
     if (!!$.browser.msie) {
-        additionalClass += ' openerp_ie';
+        additionalClass += ' hexyaerp_ie';
     }
     return this.each(function() {
-        $(this).addClass('openerp ' + additionalClass);
+        $(this).addClass('hexyaerp ' + additionalClass);
     });
 };
-$.fn.openerpBounce = function() {
+$.fn.hexyaerpBounce = function() {
     return this.each(function() {
         $(this).css('box-sizing', 'content-box').effect('bounce', {distance: 18, times: 5}, 250);
     });
@@ -386,7 +386,7 @@ return {
 
 });
 
-odoo.define('web.IFrameWidget', function (require) {
+hexya.define('web.IFrameWidget', function (require) {
 "use strict";
 
 var Widget = require('web.Widget');

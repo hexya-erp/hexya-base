@@ -16,10 +16,10 @@ $sheet-padding: 16px
 // Mixins {{{
 @font-face
     font-family: 'mnmliconsRegular'
-    src: url('/static/web/src/font/mnmliconsv21-webfont.eot') format('eot')
-    src: url('/static/web/src/font/mnmliconsv21-webfont.woff') format('woff')
-    src: url('/static/web/src/font/mnmliconsv21-webfont.ttf') format('truetype')
-    src: url('/static/web/src/font/mnmliconsv21-webfont.svg') format('svg') active
+    src: url('/web/static/src/font/mnmliconsv21-webfont.eot') format('eot')
+    src: url('/web/static/src/font/mnmliconsv21-webfont.woff') format('woff')
+    src: url('/web/static/src/font/mnmliconsv21-webfont.ttf') format('truetype')
+    src: url('/web/static/src/font/mnmliconsv21-webfont.svg') format('svg') active
     font-weight: normal
     font-style: normal
 
@@ -185,7 +185,7 @@ $sheet-padding: 16px
 .o_hidden
     display: none!important
 
-.openerp
+.hexyaerp
     // Global style {{{
     padding: 0
     margin: 0
@@ -193,7 +193,7 @@ $sheet-padding: 16px
     color: #4c4c4c
     font-size: 13px
     background: white
-    &.openerp_webclient_container
+    &.hexyaerp_webclient_container
         height: 95% // fallback for browsers without support for calc()
         height: -webkit-calc(100% - 34px)
         height: calc(100% - 34px)
@@ -201,7 +201,7 @@ $sheet-padding: 16px
         display: -webkit-flex
         display: flex
     @media (max-width: 768px)
-        &.openerp_webclient_container
+        &.hexyaerp_webclient_container
             height: 95% // fallback for browsers without support for calc()
             height: -webkit-calc(100% - 52px)
             height: calc(100% - 52px)
@@ -680,13 +680,13 @@ $sheet-padding: 16px
         .oe_secondary_submenu li
             margin-left: 20px
     // }}}
-    // About openerp {{{
-    $link-color-odoo: #a24689
+    // About hexyaerp {{{
+    $link-color-hexya: #a24689
     .oe_about
         .label
-            background-color: $link-color-odoo
+            background-color: $link-color-hexya
         a
-            color: $link-color-odoo
+            color: $link-color-hexya
 
         .user-details
             position: relative
@@ -708,7 +708,7 @@ $sheet-padding: 16px
                         a
                             padding: 10px 20px
                         &.active a
-                            background: $link-color-odoo
+                            background: $link-color-hexya
                             color: #fff
                 .user-body
                     text-align: center
@@ -2213,7 +2213,7 @@ $sheet-padding: 16px
     padding: 0
         
 @-moz-document url-prefix()
-    .openerp
+    .hexyaerp
         .oe_form_field_many2one .oe_m2o_cm_button
             line-height: 18px
         .oe_webclient
@@ -2232,12 +2232,12 @@ $sheet-padding: 16px
 // }}}
 
 // jQueryUI top level {{{
-// The jQuery-ui overlay and Autocomplete are outside the .openerp div, please don't add indentation !!!
+// The jQuery-ui overlay and Autocomplete are outside the .hexyaerp div, please don't add indentation !!!
 div.ui-widget-overlay
     background: black
     @include opacity(0.3)
-// TODO: I think only the overlay is problematic, the other top level widgets should use $.fn.openerpClass()
-//       eg: $el.autocomplete().openerpClass();
+// TODO: I think only the overlay is problematic, the other top level widgets should use $.fn.hexyaerpClass()
+//       eg: $el.autocomplete().hexyaerpClass();
 .ui-widget
     font-family: "Lucida Grande", Helvetica, Verdana, Arial, sans-serif
     color: #4c4c4c
@@ -2268,7 +2268,7 @@ div.ui-widget-overlay
     @include radius(3px)
 // }}}
 
-.openerp
+.hexyaerp
     .db_option_table
         td
             padding-bottom: 10px !important
@@ -2306,7 +2306,7 @@ body.oe_single_form
 // }}}
 
 // Internet Explorer 9+ specifics {{{
-.openerp_ie
+.hexyaerp_ie
     .placeholder
         color: $tag-border !important
         font-style: italic !important
@@ -2409,10 +2409,10 @@ body.oe_single_form
     tr, td
         page-break-inside: avoid
         page-break-after: auto
-    .openerp#announcement_bar_table
+    .hexyaerp#announcement_bar_table
         display: none
-    .openerp
-        &.openerp_webclient_container
+    .hexyaerp
+        &.hexyaerp_webclient_container
             display: block
             height: auto !important
         .oe-view-manager
@@ -2423,7 +2423,7 @@ body.oe_single_form
         .oe_application > div > .oe_view_manager > .oe_view_manager_wrapper > div > .oe_view_manager_body
             overflow: visible
             position: relative !important
-        .oe_header_row, ul.oe_header, div.oe_mail_thread_action, .oe_mail_recthread_actions, .oe_button_box, .oe_form button, button.oe_invite, .oe_form header, .openerp .oe_notebook > li.ui-state-default, .oe_topbar, .oe_leftbar, .oe_loading
+        .oe_header_row, ul.oe_header, div.oe_mail_thread_action, .oe_mail_recthread_actions, .oe_button_box, .oe_form button, button.oe_invite, .oe_form header, .hexyaerp .oe_notebook > li.ui-state-default, .oe_topbar, .oe_leftbar, .oe_loading
             // We use !important here because jQuery adds @style = display: block on elements when using $.fn.show()
             display: none !important
         .oe_list_content
@@ -2452,11 +2452,11 @@ body.oe_single_form
         text-shadow: none
         .text-core .text-wrap .text-arrow
             background: none
-        .openerp div.oe_mail_wall
+        .hexyaerp div.oe_mail_wall
             overflow: hidden !important
         .oe-view-manager .oe-view-manager-content
             overflow: visible
-    .openerp.openerp_webclient_container
+    .hexyaerp.hexyaerp_webclient_container
         overflow: visible
 // }}}
 

@@ -1,4 +1,4 @@
-odoo.define('web.pyeval', function (require) {
+hexya.define('web.pyeval', function (require) {
 "use strict";
 
 var core = require('web.core');

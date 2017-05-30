@@ -1,4 +1,4 @@
-odoo.define('web.WebClient', function (require) {
+hexya.define('web.WebClient', function (require) {
 "use strict";
 
 var ActionManager = require('web.ActionManager');
@@ -47,7 +47,7 @@ var WebClient = Widget.extend({
         this._current_state = null;
         this.menu_dm = new utils.DropMisordered();
         this.action_mutex = new utils.Mutex();
-        this.set('title_part', {"zopenerp": "Odoo"});
+        this.set('title_part', {"zhexyaerp": "Hexya"});
     },
     start: function() {
         var self = this;
@@ -120,9 +120,9 @@ var WebClient = Widget.extend({
         var self = this;
         session.on('error', crash_manager, crash_manager.rpc_error);
         self.notification_manager = new NotificationManager(this);
-        self.notification_manager.appendTo(self.$('.openerp'));
+        self.notification_manager.appendTo(self.$('.hexyaerp'));
         self.loading = new Loading(self);
-        self.loading.appendTo(self.$('.openerp_webclient_container'));
+        self.loading.appendTo(self.$('.hexyaerp_webclient_container'));
         self.action_manager = new ActionManager(self);
         self.action_manager.replace(self.$('.oe_application'));
 

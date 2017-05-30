@@ -1,9 +1,9 @@
-odoo.define('web.crash_manager', function (require) {
+hexya.define('web.crash_manager', function (require) {
     var CrashManager = require('web.CrashManager');
     return new CrashManager();
 });
 
-odoo.define('web.CrashManager', function (require) {
+hexya.define('web.CrashManager', function (require) {
 "use strict";
 
 var ajax = require('web.ajax');
@@ -65,8 +65,8 @@ var CrashManager = core.Class.extend({
             new (handler)(this, error).display();
             return;
         }
-        if (error.data.name === "openerp.http.SessionExpiredException" || error.data.name === "werkzeug.exceptions.Forbidden") {
-            this.show_warning({type: "Session Expired", data: { message: _t("Your Odoo session expired. Please refresh the current web page.") }});
+        if (error.data.name === "hexyaerp.http.SessionExpiredException" || error.data.name === "werkzeug.exceptions.Forbidden") {
+            this.show_warning({type: "Session Expired", data: { message: _t("Your Hexya session expired. Please refresh the current web page.") }});
             return;
         }
         if (_.has(map_title, error.data.exception_type)) {
@@ -116,7 +116,7 @@ var CrashManager = core.Class.extend({
         }
         new Dialog(this, {
             size: 'medium',
-            title: "Odoo " + (_.str.capitalize(error.type) || _t("Warning")),
+            title: "Hexya " + (_.str.capitalize(error.type) || _t("Warning")),
             subtitle: error.data.title,
             $content: $('<div>').html(QWeb.render('CrashManager.warning', {error: error}))
         }).open();
@@ -126,7 +126,7 @@ var CrashManager = core.Class.extend({
             return;
         }
         new Dialog(this, {
-            title: "Odoo " + _.str.capitalize(error.type),
+            title: "Hexya " + _.str.capitalize(error.type),
             $content: QWeb.render('CrashManager.error', {session: session, error: error})
         }).open();
     },
@@ -173,7 +173,7 @@ var RedirectWarningHandler = Dialog.extend(ExceptionHandler, {
 
         new Dialog(this, {
             size: 'medium',
-            title: "Odoo " + (_.str.capitalize(error.type) || "Warning"),
+            title: "Hexya " + (_.str.capitalize(error.type) || "Warning"),
             buttons: [
                 {text: error.data.arguments[2], classes : "btn-primary", click: function() {
                     window.location.href = '#action='+error.data.arguments[1];
@@ -186,7 +186,7 @@ var RedirectWarningHandler = Dialog.extend(ExceptionHandler, {
     }
 });
 
-core.crash_registry.add('openerp.exceptions.RedirectWarning', RedirectWarningHandler);
+core.crash_registry.add('hexyaerp.exceptions.RedirectWarning', RedirectWarningHandler);
 
 return CrashManager;
 });

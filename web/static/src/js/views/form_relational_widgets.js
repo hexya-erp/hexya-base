@@ -1,4 +1,4 @@
-odoo.define('web.form_relational', function (require) {
+hexya.define('web.form_relational', function (require) {
 "use strict";
 
 var ControlPanel = require('web.ControlPanel');
@@ -302,7 +302,7 @@ var FieldMany2One = common.AbstractField.extend(common.CompletionFieldMixin, com
         });
         // set position for list of suggestions box
         this.$input.autocomplete( "option", "position", { my : "left top", at: "left bottom" } );
-        this.$input.autocomplete("widget").openerpClass();
+        this.$input.autocomplete("widget").hexyaerpClass();
         // used to correct a bug when selecting an element by pushing 'enter' in an editable list
         this.$input.keyup(function(e) {
             if (e.which === 13) { // ENTER
@@ -434,7 +434,7 @@ var FieldMany2One = common.AbstractField.extend(common.CompletionFieldMixin, com
  * A Abstract field for one2many and many2many field
  * For all fields on2many or many2many:
  *  - this.get('value') contains a list of ids and virtual ids
- *  - get_value() return an odoo write command list
+ *  - get_value() return an hexya write command list
  */
 var AbstractManyField = common.AbstractField.extend({
     init: function(field_manager, node) {

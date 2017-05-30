@@ -1,7 +1,7 @@
-odoo.define('web.TreeView', function (require) {
+hexya.define('web.TreeView', function (require) {
 "use strict";
 /*---------------------------------------------------------
- * Odoo Tree view
+ * Hexya Tree view
  *---------------------------------------------------------*/
 
 var core = require('web.core');

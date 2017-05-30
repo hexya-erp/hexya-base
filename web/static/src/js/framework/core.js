@@ -1,4 +1,4 @@
-odoo.define('web.core', function (require) {
+hexya.define('web.core', function (require) {
 "use strict";
 
 var Class = require('web.Class');

@@ -1,4 +1,4 @@
-odoo.define('web.Sidebar', function (require) {
+hexya.define('web.Sidebar', function (require) {
 "use strict";
 
 var core = require('web.core');

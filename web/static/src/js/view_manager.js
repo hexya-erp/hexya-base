@@ -1,4 +1,4 @@
-odoo.define('web.ViewManager', function (require) {
+hexya.define('web.ViewManager', function (require) {
 "use strict";
 
 var ControlPanelMixin = require('web.ControlPanelMixin');

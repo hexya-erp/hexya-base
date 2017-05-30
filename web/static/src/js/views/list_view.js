@@ -1,5 +1,5 @@
 
-odoo.define('web.ListView', function (require) {
+hexya.define('web.ListView', function (require) {
 "use strict";
 
 var core = require('web.core');
@@ -955,7 +955,7 @@ var ListView = View.extend( /** @lends instance.web.ListView# */ {
         if (this.$buttons) {
             var $buttons = this.$buttons;
             this.$el.find('.oe_view_nocontent').click(function() {
-                $buttons.width($buttons.width() + 1).openerpBounce();
+                $buttons.width($buttons.width() + 1).hexyaerpBounce();
             });
         }
     }

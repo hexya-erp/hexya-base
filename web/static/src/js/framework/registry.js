@@ -1,4 +1,4 @@
-odoo.define('web.Registry', function (require) {
+hexya.define('web.Registry', function (require) {
 "use strict";
 
 var Class = require('web.Class');

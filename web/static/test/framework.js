@@ -1,4 +1,4 @@
-odoo.define_section('class', ['web.Class'], function (test) {
+hexya.define_section('class', ['web.Class'], function (test) {
 
     test('Basic class creation', function (assert, Class) {
         var C = Class.extend({
@@ -141,7 +141,7 @@ odoo.define_section('class', ['web.Class'], function (test) {
     });
 });
 
-odoo.define_section('Widget.proxy', ['web.Widget'], function (test) {
+hexya.define_section('Widget.proxy', ['web.Widget'], function (test) {
     test('(String)', function (assert, Widget) {
         var W = Widget.extend({
             exec: function () {
@@ -203,7 +203,7 @@ odoo.define_section('Widget.proxy', ['web.Widget'], function (test) {
 
 });
 
-odoo.define_section('Widget.renderElement', ['web.Widget'], function (test) {
+hexya.define_section('Widget.renderElement', ['web.Widget'], function (test) {
 
     test('no template, default', function (assert, Widget) {
         var widget = new (Widget.extend({ }))();
@@ -336,7 +336,7 @@ odoo.define_section('Widget.renderElement', ['web.Widget'], function (test) {
 
 });
 
-odoo.define_section('Widget.$', ['web.Widget', 'web.core'], function (test) {
+hexya.define_section('Widget.$', ['web.Widget', 'web.core'], function (test) {
 
     test('basic-alias', function (assert, Widget, core) {
         core.qweb.add_template(
@@ -363,7 +363,7 @@ odoo.define_section('Widget.$', ['web.Widget', 'web.core'], function (test) {
 
 });
 
-odoo.define_section('Widget.events', ['web.Widget', 'web.core'], function (test) {
+hexya.define_section('Widget.events', ['web.Widget', 'web.core'], function (test) {
     function setup(qweb) {
        qweb.add_template(
             '<no>' +
@@ -433,7 +433,7 @@ odoo.define_section('Widget.events', ['web.Widget', 'web.core'], function (test)
     });
 });
 
-odoo.define_section('Widget.async', ['web.Widget'], function (test) {
+hexya.define_section('Widget.async', ['web.Widget'], function (test) {
     test("alive(alive)", function (assert, Widget) {
         assert.expect(1);
 
@@ -504,7 +504,7 @@ odoo.define_section('Widget.async', ['web.Widget'], function (test) {
 });
 
 
-odoo.define_section('server-formats', ['web.time'], function (test) {
+hexya.define_section('server-formats', ['web.time'], function (test) {
 
     test('Parse server datetime', function (assert, time) {
         var date = time.str_to_datetime("2009-05-04 12:34:23");

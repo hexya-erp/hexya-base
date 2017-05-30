@@ -1,13 +1,13 @@
 // ------------------------------------------------------------------------------
-// Compatibility with Odoo v8.  
+// Compatibility with Hexya v8.
 // 
 // With the new module system, no global variable can (and should) be accessed
-// in openerp.  This file exports everything, to mimic the previous global 
+// in hexyaerp.  This file exports everything, to mimic the previous global
 // namespace structure.  This is only supposed to be used by 3rd parties to 
-// facilitate migration.  Odoo addons should not use the 'openerp' variable at 
+// facilitate migration.  Hexya addons should not use the 'hexyaerp' variable at
 // all.
 // ------------------------------------------------------------------------------
-odoo.define('web.compatibility', function (require) {
+hexya.define('web.compatibility', function (require) {
 "use strict";
 
 var ActionManager = require('web.ActionManager');
@@ -48,87 +48,87 @@ var OldRegistry = Registry.extend({
     },
 });
 
-window.openerp = window.openerp || {};
+window.hexyaerp = window.hexyaerp || {};
 
 $.Mutex = utils.Mutex;
-openerp._session_id = "instance0";
-openerp._t = core._t;
-openerp.get_cookie = utils.get_cookie;
+hexyaerp._session_id = "instance0";
+hexyaerp._t = core._t;
+hexyaerp.get_cookie = utils.get_cookie;
 
-openerp.qweb = core.qweb;
-openerp.session = session;
+hexyaerp.qweb = core.qweb;
+hexyaerp.session = session;
 
-openerp.web = openerp.web || {};
-openerp.web._t = core._t;
-openerp.web._lt = core._lt;
+hexyaerp.web = hexyaerp.web || {};
+hexyaerp.web._t = core._t;
+hexyaerp.web._lt = core._lt;
 
-openerp.web.ActionManager = ActionManager;
-openerp.web.auto_str_to_date = time.auto_str_to_date;
-openerp.web.blockUI = framework.blockUI;
-openerp.web.BufferedDataSet = data.BufferedDataSet;
-openerp.web.bus = core.bus;
-openerp.web.Class = core.Class;
-openerp.web.client_actions = make_old_registry(core.action_registry);
-openerp.web.CompoundContext = data.CompoundContext;
-openerp.web.CompoundDomain = data.CompoundDomain;
-openerp.web.DataSetSearch = data.DataSetSearch;
-openerp.web.DataSet = data.DataSet;
-openerp.web.date_to_str = time.date_to_str;
-openerp.web.Dialog = Dialog;
-openerp.web.DropMisordered = utils.DropMisordered;
+hexyaerp.web.ActionManager = ActionManager;
+hexyaerp.web.auto_str_to_date = time.auto_str_to_date;
+hexyaerp.web.blockUI = framework.blockUI;
+hexyaerp.web.BufferedDataSet = data.BufferedDataSet;
+hexyaerp.web.bus = core.bus;
+hexyaerp.web.Class = core.Class;
+hexyaerp.web.client_actions = make_old_registry(core.action_registry);
+hexyaerp.web.CompoundContext = data.CompoundContext;
+hexyaerp.web.CompoundDomain = data.CompoundDomain;
+hexyaerp.web.DataSetSearch = data.DataSetSearch;
+hexyaerp.web.DataSet = data.DataSet;
+hexyaerp.web.date_to_str = time.date_to_str;
+hexyaerp.web.Dialog = Dialog;
+hexyaerp.web.DropMisordered = utils.DropMisordered;
 
-openerp.web.form = openerp.web.form || {};
-openerp.web.form.AbstractField = form_common.AbstractField;
-openerp.web.form.compute_domain = data.compute_domain;
-openerp.web.form.DefaultFieldManager = form_common.DefaultFieldManager;
-openerp.web.form.FieldChar = core.form_widget_registry.get('char');
-openerp.web.form.FieldFloat = core.form_widget_registry.get('float');
-openerp.web.form.FieldStatus = core.form_widget_registry.get('statusbar');
-openerp.web.form.FieldMany2ManyTags = core.form_widget_registry.get('many2many_tags');
-openerp.web.form.FieldMany2One = core.form_widget_registry.get('many2one');
-openerp.web.form.FormWidget = form_common.FormWidget;
-openerp.web.form.tags = make_old_registry(core.form_tag_registry);
-openerp.web.form.widgets = make_old_registry(core.form_widget_registry);
-openerp.web.form.custom_widgets = make_old_registry(core.form_custom_registry);
+hexyaerp.web.form = hexyaerp.web.form || {};
+hexyaerp.web.form.AbstractField = form_common.AbstractField;
+hexyaerp.web.form.compute_domain = data.compute_domain;
+hexyaerp.web.form.DefaultFieldManager = form_common.DefaultFieldManager;
+hexyaerp.web.form.FieldChar = core.form_widget_registry.get('char');
+hexyaerp.web.form.FieldFloat = core.form_widget_registry.get('float');
+hexyaerp.web.form.FieldStatus = core.form_widget_registry.get('statusbar');
+hexyaerp.web.form.FieldMany2ManyTags = core.form_widget_registry.get('many2many_tags');
+hexyaerp.web.form.FieldMany2One = core.form_widget_registry.get('many2one');
+hexyaerp.web.form.FormWidget = form_common.FormWidget;
+hexyaerp.web.form.tags = make_old_registry(core.form_tag_registry);
+hexyaerp.web.form.widgets = make_old_registry(core.form_widget_registry);
+hexyaerp.web.form.custom_widgets = make_old_registry(core.form_custom_registry);
 
-openerp.web.format_value = formats.format_value;
-openerp.web.FormView = FormView;
+hexyaerp.web.format_value = formats.format_value;
+hexyaerp.web.FormView = FormView;
 
-openerp.web.json_node_to_xml = utils.json_node_to_xml;
+hexyaerp.web.json_node_to_xml = utils.json_node_to_xml;
 
-openerp.web.ListView = ListView;
-openerp.web.Menu = Menu;
-openerp.web.Model = Model;
-openerp.web.normalize_format = time.strftime_to_moment_format;
-openerp.web.py_eval = pyeval.py_eval;
-openerp.web.pyeval = pyeval;
-openerp.web.qweb = core.qweb;
+hexyaerp.web.ListView = ListView;
+hexyaerp.web.Menu = Menu;
+hexyaerp.web.Model = Model;
+hexyaerp.web.normalize_format = time.strftime_to_moment_format;
+hexyaerp.web.py_eval = pyeval.py_eval;
+hexyaerp.web.pyeval = pyeval;
+hexyaerp.web.qweb = core.qweb;
 
-openerp.web.Registry = OldRegistry;
+hexyaerp.web.Registry = OldRegistry;
 
-openerp.web.search = {};
-openerp.web.search.FavoriteMenu = FavoriteMenu;
-openerp.web.SearchView = SearchView;
-openerp.web.Sidebar = Sidebar;
-openerp.web.str_to_date = time.str_to_date;
-openerp.web.str_to_datetime = time.str_to_datetime;
-openerp.web.SystrayItems = SystrayMenu.Items;
-openerp.web.unblockUI = framework.unblockUI;
-openerp.web.UserMenu = UserMenu;
-openerp.web.View = View;
-openerp.web.ViewManager = ViewManager;
-openerp.web.views = make_old_registry(core.view_registry);
-openerp.web.WebClient = WebClient;
-openerp.web.Widget = Widget;
+hexyaerp.web.search = {};
+hexyaerp.web.search.FavoriteMenu = FavoriteMenu;
+hexyaerp.web.SearchView = SearchView;
+hexyaerp.web.Sidebar = Sidebar;
+hexyaerp.web.str_to_date = time.str_to_date;
+hexyaerp.web.str_to_datetime = time.str_to_datetime;
+hexyaerp.web.SystrayItems = SystrayMenu.Items;
+hexyaerp.web.unblockUI = framework.unblockUI;
+hexyaerp.web.UserMenu = UserMenu;
+hexyaerp.web.View = View;
+hexyaerp.web.ViewManager = ViewManager;
+hexyaerp.web.views = make_old_registry(core.view_registry);
+hexyaerp.web.WebClient = WebClient;
+hexyaerp.web.Widget = Widget;
 
-openerp.Widget = openerp.web.Widget;
-openerp.Widget.prototype.session = session;
+hexyaerp.Widget = hexyaerp.web.Widget;
+hexyaerp.Widget.prototype.session = session;
 
 
 WebClient.include({
     init: function () {
-        openerp.client = this;
-        openerp.webclient = this;
+        hexyaerp.client = this;
+        hexyaerp.webclient = this;
         start_modules();
         client_started.resolve();
         this._super.apply(this, arguments);
@@ -146,7 +146,7 @@ function make_old_registry(registry) {
     };
 }
 function get_object(path) {
-    var object_match = openerp;
+    var object_match = hexyaerp;
     path = path.split('.');
     // ignore first section
     for(var i=1; i<path.length; ++i) {
@@ -163,7 +163,7 @@ function get_object(path) {
 var inited = false;
 function start_modules (modules) {
     if (modules === undefined) {
-        modules = odoo._modules;
+        modules = hexya._modules;
     }
     modules = _.without(modules, "web");
     if (inited) {
@@ -171,17 +171,17 @@ function start_modules (modules) {
     }
     inited = true;
     for(var i=0; i < modules.length; i++) {
-        var fct = openerp[modules[i]];
+        var fct = hexyaerp[modules[i]];
         if (typeof(fct) === "function") {
-            openerp[modules[i]] = {};
+            hexyaerp[modules[i]] = {};
             for (var k in fct) {
-                openerp[modules[i]][k] = fct[k];
+                hexyaerp[modules[i]][k] = fct[k];
             }
-            fct(openerp, openerp[modules[i]]);
+            fct(hexyaerp, hexyaerp[modules[i]]);
         }
     }
-    openerp._modules = ['web'].concat(modules);
-    return openerp;
+    hexyaerp._modules = ['web'].concat(modules);
+    return hexyaerp;
 };
 
 // Monkey-patching of the ListView for backward compatibiliy of the colors and

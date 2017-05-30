@@ -1,7 +1,7 @@
-odoo.define('web.GraphView', function (require) {
+hexya.define('web.GraphView', function (require) {
 "use strict";
 /*---------------------------------------------------------
- * Odoo Graph view
+ * Hexya Graph view
  *---------------------------------------------------------*/
 
 var core = require('web.core');

@@ -1,4 +1,4 @@
-odoo.define('web.form_common', function (require) {
+hexya.define('web.form_common', function (require) {
 "use strict";
 
 var core = require('web.core');

@@ -1,4 +1,4 @@
-odoo.define('web.SearchView', function (require) {
+hexya.define('web.SearchView', function (require) {
 "use strict";
 
 var AutoComplete = require('web.AutoComplete');
@@ -604,8 +604,8 @@ var SearchView = Widget.extend(/** @lends instance.web.SearchView# */{
                 .$el.focus();
     },
     /**
-     * @param {openerp.web.search.SearchQuery | undefined} Undefined if event is change
-     * @param {openerp.web.search.Facet}
+     * @param {hexyaerp.web.search.SearchQuery | undefined} Undefined if event is change
+     * @param {hexyaerp.web.search.Facet}
      * @param {Object} [options]
      */
     renderFacets: function (collection, model, options) {
@@ -732,7 +732,7 @@ return SearchView;
 
 });
 
-odoo.define('web.AutoComplete', function (require) {
+hexya.define('web.AutoComplete', function (require) {
 "use strict";
 
 var Widget = require('web.Widget');

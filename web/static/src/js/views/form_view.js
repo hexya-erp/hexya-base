@@ -1,4 +1,4 @@
-odoo.define('web.FormView', function (require) {
+hexya.define('web.FormView', function (require) {
 "use strict";
 
 var core = require('web.core');
@@ -40,7 +40,7 @@ var FormView = View.extend(common.FieldManagerMixin, {
      * @constructs instance.web.FormView
      * @extends instance.web.View
      *
-     * @param {instance.web.Session} session the current openerp session
+     * @param {instance.web.Session} session the current hexyaerp session
      * @param {instance.web.DataSet} dataset the dataset this view will work with
      * @param {String} view_id the identifier of the OpenERP view object
      *
@@ -149,7 +149,7 @@ var FormView = View.extend(common.FieldManagerMixin, {
         this.$el.find(".oe_form_group_row,.oe_form_field,label,h1,.oe_title,.oe_notebook_page, .oe_list_content").on('click', function (e) {
             if(self.get("actual_mode") == "view" && self.$buttons && !$(e.target).is('[data-toggle]')) {
                 var $button = self.$buttons.find(".oe_form_button_edit");
-                $button.openerpBounce();
+                $button.hexyaerpBounce();
                 e.stopPropagation();
                 core.bus.trigger('click', e);
             }
@@ -158,7 +158,7 @@ var FormView = View.extend(common.FieldManagerMixin, {
         this.$el.find(".oe_form_field_status:not(.oe_form_status_clickable)").on('click', function (e) {
             if((self.get("actual_mode") == "view")) {
                 var $button = self.$el.find(".oe_highlight:not(.o_form_invisible)").css({'float':'left','clear':'none'});
-                $button.openerpBounce();
+                $button.hexyaerpBounce();
                 e.stopPropagation();
             }
          });
@@ -992,7 +992,7 @@ var FormView = View.extend(common.FieldManagerMixin, {
             if (this.sidebar) {
                 this.sidebar.do_attachement_update(this.dataset, this.datarecord.id);
             }
-            //openerp.log("The record has been created with id #" + this.datarecord.id);
+            //hexyaerp.log("The record has been created with id #" + this.datarecord.id);
             return $.when(this.reload()).then(function () {
                 self.trigger('record_created', r);
                 return _.extend(r, {created: true});

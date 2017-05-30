@@ -1,4 +1,4 @@
-odoo.define('web.Priority', function (require) {
+hexya.define('web.Priority', function (require) {
 "use strict";
 
 var core = require('web.core');

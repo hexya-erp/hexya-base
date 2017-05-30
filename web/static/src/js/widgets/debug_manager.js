@@ -1,4 +1,4 @@
-odoo.define('web.DebugManager', function (require) {
+hexya.define('web.DebugManager', function (require) {
 "use strict";
 
 var core = require('web.core');
@@ -30,7 +30,7 @@ if (core.debug) {
          * Updates its attributes according to the inner_widget of the ActionManager
          */
         _update: function() {
-            this.view_manager = odoo.__DEBUG__.services['web.web_client'].action_manager.get_inner_widget();
+            this.view_manager = hexya.__DEBUG__.services['web.web_client'].action_manager.get_inner_widget();
             if (!this.view_manager instanceof ViewManager) { return; }
             this.dataset = this.view_manager.dataset;
             this.active_view = this.view_manager.active_view;

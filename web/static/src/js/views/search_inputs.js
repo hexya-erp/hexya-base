@@ -1,4 +1,4 @@
-odoo.define('web.search_inputs', function (require) {
+hexya.define('web.search_inputs', function (require) {
 "use strict";
 
 var core = require('web.core');
@@ -371,7 +371,7 @@ var DateField = Field.extend(/** @lends instance.web.search.DateField# */{
 });
 
 /**
- * Implementation of the ``datetime`` openerp field type:
+ * Implementation of the ``datetime`` hexyaerp field type:
  *
  * * Uses the same widget as the ``date`` field type (a simple date)
  *
@@ -573,7 +573,7 @@ var FilterGroup = Input.extend(/** @lends instance.web.search.FilterGroup# */{
     /**
      * Fetches contexts for all enabled filters in the group
      *
-     * @param {openerp.web.search.Facet} facet
+     * @param {hexyaerp.web.search.Facet} facet
      * @return {*} combined contexts of the enabled filters in this group
      */
     get_context: function (facet) {

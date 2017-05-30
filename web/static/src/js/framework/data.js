@@ -1,4 +1,4 @@
-odoo.define('web.data', function (require) {
+hexya.define('web.data', function (require) {
 "use strict";
 
 var core = require('web.core');
@@ -136,7 +136,7 @@ var Query = Class.extend({
      * Performs a groups read according to the provided grouping criterion
      *
      * @param {String|Array<String>} grouping
-     * @returns {jQuery.Deferred<Array<openerp.web.QueryGroup>> | null}
+     * @returns {jQuery.Deferred<Array<hexyaerp.web.QueryGroup>> | null}
      */
     group_by: function (grouping) {
         var ctx = pyeval.eval(
@@ -184,7 +184,7 @@ var Query = Class.extend({
      * the new context.
      *
      * @param context context data to add to the query
-     * @returns {openerp.web.Query}
+     * @returns {hexyaerp.web.Query}
      */
     context: function (context) {
         if (!context) { return this; }
@@ -195,7 +195,7 @@ var Query = Class.extend({
      * the new domain.
      *
      * @param domain domain data to AND with the current query filter
-     * @returns {openerp.web.Query}
+     * @returns {hexyaerp.web.Query}
      */
     filter: function (domain) {
         if (!domain) { return this; }
@@ -208,7 +208,7 @@ var Query = Class.extend({
      * @param {Boolean} lazy indicates if the read_group should return only the 
      * first level of groupby records, or should return the records grouped by
      * all levels at once (so, it makes only 1 db request).
-     * @returns {openerp.web.Query}
+     * @returns {hexyaerp.web.Query}
      */
     lazy: function (lazy) {
         return this.clone({lazy: lazy});
@@ -218,7 +218,7 @@ var Query = Class.extend({
      * query's own limit
      *
      * @param {Number} limit maximum number of records the query should retrieve
-     * @returns {openerp.web.Query}
+     * @returns {hexyaerp.web.Query}
      */
     limit: function (limit) {
         return this.clone({limit: limit});
@@ -228,7 +228,7 @@ var Query = Class.extend({
      * query's own offset
      *
      * @param {Number} offset number of records the query should skip before starting its retrieval
-     * @returns {openerp.web.Query}
+     * @returns {hexyaerp.web.Query}
      */
     offset: function (offset) {
         return this.clone({offset: offset});
@@ -238,7 +238,7 @@ var Query = Class.extend({
      * those of the current query
      *
      * @param {String...} fields ordering clauses
-     * @returns {openerp.web.Query}
+     * @returns {hexyaerp.web.Query}
      */
     order_by: function (fields) {
         if (fields === undefined) { return this; }
@@ -583,7 +583,7 @@ var DataSet =  Class.extend(mixins.PropertiesMixin, {
      * Set the sort criteria on the dataset.  
      *
      * @param {Array} fields_list: list of fields order descriptors, as used by
-     * Odoo's ORM (such as 'name desc', 'product_id', 'order_date asc')
+     * Hexya's ORM (such as 'name desc', 'product_id', 'order_date asc')
      */
     set_sort: function (fields_list) {
         this._sort = deserialize_sort(fields_list);

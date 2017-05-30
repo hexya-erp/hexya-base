@@ -1,4 +1,4 @@
-odoo.define('web.Model', function (require) {
+hexya.define('web.Model', function (require) {
 "use strict";
 
 var Class = require('web.Class');
@@ -7,12 +7,12 @@ var utils = require('web.utils');
 
 var Model = Class.extend({
     /**
-    new openerp.web.Model([session,] model_name[, context[, domain]])
+    new hexyaerp.web.Model([session,] model_name[, context[, domain]])
 
     @constructs instance.web.Model
     @extends instance.web.Class
 
-    @param {openerp.web.Session} [session] The session object used to communicate with
+    @param {hexyaerp.web.Session} [session] The session object used to communicate with
     the server.
     @param {String} model_name name of the OpenERP model this object is bound to
     @param {Object} [context]

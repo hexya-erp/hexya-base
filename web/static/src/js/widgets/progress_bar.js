@@ -1,4 +1,4 @@
-odoo.define('web.ProgressBar', function (require) {
+hexya.define('web.ProgressBar', function (require) {
 "use strict";
 
 var core = require('web.core');

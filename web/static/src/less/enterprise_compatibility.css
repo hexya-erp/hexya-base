@@ -7277,10 +7277,10 @@ fieldset[disabled] .oe_link:focus {
   color: #777777;
   text-decoration: none;
 }
-.openerp .oe_avatar {
+.hexyaerp .oe_avatar {
   float: left;
 }
-.openerp .oe_button_box {
+.hexyaerp .oe_button_box {
   float: right;
 }
 .o_pager_value > input {
@@ -7353,21 +7353,21 @@ div.o_checkbox {
 div.o_checkbox > input + span {
   display: none;
 }
-.openerp .oe_formview .oe_button_box .oe_stat_button {
+.hexyaerp .oe_formview .oe_button_box .oe_stat_button {
   text-align: left;
 }
-.openerp .oe_formview .oe_button_box .oe_stat_button .o_button_icon {
+.hexyaerp .oe_formview .oe_button_box .oe_stat_button .o_button_icon {
   width: 30%;
   display: inline-block;
   vertical-align: middle;
 }
-.openerp .oe_formview .oe_button_box .oe_stat_button .o_stat_info {
+.hexyaerp .oe_formview .oe_button_box .oe_stat_button .o_stat_info {
   display: inline-block;
   vertical-align: middle;
   max-width: 70%;
   line-height: 1.2;
 }
-.openerp .oe_formview .oe_button_box .oe_stat_button .o_stat_info .o_stat_value {
+.hexyaerp .oe_formview .oe_button_box .oe_stat_button .o_stat_info .o_stat_value {
   display: block;
   max-width: 100%;
   white-space: nowrap;
@@ -7377,7 +7377,7 @@ div.o_checkbox > input + span {
   font-weight: 700;
   color: #337ab7;
 }
-.openerp .oe_formview .oe_button_box .oe_stat_button .o_stat_info .o_stat_text {
+.hexyaerp .oe_formview .oe_button_box .oe_stat_button .o_stat_info .o_stat_text {
   display: block;
   max-width: 100%;
   white-space: nowrap;
@@ -7386,10 +7386,10 @@ div.o_checkbox > input + span {
   vertical-align: top;
   font-size: small;
 }
-.openerp .oe_formview .oe_button_box .oe_stat_button .o_stat_info .o_stat_text .o_stat_value {
+.hexyaerp .oe_formview .oe_button_box .oe_stat_button .o_stat_info .o_stat_text .o_stat_value {
   display: inline;
 }
-.openerp .oe_formview .oe_button_box .oe_stat_button > span {
+.hexyaerp .oe_formview .oe_button_box .oe_stat_button > span {
   display: inline-block;
   vertical-align: middle;
   max-width: 70%;
@@ -7397,7 +7397,7 @@ div.o_checkbox > input + span {
   font-size: small;
   white-space: normal;
 }
-.openerp .oe_formview .oe_button_box .oe_stat_button > span .o_stat_value {
+.hexyaerp .oe_formview .oe_button_box .oe_stat_button > span .o_stat_value {
   display: block;
   max-width: 100%;
   white-space: nowrap;
@@ -7407,7 +7407,7 @@ div.o_checkbox > input + span {
   font-weight: 700;
   color: #337ab7;
 }
-.openerp .oe_formview .oe_button_box .oe_stat_button > span .o_stat_text {
+.hexyaerp .oe_formview .oe_button_box .oe_stat_button > span .o_stat_text {
   display: block;
   max-width: 100%;
   white-space: nowrap;
@@ -7416,36 +7416,36 @@ div.o_checkbox > input + span {
   vertical-align: top;
   font-size: small;
 }
-.openerp .oe_formview .oe_button_box .oe_stat_button > span .o_stat_text .o_stat_value {
+.hexyaerp .oe_formview .oe_button_box .oe_stat_button > span .o_stat_text .o_stat_value {
   display: inline;
 }
-.openerp .oe_formview .oe_button_box + .oe_title,
-.openerp .oe_formview .oe_button_box + .oe_avatar + .oe_title {
+.hexyaerp .oe_formview .oe_button_box + .oe_title,
+.hexyaerp .oe_formview .oe_button_box + .oe_avatar + .oe_title {
   width: 400px;
 }
-.openerp .oe_formview .oe_avatar > img {
+.hexyaerp .oe_formview .oe_avatar > img {
   max-width: 90px;
   max-height: 90px;
 }
-.openerp .oe_formview .oe_avatar + .oe_title {
+.hexyaerp .oe_formview .oe_avatar + .oe_title {
   padding-left: 95px;
 }
-.openerp .oe_formview .o_row > * {
-  width: auto!important;
+.hexyaerp .oe_formview .o_row > * {
+  width: auto !important;
 }
-.openerp .oe_formview .o_row > div {
+.hexyaerp .oe_formview .o_row > div {
   display: inline-block;
 }
-.openerp .oe_formview .o_row > div + div {
+.hexyaerp .oe_formview .o_row > div + div {
   margin-left: 5px;
 }
-.openerp .oe_formview .oe_form label {
+.hexyaerp .oe_formview .oe_form label {
   font-size: 13px;
 }
-.openerp .oe_formview .oe_form_group .oe_form_group_cell:not(.oe_form_group_cell_label) label {
+.hexyaerp .oe_formview .oe_form_group .oe_form_group_cell:not(.oe_form_group_cell_label) label {
   font-weight: normal;
 }
-.openerp .oe_formview .o_form_field_many2manytags {
+.hexyaerp .oe_formview .o_form_field_many2manytags {
   display: -ms-inline-flexbox;
   display: -moz-inline-box;
   display: -webkit-inline-flex;
@@ -7458,7 +7458,7 @@ div.o_checkbox > input + span {
   align-items: flex-start;
   padding: 0;
 }
-.openerp .oe_formview .o_form_field_many2manytags .badge {
+.hexyaerp .oe_formview .o_form_field_many2manytags .badge {
   cursor: pointer;
   -ms-flex: 0 0 auto;
   -moz-flex: 0 0 auto;
@@ -7469,17 +7469,17 @@ div.o_checkbox > input + span {
   color: #FFF;
   font-size: 12px;
 }
-.openerp .oe_formview .o_form_field_many2manytags .badge .o_delete {
+.hexyaerp .oe_formview .o_form_field_many2manytags .badge .o_delete {
   cursor: pointer;
 }
-.openerp .oe_formview .o_form_field_many2manytags .badge > ul {
+.hexyaerp .oe_formview .o_form_field_many2manytags .badge > ul {
   width: 228px;
 }
-.openerp .oe_formview .o_form_field_many2manytags .badge > ul > li {
+.hexyaerp .oe_formview .o_form_field_many2manytags .badge > ul > li {
   float: left;
   color: black;
 }
-.openerp .oe_formview .o_form_field_many2manytags .badge > ul > li > span {
+.hexyaerp .oe_formview .o_form_field_many2manytags .badge > ul > li > span {
   border-radius: 6px;
   width: 45px;
   height: 30px;
@@ -7488,24 +7488,24 @@ div.o_checkbox > input + span {
   cursor: pointer;
   padding: 0;
 }
-.openerp .oe_formview .o_form_field_many2manytags .badge > ul > li > span:hover {
+.hexyaerp .oe_formview .o_form_field_many2manytags .badge > ul > li > span:hover {
   opacity: 0.8;
 }
-.openerp .oe_formview .o_form_field_many2manytags .badge > ul > li:last-child {
+.hexyaerp .oe_formview .o_form_field_many2manytags .badge > ul > li:last-child {
   margin-top: 7px;
   cursor: auto;
 }
-.openerp .oe_formview .o_form_field_many2manytags > .oe_form_field_many2one {
+.hexyaerp .oe_formview .o_form_field_many2manytags > .oe_form_field_many2one {
   padding: 0;
 }
-.openerp .oe_formview.oe_form_editable .o_form_field_many2manytags {
+.hexyaerp .oe_formview.oe_form_editable .o_form_field_many2manytags {
   border: 1px solid #CCC;
   border-radius: 3px;
 }
-.openerp .oe_formview.oe_form_editable .o_form_field_many2manytags.o_form_field_empty {
+.hexyaerp .oe_formview.oe_form_editable .o_form_field_many2manytags.o_form_field_empty {
   display: none;
 }
-.openerp .oe_formview.oe_form_editable .o_form_field_many2manytags > .oe_form_field {
+.hexyaerp .oe_formview.oe_form_editable .o_form_field_many2manytags > .oe_form_field {
   -ms-flex: 1 0 100px;
   -moz-flex: 1 0 100px;
   -webkit-box-flex: 1;
@@ -7513,72 +7513,72 @@ div.o_checkbox > input + span {
   flex: 1 0 100px;
   position: initial;
 }
-.openerp .oe_formview.oe_form_editable .o_form_field_many2manytags > .oe_form_field input {
+.hexyaerp .oe_formview.oe_form_editable .o_form_field_many2manytags > .oe_form_field input {
   border: none;
 }
-.openerp .oe_formview .o_address_format {
+.hexyaerp .oe_formview .o_address_format {
   width: 100%;
 }
-.openerp .oe_formview .o_address_format > .oe_form_field {
+.hexyaerp .oe_formview .o_address_format > .oe_form_field {
   width: auto;
   display: block;
 }
-.openerp .oe_formview .o_address_format > .o_address_street,
-.openerp .oe_formview .o_address_format > .o_address_country {
+.hexyaerp .oe_formview .o_address_format > .o_address_street,
+.hexyaerp .oe_formview .o_address_format > .o_address_country {
   clear: left;
   width: 100%;
 }
-.openerp .oe_formview .o_address_format > .o_address_city,
-.openerp .oe_formview .o_address_format > .o_address_state,
-.openerp .oe_formview .o_address_format > .o_address_zip {
+.hexyaerp .oe_formview .o_address_format > .o_address_city,
+.hexyaerp .oe_formview .o_address_format > .o_address_state,
+.hexyaerp .oe_formview .o_address_format > .o_address_zip {
   float: left;
   margin-right: 2%;
 }
-.openerp .oe_formview .o_address_format > .o_address_zip {
+.hexyaerp .oe_formview .o_address_format > .o_address_zip {
   margin-right: 0;
 }
-.openerp .oe_formview .o_address_format.o_zip_city > .o_address_zip {
+.hexyaerp .oe_formview .o_address_format.o_zip_city > .o_address_zip {
   margin-right: 2%;
 }
-.openerp .oe_formview .o_address_format.o_zip_city > .o_address_city {
+.hexyaerp .oe_formview .o_address_format.o_zip_city > .o_address_city {
   margin-right: 0;
 }
-.openerp .oe_formview .o_address_format.o_zip_city > .o_address_state {
+.hexyaerp .oe_formview .o_address_format.o_zip_city > .o_address_state {
   clear: left;
   margin-right: 0;
 }
-.openerp .oe_formview .o_address_format.o_city_state > .o_address_state {
+.hexyaerp .oe_formview .o_address_format.o_city_state > .o_address_state {
   margin-right: 0;
 }
-.openerp .oe_formview .o_address_format.o_city_state > .o_address_zip {
+.hexyaerp .oe_formview .o_address_format.o_city_state > .o_address_zip {
   clear: left;
   margin-right: 0;
 }
-.openerp .oe_formview.oe_form_editable .o_address_format > .o_address_city {
+.hexyaerp .oe_formview.oe_form_editable .o_address_format > .o_address_city {
   width: 38%;
 }
-.openerp .oe_formview.oe_form_editable .o_address_format > .o_address_state {
+.hexyaerp .oe_formview.oe_form_editable .o_address_format > .o_address_state {
   width: 33%;
 }
-.openerp .oe_formview.oe_form_editable .o_address_format > .o_address_zip {
+.hexyaerp .oe_formview.oe_form_editable .o_address_format > .o_address_zip {
   width: 25%;
 }
-.openerp .oe_formview.oe_form_editable .o_address_format.o_zip_city > .o_address_zip {
+.hexyaerp .oe_formview.oe_form_editable .o_address_format.o_zip_city > .o_address_zip {
   width: 38%;
 }
-.openerp .oe_formview.oe_form_editable .o_address_format.o_zip_city > .o_address_city {
+.hexyaerp .oe_formview.oe_form_editable .o_address_format.o_zip_city > .o_address_city {
   width: 60%;
 }
-.openerp .oe_formview.oe_form_editable .o_address_format.o_zip_city > .o_address_state {
+.hexyaerp .oe_formview.oe_form_editable .o_address_format.o_zip_city > .o_address_state {
   width: 100%;
 }
-.openerp .oe_formview.oe_form_editable .o_address_format.o_city_state > .o_address_city {
+.hexyaerp .oe_formview.oe_form_editable .o_address_format.o_city_state > .o_address_city {
   width: 50%;
 }
-.openerp .oe_formview.oe_form_editable .o_address_format.o_city_state > .o_address_state {
+.hexyaerp .oe_formview.oe_form_editable .o_address_format.o_city_state > .o_address_state {
   width: 48%;
 }
-.openerp .oe_formview.oe_form_editable .o_address_format.o_city_state > .o_address_zip {
+.hexyaerp .oe_formview.oe_form_editable .o_address_format.o_city_state > .o_address_zip {
   width: 100%;
 }
 .o_form_field_many2manytags .o_tag_color_0 {

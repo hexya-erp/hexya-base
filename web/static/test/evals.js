@@ -1,11 +1,11 @@
-odoo.define_section('eval.basics', ['web.pyeval'], function(test, mock) {
+hexya.define_section('eval.basics', ['web.pyeval'], function(test, mock) {
     test('not prefix', function (assert) {
         assert.ok(py.eval('not False'));
         assert.ok(py.eval('not foo', {foo: false}));
         assert.ok(py.eval('not a in b', {a: 3, b: [1, 2, 4, 8]}));
     });
 });
-odoo.define_section('eval.types', ['web.pyeval'], function (test, mock) {
+hexya.define_section('eval.types', ['web.pyeval'], function (test, mock) {
 
     function makeTimeCheck (assert, pyeval) {
         var context = pyeval.context();
@@ -342,7 +342,7 @@ odoo.define_section('eval.types', ['web.pyeval'], function (test, mock) {
     });
 });
 
-odoo.define_section('eval.edc', ['web.pyeval', 'web.session'], function (test, mock) {
+hexya.define_section('eval.edc', ['web.pyeval', 'web.session'], function (test, mock) {
 
     function setup (session) {
         var user = { login: 'admin', id: 1, lang: 'en_US', tz: false };
@@ -521,7 +521,7 @@ odoo.define_section('eval.edc', ['web.pyeval', 'web.session'], function (test, m
     });
 });
 
-odoo.define_section('eval.edc.nonliterals', ['web.pyeval', 'web.session'], function (test, mock) {
+hexya.define_section('eval.edc.nonliterals', ['web.pyeval', 'web.session'], function (test, mock) {
     function setup(session) {
         session.user_context = {
             lang: 'en_US',
@@ -678,7 +678,7 @@ odoo.define_section('eval.edc.nonliterals', ['web.pyeval', 'web.session'], funct
     });
 });
 
-odoo.define_section('eval.contexts', ['web.pyeval'], function (test) {
+hexya.define_section('eval.contexts', ['web.pyeval'], function (test) {
 
     test('context_recursive', function (assert, pyeval) {
         var context_to_eval = [{
@@ -892,7 +892,7 @@ odoo.define_section('eval.contexts', ['web.pyeval'], function (test) {
     });
 });
 
-odoo.define_section('eval.domains', ['web.pyeval'], function (test) {
+hexya.define_section('eval.domains', ['web.pyeval'], function (test) {
 
     test('current_date', ['web.time'], function (assert, pyeval, time) {
         var current_date = time.date_to_str(new Date());
@@ -923,7 +923,7 @@ odoo.define_section('eval.domains', ['web.pyeval'], function (test) {
 
 });
 
-odoo.define_section('eval.groupbys', ['web.pyeval'], function (test) {
+hexya.define_section('eval.groupbys', ['web.pyeval'], function (test) {
 
     test('groupbys_00', function (assert, pyeval) {
         var result = pyeval.eval('groupbys', [

@@ -1,4 +1,4 @@
-odoo.define('web.ActionManager', function (require) {
+hexya.define('web.ActionManager', function (require) {
 "use strict";
 
 var ControlPanel = require('web.ControlPanel');
@@ -247,7 +247,7 @@ var ActionManager = Widget.extend({
     /**
      * Add a new action to the action manager
      *
-     * widget: typically, widgets added are openerp.web.ViewManager. The action manager
+     * widget: typically, widgets added are hexyaerp.web.ViewManager. The action manager
      *      uses the stack of actions to handle the breadcrumbs.
      * action_descr: new action description
      * options.on_reverse_breadcrumb: will be called when breadcrumb is clicked on

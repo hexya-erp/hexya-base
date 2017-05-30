@@ -1,4 +1,4 @@
-odoo.define('web.list_common', function (require) {
+hexya.define('web.list_common', function (require) {
 "use strict";
 
 var core = require('web.core');

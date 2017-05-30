@@ -1,4 +1,4 @@
-odoo.define_section('editor', ['web.ListEditor'], function (test, mock) {
+hexya.define_section('editor', ['web.ListEditor'], function (test, mock) {
 
     function setup() {
         mock.add('test.model:create', function () {
@@ -171,7 +171,7 @@ odoo.define_section('editor', ['web.ListEditor'], function (test, mock) {
     });
 });
 
-odoo.define_section('list.edition', ['web.data', 'web.ListView'], function (test, mock) {
+hexya.define_section('list.edition', ['web.data', 'web.ListView'], function (test, mock) {
 
     function setup () {
         var records = {};
@@ -249,7 +249,7 @@ odoo.define_section('list.edition', ['web.data', 'web.ListView'], function (test
     });
 });
 
-odoo.define_section('list.edition.events', ['web.data', 'web.ListView'], function (test, mock) {
+hexya.define_section('list.edition.events', ['web.data', 'web.ListView'], function (test, mock) {
 
     function setup () {
         mock.add('demo:read', function () {
@@ -321,7 +321,7 @@ odoo.define_section('list.edition.events', ['web.data', 'web.ListView'], functio
     });
 });
 
-odoo.define_section('list.edition.onwrite', ['web.data', 'web.ListView'], function (test, mock) {
+hexya.define_section('list.edition.onwrite', ['web.data', 'web.ListView'], function (test, mock) {
 
     test('record-to-read', function (assert, data, ListView) {
         assert.expect(4);

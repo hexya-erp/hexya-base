@@ -1,8 +1,8 @@
 
-odoo.testing = {};
+hexya.testing = {};
 
-odoo.testing.start_services = function () {
-    var factories = odoo.__DEBUG__.factories;
+hexya.testing.start_services = function () {
+    var factories = hexya.__DEBUG__.factories;
     var jobs = _.map(factories, function (factory, name) {
         return {
             name: name,
@@ -15,29 +15,29 @@ odoo.testing.start_services = function () {
         $: $,
         _: _,
     });
-  return odoo.process_jobs(jobs, services);
+  return hexya.process_jobs(jobs, services);
 };
 
-odoo.testing.MockRPC = function (session) {
+hexya.testing.MockRPC = function (session) {
     this.responses = {};
 };
 
-odoo.testing.MockRPC.prototype.clear = function () {
+hexya.testing.MockRPC.prototype.clear = function () {
     this.responses = {};
 };
 
-odoo.testing.MockRPC.prototype.interceptRPC = function (session) {
+hexya.testing.MockRPC.prototype.interceptRPC = function (session) {
     session.rpc = this.rpc.bind(this);
 };
 
-odoo.testing.MockRPC.prototype.add = function (spec, handler, no_override) {
+hexya.testing.MockRPC.prototype.add = function (spec, handler, no_override) {
     if (no_override && (spec in this.responses)) {
         return;
     }
     this.responses[spec] = handler;
 };
 
-odoo.testing.MockRPC.prototype.rpc =  function (url, rparams, options) {
+hexya.testing.MockRPC.prototype.rpc =  function (url, rparams, options) {
     if (_.isString(url)) {
         url = {url: url};
     }
@@ -71,9 +71,9 @@ odoo.testing.MockRPC.prototype.rpc =  function (url, rparams, options) {
     }
 };
 
-odoo.testing.noop = function () {};
+hexya.testing.noop = function () {};
 
-odoo.define_section = function (name, section_deps) {
+hexya.define_section = function (name, section_deps) {
     var section_body, options, mock;
 
     if (typeof arguments[2] === 'function') {
@@ -93,9 +93,9 @@ odoo.define_section = function (name, section_deps) {
             body = arguments[arguments.length - 1];
 
         QUnit.test(name, function (assert) {
-            var services = odoo.testing.start_services();
+            var services = hexya.testing.start_services();
             var deps = _.map(section_deps.concat(dep_names), function (name) { return services[name]; });
-            services.qweb.add_template(odoo.testing.templates);
+            services.qweb.add_template(hexya.testing.templates);
             mock.clear();
             mock.interceptRPC(services['web.session']);
             var info = {
@@ -107,7 +107,7 @@ odoo.define_section = function (name, section_deps) {
         });
     }
 
-    var mock = new odoo.testing.MockRPC();
+    var mock = new hexya.testing.MockRPC();
     section_body(test, mock);
 };
 
@@ -127,7 +127,7 @@ QUnit.log(function(result) {
 });
 
 (new QWeb2.Engine()).load_xml("/web/webclient/qweb", function (err, xDoc) {
-    odoo.testing.templates = xDoc;
+    hexya.testing.templates = xDoc;
     QUnit.start();
 });
 

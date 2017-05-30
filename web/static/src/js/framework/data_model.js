@@ -1,4 +1,4 @@
-odoo.define('web.DataModel', function (require) {
+hexya.define('web.DataModel', function (require) {
 "use strict";
 
 var data = require('web.data');

@@ -1,4 +1,4 @@
-odoo.define('web.formats', function (require) {
+hexya.define('web.formats', function (require) {
 "use strict";
 
 var core = require('web.core');

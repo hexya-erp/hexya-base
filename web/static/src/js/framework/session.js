@@ -1,4 +1,4 @@
-odoo.define('web.Session', function (require) {
+hexya.define('web.Session', function (require) {
 "use strict";
 
 var ajax = require('web.ajax');
@@ -25,7 +25,7 @@ var Session = core.Class.extend(mixins.EventDispatcherMixin, {
     init: function(parent, origin, options) {
         mixins.EventDispatcherMixin.init.call(this, parent);
         options = options || {};
-        this.module_list = (options.modules && options.modules.slice()) || (window.odoo._modules && window.odoo._modules.slice()) || [];
+        this.module_list = (options.modules && options.modules.slice()) || (window.hexya._modules && window.hexya._modules.slice()) || [];
         this.server = null;
         this.session_id = options.session_id || null;
         this.override_session = options.override_session || !!options.session_id || false;
@@ -136,7 +136,7 @@ var Session = core.Class.extend(mixins.EventDispatcherMixin, {
         }
         var def = this._groups_def[group];
         if (!def) {
-            var Model = window.openerp.web.Model;
+            var Model = window.hexyaerp.web.Model;
             var Users = new Model('res.users');
             def = this._groups_def[group] = Users.call('has_group', [group]);
         }
@@ -207,7 +207,7 @@ var Session = core.Class.extend(mixins.EventDispatcherMixin, {
     load_currencies: function() {
         this.currencies = {};
         var self = this;
-        return new openerp.web.Model("res.currency").query(["symbol", "position", "decimal_places"]).all()
+        return new hexyaerp.web.Model("res.currency").query(["symbol", "position", "decimal_places"]).all()
                 .then(function(value) {
                     _.each(value, function(k){
                         self.currencies[k.id] = {'symbol': k.symbol, 'position': k.position, 'digits': [69,k.decimal_places]};
@@ -246,20 +246,20 @@ var Session = core.Class.extend(mixins.EventDispatcherMixin, {
         return self.qweb_mutex.def;
     },
     on_modules_loaded: function() {
-        var openerp = window.openerp;
+        var hexyaerp = window.hexyaerp;
         for(var j=0; j<this.module_list.length; j++) {
             var mod = this.module_list[j];
             if(this.module_loaded[mod])
                 continue;
-            openerp[mod] = {};
+            hexyaerp[mod] = {};
             // init module mod
-            var fct = openerp._openerp[mod];
+            var fct = hexyaerp._hexyaerp[mod];
             if(typeof(fct) === "function") {
-                openerp._openerp[mod] = {};
+                hexyaerp._hexyaerp[mod] = {};
                 for (var k in fct) {
-                    openerp._openerp[mod][k] = fct[k];
+                    hexyaerp._hexyaerp[mod][k] = fct[k];
                 }
-                fct(openerp, openerp._openerp[mod]);
+                fct(hexyaerp, hexyaerp._hexyaerp[mod]);
             }
             this.module_loaded[mod] = true;
         }
@@ -337,7 +337,7 @@ var Session = core.Class.extend(mixins.EventDispatcherMixin, {
         options = _.clone(options || {});
         var shadow = options.shadow || false;
         options.headers = _.extend({}, options.headers)
-        if (odoo.debug) {
+        if (hexya.debug) {
             options.headers["X-Debug-Mode"] = true;
         }
 
@@ -422,7 +422,7 @@ return Session;
 });
 
 
-odoo.define('web.config', function (require) {
+hexya.define('web.config', function (require) {
 "use strict";
 
 var bus = require('web.core').bus;

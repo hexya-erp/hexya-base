@@ -16,7 +16,7 @@
 // ------------------------------------------------------------------
 // Padding
 // ------------------------------------------------------------------
-.o-webclient-padding(@top: 0px, @right: @odoo-horizontal-padding, @bottom: 0px, @left: @odoo-horizontal-padding) {
+.o-webclient-padding(@top: 0px, @right: @hexya-horizontal-padding, @bottom: 0px, @left: @hexya-horizontal-padding) {
     padding-top: @top;
     padding-right: @right;
     padding-bottom: @bottom;
@@ -140,14 +140,14 @@
     li {
         position: relative;
         > a {
-            color: @odoo-main-text-color;
+            color: @hexya-main-text-color;
             &:hover {
-                color: darken(@odoo-main-text-color, 10%);
+                color: darken(@hexya-main-text-color, 10%);
             }
         }
         &.selected {
             > a {
-                color: darken(@odoo-main-text-color, 10%);
+                color: darken(@hexya-main-text-color, 10%);
                 font-weight: bold;
                 &:before {
                     font-family: FontAwesome;

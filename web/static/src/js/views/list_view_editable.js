@@ -1,7 +1,7 @@
-odoo.define('web.ListEditor', function (require) {
+hexya.define('web.ListEditor', function (require) {
 "use strict";    
 /*---------------------------------------------------------
- * Odoo Editable List view
+ * Hexya Editable List view
  *---------------------------------------------------------*/
 /**
  * handles editability case for lists, because it depends on form and forms already depends on lists it had to be split out

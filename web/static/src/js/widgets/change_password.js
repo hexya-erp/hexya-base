@@ -1,4 +1,4 @@
-odoo.define('web.ChangePassword', function (require) {
+hexya.define('web.ChangePassword', function (require) {
 "use strict";
 
 var core = require('web.core');
