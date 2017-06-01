@@ -82,7 +82,7 @@ func initPartner() {
 	partner.AddBinaryField("Image", models.SimpleFieldParams{})
 	partner.AddBinaryField("ImageMedium", models.SimpleFieldParams{})
 	partner.AddSelectionField("CompanyType", models.SelectionFieldParams{Selection: types.Selection{"person": "Individual", "company": "Company"},
-		OnChange: "ComputeIsCompany"})
+		OnChange: "ComputeIsCompany", Default: models.DefaultValue("person")})
 	partner.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "Company"})
 	partner.AddIntegerField("Color", models.SimpleFieldParams{})
 	partner.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: "User", ReverseFK: "Partner"})

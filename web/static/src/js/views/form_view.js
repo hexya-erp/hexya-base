@@ -507,7 +507,7 @@ var FormView = View.extend(common.FieldManagerMixin, {
             var change_spec = widget ? onchange_specs[widget.name] : null;
             if (!widget || (!_.isEmpty(change_spec) && change_spec !== "0")) {
                 var ids = [],
-                    trigger_field_name = widget ? widget.name : self._onchange_fields,
+                    trigger_field_name = widget ? [widget.name] : self._onchange_fields,
                     values = self._get_onchange_values(),
                     context = new data.CompoundContext(self.dataset.get_context());
 
