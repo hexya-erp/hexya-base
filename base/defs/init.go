@@ -9,6 +9,7 @@ var log *logging.Logger
 
 func init() {
 	log = logging.GetLogger("base")
+	initCountry()
 	initGroups()
 	initPartner()
 	initCompany()

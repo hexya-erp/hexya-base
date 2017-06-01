@@ -79,6 +79,13 @@ func initUsers() {
 			return res
 		})
 
+	user.AddMethod("HasGroup",
+		`HasGroup returns true if this user belongs to the group with the given ID`,
+		func(rs pool.UserSet, groupID string) bool {
+			group := security.Registry.GetGroup(groupID)
+			return security.Registry.HasMembership(rs.ID(), group)
+		})
+
 	user.AddMethod("Authenticate",
 		"Authenticate the user defined by login and secret",
 		func(rs pool.UserSet, login, secret string) (uid int64, err error) {

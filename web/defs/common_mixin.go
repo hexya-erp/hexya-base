@@ -310,6 +310,11 @@ func initCommonMixin() {
 				return modifiers
 			}
 			var attrs map[string]domains.Domain
+			attrStr = strings.Replace(attrStr, "(", "[", -1)
+			attrStr = strings.Replace(attrStr, ")", "]", -1)
+			attrStr = strings.Replace(attrStr, "'", "\"", -1)
+			attrStr = strings.Replace(attrStr, "True", "true", -1)
+			attrStr = strings.Replace(attrStr, "False", "false", -1)
 			err := json.Unmarshal([]byte(attrStr), &attrs)
 			if err != nil {
 				log.Panic("Invalid attrs definition", "model", rc.ModelName(), "attrs", attrStr)
