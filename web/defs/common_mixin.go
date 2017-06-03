@@ -12,6 +12,7 @@ import (
 	"github.com/hexya-erp/hexya/hexya/actions"
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/fieldtype"
+	"github.com/hexya-erp/hexya/hexya/models/operator"
 	"github.com/hexya-erp/hexya/hexya/tools/etree"
 	"github.com/hexya-erp/hexya/hexya/views"
 	"github.com/hexya-erp/hexya/pool"
@@ -82,6 +83,9 @@ func initCommonMixin() {
 		value for a relational field. Sometimes be seen as the inverse
 		function of NameGet but it is not guaranteed to be.`,
 		func(rc models.RecordCollection, params webdata.NameSearchParams) []webdata.RecordIDWithName {
+			if params.Operator == "" {
+				params.Operator = operator.ILike
+			}
 			searchRs := rc.Model().Search(rc.Env(), rc.Model().Field("Name").AddOperator(params.Operator, params.Name)).Limit(models.ConvertLimitToInt(params.Limit))
 			if extraCondition := domains.ParseDomain(params.Args); extraCondition != nil {
 				searchRs = searchRs.Search(extraCondition)
@@ -99,7 +103,7 @@ func initCommonMixin() {
 
 	commonMixin.AddMethod("ProcessDataValues",
 		`ProcessDataValues updates the given data values for Write and Create methods to be
-		compatible with the ORM`,
+		compatible with the ORM, in particular for relation fields`,
 		func(rs pool.CommonMixinSet, data models.FieldMapper) models.FieldMap {
 			fMap := data.FieldMap()
 			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
@@ -228,6 +232,7 @@ func initCommonMixin() {
 			}
 			// Apply changes
 			rs.UpdateFieldNames(doc, &fieldInfos)
+			rs.SanitizeSearchView(doc)
 			rs.AddModifiers(doc, fieldInfos)
 			// Dump xml to string and return
 			res, err := doc.WriteToString()
@@ -235,6 +240,19 @@ func initCommonMixin() {
 				log.Panic("Unable to render XML", "error", err)
 			}
 			return res
+		})
+
+	commonMixin.AddMethod("SanitizeSearchView",
+		`SanitizeSearchView adds the missing attribute if it does not exist`,
+		func(rs pool.CommonMixinSet, doc *etree.Document) {
+			if doc.Root().Tag != "search" {
+				return
+			}
+			for _, fieldTag := range doc.FindElements("//field") {
+				if fieldTag.SelectAttrValue("domain", "") == "" {
+					fieldTag.CreateAttr("domain", "[]")
+				}
+			}
 		})
 
 	commonMixin.AddMethod("AddModifiers",

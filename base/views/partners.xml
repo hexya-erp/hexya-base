@@ -7,12 +7,45 @@
                   groups="base_group_sale_salesman"
                   sequence="6"/>
 
-        <!-- This menu will disappear, I commented it for tests purpose -->
         <menuitem id="base_menu_sale_config" name="Configuration" parent="base_menu_base_partner"
                   sequence="100" groups="base_group_configuration"/>
         <menuitem id="base_menu_config_address_book" parent="base_menu_sale_config" name="Contacts" sequence="4"
                   groups="base_group_system"/>
 
+        <!-- Partner Titles -->
+        <view id="base_view_partner_title_tree" model="PartnerTitle">
+            <tree string="Partner Titles">
+                <field name="name"/>
+                <field name="shortcut"/>
+            </tree>
+        </view>
+
+        <view id="base_view_partner_title_search" model="PartnerTitle">
+            <search>
+                <field name="name"/>
+            </search>
+        </view>
+
+        <view id="base_view_partner_title_form" model="PartnerTitle">
+            <form string="Partner Titles">
+                <group col="4">
+                    <field name="name"/>
+                    <field name="shortcut"/>
+                </group>
+            </form>
+        </view>
+
+        <action id="base_action_partner_title_contact" type="ir.actions.act_window" model="PartnerTitle"
+                name="Contact Titles" view_mode="tree,form">
+            <help>Manage the contact titles you want to have available in your system and the way you want
+                to print them in letters and other documents. Some example: Mr., Mrs.
+            </help>
+        </action>
+
+        <menuitem action="base_action_partner_title_contact" id="base_menu_partner_title_contact" name="Contact Titles"
+                  parent="base_menu_config_address_book" sequence="3" groups="base_group_no_one"/>
+
+        <!-- Partners -->
         <view id="base_view_partner_tree" model="Partner" priority="8">
             <tree string="Contacts">
                 <field name="display_name"/>
@@ -172,80 +205,80 @@
                         <page string="Contacts &amp; Addresses" autofocus="autofocus">
                             <field name="Children" mode="tree"
                                    context="{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_lang': lang,}">
-<!--
-                                <kanban>
-                                    <field name="color"/>
-                                    <field name="name"/>
-                                    <field name="Title"/>
-                                    <field name="type"/>
-                                    <field name="email"/>
-                                    <field name="parent_id"/>
-                                    <field name="is_company"/>
-                                    <field name="function"/>
-                                    <field name="phone"/>
-                                    <field name="street"/>
-                                    <field name="street2"/>
-                                    <field name="zip"/>
-                                    <field name="city"/>
-                                    <field name="country_id"/>
-                                    <field name="mobile"/>
-                                    <field name="fax"/>
-                                    <field name="state_id"/>
-                                    <field name="image"/>
-                                    <field name="lang"/>
-                                    <templates>
-                                        <t t-name="kanban-box">
-                                            <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
-                                            <div t-att-class="color + (record.Title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'">
-                                                <a t-if="!read_only_mode" type="delete"
-                                                   class="fa fa-times pull-right"/>
-                                                <div class="o_kanban_image">
-                                                    <img t-if="record.image.raw_value"
-                                                         t-att-src="'data:image/png;base64,'+record.image.raw_value"/>
-                                                    <t t-if="!record.image.raw_value">
-                                                        <img t-if="record.type.raw_value === 'delivery'"
-                                                             t-att-src='_s + "/base/static/src/img/truck.png"'/>
-                                                        <img t-if="record.type.raw_value === 'invoice'"
-                                                             t-att-src='_s + "/base/static/src/img/money.png"'/>
-                                                        <t t-if="record.type.raw_value !== 'invoice' &amp;&amp; record.type.raw_value !== 'delivery'">
-                                                            <img t-if="record.is_company.raw_value === true"
-                                                                 t-att-src='_s + "/base/static/src/img/company_image.png"'/>
-                                                            <img t-if="record.is_company.raw_value === false"
-                                                                 t-att-src='_s + "/base/static/src/img/avatar.png"'/>
-                                                        </t>
-                                                    </t>
-                                                </div>
-                                                <div class="oe_kanban_details">
-                                                    <field name="name"/>
-                                                    <div t-if="record.function.raw_value">
-                                                        <field name="function"/>
-                                                    </div>
-                                                    <div t-if="record.email.raw_value">
-                                                        <field name="email"/>
-                                                    </div>
-                                                    <div t-if="record.type.raw_value != 'contact'">
-                                                        <div>
-                                                            <field name="zip"/>
-                                                            <field name="city"/>
-                                                        </div>
-                                                        <field t-if="record.state_id.raw_value" name="state_id"/>
-                                                        <field name="country_id"/>
-                                                    </div>
-                                                    <div t-if="record.phone.raw_value">Phone:
-                                                        <field name="phone"/>
-                                                    </div>
-                                                    <div t-if="record.mobile.raw_value">Mobile:
-                                                        <field name="mobile"/>
-                                                    </div>
-                                                    <div t-if="record.fax.raw_value">Fax:
-                                                        <field name="fax"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </t>
-                                    </templates>
-                                </kanban>
--->
+                                <!--
+                                                                <kanban>
+                                                                    <field name="color"/>
+                                                                    <field name="name"/>
+                                                                    <field name="Title"/>
+                                                                    <field name="type"/>
+                                                                    <field name="email"/>
+                                                                    <field name="parent_id"/>
+                                                                    <field name="is_company"/>
+                                                                    <field name="function"/>
+                                                                    <field name="phone"/>
+                                                                    <field name="street"/>
+                                                                    <field name="street2"/>
+                                                                    <field name="zip"/>
+                                                                    <field name="city"/>
+                                                                    <field name="country_id"/>
+                                                                    <field name="mobile"/>
+                                                                    <field name="fax"/>
+                                                                    <field name="state_id"/>
+                                                                    <field name="image"/>
+                                                                    <field name="lang"/>
+                                                                    <templates>
+                                                                        <t t-name="kanban-box">
+                                                                            <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
+                                                                            <div t-att-class="color + (record.Title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'">
+                                                                                <a t-if="!read_only_mode" type="delete"
+                                                                                   class="fa fa-times pull-right"/>
+                                                                                <div class="o_kanban_image">
+                                                                                    <img t-if="record.image.raw_value"
+                                                                                         t-att-src="'data:image/png;base64,'+record.image.raw_value"/>
+                                                                                    <t t-if="!record.image.raw_value">
+                                                                                        <img t-if="record.type.raw_value === 'delivery'"
+                                                                                             t-att-src='_s + "/base/static/src/img/truck.png"'/>
+                                                                                        <img t-if="record.type.raw_value === 'invoice'"
+                                                                                             t-att-src='_s + "/base/static/src/img/money.png"'/>
+                                                                                        <t t-if="record.type.raw_value !== 'invoice' &amp;&amp; record.type.raw_value !== 'delivery'">
+                                                                                            <img t-if="record.is_company.raw_value === true"
+                                                                                                 t-att-src='_s + "/base/static/src/img/company_image.png"'/>
+                                                                                            <img t-if="record.is_company.raw_value === false"
+                                                                                                 t-att-src='_s + "/base/static/src/img/avatar.png"'/>
+                                                                                        </t>
+                                                                                    </t>
+                                                                                </div>
+                                                                                <div class="oe_kanban_details">
+                                                                                    <field name="name"/>
+                                                                                    <div t-if="record.function.raw_value">
+                                                                                        <field name="function"/>
+                                                                                    </div>
+                                                                                    <div t-if="record.email.raw_value">
+                                                                                        <field name="email"/>
+                                                                                    </div>
+                                                                                    <div t-if="record.type.raw_value != 'contact'">
+                                                                                        <div>
+                                                                                            <field name="zip"/>
+                                                                                            <field name="city"/>
+                                                                                        </div>
+                                                                                        <field t-if="record.state_id.raw_value" name="state_id"/>
+                                                                                        <field name="country_id"/>
+                                                                                    </div>
+                                                                                    <div t-if="record.phone.raw_value">Phone:
+                                                                                        <field name="phone"/>
+                                                                                    </div>
+                                                                                    <div t-if="record.mobile.raw_value">Mobile:
+                                                                                        <field name="mobile"/>
+                                                                                    </div>
+                                                                                    <div t-if="record.fax.raw_value">Fax:
+                                                                                        <field name="fax"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </t>
+                                                                    </templates>
+                                                                </kanban>
+                                -->
                                 <form string="Contact / Address">
                                     <sheet>
                                         <field name="type" required="1" widget="radio"
@@ -321,7 +354,7 @@
         <view id="base_view_res_partner_filter" model="Partner">
             <search string="Search Partner">
                 <field name="name"
-                       filter_domain="['|','|',('display_name','ilike',self),('ref','=',self),('email','ilike',self)]"/>
+                       filter_domain="['|','|',('name','ilike',self),('ref','=',self),('email','ilike',self)]"/>
                 <filter help="My Partners" domain="[('user_id','=',uid)]"/>
                 <separator/>
                 <filter string="Persons" name="type_person" domain="[('is_company','=',0)]"/>
