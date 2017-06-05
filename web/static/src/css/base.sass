@@ -1824,12 +1824,6 @@ $form-required: rgba(64, 66, 189, 0.2)
 
         .oe_form_field_x2many_list_row_add
             font-weight: bold
-        .oe_list_content
-            > thead
-                border-bottom: 1px
-            > tbody
-                tr:nth-child(odd)
-                    background: transparent
         .oe_list .oe_list_edit_row_save
             background: url(/static/web/src/img/iconset-b-remove.png) 50% 50% no-repeat
             &:before
@@ -1959,110 +1953,9 @@ $form-required: rgba(64, 66, 189, 0.2)
             @include vertical-gradient(#fcfcfc, #dedede)
 
     .oe_list_content
-        width: 100%
-        td:first-child, th:first-child
-            &:after
-                border-width: 0
-        td.oe_number
-            text-align: right !important
-            white-space: nowrap !important
-            max-width: 100px
-        td.oe_list_field_date, th.oe_list_header_date
-            min-width: 6em
-        > thead
-            border-bottom: 2px solid #cacaca
-            background: #eee
-            vertical-align: top
-        td, th
-            padding: 3px 6px
-            line-height: 18px
-        th.oe_sortable, th.oe_sortable div
-            cursor: pointer
-        th.oe_sortable div
-            position: relative
-        th.oe_sortable div:after
-            margin-right: 6px
-            content: ""
-            margin-top: 7px
-            border-width: 0 4px 4px
-            border-style: solid
-            border-color: #000 transparent
-            visibility: hidden
-        th.sortup div:after
-            float: right
-            visibility: visible
-            @include opacity(0.6)
-        .oe_list_header_many2many_tags
-            min-width: 70px
-        th.sortdown div:after
-            float: right
-            border-bottom: none
-            border-left: 4px solid transparent
-            border-right: 4px solid transparent
-            border-top: 4px solid #000
-            visibility: visible
-            @include box-shadow(none)
-            @include opacity(0.6)
-        > tbody
-            cursor: pointer
-            > tr
-                height: $row-height
-                border-top: 1px solid #ddd
-                &.text-bf
-                    font-weight: bold
-                &.text-it
-                    font-style: italic
-                > td.oe_list_field_cell
-                    padding: 3px 6px
-                    white-space: pre-line
-                > td, > th
-                    > button
-                        border: none
-                        background: transparent
-                        padding: 0
-                    > button.btn_txt
-                        border: 1px solid rgba(0,0,0,0.4)
-                        background: #e3e3e3
-                        padding: 3px 12px
-                > td.oe_list_checkbox:first-child, th.oe_list_checkbox:first-child
-                    width: 17px
-                    &:after
-                        border-width: 0
-                > td.oe_list_field_boolean input
-                    @include opacity()
-                > td.oe_list_field_boolean input:-moz-read-only
-                    @include opacity(1.0)
-            > tr:nth-child(odd)
-                background-color: #f0f0fa
-                @include vertical-gradient(#f0f0fa, #eeeef6)
+        th
+            border-bottom: 0
 
-        > tfoot
-            border-top: 2px solid #cacaca
-            border-bottom: 1px solid #cacaca
-            background: #eee
-            font-weight: bold
-
-
-        .numeric
-            text-align: right
-            width: 82px
-            input
-                text-align: right
-        th.oe_list_header_handle
-            font-size: 1px
-            overflow: hidden
-            text-indent: -9001px
-        td.oe_list_field_handle
-            width: 1em
-            padding: 0 !important
-            cursor: ns-resize
-            .oe_list_handle
-                font-size: 7px
-                color: #E0E0E0
-                margin-right: 10px
-                margin-top: 8px
-        .oe_list_field_progressbar progress
-            width: 100%
     // }}}
     // Tree view {{{
     .tree_header

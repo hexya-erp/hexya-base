@@ -372,7 +372,7 @@
     </td>
 </tr>
 
-<table t-name="ListView" class="oe_list_content">
+<table t-name="ListView" class="oe_list_content table table-condensed table-striped table-hover">
     <t t-set="columns_count" t-value="visible_columns.length + (options.selectable ? 1 : 0) + (options.deletable ? 1 : 0)"/>
     <thead>
         <tr t-if="(!!options.action_buttons and !options.$buttons) or (!!options.pager and !options.$pager)">

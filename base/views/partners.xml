@@ -14,7 +14,7 @@
 
         <!-- Partner Titles -->
         <view id="base_view_partner_title_tree" model="PartnerTitle">
-            <tree string="Partner Titles">
+            <tree string="Partner Titles" editable="top">
                 <field name="name"/>
                 <field name="shortcut"/>
             </tree>
