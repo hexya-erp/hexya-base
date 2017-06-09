@@ -17,6 +17,7 @@ func initAttachment() {
 	attachment.AddTextField("Description", models.StringFieldParams{})
 	attachment.AddCharField("ResName", models.StringFieldParams{String: "Resource Name"}) //, Compute: "NameGetResName", Stored: true})
 	attachment.AddCharField("ResModel", models.StringFieldParams{String: "Resource Model", Help: "The database object this attachment will be attached to"})
+	attachment.AddIntegerField("ResField", models.SimpleFieldParams{String: "Resource Field"})
 	attachment.AddIntegerField("ResID", models.SimpleFieldParams{String: "Resource ID", Help: "The record id this is attached to"})
 	attachment.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "Company"})
 	attachment.AddSelectionField("Type", models.SelectionFieldParams{Selection: types.Selection{"binary": "Binary", "url": "URL"}})
@@ -25,4 +26,6 @@ func initAttachment() {
 	attachment.AddCharField("StoreFname", models.StringFieldParams{String: "Stored Filename"})
 	attachment.AddCharField("DBDatas", models.StringFieldParams{String: "Database Data"})
 	attachment.AddIntegerField("FileSize", models.SimpleFieldParams{})
+	attachment.AddCharField("MimeType", models.StringFieldParams{})
+	attachment.AddBooleanField("Public", models.SimpleFieldParams{String:"Is a public document"})
 }

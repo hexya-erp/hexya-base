@@ -2,6 +2,34 @@
 <hexya>
     <data>
 
+        <!-- change password wizard -->
+        <view id="base_change_password_wizard_view" model="UserChangePasswordWizard">
+            <form string="Change Password">
+                <field name="Users"/>
+                <footer>
+                    <button string="Change Password" name="change_password_button" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </view>
+
+        <view id="base_change_password_wizard_user_tree_view" model="UserChangePasswordWizardLine">
+            <!-- the user list is editable, but one cannot add or delete rows -->
+            <tree string="Users" editable="bottom" create="false" delete="false">
+                <field name="user_login"/>
+                <field name="new_password" required="True" password="True"/>
+            </tree>
+        </view>
+
+        <action id="base_change_password_wizard_action"
+                type="ir.actions.act_window"
+                name="Change Password"
+                src_model="User"
+                model="UserChangePasswordWizard"
+                view_type="form" view_mode="form"
+                target="new"
+                groups="base_group_erp_manager"/>
+
         <!-- Users -->
         <view id="base_view_users_tree" model="User">
             <tree string="Users">
@@ -15,7 +43,8 @@
         <view id="base_view_users_form" model="User">
             <form string="Users">
                 <header>
-                    <button string="Change Password" type="action" name="%(change_password_wizard_action)d" help="Change the user password."/>
+                    <button string="Change Password" type="action" name="base_change_password_wizard_action"
+                            help="Change the user password."/>
                 </header>
                 <sheet>
                     <field name="ID" invisible="1"/>
@@ -27,18 +56,22 @@
                     <field name="Image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
                     <div class="oe_title">
                         <label for="Name" class="oe_edit_only"/>
-                        <h1><field name="Name" required="1"/></h1>
+                        <h1>
+                            <field name="Name" required="1"/>
+                        </h1>
                         <field name="Email" invisible="1"/>
                         <label for="Login" class="oe_edit_only" string="Email Address"/>
-                        <h2><field name="Login" on_change="on_change_login(login)"/></h2>
+                        <h2>
+                            <field name="Login" on_change="on_change_login(login)"/>
+                        </h2>
                         <group>
-                            <field name="Partner" readonly="1" groups="base.group_no_one"
+                            <field name="Partner" readonly="1" groups="base_group_no_one"
                                    attrs='{"invisible": [["id", "=", false]]}'/>
                         </group>
                     </div>
                     <notebook colspan="4">
                         <page name="access_rights" string="Access Rights">
-                            <group string="Multi Companies" groups="base.group_light_multi_company">
+                            <group string="Multi Companies" groups="base_group_light_multi_company">
                                 <field string="Allowed Companies" name="Companies" widget="many2many_tags"/>
                                 <field string="Current Company" name="Company" context="{'user_preference': 0}"/>
                             </group>
@@ -49,10 +82,11 @@
                             <group>
                                 <group string="Localization" name="preferences">
                                     <field name="Lang"/>
-                                    <field name="TZ" widget="timezone_mismatch" options="{'tz_offset_field': 'tz_offset'}" />
+                                    <field name="TZ" widget="timezone_mismatch"
+                                           options="{'tz_offset_field': 'tz_offset'}"/>
                                     <field name="TZOffset" invisible="1"/>
                                 </group>
-                                <group string="Menus Customization"><!-- groups="base.group_no_one">-->
+                                <group string="Menus Customization"><!-- groups="base_group_no_one">-->
                                     <field name="ActionID"/>
                                 </group>
                             </group>

@@ -465,7 +465,7 @@
 
         <action id="base_action_partner_form" type="ir.actions.act_window" name="Customers" model="Partner"
                 search_view_id="base_view_res_partner_filter" view_mode="tree,form"
-                context='{"search_default_customer":1}'>
+                context='{"search_default_customer": true}'>
             <help>
                 <p class="oe_view_nocontent_create">
                     Click to add a contact in your address book.

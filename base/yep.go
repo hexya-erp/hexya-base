@@ -54,24 +54,35 @@ func init() {
 		PostInit: func() {
 			err := models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 
-				mainCompany := pool.Company().Search(env, pool.Company().ID().Equals(1))
-				if mainCompany.IsEmpty() {
-					mainCompany = pool.Company().Create(env, &pool.CompanyData{
+				mainCompanyPartner := pool.Partner().Search(env, pool.Partner().ID().Equals(1))
+				if mainCompanyPartner.IsEmpty() {
+					mainCompanyPartner = pool.Partner().Create(env, &pool.PartnerData{
 						ID:   1,
 						Name: "Your Company",
 					})
-					env.Cr().Execute("ALTER SEQUENCE company_id_seq RESTART WITH 2")
+					env.Cr().Execute("SELECT nextval('partner_id_seq')")
 				}
 
-				adminPartner := pool.Partner().Search(env, pool.Partner().ID().Equals(1))
+				mainCompany := pool.Company().Search(env, pool.Company().ID().Equals(1))
+				if mainCompany.IsEmpty() {
+					euro := pool.Currency().Search(env, pool.Currency().HexyaExternalID().Equals("base_EUR"))
+					mainCompany = pool.Company().Create(env, &pool.CompanyData{
+						ID:       1,
+						Partner:  mainCompanyPartner,
+						Currency: euro,
+					})
+					env.Cr().Execute("SELECT nextval('company_id_seq')")
+				}
+
+				adminPartner := pool.Partner().Search(env, pool.Partner().ID().Equals(2))
 				if adminPartner.IsEmpty() {
 					adminPartner = pool.Partner().Create(env, &pool.PartnerData{
-						ID:       1,
+						ID:       2,
 						Lang:     "en_US",
 						Name:     "Administrator",
 						Function: "IT Manager",
 					})
-					env.Cr().Execute("ALTER SEQUENCE partner_id_seq RESTART WITH 2")
+					env.Cr().Execute("SELECT nextval('partner_id_seq')")
 				}
 
 				avatarImg, _ := ioutil.ReadFile(path.Join(generate.HexyaDir, "hexya", "server", "static", "base", "src", "img", "avatar.png"))
@@ -80,18 +91,20 @@ func init() {
 				ActionID := actions.MakeActionRef("base_action_res_users")
 				if adminUser.IsEmpty() {
 					pool.User().Create(env, &pool.UserData{
-						ID:         security.SuperUserID,
-						Name:       "Administrator",
-						Active:     true,
-						Company:    mainCompany,
-						Login:      "admin",
-						LoginDate:  types.DateTime{},
-						Password:   "admin",
-						Partner:    adminPartner,
-						ActionID:   ActionID,
-						ImageSmall: base64.StdEncoding.EncodeToString(avatarImg),
+						ID:          security.SuperUserID,
+						Name:        "Administrator",
+						Active:      true,
+						Company:     mainCompany,
+						Login:       "admin",
+						LoginDate:   types.DateTime{},
+						Password:    "admin",
+						Partner:     adminPartner,
+						ActionID:    ActionID,
+						ImageSmall:  base64.StdEncoding.EncodeToString(avatarImg),
+						ImageMedium: base64.StdEncoding.EncodeToString(avatarImg),
+						Image:       base64.StdEncoding.EncodeToString(avatarImg),
 					})
-					env.Cr().Execute("ALTER SEQUENCE user_id_seq RESTART WITH 2")
+					env.Cr().Execute("SELECT nextval('user_id_seq')")
 				}
 
 				pool.Group().NewSet(env).ReloadGroups()

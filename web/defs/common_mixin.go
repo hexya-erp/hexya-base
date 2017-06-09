@@ -115,9 +115,63 @@ func initCommonMixin() {
 				switch fInfos[fJSON].Type {
 				case fieldtype.Many2Many:
 					fMap[f] = rs.NormalizeM2MData(f, fInfos[fJSON], v)
+				case fieldtype.One2Many:
+					fMap[f] = rs.ExecuteO2MActions(f, fInfos[fJSON], v)
 				}
 			}
 			return fMap
+		})
+
+	commonMixin.AddMethod("ExecuteO2MActions",
+		`ExecuteO2MActions executes the actions on one2many fields given by
+		the list of triplets received from the client`,
+		func(rs pool.CommonMixinSet, fieldName string, info *models.FieldInfo, value interface{}) interface{} {
+			switch v := value.(type) {
+			case []interface{}:
+				relSet := rs.Env().Pool(info.Relation)
+				recs := rs.Get(fieldName).(models.RecordCollection)
+				if len(v) == 0 {
+					return nil
+				}
+				// We assume we have a list of triplets from client
+				for _, triplet := range v {
+					action := int(triplet.([]interface{})[0].(float64))
+					var values models.FieldMap
+					switch val := triplet.([]interface{})[2].(type) {
+					case bool:
+					case map[string]interface{}:
+						values = models.FieldMap(val)
+					case models.FieldMap:
+						values = val
+					}
+					switch action {
+					case 0:
+						// Create a new record with values
+						newRec := relSet.Call("Create", models.FieldMap(values)).(models.RecordCollection)
+						recs = recs.Union(newRec)
+					case 1:
+						// Update the id record with the given values
+						id := int(triplet.([]interface{})[1].(float64))
+						rec := relSet.Search(relSet.Model().Field("ID").Equals(id))
+						rec.Call("Write", values)
+						// add rec to recs in case we are in create
+						recs = recs.Union(rec)
+					case 2:
+						// Remove and delete the id record
+						id := int(triplet.([]interface{})[1].(float64))
+						rec := relSet.Search(relSet.Model().Field("ID").Equals(id))
+						recs = recs.Subtract(rec)
+						rec.Call("Unlink")
+					case 3:
+						// Detach the id record
+						id := int(triplet.([]interface{})[1].(float64))
+						rec := relSet.Search(relSet.Model().Field("ID").Equals(id))
+						recs = recs.Subtract(rec)
+					}
+				}
+				return recs.Ids()
+			}
+			return value
 		})
 
 	commonMixin.AddMethod("NormalizeM2MData",
@@ -147,7 +201,7 @@ func initCommonMixin() {
 						for i, id := range idList {
 							ids[i] = int64(id.(float64))
 						}
-						return resSet.Search(resSet.Model().Field("ID").In(ids))
+						return ids
 					}
 				}
 			}

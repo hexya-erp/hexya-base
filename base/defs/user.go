@@ -25,9 +25,45 @@ func (bab *BaseAuthBackend) Authenticate(login, secret string, context *types.Co
 	return
 }
 
-func initUsers() {
-	models.NewModel("User")
+func initChangePasswordWizard() {
+	models.NewTransientModel("UserChangePasswordWizard")
+	cpWizard := pool.UserChangePasswordWizard()
+	cpWizard.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: "UserChangePasswordWizardLine",
+		ReverseFK: "Wizard", Default: func(env models.Environment, fMap models.FieldMap) interface{} {
+			activeIds := env.Context().GetIntegerSlice("active_ids")
+			userLines := pool.UserChangePasswordWizardLine().NewSet(env)
+			for _, user := range pool.User().Search(env, pool.User().ID().In(activeIds)).Records() {
+				ul := pool.UserChangePasswordWizardLine().Create(env, pool.UserChangePasswordWizardLineData{
+					User:        user,
+					UserLogin:   user.Login(),
+					NewPassword: user.Password(),
+				})
+				userLines = userLines.Union(ul)
+			}
+			return userLines
+		}})
 
+	cpWizard.AddMethod("ChangePasswordButton",
+		`ChangePasswordButton is called when the user clicks on 'Apply' button in the popup.
+		It updates the user's password.`,
+		func(rs pool.UserChangePasswordWizardSet) {
+			for _, userLine := range rs.Users().Records(){
+				userLine.User().SetPassword(userLine.NewPassword())
+			}
+		})
+
+	models.NewTransientModel("UserChangePasswordWizardLine")
+	cpWizardLine := pool.UserChangePasswordWizardLine()
+	cpWizardLine.AddMany2OneField("Wizard", models.ForeignKeyFieldParams{RelationModel: "UserChangePasswordWizard"})
+	cpWizardLine.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: "User", OnDelete: models.Cascade})
+	cpWizardLine.AddCharField("UserLogin", models.StringFieldParams{})
+	cpWizardLine.AddCharField("NewPassword", models.StringFieldParams{})
+}
+
+func initUsers() {
+	initChangePasswordWizard()
+
+	models.NewModel("User")
 	user := pool.User()
 	user.AddDateTimeField("LoginDate", models.SimpleFieldParams{})
 	user.AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: "Partner", Embed: true})

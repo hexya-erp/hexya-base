@@ -68,7 +68,7 @@ func initPartner() {
 	partner.AddCharField("Type", models.StringFieldParams{})
 	partner.AddCharField("Street", models.StringFieldParams{})
 	partner.AddCharField("Street2", models.StringFieldParams{})
-	partner.AddCharField("ZIP", models.StringFieldParams{})
+	partner.AddCharField("Zip", models.StringFieldParams{})
 	partner.AddCharField("City", models.StringFieldParams{})
 	partner.AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: "CountryState"})
 	partner.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: "Country"})
