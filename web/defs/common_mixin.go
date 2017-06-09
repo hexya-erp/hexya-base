@@ -84,7 +84,7 @@ func initCommonMixin() {
 		function of NameGet but it is not guaranteed to be.`,
 		func(rc models.RecordCollection, params webdata.NameSearchParams) []webdata.RecordIDWithName {
 			if params.Operator == "" {
-				params.Operator = operator.ILike
+				params.Operator = operator.IContains
 			}
 			searchRs := rc.Model().Search(rc.Env(), rc.Model().Field("Name").AddOperator(params.Operator, params.Name)).Limit(models.ConvertLimitToInt(params.Limit))
 			if extraCondition := domains.ParseDomain(params.Args); extraCondition != nil {
