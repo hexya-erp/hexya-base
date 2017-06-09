@@ -47,7 +47,7 @@ func initChangePasswordWizard() {
 		`ChangePasswordButton is called when the user clicks on 'Apply' button in the popup.
 		It updates the user's password.`,
 		func(rs pool.UserChangePasswordWizardSet) {
-			for _, userLine := range rs.Users().Records(){
+			for _, userLine := range rs.Users().Records() {
 				userLine.User().SetPassword(userLine.NewPassword())
 			}
 		})

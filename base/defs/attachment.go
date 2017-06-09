@@ -27,5 +27,5 @@ func initAttachment() {
 	attachment.AddCharField("DBDatas", models.StringFieldParams{String: "Database Data"})
 	attachment.AddIntegerField("FileSize", models.SimpleFieldParams{})
 	attachment.AddCharField("MimeType", models.StringFieldParams{})
-	attachment.AddBooleanField("Public", models.SimpleFieldParams{String:"Is a public document"})
+	attachment.AddBooleanField("Public", models.SimpleFieldParams{String: "Is a public document"})
 }
