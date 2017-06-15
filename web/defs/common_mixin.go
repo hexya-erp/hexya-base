@@ -13,6 +13,7 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/fieldtype"
 	"github.com/hexya-erp/hexya/hexya/models/operator"
+	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/tools/etree"
 	"github.com/hexya-erp/hexya/hexya/views"
 	"github.com/hexya-erp/hexya/pool"
@@ -72,7 +73,7 @@ func initCommonMixin() {
 				fMap[fName] = value
 			}
 			return fMap
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("NameSearch",
 		`NameSearch searches for records that have a display name matching the given
@@ -99,7 +100,7 @@ func initCommonMixin() {
 				res[i].Name = rec.Get("display_name").(string)
 			}
 			return res
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("ProcessDataValues",
 		`ProcessDataValues updates the given data values for Write and Create methods to be
@@ -120,7 +121,7 @@ func initCommonMixin() {
 				}
 			}
 			return fMap
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("ExecuteO2MActions",
 		`ExecuteO2MActions executes the actions on one2many fields given by
@@ -172,7 +173,7 @@ func initCommonMixin() {
 				return recs.Ids()
 			}
 			return value
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("NormalizeM2MData",
 		`NormalizeM2MData converts the list of triplets received from the client into the final list of ids
@@ -206,7 +207,7 @@ func initCommonMixin() {
 				}
 			}
 			return value
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("GetFormviewId",
 		`GetFormviewId returns an view id to open the document with.
@@ -214,7 +215,7 @@ func initCommonMixin() {
  		to give specific view ids for example.`,
 		func(rs pool.CommonMixinSet) string {
 			return ""
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("GetFormviewAction",
 		`GetFormviewAction returns an action to open the document.
@@ -232,7 +233,7 @@ func initCommonMixin() {
 				ResID:       rs.ID(),
 				Context:     rs.Env().Context(),
 			}
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("FieldsViewGet",
 		`FieldsViewGet is the base implementation of the 'FieldsViewGet' method which
@@ -260,7 +261,7 @@ func initCommonMixin() {
 				Fields:  fInfos,
 			}
 			return &res
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("GetToolbar",
 		`GetToolbar returns a toolbar populated with the actions linked to this model`,
@@ -273,7 +274,7 @@ func initCommonMixin() {
 				}
 			}
 			return res
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("ProcessView",
 		`ProcessView makes all the necessary modifications to the view
@@ -294,7 +295,7 @@ func initCommonMixin() {
 				log.Panic("Unable to render XML", "error", err)
 			}
 			return res
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("SanitizeSearchView",
 		`SanitizeSearchView adds the missing attribute if it does not exist`,
@@ -307,7 +308,7 @@ func initCommonMixin() {
 					fieldTag.CreateAttr("domain", "[]")
 				}
 			}
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("AddModifiers",
 		`AddModifiers adds the modifiers attribute nodes to given xml doc.`,
@@ -346,7 +347,7 @@ func initCommonMixin() {
 				modJSON, _ := json.Marshal(modifiers)
 				element.CreateAttr("modifiers", string(modJSON))
 			}
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("ProcessFieldElementModifiers",
 		`ProcessFieldElementModifiers modifies the given modifiers map by taking into account:
@@ -370,7 +371,7 @@ func initCommonMixin() {
 				modifiers["required"] = true
 			}
 			return modifiers
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("ProcessElementAttrs",
 		`ProcessElementAttrs returns a modifiers map according to the domain
@@ -399,7 +400,7 @@ func initCommonMixin() {
 				modifiers[modifier] = attrs[modifier]
 			}
 			return modifiers
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("UpdateFieldNames",
 		`UpdateFieldNames changes the field names in the view to the column names.
@@ -418,7 +419,7 @@ func initCommonMixin() {
 				labelTag.RemoveAttr("for")
 				labelTag.CreateAttr("for", fieldJSON)
 			}
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("SearchRead",
 		`SearchRead retrieves database records according to the filters defined in params.`,
@@ -426,7 +427,7 @@ func initCommonMixin() {
 			rSet := rs.AddDomainLimitOffset(params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order).Fetch()
 			records := rSet.Read(params.Fields)
 			return records
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("AddDomainLimitOffset",
 		`AddDomainLimitOffsetOrder adds the given domain, limit, offset
@@ -448,7 +449,7 @@ func initCommonMixin() {
 				rc = rc.OrderBy(strings.Split(order, ",")...)
 			}
 			return rc
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.AddMethod("ReadGroup",
 		`Get a list of record aggregates according to the given parameters.`,
@@ -465,6 +466,6 @@ func initCommonMixin() {
 				res[i] = line
 			}
 			return res
-		})
+		}).AllowGroup(security.GroupEveryone)
 
 }

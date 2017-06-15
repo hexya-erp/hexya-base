@@ -25,7 +25,7 @@ func (bab *BaseAuthBackend) Authenticate(login, secret string, context *types.Co
 	return
 }
 
-func initChangePasswordWizard() {
+func init() {
 	models.NewTransientModel("UserChangePasswordWizard")
 	cpWizard := pool.UserChangePasswordWizard()
 	cpWizard.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: "UserChangePasswordWizardLine",
@@ -58,10 +58,6 @@ func initChangePasswordWizard() {
 	cpWizardLine.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: "User", OnDelete: models.Cascade})
 	cpWizardLine.AddCharField("UserLogin", models.StringFieldParams{})
 	cpWizardLine.AddCharField("NewPassword", models.StringFieldParams{})
-}
-
-func initUsers() {
-	initChangePasswordWizard()
 
 	models.NewModel("User")
 	user := pool.User()

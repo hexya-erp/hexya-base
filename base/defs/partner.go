@@ -11,7 +11,7 @@ import (
 	"github.com/hexya-erp/hexya/pool"
 )
 
-func initPartner() {
+func init() {
 	models.NewModel("PartnerTitle")
 	partnerTitle := pool.PartnerTitle()
 	partnerTitle.AddCharField("Name", models.StringFieldParams{String: "Title", Required: true, Translate: true})

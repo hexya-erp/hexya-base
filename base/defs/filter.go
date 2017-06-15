@@ -9,7 +9,7 @@ import (
 	"github.com/hexya-erp/hexya/pool"
 )
 
-func initFilters() {
+func init() {
 	models.NewModel("Filter")
 
 	filter := pool.Filter()

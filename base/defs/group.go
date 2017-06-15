@@ -9,7 +9,7 @@ import (
 	"github.com/hexya-erp/hexya/pool"
 )
 
-func initGroups() {
+func init() {
 	models.NewModel("Group")
 	group := pool.Group()
 	group.AddCharField("GroupID", models.StringFieldParams{Required: true})

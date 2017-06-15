@@ -106,7 +106,6 @@ func initStaticPaths() {
 		"/static/web/lib/nvd3/nv.d3.css",
 		"/static/web/src/css/base.css",
 		"/static/web/src/css/data_export.css",
-		"/static/base/src/css/modules.css",
 		"/static/web/src/less/bootswatch.css",
 		"/static/web/src/less/import_bootstrap.css",
 		"/static/web/src/less/enterprise_compatibility.css",
@@ -212,6 +211,7 @@ func initRoutes() {
 		webClient := web.AddGroup("/webclient")
 		{
 			webClient.AddController(http.MethodGet, "/qweb", QWeb)
+			webClient.AddController(http.MethodGet, "/locale", LoadLocale)
 			webClient.AddController(http.MethodGet, "/locale/:lang", LoadLocale)
 			webClient.AddController(http.MethodPost, "/translations", BootstrapTranslations)
 			webClient.AddController(http.MethodPost, "/csslist", CSSList)

@@ -8,7 +8,7 @@ import (
 	"github.com/hexya-erp/hexya/pool"
 )
 
-func initCountry() {
+func init() {
 	models.NewModel("CountryGroup")
 	countryGroup := pool.CountryGroup()
 	countryGroup.AddCharField("Name", models.StringFieldParams{Required: true})

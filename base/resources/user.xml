@@ -3,6 +3,15 @@
     <data>
 
         <!-- change password wizard -->
+        <action id="base_change_password_wizard_action"
+                type="ir.actions.act_window"
+                name="Change Password"
+                src_model="User"
+                model="UserChangePasswordWizard"
+                view_type="form" view_mode="form"
+                target="new"
+                groups="base_group_erp_manager"/>
+
         <view id="base_change_password_wizard_view" model="UserChangePasswordWizard">
             <form string="Change Password">
                 <field name="Users"/>
@@ -20,15 +29,6 @@
                 <field name="new_password" required="True" password="True"/>
             </tree>
         </view>
-
-        <action id="base_change_password_wizard_action"
-                type="ir.actions.act_window"
-                name="Change Password"
-                src_model="User"
-                model="UserChangePasswordWizard"
-                view_type="form" view_mode="form"
-                target="new"
-                groups="base_group_erp_manager"/>
 
         <!-- Users -->
         <view id="base_view_users_tree" model="User">

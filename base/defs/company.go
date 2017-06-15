@@ -8,7 +8,7 @@ import (
 	"github.com/hexya-erp/hexya/pool"
 )
 
-func initCompany() {
+func init() {
 	models.NewModel("Company")
 	company := pool.Company()
 	company.AddCharField("Name", models.StringFieldParams{String: "Company Name", Size: 128, Required: true, Related: "Partner.Name", Unique: true})

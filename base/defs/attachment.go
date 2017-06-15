@@ -9,7 +9,7 @@ import (
 	"github.com/hexya-erp/hexya/pool"
 )
 
-func initAttachment() {
+func init() {
 	models.NewModel("Attachment")
 	attachment := pool.Attachment()
 	attachment.AddCharField("Name", models.StringFieldParams{String: "Attachment Name"})
