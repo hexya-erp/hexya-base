@@ -37,12 +37,12 @@ func initCommonMixin() {
 		})
 
 	commonMixin.Methods().Read().Extend("",
-		func(rc models.RecordCollection, fields []string) []models.FieldMap {
-			res := rc.Super().Call("Read", fields).([]models.FieldMap)
+		func(rs pool.CommonMixinSet, fields []string) []models.FieldMap {
+			res := rs.Super().Read(fields)
 			for i, fMap := range res {
-				rec := rc.Model().Search(rc.Env(), rc.Model().Field("ID").Equals(fMap["id"].(int64)))
-				fInfos := rec.Call("FieldsGet", models.FieldsGetArgs{})
-				res[i] = rc.Call("AddNamesToRelations", fMap, fInfos).(models.FieldMap)
+				rec := pool.CommonMixin().NewSet(rs.Env(), rs.ModelName()).Search(pool.CommonMixin().ID().Equals(fMap["id"].(int64)))
+				fInfos := rec.FieldsGet(models.FieldsGetArgs{})
+				res[i] = rec.AddNamesToRelations(fMap, fInfos)
 			}
 			return res
 		})
@@ -425,6 +425,7 @@ func initCommonMixin() {
 		`SearchRead retrieves database records according to the filters defined in params.`,
 		func(rs pool.CommonMixinSet, params webdata.SearchParams) []models.FieldMap {
 			rSet := rs.AddDomainLimitOffset(params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order).Fetch()
+
 			records := rSet.Read(params.Fields)
 			return records
 		}).AllowGroup(security.GroupEveryone)

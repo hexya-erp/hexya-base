@@ -16,7 +16,7 @@ func init() {
 	group.AddCharField("Name", models.StringFieldParams{Required: true, Translate: true})
 
 	group.Methods().Create().Extend("",
-		func(rs pool.GroupSet, data *pool.GroupData) pool.GroupSet {
+		func(rs pool.GroupSet, data models.FieldMapper) pool.GroupSet {
 			if rs.Env().Context().HasKey("GroupForceCreate") {
 				return rs.Super().Create(data)
 			}
@@ -25,8 +25,9 @@ func init() {
 		})
 
 	group.Methods().Write().Extend("",
-		func(rs pool.GroupSet, data *pool.GroupData, fieldsToUnset ...models.FieldNamer) {
+		func(rs pool.GroupSet, data models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {
 			log.Panic("Trying to modify a security group")
+			panic("Unreachable")
 		})
 
 	group.AddMethod("ReloadGroups",

@@ -77,7 +77,7 @@ func init() {
 	user.Methods().Write().Extend("",
 		func(rs pool.UserSet, data models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {
 			res := rs.Super().Write(data, fieldsToUnset...)
-			fMap := data.FieldMap()
+			fMap := data.FieldMap(fieldsToUnset...)
 			_, ok1 := fMap["Groups"]
 			_, ok2 := fMap["group_ids"]
 			if ok1 || ok2 {

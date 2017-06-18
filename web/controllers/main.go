@@ -5,7 +5,7 @@ package controllers
 
 import (
 	"net/http"
-	"path"
+	"path/filepath"
 
 	"github.com/hexya-erp/hexya/hexya/controllers"
 	"github.com/hexya-erp/hexya/hexya/menus"
@@ -189,7 +189,7 @@ func initRoutes() {
 	root.AddController(http.MethodPost, "/web/login", LoginPost)
 	root.AddController(http.MethodGet, "/web/binary/company_logo", CompanyLogo)
 
-	root.AddStatic("/static", path.Join(generate.HexyaDir, "hexya", "server", "static"))
+	root.AddStatic("/static", filepath.Join(generate.HexyaDir, "hexya", "server", "static"))
 	web := root.AddGroup("/web")
 	{
 		web.AddMiddleWare(LoginRequired)

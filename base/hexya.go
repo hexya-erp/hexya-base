@@ -17,7 +17,7 @@ package base
 import (
 	"encoding/base64"
 	"io/ioutil"
-	"path"
+	"path/filepath"
 
 	_ "github.com/hexya-erp/hexya-base/base/defs"
 	"github.com/hexya-erp/hexya/hexya/actions"
@@ -85,7 +85,7 @@ func init() {
 					env.Cr().Execute("SELECT nextval('partner_id_seq')")
 				}
 
-				avatarImg, _ := ioutil.ReadFile(path.Join(generate.HexyaDir, "hexya", "server", "static", "base", "src", "img", "avatar.png"))
+				avatarImg, _ := ioutil.ReadFile(filepath.Join(generate.HexyaDir, "hexya", "server", "static", "base", "src", "img", "avatar.png"))
 
 				adminUser := pool.User().Search(env, pool.User().ID().Equals(security.SuperUserID))
 				ActionID := actions.MakeActionRef("base_action_res_users")

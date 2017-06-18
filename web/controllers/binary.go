@@ -7,7 +7,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"net/http"
-	"path"
+	"path/filepath"
 	"strconv"
 
 	"github.com/hexya-erp/hexya/hexya/server"
@@ -16,7 +16,7 @@ import (
 
 // CompanyLogo serves the logo of the company
 func CompanyLogo(c *server.Context) {
-	c.File(path.Join(generate.HexyaDir, "hexya", "server", "static", "web", "src", "img", "logo.png"))
+	c.File(filepath.Join(generate.HexyaDir, "hexya", "server", "static", "web", "src", "img", "logo.png"))
 }
 
 // Image serves the image stored in the database (base64 encoded)
