@@ -12,21 +12,19 @@ import (
 )
 
 func init() {
-	models.NewModel("PartnerTitle")
-	partnerTitle := pool.PartnerTitle()
+	partnerTitle := pool.PartnerTitle().DeclareModel()
 	partnerTitle.AddCharField("Name", models.StringFieldParams{String: "Title", Required: true, Translate: true})
 	partnerTitle.AddCharField("Shortcut", models.StringFieldParams{String: "Abbreviation", Translate: true})
 
-	models.NewModel("PartnerCategory")
-	partnerCategory := pool.PartnerCategory()
+	partnerCategory := pool.PartnerCategory().DeclareModel()
 	partnerCategory.AddCharField("Name", models.StringFieldParams{String: "Category Name", Required: true, Translate: true})
 	partnerCategory.AddIntegerField("Color", models.SimpleFieldParams{String: "Color Index"})
-	partnerCategory.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: "PartnerCategory",
+	partnerCategory.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: pool.PartnerCategory(),
 		String: "Parent Tag", Index: true, OnDelete: models.Cascade})
 	partnerCategory.AddCharField("CompleteName", models.StringFieldParams{String: "Full Name", Compute: "ComputeCompleteName"})
-	partnerCategory.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: "PartnerCategory",
+	partnerCategory.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: pool.PartnerCategory(),
 		ReverseFK: "Parent", String: "Children Tags"})
-	partnerCategory.AddMany2ManyField("Partners", models.Many2ManyFieldParams{RelationModel: "Partner"})
+	partnerCategory.AddMany2ManyField("Partners", models.Many2ManyFieldParams{RelationModel: pool.Partner()})
 
 	partnerCategory.AddMethod("ComputeCompleteName",
 		`ComputeCompleteName returns the complete name of the tag with all the parents`,
@@ -41,23 +39,22 @@ func init() {
 			return res, []models.FieldNamer{pool.PartnerCategory().CompleteName()}
 		})
 
-	models.NewModel("Partner")
-	partner := pool.Partner()
+	partner := pool.Partner().DeclareModel()
 	partner.AddCharField("Name", models.StringFieldParams{Required: true, Index: true, NoCopy: true})
 	partner.AddDateField("Date", models.SimpleFieldParams{})
-	partner.AddMany2OneField("Title", models.ForeignKeyFieldParams{RelationModel: "PartnerTitle"})
-	partner.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: "Partner"})
-	partner.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: "Partner", ReverseFK: "Parent"})
+	partner.AddMany2OneField("Title", models.ForeignKeyFieldParams{RelationModel: pool.PartnerTitle()})
+	partner.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: pool.Partner()})
+	partner.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: pool.Partner(), ReverseFK: "Parent"})
 	partner.AddCharField("Ref", models.StringFieldParams{})
 	partner.AddCharField("Lang", models.StringFieldParams{})
 	partner.AddCharField("TZ", models.StringFieldParams{})
 	partner.AddCharField("TZOffset", models.StringFieldParams{})
-	partner.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: "User"})
+	partner.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: pool.User()})
 	partner.AddCharField("VAT", models.StringFieldParams{})
 	//Banks            []*PartnerBank
 	partner.AddCharField("Website", models.StringFieldParams{})
 	partner.AddCharField("Comment", models.StringFieldParams{})
-	partner.AddMany2ManyField("Categories", models.Many2ManyFieldParams{RelationModel: "PartnerCategory"})
+	partner.AddMany2ManyField("Categories", models.Many2ManyFieldParams{RelationModel: pool.PartnerCategory()})
 	partner.AddFloatField("CreditLimit", models.FloatFieldParams{})
 	partner.AddCharField("EAN13", models.StringFieldParams{})
 	partner.AddBooleanField("Active", models.SimpleFieldParams{})
@@ -70,8 +67,8 @@ func init() {
 	partner.AddCharField("Street2", models.StringFieldParams{})
 	partner.AddCharField("Zip", models.StringFieldParams{})
 	partner.AddCharField("City", models.StringFieldParams{})
-	partner.AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: "CountryState"})
-	partner.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: "Country"})
+	partner.AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: pool.CountryState()})
+	partner.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country()})
 	partner.AddCharField("Email", models.StringFieldParams{})
 	partner.AddCharField("Phone", models.StringFieldParams{})
 	partner.AddCharField("Fax", models.StringFieldParams{})
@@ -83,9 +80,9 @@ func init() {
 	partner.AddBinaryField("ImageMedium", models.SimpleFieldParams{})
 	partner.AddSelectionField("CompanyType", models.SelectionFieldParams{Selection: types.Selection{"person": "Individual", "company": "Company"},
 		OnChange: "ComputeIsCompany", Default: models.DefaultValue("person")})
-	partner.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "Company"})
+	partner.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
 	partner.AddIntegerField("Color", models.SimpleFieldParams{})
-	partner.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: "User", ReverseFK: "Partner"})
+	partner.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: pool.User(), ReverseFK: "Partner"})
 
 	partner.AddMethod("ComputeIsCompany",
 		`ComputeIsCompany computes the IsCompany field from the selected CompanyType`,

@@ -10,8 +10,7 @@ import (
 )
 
 func init() {
-	models.NewModel("Group")
-	group := pool.Group()
+	group := pool.Group().DeclareModel()
 	group.AddCharField("GroupID", models.StringFieldParams{Required: true})
 	group.AddCharField("Name", models.StringFieldParams{Required: true, Translate: true})
 

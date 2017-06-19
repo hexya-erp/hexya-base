@@ -11,14 +11,14 @@ import (
 )
 
 func init() {
-	models.NewModel("Bank")
+	pool.Bank().DeclareModel()
 	pool.Bank().AddCharField("Name", models.StringFieldParams{Required: true})
 	pool.Bank().AddCharField("Street", models.StringFieldParams{})
 	pool.Bank().AddCharField("Street2", models.StringFieldParams{})
 	pool.Bank().AddCharField("Zip", models.StringFieldParams{})
 	pool.Bank().AddCharField("City", models.StringFieldParams{})
-	pool.Bank().AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: "CountryState", String: "Fed. State"}) // domain="[('country_id', '=', country)]"
-	pool.Bank().AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: "Country"})
+	pool.Bank().AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: pool.CountryState(), String: "Fed. State"}) // domain="[('country_id', '=', country)]"
+	pool.Bank().AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country()})
 	pool.Bank().AddCharField("Email", models.StringFieldParams{})
 	pool.Bank().AddCharField("Phone", models.StringFieldParams{})
 	pool.Bank().AddCharField("Fax", models.StringFieldParams{})

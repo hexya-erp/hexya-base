@@ -26,9 +26,8 @@ func (bab *BaseAuthBackend) Authenticate(login, secret string, context *types.Co
 }
 
 func init() {
-	models.NewTransientModel("UserChangePasswordWizard")
-	cpWizard := pool.UserChangePasswordWizard()
-	cpWizard.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: "UserChangePasswordWizardLine",
+	cpWizard := pool.UserChangePasswordWizard().DeclareModel()
+	cpWizard.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: pool.UserChangePasswordWizardLine(),
 		ReverseFK: "Wizard", Default: func(env models.Environment, fMap models.FieldMap) interface{} {
 			activeIds := env.Context().GetIntegerSlice("active_ids")
 			userLines := pool.UserChangePasswordWizardLine().NewSet(env)
@@ -52,27 +51,25 @@ func init() {
 			}
 		})
 
-	models.NewTransientModel("UserChangePasswordWizardLine")
-	cpWizardLine := pool.UserChangePasswordWizardLine()
-	cpWizardLine.AddMany2OneField("Wizard", models.ForeignKeyFieldParams{RelationModel: "UserChangePasswordWizard"})
-	cpWizardLine.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: "User", OnDelete: models.Cascade})
+	cpWizardLine := pool.UserChangePasswordWizardLine().DeclareModel()
+	cpWizardLine.AddMany2OneField("Wizard", models.ForeignKeyFieldParams{RelationModel: pool.UserChangePasswordWizard()})
+	cpWizardLine.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: pool.User(), OnDelete: models.Cascade})
 	cpWizardLine.AddCharField("UserLogin", models.StringFieldParams{})
 	cpWizardLine.AddCharField("NewPassword", models.StringFieldParams{})
 
-	models.NewModel("User")
-	user := pool.User()
+	user := pool.User().DeclareModel()
 	user.AddDateTimeField("LoginDate", models.SimpleFieldParams{})
-	user.AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: "Partner", Embed: true})
+	user.AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(), Embed: true})
 	user.AddCharField("Login", models.StringFieldParams{Required: true})
 	user.AddCharField("Password", models.StringFieldParams{})
 	user.AddCharField("NewPassword", models.StringFieldParams{})
 	user.AddTextField("Signature", models.StringFieldParams{})
 	user.AddBooleanField("Active", models.SimpleFieldParams{})
 	user.AddCharField("ActionID", models.StringFieldParams{GoType: new(actions.ActionRef)})
-	user.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "Company"})
-	user.AddMany2ManyField("Companies", models.Many2ManyFieldParams{RelationModel: "Company", JSON: "company_ids"})
+	user.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
+	user.AddMany2ManyField("Companies", models.Many2ManyFieldParams{RelationModel: pool.Company(), JSON: "company_ids"})
 	user.AddBinaryField("ImageSmall", models.SimpleFieldParams{})
-	user.AddMany2ManyField("Groups", models.Many2ManyFieldParams{RelationModel: "Group", JSON: "group_ids"})
+	user.AddMany2ManyField("Groups", models.Many2ManyFieldParams{RelationModel: pool.Group(), JSON: "group_ids"})
 
 	user.Methods().Write().Extend("",
 		func(rs pool.UserSet, data models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {

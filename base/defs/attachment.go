@@ -10,8 +10,7 @@ import (
 )
 
 func init() {
-	models.NewModel("Attachment")
-	attachment := pool.Attachment()
+	attachment := pool.Attachment().DeclareModel()
 	attachment.AddCharField("Name", models.StringFieldParams{String: "Attachment Name"})
 	attachment.AddCharField("DatasFname", models.StringFieldParams{String: "File Name"})
 	attachment.AddTextField("Description", models.StringFieldParams{})
@@ -19,7 +18,7 @@ func init() {
 	attachment.AddCharField("ResModel", models.StringFieldParams{String: "Resource Model", Help: "The database object this attachment will be attached to"})
 	attachment.AddIntegerField("ResField", models.SimpleFieldParams{String: "Resource Field"})
 	attachment.AddIntegerField("ResID", models.SimpleFieldParams{String: "Resource ID", Help: "The record id this is attached to"})
-	attachment.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: "Company"})
+	attachment.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
 	attachment.AddSelectionField("Type", models.SelectionFieldParams{Selection: types.Selection{"binary": "Binary", "url": "URL"}})
 	attachment.AddCharField("URL", models.StringFieldParams{})
 	attachment.AddBinaryField("Datas", models.SimpleFieldParams{String: "File Content"}) //, Compute: "DataGet"})

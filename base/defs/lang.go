@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	models.NewModel("Lang")
+	pool.Lang().DeclareModel()
 	pool.Lang().AddCharField("Name", models.StringFieldParams{Required: true})
 	pool.Lang().AddCharField("Code", models.StringFieldParams{String: "Locale Code", Required: true, Help: "This field is used to set/get locales for user"})
 	pool.Lang().AddCharField("ISOCode", models.StringFieldParams{Help: "This ISO code is the name of PO files to use for translations"})

@@ -10,16 +10,14 @@ import (
 )
 
 func init() {
-	models.NewModel("Filter")
-
-	filter := pool.Filter()
+	filter := pool.Filter().DeclareModel()
 	filter.AddCharField("ResModel", models.StringFieldParams{})
 	filter.AddCharField("Domain", models.StringFieldParams{})
 	filter.AddCharField("Context", models.StringFieldParams{})
 	filter.AddCharField("Name", models.StringFieldParams{})
 	filter.AddCharField("Sort", models.StringFieldParams{})
 	filter.AddBooleanField("IsDefault", models.SimpleFieldParams{})
-	filter.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: "User"})
+	filter.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: pool.User()})
 	filter.AddCharField("ActionID", models.StringFieldParams{GoType: new(actions.ActionRef)})
 
 	filter.AddMethod("GetFilters",

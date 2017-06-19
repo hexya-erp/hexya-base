@@ -9,21 +9,18 @@ import (
 )
 
 func init() {
-	models.NewModel("CountryGroup")
-	countryGroup := pool.CountryGroup()
+	countryGroup := pool.CountryGroup().DeclareModel()
 	countryGroup.AddCharField("Name", models.StringFieldParams{Required: true})
-	countryGroup.AddMany2ManyField("Countries", models.Many2ManyFieldParams{RelationModel: "Country"})
+	countryGroup.AddMany2ManyField("Countries", models.Many2ManyFieldParams{RelationModel: pool.Country()})
 
-	models.NewModel("CountryState")
-	countryState := pool.CountryState()
+	countryState := pool.CountryState().DeclareModel()
 	countryState.AddCharField("Name", models.StringFieldParams{String: "State Name", Required: true,
 		Help: "Administrative divisions of a country. E.g. Fed. State, Departement, Canton"})
-	countryState.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: "Country", Required: true})
+	countryState.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country(), Required: true})
 	countryState.AddCharField("Code", models.StringFieldParams{String: "State Code", Size: 3,
 		Help: "The state code in max. three chars.", Required: true})
 
-	models.NewModel("Country")
-	country := pool.Country()
+	country := pool.Country().DeclareModel()
 	country.AddCharField("Name", models.StringFieldParams{String: "Country Name", Help: "The full name of the country.",
 		Translate: true, Required: true, Unique: true})
 	country.AddCharField("Code", models.StringFieldParams{String: "Country Code", Size: 2, Unique: true,
@@ -31,9 +28,9 @@ func init() {
 	country.AddTextField("AddressFormat", models.StringFieldParams{Default: func(env models.Environment, fMap models.FieldMap) interface{} {
 		return "%(Street)s\n%(Street2)s\n%(City)s %(StateCode)s %(Zip)s\n%(CountryName)s"
 	}, Help: "You can state here the usual format to use for the addresses belonging to this country."})
-	country.AddMany2OneField("Currency", models.ForeignKeyFieldParams{RelationModel: "Currency"})
+	country.AddMany2OneField("Currency", models.ForeignKeyFieldParams{RelationModel: pool.Currency()})
 	country.AddBinaryField("Image", models.SimpleFieldParams{})
 	country.AddIntegerField("PhoneCode", models.SimpleFieldParams{String: "Country Calling Code"})
-	country.AddMany2ManyField("CountryGroups", models.Many2ManyFieldParams{RelationModel: "CountryGroup"})
-	country.AddOne2ManyField("States", models.ReverseFieldParams{RelationModel: "CountryState", ReverseFK: "Country"})
+	country.AddMany2ManyField("CountryGroups", models.Many2ManyFieldParams{RelationModel: pool.CountryGroup()})
+	country.AddOne2ManyField("States", models.ReverseFieldParams{RelationModel: pool.CountryState(), ReverseFK: "Country"})
 }
