@@ -32,7 +32,7 @@ func init() {
 	company.AddCharField("VAT", models.StringFieldParams{Related: "Partner.VAT"})
 	company.AddCharField("CompanyRegistry", models.StringFieldParams{Size: 64})
 
-	company.AddMethod("ComputeLogoWeb",
+	company.Methods().ComputeLogoWeb().DeclareMethod(
 		`ComputeLogoWeb returns a resized version of the company logo`,
 		func(rs pool.CompanySet) (*pool.CompanyData, []models.FieldNamer) {
 			res := pool.CompanyData{

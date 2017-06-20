@@ -84,7 +84,7 @@ func init() {
 	partner.AddIntegerField("Color", models.SimpleFieldParams{})
 	partner.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: pool.User(), ReverseFK: "Partner"})
 
-	partner.AddMethod("ComputeIsCompany",
+	partner.Methods().ComputeIsCompany().DeclareMethod(
 		`ComputeIsCompany computes the IsCompany field from the selected CompanyType`,
 		func(s pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
 			var res pool.PartnerData

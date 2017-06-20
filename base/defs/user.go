@@ -42,7 +42,7 @@ func init() {
 			return userLines
 		}})
 
-	cpWizard.AddMethod("ChangePasswordButton",
+	cpWizard.Methods().ChangePasswordButton().DeclareMethod(
 		`ChangePasswordButton is called when the user clicks on 'Apply' button in the popup.
 		It updates the user's password.`,
 		func(rs pool.UserChangePasswordWizardSet) {
@@ -96,7 +96,7 @@ func init() {
 			return fmt.Sprintf("%s (%s)", res, rs.Login())
 		})
 
-	user.AddMethod("ContextGet",
+	user.Methods().ContextGet().DeclareMethod(
 		`UsersContextGet returns a context with the user's lang, tz and uid
 		This method must be called on a singleton.`,
 		func(rs pool.UserSet) *types.Context {
@@ -108,14 +108,14 @@ func init() {
 			return res
 		})
 
-	user.AddMethod("HasGroup",
+	user.Methods().HasGroup().DeclareMethod(
 		`HasGroup returns true if this user belongs to the group with the given ID`,
 		func(rs pool.UserSet, groupID string) bool {
 			group := security.Registry.GetGroup(groupID)
 			return security.Registry.HasMembership(rs.ID(), group)
 		})
 
-	user.AddMethod("Authenticate",
+	user.Methods().Authenticate().DeclareMethod(
 		"Authenticate the user defined by login and secret",
 		func(rs pool.UserSet, login, secret string) (uid int64, err error) {
 			user := rs.Search(pool.User().Login().Equals(login))

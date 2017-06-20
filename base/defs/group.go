@@ -29,7 +29,7 @@ func init() {
 			panic("Unreachable")
 		})
 
-	group.AddMethod("ReloadGroups",
+	group.Methods().ReloadGroups().DeclareMethod(
 		`ReloadGroups populates the Group table with groups from the security.Registry
 		and refresh all memberships.`,
 		func(rs pool.GroupSet) {

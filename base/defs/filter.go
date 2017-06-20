@@ -20,7 +20,7 @@ func init() {
 	filter.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: pool.User()})
 	filter.AddCharField("ActionID", models.StringFieldParams{GoType: new(actions.ActionRef)})
 
-	filter.AddMethod("GetFilters",
+	filter.Methods().GetFilters().DeclareMethod(
 		`GetFilters returns the filters for the given model and actionID for the current user`,
 		func(rs pool.FilterSet, modelName, actionID string) []pool.FilterData {
 			condition := pool.Filter().ResModel().Equals(modelName).
