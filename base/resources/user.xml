@@ -114,5 +114,35 @@
         <menuitem id="base_menu_action_users" name="Users" sequence="1" action="base_action_res_users"
                   parent="base_menu_users"/>
 
+        <view id="base_view_users_form_simple_modif" model="User" priority="18">
+            <form string="Users">
+                <field name="image" readonly="0" widget='image' class="oe_right oe_avatar"
+                       options='{"preview_image": "image_small"}'/>
+                <h1>
+                    <field name="name" readonly="1" class="oe_inline"/>
+                </h1>
+                <button name="preference_change_password" type="object" string="Change password" class="oe_link"/>
+                <group name="preferences" col="4">
+                    <field name="lang" readonly="0"/>
+                    <field name="tz" widget="timezone_mismatch" options="{'tz_offset_field': 'tz_offset'}"
+                           readonly="0"/>
+                    <field name="tz_offset" invisible="1"/>
+                    <field name="company_id" options="{'no_create': True}" readonly="0"
+                           groups="base_group_multi_company"/>
+                </group>
+                <group string="Email Preferences">
+                    <field name="email" widget="email" readonly="0"/>
+                    <field name="signature" readonly="0"/>
+                </group>
+                <footer>
+                    <button name="preference_save" type="object" string="Save" class="btn-primary"/>
+                    <button name="preference_cancel" string="Cancel" special="cancel" class="btn-default"/>
+                </footer>
+            </form>
+        </view>
+
+        <action id="base_action_res_users_my" type="ir.actions.act_window" name="Change My Preferences" model="User"
+                target="new" view_mode="form" view_id="base_view_users_form_simple_modif"/>
+
     </data>
 </hexya>

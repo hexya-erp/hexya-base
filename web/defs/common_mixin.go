@@ -59,7 +59,7 @@ func initCommonMixin() {
 						if rcId := v.Get("id"); rcId != int64(0) {
 							value = [2]interface{}{rcId, v.Call("NameGet").(string)}
 						} else {
-							value = nil
+							value = false
 						}
 					case fi.Type.Is2ManyRelationType():
 						value = v.Ids()
@@ -148,7 +148,7 @@ func initCommonMixin() {
 					switch action {
 					case 0:
 						// Create a new record with values
-						newRec := relSet.Call("Create", models.FieldMap(values)).(models.RecordCollection)
+						newRec := relSet.Call("Create", models.FieldMap(values)).(models.RecordSet).Collection()
 						recs = recs.Union(newRec)
 					case 1:
 						// Update the id record with the given values
@@ -414,6 +414,9 @@ func initCommonMixin() {
 				fieldTag.CreateAttr("name", fieldJSON)
 			}
 			for _, labelTag := range doc.FindElements("//label") {
+				if labelTag.SelectAttr("for") == nil {
+					continue
+				}
 				fieldName := labelTag.SelectAttr("for").Value
 				fieldJSON := rc.Model().JSONizeFieldName(fieldName)
 				labelTag.RemoveAttr("for")

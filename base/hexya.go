@@ -19,7 +19,6 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
-	_ "github.com/hexya-erp/hexya-base/base/defs"
 	"github.com/hexya-erp/hexya/hexya/actions"
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/security"
@@ -31,18 +30,8 @@ import (
 )
 
 const (
+	// MODULE_NAME is the name of this module
 	MODULE_NAME string = "base"
-	SEQUENCE    uint8  = 100
-	NAME        string = "Base"
-	VERSION     string = "0.1"
-	CATEGORY    string = "Hidden"
-	DESCRIPTION string = `
-The kernel of Hexya, needed for all installation
-==============================================
-	`
-	AUTHOR     string = "NDP Systèmes"
-	MAINTAINER string = "NDP Systèmes"
-	WEBSITE    string = "http://www.ndp-systemes.fr"
 )
 
 var log *logging.Logger

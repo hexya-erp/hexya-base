@@ -1,7 +1,7 @@
 // Copyright 2017 NDP Systèmes. All Rights Reserved.
 // See LICENSE file for full licensing details.
 
-package defs
+package base
 
 import (
 	"github.com/hexya-erp/hexya/hexya/models"
@@ -14,7 +14,7 @@ func init() {
 	pool.Lang().AddCharField("Name", models.StringFieldParams{Required: true})
 	pool.Lang().AddCharField("Code", models.StringFieldParams{String: "Locale Code", Required: true, Help: "This field is used to set/get locales for user"})
 	pool.Lang().AddCharField("ISOCode", models.StringFieldParams{Help: "This ISO code is the name of PO files to use for translations"})
-	pool.Lang().AddBooleanField("Translate", models.SimpleFieldParams{})
+	pool.Lang().AddBooleanField("Translatable", models.SimpleFieldParams{})
 	pool.Lang().AddBooleanField("Active", models.SimpleFieldParams{})
 	pool.Lang().AddSelectionField("Direction", models.SelectionFieldParams{Selection: types.Selection{"ltr": "Left-to-Right", "rtl": "Right-to-left"},
 		Required: true, Default: models.DefaultValue("ltr")})

@@ -86,7 +86,7 @@ var UserMenu = Widget.extend({
     on_menu_settings: function() {
         var self = this;
         this.getParent().clear_uncommitted_changes().then(function() {
-            self.rpc("/web/action/load", { action_id: "base.action_res_users_my" }).done(function(result) {
+            self.rpc("/web/action/load", { action_id: "base_action_res_users_my" }).done(function(result) {
                 result.res_id = session.uid;
                 self.getParent().action_manager.do_action(result);
             });

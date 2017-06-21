@@ -1,7 +1,7 @@
 // Copyright 2016 NDP Systèmes. All Rights Reserved.
 // See LICENSE file for full licensing details.
 
-package defs
+package base
 
 import (
 	"fmt"
@@ -26,7 +26,7 @@ func (bab *BaseAuthBackend) Authenticate(login, secret string, context *types.Co
 }
 
 func init() {
-	cpWizard := pool.UserChangePasswordWizard().DeclareModel()
+	cpWizard := pool.UserChangePasswordWizard().DeclareTransientModel()
 	cpWizard.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: pool.UserChangePasswordWizardLine(),
 		ReverseFK: "Wizard", Default: func(env models.Environment, fMap models.FieldMap) interface{} {
 			activeIds := env.Context().GetIntegerSlice("active_ids")
@@ -51,7 +51,7 @@ func init() {
 			}
 		})
 
-	cpWizardLine := pool.UserChangePasswordWizardLine().DeclareModel()
+	cpWizardLine := pool.UserChangePasswordWizardLine().DeclareTransientModel()
 	cpWizardLine.AddMany2OneField("Wizard", models.ForeignKeyFieldParams{RelationModel: pool.UserChangePasswordWizard()})
 	cpWizardLine.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: pool.User(), OnDelete: models.Cascade})
 	cpWizardLine.AddCharField("UserLogin", models.StringFieldParams{})
