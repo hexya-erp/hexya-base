@@ -5,7 +5,6 @@ package base
 
 import (
 	"github.com/hexya-erp/hexya/hexya/models"
-	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types"
 	"github.com/hexya-erp/hexya/pool"
 )
@@ -26,6 +25,4 @@ func init() {
 	currency.AddIntegerField("DecimalPlaces", models.SimpleFieldParams{}) //Compute: "ComputeDecimalPlaces"})
 	currency.AddBooleanField("Active", models.SimpleFieldParams{})
 	currency.AddSelectionField("Position", models.SelectionFieldParams{Selection: types.Selection{"after": "After Amount", "before": "Before Amount"}, String: "Symbol Position", Help: "Determines where the currency symbol should be placed after or before the amount."})
-
-	currency.Methods().Load().AllowGroup(security.GroupEveryone)
 }

@@ -57,46 +57,101 @@ func init() {
 	cpWizardLine.AddCharField("UserLogin", models.StringFieldParams{})
 	cpWizardLine.AddCharField("NewPassword", models.StringFieldParams{})
 
-	user := pool.User().DeclareModel()
-	user.AddDateTimeField("LoginDate", models.SimpleFieldParams{})
-	user.AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(), Embed: true})
-	user.AddCharField("Login", models.StringFieldParams{Required: true})
-	user.AddCharField("Password", models.StringFieldParams{})
-	user.AddCharField("NewPassword", models.StringFieldParams{})
-	user.AddTextField("Signature", models.StringFieldParams{})
-	user.AddBooleanField("Active", models.SimpleFieldParams{})
-	user.AddCharField("ActionID", models.StringFieldParams{GoType: new(actions.ActionRef)})
-	user.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
-	user.AddMany2ManyField("Companies", models.Many2ManyFieldParams{RelationModel: pool.Company(), JSON: "company_ids"})
-	user.AddBinaryField("ImageSmall", models.SimpleFieldParams{})
-	user.AddMany2ManyField("Groups", models.Many2ManyFieldParams{RelationModel: pool.Group(), JSON: "group_ids"})
+	userModel := pool.User().DeclareModel()
+	userModel.AddDateTimeField("LoginDate", models.SimpleFieldParams{})
+	userModel.AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(), Embed: true})
+	userModel.AddCharField("Login", models.StringFieldParams{Required: true})
+	userModel.AddCharField("Password", models.StringFieldParams{})
+	userModel.AddCharField("NewPassword", models.StringFieldParams{})
+	userModel.AddTextField("Signature", models.StringFieldParams{})
+	userModel.AddBooleanField("Active", models.SimpleFieldParams{})
+	userModel.AddCharField("ActionID", models.StringFieldParams{GoType: new(actions.ActionRef)})
+	userModel.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
+	userModel.AddMany2ManyField("Companies", models.Many2ManyFieldParams{RelationModel: pool.Company(), JSON: "company_ids"})
+	userModel.AddBinaryField("ImageSmall", models.SimpleFieldParams{})
+	userModel.AddMany2ManyField("Groups", models.Many2ManyFieldParams{RelationModel: pool.Group(), JSON: "group_ids"})
 
-	user.Methods().Write().Extend("",
+	userModel.Methods().Write().Extend("",
 		func(rs pool.UserSet, data models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {
 			res := rs.Super().Write(data, fieldsToUnset...)
 			fMap := data.FieldMap(fieldsToUnset...)
 			_, ok1 := fMap["Groups"]
 			_, ok2 := fMap["group_ids"]
 			if ok1 || ok2 {
-				log.Debug("Updating user groups", "user", rs.Name(), "uid", rs.ID(), "groups", rs.Groups())
 				// We get groups before removing all memberships otherwise we might get stuck with permissions if we
 				// are modifying our own user memberships.
-				groups := rs.Groups().Records()
-				security.Registry.RemoveAllMembershipsForUser(rs.ID())
-				for _, group := range groups {
-					security.Registry.AddMembership(rs.ID(), security.Registry.GetGroup(group.GroupID()))
-				}
+				rs.SyncMemberships()
 			}
 			return res
 		})
 
-	user.Methods().NameGet().Extend("",
+	userModel.Methods().AddMandatoryGroups().DeclareMethod(
+		`AddMandatoryGroups adds the group Everyone to everybody and the admin group to the admin`,
+		func(rs pool.UserSet) {
+			for _, user := range rs.Records() {
+				dbGroupEveryone := pool.Group().Search(rs.Env(), pool.Group().GroupID().Equals(security.GroupEveryoneID))
+				dbGroupAdmin := pool.Group().Search(rs.Env(), pool.Group().GroupID().Equals(security.GroupAdminID))
+				groups := user.Groups()
+				// Add groupAdmin for admin
+				if user.ID() == security.SuperUserID {
+					groups = groups.Union(dbGroupAdmin)
+				}
+				// Add groupEveryone if not already the case
+				groups = groups.Union(dbGroupEveryone)
+
+				user.SetGroups(groups)
+			}
+		})
+
+	userModel.Methods().SyncMemberships().DeclareMethod(
+		`SyncMemberships synchronises the users memberships with the Hexya internal registry`,
+		func(rs pool.UserSet) {
+			for _, user := range rs.Records() {
+				if user.CheckGroupsSync() {
+					continue
+				}
+				log.Debug("Updating user groups", "user", rs.Name(), "uid", rs.ID(), "groups", rs.Groups())
+				// Push memberships to registry
+				security.Registry.RemoveAllMembershipsForUser(user.ID())
+				for _, dbGroup := range user.Groups().Records() {
+					security.Registry.AddMembership(user.ID(), security.Registry.GetGroup(dbGroup.GroupID()))
+				}
+			}
+		})
+
+	userModel.Methods().CheckGroupsSync().DeclareMethod(
+		`CheckGroupSync returns true if the groups in the internal registry match exactly
+		database groups of the given users. This method must be called on a singleton`,
+		func(rs pool.UserSet) bool {
+			rs.EnsureOne()
+		dbLoop:
+			for _, dbGroup := range rs.Groups().Records() {
+				for grp := range security.Registry.UserGroups(rs.ID()) {
+					if grp.ID == dbGroup.GroupID() {
+						continue dbLoop
+					}
+				}
+				return false
+			}
+		rLoop:
+			for grp := range security.Registry.UserGroups(rs.ID()) {
+				for _, dbGroup := range rs.Groups().Records() {
+					if grp.ID == dbGroup.GroupID() {
+						continue rLoop
+					}
+				}
+				return false
+			}
+			return true
+		})
+
+	userModel.Methods().NameGet().Extend("",
 		func(rs pool.UserSet) string {
 			res := rs.Super().NameGet()
 			return fmt.Sprintf("%s (%s)", res, rs.Login())
 		})
 
-	user.Methods().ContextGet().DeclareMethod(
+	userModel.Methods().ContextGet().DeclareMethod(
 		`UsersContextGet returns a context with the user's lang, tz and uid
 		This method must be called on a singleton.`,
 		func(rs pool.UserSet) *types.Context {
@@ -108,14 +163,14 @@ func init() {
 			return res
 		})
 
-	user.Methods().HasGroup().DeclareMethod(
+	userModel.Methods().HasGroup().DeclareMethod(
 		`HasGroup returns true if this user belongs to the group with the given ID`,
 		func(rs pool.UserSet, groupID string) bool {
 			group := security.Registry.GetGroup(groupID)
 			return security.Registry.HasMembership(rs.ID(), group)
 		})
 
-	user.Methods().Authenticate().DeclareMethod(
+	userModel.Methods().Authenticate().DeclareMethod(
 		"Authenticate the user defined by login and secret",
 		func(rs pool.UserSet, login, secret string) (uid int64, err error) {
 			user := rs.Search(pool.User().Login().Equals(login))

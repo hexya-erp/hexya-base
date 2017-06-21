@@ -31,28 +31,27 @@ func init() {
 
 	group.Methods().ReloadGroups().DeclareMethod(
 		`ReloadGroups populates the Group table with groups from the security.Registry
-		and refresh all memberships.`,
+		and refresh all memberships from the database to the security.Registry.`,
 		func(rs pool.GroupSet) {
 			log.Debug("Reloading groups")
-			// Sync groups
-			pool.Group().NewSet(rs.Env()).FetchAll().Unlink()
+			// Sync groups: registry => Database
+			var existingGroupIds []string
 			for _, group := range security.Registry.AllGroups() {
+				existingGroupIds = append(existingGroupIds, group.ID)
+				if !pool.Group().Search(rs.Env(), pool.Group().GroupID().Equals(group.ID)).IsEmpty() {
+					// The group already exists in the database
+					continue
+				}
 				rs.WithContext("GroupForceCreate", true).Create(&pool.GroupData{
 					GroupID: group.ID,
 					Name:    group.Name,
 				})
 			}
-			// Sync memberships
-			for _, user := range pool.User().NewSet(rs.Env()).FetchAll().Records() {
-				secGroups := security.Registry.UserGroups(user.ID())
-				grpIds := make([]string, len(secGroups))
-				i := 0
-				for grp := range secGroups {
-					grpIds[i] = grp.ID
-					i++
-				}
-				groups := pool.Group().Search(rs.Env(), pool.Group().GroupID().In(grpIds))
-				user.SetGroups(groups)
-			}
+			// Remove unknown groups from database
+			pool.Group().Search(rs.Env(), pool.Group().GroupID().NotIn(existingGroupIds)).Unlink()
+			// Sync memberships: DB => Registry
+			allUsers := pool.User().NewSet(rs.Env()).FetchAll()
+			allUsers.AddMandatoryGroups()
+			allUsers.SyncMemberships()
 		})
 }

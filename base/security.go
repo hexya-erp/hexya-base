@@ -3,7 +3,10 @@
 
 package base
 
-import "github.com/hexya-erp/hexya/hexya/models/security"
+import (
+	"github.com/hexya-erp/hexya/hexya/models/security"
+	"github.com/hexya-erp/hexya/pool"
+)
 
 var (
 	GroupERPManager, GroupSystem, GroupUser, GroupMultiCompany, GroupMultiCurrency,
@@ -20,4 +23,32 @@ func init() {
 	GroupPartnerManager = security.Registry.NewGroup("group_partner_manager", "Contact Creation")
 	GroupPortal = security.Registry.NewGroup("group_portal", "Portal")
 	GroupPublic = security.Registry.NewGroup("group_public", "Public")
+
+	pool.Filter().Methods().AllowAllToGroup(security.GroupEveryone)
+
+	pool.Attachment().Methods().Load().AllowGroup(security.GroupEveryone)
+	pool.Attachment().Methods().AllowAllToGroup(GroupUser)
+
+	pool.User().Methods().Load().AllowGroup(security.GroupEveryone)
+	pool.User().Methods().AllowAllToGroup(GroupERPManager)
+
+	pool.CurrencyRate().Methods().Load().AllowGroup(security.GroupEveryone)
+	pool.CurrencyRate().Methods().AllowAllToGroup(GroupSystem)
+
+	pool.Currency().Methods().Load().AllowGroup(security.GroupEveryone)
+	pool.Currency().Methods().AllowAllToGroup(GroupSystem)
+
+	pool.Partner().Methods().Load().AllowGroup(GroupPublic)
+	pool.Partner().Methods().Load().AllowGroup(GroupPortal)
+	pool.Partner().Methods().Load().AllowGroup(GroupUser)
+	pool.Partner().Methods().AllowAllToGroup(GroupPartnerManager)
+
+	pool.PartnerTitle().Methods().Load().AllowGroup(security.GroupEveryone)
+	pool.PartnerTitle().Methods().AllowAllToGroup(GroupPartnerManager)
+
+	pool.PartnerCategory().Methods().Load().AllowGroup(GroupUser)
+	pool.PartnerCategory().Methods().AllowAllToGroup(GroupPartnerManager)
+
+	pool.Bank().Methods().Load().AllowGroup(GroupUser)
+	pool.Bank().Methods().AllowAllToGroup(GroupPartnerManager)
 }

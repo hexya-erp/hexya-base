@@ -476,10 +476,8 @@
                     documents, etc.
                 </p>
             </help>
-            <views>
-                <view id="base_view_partner_tree" type="tree"/>
-                <view id="base_view_partner_form" type="form"/>
-            </views>
+            <view id="base_view_partner_tree" type="tree"/>
+            <view id="base_view_partner_form" type="form"/>
         </action>
 
         <menuitem id="base_menu_sales" name="Sales" parent="base_menu_base_partner" sequence="5"/>
