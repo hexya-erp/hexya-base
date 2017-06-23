@@ -32,6 +32,12 @@ type FieldsViewData struct {
 	FieldParent string                       `json:"field_parent"`
 }
 
+// SubViewData is the type expected for Views in FieldsViewData
+type SubViewData struct {
+	Arch   string                       `json:"arch"`
+	Fields map[string]*models.FieldInfo `json:"fields"`
+}
+
 // SearchParams is the args struct for the SearchRead method
 type SearchParams struct {
 	Domain domains.Domain `json:"domain"`

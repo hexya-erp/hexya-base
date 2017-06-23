@@ -8,11 +8,11 @@ import (
 	"github.com/hexya-erp/hexya/pool"
 )
 
-func initBaseMixin() {
-	baseMixin := models.Registry.MustGet("BaseMixin")
+func init() {
+	baseMixin := pool.BaseMixin()
 	baseMixin.AddBooleanField("Active", models.SimpleFieldParams{})
 
-	baseMixin.AddMethod("ToggleActive",
+	baseMixin.Methods().ToggleActive().DeclareMethod(
 		`ToggleActive toggles the Active field of this object`,
 		func(rs pool.BaseMixinSet) {
 			if rs.Active() {
@@ -21,5 +21,4 @@ func initBaseMixin() {
 				rs.SetActive(true)
 			}
 		})
-
 }

@@ -62,7 +62,11 @@ func init() {
 	partner.AddBooleanField("Supplier", models.SimpleFieldParams{})
 	partner.AddBooleanField("Employee", models.SimpleFieldParams{})
 	partner.AddCharField("Function", models.StringFieldParams{})
-	partner.AddCharField("Type", models.StringFieldParams{})
+	partner.AddSelectionField("Type", models.SelectionFieldParams{Selection: types.Selection{
+		"contact": "Contact", "invoice": "Invoice Address", "delivery": "Shipping Address", "other": "Other Address"},
+		Help:    "Used to select automatically the right address according to the context in sales and purchases documents.",
+		Default: models.DefaultValue("contact"),
+	})
 	partner.AddCharField("Street", models.StringFieldParams{})
 	partner.AddCharField("Street2", models.StringFieldParams{})
 	partner.AddCharField("Zip", models.StringFieldParams{})

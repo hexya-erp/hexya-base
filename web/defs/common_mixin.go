@@ -19,7 +19,7 @@ import (
 	"github.com/hexya-erp/hexya/pool"
 )
 
-func initCommonMixin() {
+func init() {
 	commonMixin := pool.CommonMixin()
 
 	commonMixin.Methods().Create().Extend("",
@@ -47,7 +47,7 @@ func initCommonMixin() {
 			return res
 		})
 
-	commonMixin.AddMethod("AddNamesToRelations",
+	commonMixin.Methods().AddNamesToRelations().DeclareMethod(
 		`AddNameToRelations returns the given FieldMap after getting the name of all 2one relation ids`,
 		func(rs pool.CommonMixinSet, fMap models.FieldMap, fInfos map[string]*models.FieldInfo) models.FieldMap {
 			for fName, value := range fMap {
@@ -75,7 +75,7 @@ func initCommonMixin() {
 			return fMap
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("NameSearch",
+	commonMixin.Methods().NameSearch().DeclareMethod(
 		`NameSearch searches for records that have a display name matching the given
 		"name" pattern when compared with the given "operator", while also
 		matching the optional search domain ("args").
@@ -102,7 +102,7 @@ func initCommonMixin() {
 			return res
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("ProcessDataValues",
+	commonMixin.Methods().ProcessDataValues().DeclareMethod(
 		`ProcessDataValues updates the given data values for Write and Create methods to be
 		compatible with the ORM, in particular for relation fields`,
 		func(rs pool.CommonMixinSet, data models.FieldMapper) models.FieldMap {
@@ -123,7 +123,7 @@ func initCommonMixin() {
 			return fMap
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("ExecuteO2MActions",
+	commonMixin.Methods().ExecuteO2MActions().DeclareMethod(
 		`ExecuteO2MActions executes the actions on one2many fields given by
 		the list of triplets received from the client`,
 		func(rs pool.CommonMixinSet, fieldName string, info *models.FieldInfo, value interface{}) interface{} {
@@ -175,7 +175,7 @@ func initCommonMixin() {
 			return value
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("NormalizeM2MData",
+	commonMixin.Methods().NormalizeM2MData().DeclareMethod(
 		`NormalizeM2MData converts the list of triplets received from the client into the final list of ids
 		to keep in the Many2Many relationship of this model through the given field.`,
 		func(rs pool.CommonMixinSet, fieldName string, info *models.FieldInfo, value interface{}) interface{} {
@@ -209,15 +209,15 @@ func initCommonMixin() {
 			return value
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("GetFormviewId",
-		`GetFormviewId returns an view id to open the document with.
+	commonMixin.Methods().GetFormviewId().DeclareMethod(
+		`GetFormviewID returns an view id to open the document with.
 		This method is meant to be overridden in addons that want
  		to give specific view ids for example.`,
 		func(rs pool.CommonMixinSet) string {
 			return ""
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("GetFormviewAction",
+	commonMixin.Methods().GetFormviewAction().DeclareMethod(
 		`GetFormviewAction returns an action to open the document.
 		This method is meant to be overridden in addons that want
 		to give specific view ids for example.`,
@@ -235,7 +235,7 @@ func initCommonMixin() {
 			}
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("FieldsViewGet",
+	commonMixin.Methods().FieldsViewGet().DeclareMethod(
 		`FieldsViewGet is the base implementation of the 'FieldsViewGet' method which
 		gets the detailed composition of the requested view like fields, mixin,
 		view architecture.`,
@@ -260,10 +260,24 @@ func initCommonMixin() {
 				Toolbar: toolbar,
 				Fields:  fInfos,
 			}
+			for field, sViews := range view.SubViews {
+				fJSON := rs.Model().JSONizeFieldName(field)
+				relRS := rs.Env().Pool(fInfos[fJSON].Relation)
+				for svType, sv := range sViews {
+					svFields := relRS.Call("FieldsGet", models.FieldsGetArgs{Fields: sv.Fields}).(map[string]*models.FieldInfo)
+					if res.Fields[fJSON].Views == nil {
+						res.Fields[fJSON].Views = make(map[string]interface{})
+					}
+					res.Fields[fJSON].Views[string(svType)] = &webdata.SubViewData{
+						Fields: svFields,
+						Arch:   relRS.Call("ProcessView", sv.Arch, svFields).(string),
+					}
+				}
+			}
 			return &res
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("GetToolbar",
+	commonMixin.Methods().GetToolbar().DeclareMethod(
 		`GetToolbar returns a toolbar populated with the actions linked to this model`,
 		func(rs pool.CommonMixinSet) webdata.Toolbar {
 			var res webdata.Toolbar
@@ -276,7 +290,7 @@ func initCommonMixin() {
 			return res
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("ProcessView",
+	commonMixin.Methods().ProcessView().DeclareMethod(
 		`ProcessView makes all the necessary modifications to the view
 		arch and returns the new xml string.`,
 		func(rs pool.CommonMixinSet, arch string, fieldInfos map[string]*models.FieldInfo) string {
@@ -297,7 +311,7 @@ func initCommonMixin() {
 			return res
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("SanitizeSearchView",
+	commonMixin.Methods().SanitizeSearchView().DeclareMethod(
 		`SanitizeSearchView adds the missing attribute if it does not exist`,
 		func(rs pool.CommonMixinSet, doc *etree.Document) {
 			if doc.Root().Tag != "search" {
@@ -310,7 +324,7 @@ func initCommonMixin() {
 			}
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("AddModifiers",
+	commonMixin.Methods().AddModifiers().DeclareMethod(
 		`AddModifiers adds the modifiers attribute nodes to given xml doc.`,
 		func(rs pool.CommonMixinSet, doc *etree.Document, fieldInfos map[string]*models.FieldInfo) {
 			allModifiers := make(map[*etree.Element]map[string]interface{})
@@ -349,7 +363,7 @@ func initCommonMixin() {
 			}
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("ProcessFieldElementModifiers",
+	commonMixin.Methods().ProcessFieldElementModifiers().DeclareMethod(
 		`ProcessFieldElementModifiers modifies the given modifiers map by taking into account:
 		- 'invisible', 'readonly' and 'required' attributes in field tags
 		- 'ReadOnly' and 'Required' parameters of the model's field'
@@ -373,7 +387,7 @@ func initCommonMixin() {
 			return modifiers
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("ProcessElementAttrs",
+	commonMixin.Methods().ProcessElementAttrs().DeclareMethod(
 		`ProcessElementAttrs returns a modifiers map according to the domain
 		in attrs of the given element`,
 		func(rc models.RecordCollection, element *etree.Element) map[string]interface{} {
@@ -402,7 +416,7 @@ func initCommonMixin() {
 			return modifiers
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("UpdateFieldNames",
+	commonMixin.Methods().UpdateFieldNames().DeclareMethod(
 		`UpdateFieldNames changes the field names in the view to the column names.
 		If a field name is already column names then it does nothing.
 		This method also modifies the fields in the given fieldInfo to match the new name.`,
@@ -424,7 +438,7 @@ func initCommonMixin() {
 			}
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("SearchRead",
+	commonMixin.Methods().SearchRead().DeclareMethod(
 		`SearchRead retrieves database records according to the filters defined in params.`,
 		func(rs pool.CommonMixinSet, params webdata.SearchParams) []models.FieldMap {
 			rSet := rs.AddDomainLimitOffset(params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order).Fetch()
@@ -433,7 +447,7 @@ func initCommonMixin() {
 			return records
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("AddDomainLimitOffset",
+	commonMixin.Methods().AddDomainLimitOffset().DeclareMethod(
 		`AddDomainLimitOffsetOrder adds the given domain, limit, offset
 		and order to the current RecordSet query.`,
 		func(rc models.RecordCollection, domain domains.Domain, limit int, offset int, order string) models.RecordCollection {
@@ -455,7 +469,7 @@ func initCommonMixin() {
 			return rc
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.AddMethod("ReadGroup",
+	commonMixin.Methods().ReadGroup().DeclareMethod(
 		`Get a list of record aggregates according to the given parameters.`,
 		func(rs pool.CommonMixinSet, params webdata.ReadGroupParams) []models.FieldMap {
 			rSet := rs.AddDomainLimitOffset(params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order)
