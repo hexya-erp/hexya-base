@@ -91,7 +91,6 @@ func init() {
 			if extraCondition := domains.ParseDomain(params.Args); extraCondition != nil {
 				searchRs = searchRs.Search(extraCondition)
 			}
-
 			searchRs.Load("ID", "DisplayName")
 
 			res := make([]webdata.RecordIDWithName, searchRs.Len())
@@ -234,6 +233,16 @@ func init() {
 				Context:     rs.Env().Context(),
 			}
 		}).AllowGroup(security.GroupEveryone)
+
+	commonMixin.Methods().FieldsGet().Extend("",
+		func(rs pool.CommonMixinSet, args models.FieldsGetArgs) map[string]*models.FieldInfo {
+			res := rs.Super().FieldsGet(args)
+			for f, fInfo := range res {
+				dom, _ := fInfo.Domain.([]interface{})
+				res[f].Domain = domains.Domain(dom).String()
+			}
+			return res
+		})
 
 	commonMixin.Methods().FieldsViewGet().DeclareMethod(
 		`FieldsViewGet is the base implementation of the 'FieldsViewGet' method which

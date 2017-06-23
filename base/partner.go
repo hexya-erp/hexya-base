@@ -71,7 +71,8 @@ func init() {
 	partner.AddCharField("Street2", models.StringFieldParams{})
 	partner.AddCharField("Zip", models.StringFieldParams{})
 	partner.AddCharField("City", models.StringFieldParams{})
-	partner.AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: pool.CountryState()})
+	partner.AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: pool.CountryState(),
+		Filter: pool.CountryState().Country().EqualsEval("country_id")})
 	partner.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country()})
 	partner.AddCharField("Email", models.StringFieldParams{})
 	partner.AddCharField("Phone", models.StringFieldParams{})

@@ -19,7 +19,11 @@ func init() {
 	pool.Bank().AddCharField("Street2", models.StringFieldParams{})
 	pool.Bank().AddCharField("Zip", models.StringFieldParams{})
 	pool.Bank().AddCharField("City", models.StringFieldParams{})
-	pool.Bank().AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: pool.CountryState(), String: "Fed. State"}) // domain="[('country_id', '=', country)]"
+	pool.Bank().AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: pool.CountryState(), String: "Fed. State",
+		Filter: pool.CountryState().Country().EqualsFunc(func(rs models.RecordSet) pool.CountrySet {
+			bank := rs.(pool.BankSet)
+			return bank.Country()
+		})})
 	pool.Bank().AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country()})
 	pool.Bank().AddCharField("Email", models.StringFieldParams{})
 	pool.Bank().AddCharField("Phone", models.StringFieldParams{})
@@ -42,7 +46,8 @@ func init() {
 	pool.BankAccount().AddCharField("SanitizedAccountNumber", models.StringFieldParams{Compute: "ComputeSanitizedAccountNumber",
 		Stored: true})
 	pool.BankAccount().AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(),
-		String: "Account Holder", OnDelete: models.Cascade, Index: true}) //domain=['|', ('is_company', '=', True), ('parent_id', '=', False)])
+		String: "Account Holder", OnDelete: models.Cascade, Index: true,
+		Filter: pool.Partner().IsCompany().Equals(true).Or().Parent().IsNull()})
 	pool.BankAccount().AddMany2OneField("Bank", models.ForeignKeyFieldParams{RelationModel: pool.Bank()})
 	pool.BankAccount().AddCharField("BankName", models.StringFieldParams{Related: "Bank.Name"})
 	pool.BankAccount().AddCharField("BankBIC", models.StringFieldParams{Related: "Bank.BIC"})
