@@ -20,6 +20,8 @@ func init() {
 	countryState.AddCharField("Code", models.StringFieldParams{String: "State Code", Size: 3,
 		Help: "The state code in max. three chars.", Required: true})
 
+	countryState.AddSQLConstraint("name_code_uniq", "unique(country_id, code)", "The code of the state must be unique by country !")
+
 	country := pool.Country().DeclareModel()
 	country.AddCharField("Name", models.StringFieldParams{String: "Country Name", Help: "The full name of the country.",
 		Translate: true, Required: true, Unique: true})

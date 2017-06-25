@@ -13,7 +13,7 @@ import (
 
 func init() {
 	partnerTitle := pool.PartnerTitle().DeclareModel()
-	partnerTitle.AddCharField("Name", models.StringFieldParams{String: "Title", Required: true, Translate: true})
+	partnerTitle.AddCharField("Name", models.StringFieldParams{String: "Title", Required: true, Translate: true, Unique: true})
 	partnerTitle.AddCharField("Shortcut", models.StringFieldParams{String: "Abbreviation", Translate: true})
 
 	partnerCategory := pool.PartnerCategory().DeclareModel()
@@ -97,6 +97,7 @@ func init() {
 			return &res, []models.FieldNamer{pool.Partner().IsCompany()}
 		})
 
+	partner.AddSQLConstraint("check_name", "CHECK( (type='contact' AND name IS NOT NULL) or (type != 'contact') )", "Contacts require a name.")
 	//'has_image': fields.function(_has_image, type="boolean"),
 	//'contact_address': fields.function(_address_display,  type='char', string='Complete Address'),
 	//'commercial_partner_id': fields.function(_commercial_partner_id, type='many2one', relation='res.partner', string='Commercial Entity', store=_commercial_partner_store_triggers)

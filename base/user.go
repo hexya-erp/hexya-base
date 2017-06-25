@@ -60,7 +60,7 @@ func init() {
 	userModel := pool.User().DeclareModel()
 	userModel.AddDateTimeField("LoginDate", models.SimpleFieldParams{})
 	userModel.AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(), Embed: true})
-	userModel.AddCharField("Login", models.StringFieldParams{Required: true})
+	userModel.AddCharField("Login", models.StringFieldParams{Required: true, Unique: true})
 	userModel.AddCharField("Password", models.StringFieldParams{})
 	userModel.AddCharField("NewPassword", models.StringFieldParams{})
 	userModel.AddTextField("Signature", models.StringFieldParams{})

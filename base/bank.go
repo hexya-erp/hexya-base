@@ -55,6 +55,8 @@ func init() {
 	pool.BankAccount().AddMany2OneField("Currency", models.ForeignKeyFieldParams{RelationModel: pool.Currency()})
 	pool.BankAccount().AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
 
+	pool.BankAccount().AddSQLConstraint("unique_number", "unique(sanitized_account_number, company_id)", "Account Number must be unique")
+
 	pool.BankAccount().Methods().ComputeAccountType().DeclareMethod(
 		`ComputeAccountType computes the type of account from the account number`,
 		func(rs pool.BankAccountSet) (*pool.BankAccountData, []models.FieldNamer) {
