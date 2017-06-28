@@ -64,7 +64,7 @@ func init() {
 	userModel.AddCharField("Password", models.StringFieldParams{})
 	userModel.AddCharField("NewPassword", models.StringFieldParams{})
 	userModel.AddTextField("Signature", models.StringFieldParams{})
-	userModel.AddBooleanField("Active", models.SimpleFieldParams{})
+	userModel.AddBooleanField("Active", models.SimpleFieldParams{Default: models.DefaultValue(true)})
 	userModel.AddCharField("ActionID", models.StringFieldParams{GoType: new(actions.ActionRef)})
 	userModel.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
 	userModel.AddMany2ManyField("Companies", models.Many2ManyFieldParams{RelationModel: pool.Company(), JSON: "company_ids"})

@@ -57,7 +57,7 @@ func init() {
 	partner.AddMany2ManyField("Categories", models.Many2ManyFieldParams{RelationModel: pool.PartnerCategory()})
 	partner.AddFloatField("CreditLimit", models.FloatFieldParams{})
 	partner.AddCharField("EAN13", models.StringFieldParams{})
-	partner.AddBooleanField("Active", models.SimpleFieldParams{})
+	partner.AddBooleanField("Active", models.SimpleFieldParams{Default: models.DefaultValue(true)})
 	partner.AddBooleanField("Customer", models.SimpleFieldParams{})
 	partner.AddBooleanField("Supplier", models.SimpleFieldParams{})
 	partner.AddBooleanField("Employee", models.SimpleFieldParams{})
