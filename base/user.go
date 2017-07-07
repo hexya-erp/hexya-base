@@ -186,6 +186,12 @@ func init() {
 			return
 		})
 
+	userModel.Methods().GetCompany().DeclareMethod(
+		`GetCompany returns the current user's company.`,
+		func(rs pool.UserSet) pool.CompanySet {
+			return pool.User().Browse(rs.Env(), []int64{rs.Env().Uid()}).Company()
+		})
+
 	security.AuthenticationRegistry.RegisterBackend(new(BaseAuthBackend))
 
 }
