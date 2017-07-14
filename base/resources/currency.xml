@@ -59,7 +59,7 @@
                 <field name="name"/>
                 <field name="symbol"/>
                 <field name="Rates" invisible="1"/>
-                <!--<field name="date"/>-->
+                <field name="date"/>
                 <field name="rate"/>
                 <field name="active"/>
             </tree>
