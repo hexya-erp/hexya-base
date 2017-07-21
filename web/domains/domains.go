@@ -15,7 +15,11 @@
 package domains
 
 import (
+	"database/sql"
+	"database/sql/driver"
+	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/operator"
@@ -28,16 +32,49 @@ import (
 // in prefix form (DomainPrefixOperator)
 type Domain []interface{}
 
+// Value JSON encode our Domain for storing in the database.
+func (d Domain) Value() (driver.Value, error) {
+	bytes, err := json.Marshal(d)
+	return driver.Value(bytes), err
+}
+
+// Scan JSON decodes the value of the database into a Domain
+func (d *Domain) Scan(src interface{}) error {
+	var data []byte
+	switch s := src.(type) {
+	case string:
+		data = []byte(s)
+	case []byte:
+		data = s
+	case []interface{}:
+		*d = Domain(s)
+		return nil
+	default:
+		return fmt.Errorf("Invalid type for Domain: %T", src)
+	}
+	var dom Domain
+	err := json.Unmarshal(data, &dom)
+	if err != nil {
+		return err
+	}
+	*d = dom
+	return nil
+
+}
+
+var _ driver.Valuer = Domain{}
+var _ sql.Scanner = &Domain{}
+
 // String method for Domain type. Returns a valid domain for client.
 func (d Domain) String() string {
 	if len(d) == 0 {
 		return "[]"
 	}
-	var res string
+	var res []string
 	for _, term := range d {
 		switch t := term.(type) {
 		case string:
-			res += t
+			res = append(res, t)
 		case []interface{}:
 			var argStr string
 			switch arg := t[2].(type) {
@@ -48,13 +85,12 @@ func (d Domain) String() string {
 			default:
 				argStr = fmt.Sprintf("%v", arg)
 			}
-			res += fmt.Sprintf(`["%s", "%s", %s]`, t[0], t[1], argStr)
+			res = append(res, fmt.Sprintf(`["%s", "%s", %s]`, t[0], t[1], argStr))
 		default:
 			log.Panic("Unexpected Domain term", "domain", d)
 		}
-		res += ","
 	}
-	return fmt.Sprintf("[%s]", res)
+	return fmt.Sprintf("[%s]", strings.Join(res, ","))
 }
 
 // A DomainTerm is a search criterion in the form of

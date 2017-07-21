@@ -1,7 +1,7 @@
 // Copyright 2017 NDP Systèmes. All Rights Reserved.
 // See LICENSE file for full licensing details.
 
-package defs
+package web
 
 import (
 	"encoding/json"
@@ -50,6 +50,7 @@ func init() {
 	commonMixin.Methods().AddNamesToRelations().DeclareMethod(
 		`AddNameToRelations returns the given FieldMap after getting the name of all 2one relation ids`,
 		func(rs pool.CommonMixinSet, fMap models.FieldMap, fInfos map[string]*models.FieldInfo) models.FieldMap {
+			fMap = rs.Model().JSONizeFieldMap(fMap)
 			for fName, value := range fMap {
 				fi := fInfos[fName]
 				switch v := value.(type) {

@@ -1,12 +1,11 @@
 // Copyright 2017 NDP Systèmes. All Rights Reserved.
 // See LICENSE file for full licensing details.
 
-package tests
+package base
 
 import (
 	"testing"
 
-	_ "github.com/hexya-erp/hexya-base/base"
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/tests"

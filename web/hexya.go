@@ -17,15 +17,18 @@ package web
 import (
 	_ "github.com/hexya-erp/hexya-base/base"
 	_ "github.com/hexya-erp/hexya-base/web/controllers"
-	_ "github.com/hexya-erp/hexya-base/web/defs"
 	"github.com/hexya-erp/hexya/hexya/server"
+	"github.com/hexya-erp/hexya/hexya/tools/logging"
 )
 
 const (
 	MODULE_NAME = "web"
 )
 
+var log *logging.Logger
+
 func init() {
+	log = logging.GetLogger("web")
 	server.RegisterModule(&server.Module{
 		Name:     MODULE_NAME,
 		PostInit: func() {},

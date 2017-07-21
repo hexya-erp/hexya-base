@@ -24,8 +24,6 @@ func init() {
 	GroupPortal = security.Registry.NewGroup("group_portal", "Portal")
 	GroupPublic = security.Registry.NewGroup("group_public", "Public")
 
-	pool.Filter().Methods().AllowAllToGroup(security.GroupEveryone)
-
 	pool.Attachment().Methods().Load().AllowGroup(security.GroupEveryone)
 	pool.Attachment().Methods().AllowAllToGroup(GroupUser)
 

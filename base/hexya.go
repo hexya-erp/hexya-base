@@ -102,6 +102,8 @@ func init() {
 				}
 
 				pool.Group().NewSet(env).ReloadGroups()
+
+				pool.ConfigParameter().NewSet(env).Init()
 			})
 			if err != nil {
 				log.Panic("Error while initializing", "error", err)
