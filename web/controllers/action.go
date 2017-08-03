@@ -8,18 +8,30 @@ import (
 	"net/http"
 
 	"github.com/hexya-erp/hexya/hexya/actions"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types"
 	"github.com/hexya-erp/hexya/hexya/server"
+	"github.com/hexya-erp/hexya/pool"
 )
 
 // ActionLoad returns the action with the given id
 func ActionLoad(c *server.Context) {
+	var lang string
+	if c.Session().Get("uid") != nil {
+		models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
+			user := pool.User().Search(env, pool.User().ID().Equals(c.Session().Get("uid").(int64)))
+			lang = user.ContextGet().GetString("lang")
+		})
+	}
+
 	params := struct {
 		ActionID          string         `json:"action_id"`
 		AdditionalContext *types.Context `json:"additional_context"`
 	}{}
 	c.BindRPCParams(&params)
-	action := actions.Registry.MustGetById(params.ActionID)
+	action := *actions.Registry.MustGetById(params.ActionID)
+	action.Name = action.TranslatedName(lang)
 	c.RPC(http.StatusOK, action)
 }
 

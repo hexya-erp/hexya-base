@@ -57,7 +57,7 @@ func init() {
 					AndCond(
 						pool.CurrencyRate().Company().IsNull().
 							Or().Company().Equals(company))).
-				OrderBy("Company, Name desc").
+				OrderBy("Company", "Name desc").
 				Limit(1)
 			res := rate.Rate()
 			if res == 0 {

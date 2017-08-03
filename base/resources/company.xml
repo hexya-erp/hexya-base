@@ -75,7 +75,7 @@
 
         <action id="base_action_res_company_form" type="ir.actions.act_window" model="Company" view_mode="tree,form"
                 name="Companies">
-            <help>Create and manage the companies that will be managed by Odoo from here. Shops or
+            <help>Create and manage the companies that will be managed by Hexya from here. Shops or
                 subsidiaries can be created and maintained from here.
             </help>
         </action>

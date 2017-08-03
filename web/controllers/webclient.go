@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/hexya-erp/hexya/hexya/i18n"
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools"
 	"github.com/hexya-erp/hexya/hexya/tools/xmlutils"
@@ -24,9 +25,9 @@ func QWeb(c *server.Context) {
 // BootstrapTranslations returns data about the current language
 func BootstrapTranslations(c *server.Context) {
 	res := gin.H{
-		"lang_parameters": tools.LangParameters{
+		"lang_parameters": i18n.LangParameters{
 			DateFormat:   "%m/%d/%Y",
-			Direction:    tools.LangDirectionLTR,
+			Direction:    i18n.LangDirectionLTR,
 			ThousandsSep: ",",
 			TimeFormat:   "%H:%M:%S",
 			DecimalPoint: ".",

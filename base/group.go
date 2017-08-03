@@ -19,13 +19,13 @@ func init() {
 			if rs.Env().Context().HasKey("GroupForceCreate") {
 				return rs.Super().Create(data)
 			}
-			log.Panic("Trying to create a security group")
+			log.Panic(rs.T("Trying to create a security group"))
 			panic("Unreachable")
 		})
 
 	group.Methods().Write().Extend("",
 		func(rs pool.GroupSet, data models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {
-			log.Panic("Trying to modify a security group")
+			log.Panic(rs.T("Trying to modify a security group"))
 			panic("Unreachable")
 		})
 

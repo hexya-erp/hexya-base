@@ -36,7 +36,8 @@ func init() {
 		func(rs pool.FilterSet, modelName, actionID string) []models.FieldMap {
 			condition := pool.Filter().ResModel().Equals(modelName).
 				And().Action().Equals(actionID).
-				And().UserFilteredOn(pool.User().ID().Equals(rs.Env().Uid())).Or().User().IsNull()
+				AndCond(pool.Filter().UserFilteredOn(pool.User().ID().Equals(rs.Env().Uid())).
+					Or().User().IsNull())
 			userContext := pool.User().Browse(rs.Env(), []int64{rs.Env().Uid()}).ContextGet()
 			filterRS := pool.Filter().NewSet(rs.Env())
 			res := filterRS.WithNewContext(userContext).Search(condition).Read([]string{"Name", "IsDefault", "Domain", "Context", "User", "Sort"})

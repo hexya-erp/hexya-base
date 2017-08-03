@@ -1,6 +1,6 @@
 {{ define "web.layout" }}
     <!DOCTYPE html>
-        <html style="height: 100%">
+    <html style="height: 100%">
         <head>
             <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
             <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
@@ -17,7 +17,7 @@
 
 {{ define "web.menu" }}
     <ul class="nav navbar-nav navbar-left oe_application_menu_placeholder">
-        {{ range .Menus }}
+        {{ range . }}
         <li>
             {{ template "web.menu_link" .}}
         </li>
@@ -33,11 +33,11 @@
 {{ end }}
 
 {{ define "web.menu_link" }}
-    <a href="{{ if .HasAction }}{{ printf `/web#menu_id=%s&action=%s` (.ID) (.Action.ID) }}{{ end }}"
+    <a href="{{ printf `/web#menu_id=%s&action=` (.ID) }}{{ if .HasAction }}{{ .ActionID }}{{ end }}"
         class="{{ if .HasChildren }}oe_menu_toggler{{ else }}oe_menu_leaf{{ end }}"
         data-menu="{{ .ID }}"
-        data-action-model="{{ if .HasAction }}{{ .Action.Model }}{{ end }}"
-        data-action-id="{{ if .HasAction }}{{ .Action.ID }}{{ end }}">
+       {{ if .HasAction }}data-action-model="{{ .ActionModel }}"{{ end }}
+       {{ if .HasAction }}data-action-id="{{ .ActionID }}"{{ end }}>
         <span class="oe_menu_text">
             {{ .Name }}
         </span>
@@ -50,10 +50,10 @@
         <img src='/web/binary/company_logo'/>
     </a>
     <div class="oe_secondary_menus_container">
-        {{ range .Menus }}
+        {{ range . }}
             <div style="display: none" class="oe_secondary_menu" data-menu-parent="{{ .ID }}">
                 {{ if .HasChildren }}
-                    {{ range .Children.Menus }}
+                    {{ range .Children }}
                         <div class="oe_secondary_menu_section">
                             {{ .Name }}
                         </div>
@@ -71,7 +71,7 @@
 {{ define "web.menu_secondary_submenu" }}
     {{ if .HasChildren }}
         <ul class="oe_secondary_submenu nav nav-pills nav-stacked">
-            {{ range .Children.Menus }}
+            {{ range .Children }}
                 <li>
                     {{ template "web.menu_link" . }}
                     {{ template "web.menu_secondary_submenu" . }}

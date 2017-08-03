@@ -45,7 +45,7 @@ func init() {
 
 				mainCompanyPartner := pool.Partner().Search(env, pool.Partner().ID().Equals(1))
 				if mainCompanyPartner.IsEmpty() {
-					log.Debug("Creating main company partner")
+					log.Debug(mainCompanyPartner.T("Creating main company partner"))
 					mainCompanyPartner = pool.Partner().Create(env, &pool.PartnerData{
 						ID:   1,
 						Name: "Your Company",
@@ -55,7 +55,7 @@ func init() {
 
 				mainCompany := pool.Company().Search(env, pool.Company().ID().Equals(1))
 				if mainCompany.IsEmpty() {
-					log.Debug("Creating main company")
+					log.Debug(mainCompany.T("Creating main company"))
 					euro := pool.Currency().Search(env, pool.Currency().HexyaExternalID().Equals("base_EUR"))
 					mainCompany = pool.Company().Create(env, &pool.CompanyData{
 						ID:       1,
@@ -68,7 +68,7 @@ func init() {
 
 				adminPartner := pool.Partner().Search(env, pool.Partner().ID().Equals(2))
 				if adminPartner.IsEmpty() {
-					log.Debug("Creating admin partner")
+					log.Debug(adminPartner.T("Creating admin partner"))
 					adminPartner = pool.Partner().Create(env, &pool.PartnerData{
 						ID:       2,
 						Lang:     "en_US",
@@ -83,7 +83,7 @@ func init() {
 				adminUser := pool.User().Search(env, pool.User().ID().Equals(security.SuperUserID))
 				ActionID := actions.MakeActionRef("base_action_res_users")
 				if adminUser.IsEmpty() {
-					log.Debug("Creating admin user")
+					log.Debug(adminUser.T("Creating admin user"))
 					pool.User().Create(env, &pool.UserData{
 						ID:          security.SuperUserID,
 						Name:        "Administrator",

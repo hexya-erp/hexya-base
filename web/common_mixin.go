@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"strings"
 
+	"github.com/beevik/etree"
 	"github.com/hexya-erp/hexya-base/web/domains"
 	"github.com/hexya-erp/hexya-base/web/webdata"
 	"github.com/hexya-erp/hexya/hexya/actions"
@@ -14,7 +15,6 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models/fieldtype"
 	"github.com/hexya-erp/hexya/hexya/models/operator"
 	"github.com/hexya-erp/hexya/hexya/models/security"
-	"github.com/hexya-erp/hexya/hexya/tools/etree"
 	"github.com/hexya-erp/hexya/hexya/views"
 	"github.com/hexya-erp/hexya/pool"
 )
@@ -50,7 +50,7 @@ func init() {
 	commonMixin.Methods().AddNamesToRelations().DeclareMethod(
 		`AddNameToRelations returns the given FieldMap after getting the name of all 2one relation ids`,
 		func(rs pool.CommonMixinSet, fMap models.FieldMap, fInfos map[string]*models.FieldInfo) models.FieldMap {
-			fMap = rs.Model().JSONizeFieldMap(fMap)
+			fMap = fMap.JSONized(rs.Model().Underlying())
 			for fName, value := range fMap {
 				fi := fInfos[fName]
 				switch v := value.(type) {
@@ -250,6 +250,7 @@ func init() {
 		gets the detailed composition of the requested view like fields, mixin,
 		view architecture.`,
 		func(rs pool.CommonMixinSet, args webdata.FieldsViewGetParams) *webdata.FieldsViewData {
+			lang := rs.Env().Context().GetString("lang")
 			view := views.Registry.GetByID(args.ViewID)
 			if view == nil {
 				view = views.Registry.GetFirstViewForModel(rs.ModelName(), views.ViewType(args.ViewType))
@@ -259,7 +260,7 @@ func init() {
 				cols[i] = models.FieldName(rs.Model().JSONizeFieldName(string(f)))
 			}
 			fInfos := rs.FieldsGet(models.FieldsGetArgs{Fields: cols})
-			arch := rs.ProcessView(view.Arch, fInfos)
+			arch := rs.ProcessView(view.Arch(lang), fInfos)
 			toolbar := rs.GetToolbar()
 			res := webdata.FieldsViewData{
 				Name:    view.Name,
@@ -280,7 +281,7 @@ func init() {
 					}
 					res.Fields[fJSON].Views[string(svType)] = &webdata.SubViewData{
 						Fields: svFields,
-						Arch:   relRS.Call("ProcessView", sv.Arch, svFields).(string),
+						Arch:   relRS.Call("ProcessView", sv.Arch(lang), svFields).(string),
 					}
 				}
 			}

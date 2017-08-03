@@ -9,8 +9,11 @@ import (
 
 	"github.com/hexya-erp/hexya/hexya/controllers"
 	"github.com/hexya-erp/hexya/hexya/menus"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools/generate"
+	"github.com/hexya-erp/hexya/pool"
 )
 
 var (
@@ -29,17 +32,66 @@ var (
 )
 
 type templateData struct {
-	Menu      *menus.Collection
+	Menu      []Menu
 	CSS       []string
 	BackendJS []string
 	CommonJS  []string
 	Modules   []string
 }
 
+// A Menu is the representation of a single menu item
+type Menu struct {
+	ID          string
+	Name        string
+	Children    []Menu
+	ActionID    string
+	ActionModel string
+	HasChildren bool
+	HasAction   bool
+}
+
+// getMenuTree returns a slice of Menu objects with all their descendants
+// from a given slice of menus.Menu objects.
+func getMenuTree(menus []*menus.Menu, lang string) []Menu {
+	res := make([]Menu, len(menus))
+	for i, m := range menus {
+		var children []Menu
+		if m.HasChildren {
+			children = getMenuTree(m.Children.Menus, lang)
+		}
+		var model string
+		if m.HasAction {
+			model = m.Action.Model
+		}
+		name := m.Name
+		if lang != "" {
+			name = m.TranslatedName(lang)
+		}
+		res[i] = Menu{
+			ID:          m.ID,
+			Name:        name,
+			ActionID:    m.ActionID,
+			ActionModel: model,
+			Children:    children,
+			HasAction:   m.HasAction,
+			HasChildren: m.HasChildren,
+		}
+	}
+	return res
+}
+
 // WebClient is the controller for the application main page
 func WebClient(c *server.Context) {
+	var lang string
+	if c.Session().Get("uid") != nil {
+		models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
+			user := pool.User().Search(env, pool.User().ID().Equals(c.Session().Get("uid").(int64)))
+			lang = user.ContextGet().GetString("lang")
+		})
+	}
+
 	data := templateData{
-		Menu:      menus.Registry,
+		Menu:      getMenuTree(menus.Registry.Menus, lang),
 		Modules:   server.Modules.Names(),
 		CSS:       append(CommonCSS, BackendCSS...),
 		CommonJS:  CommonJS,

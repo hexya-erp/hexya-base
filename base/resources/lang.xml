@@ -10,7 +10,7 @@
                 <field name="direction"/>
                 <field name="translatable"/>
                 <field name="active"/>
-                <button name="%(base_action_wizard_update_translations)d"
+                <button name="base_action_wizard_update_translations"
                         string="Update Terms" type="action" icon="fa-refresh" help="Update Language Terms"
                         attrs="{'invisible': [('active', '=', False)]}"/>
             </tree>

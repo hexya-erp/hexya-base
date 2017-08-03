@@ -45,7 +45,7 @@ gap in the sequence (while they are possible in the former).`})
 	pool.Sequence().AddIntegerField("NumberIncrement", models.SimpleFieldParams{String: "Step", Required: true,
 		Default: models.DefaultValue(1), Help: "The next number of the sequence will be incremented by this number"})
 	pool.Sequence().AddIntegerField("Padding", models.SimpleFieldParams{String: "Sequence Size", Required: true,
-		Default: models.DefaultValue(0), Help: "Odoo will automatically adds some '0' on the left of the 'Next Number' to get the required padding size."})
+		Default: models.DefaultValue(0), Help: "Hexya will automatically adds some '0' on the left of the 'Next Number' to get the required padding size."})
 	pool.Sequence().AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()}) // default=lambda s: s.env['res.company']._company_default_get('ir.sequence'))
 	pool.Sequence().AddBooleanField("UseDateRange", models.SimpleFieldParams{String: "Use subsequences per Date Range"})
 	pool.Sequence().AddOne2ManyField("DateRanges", models.ReverseFieldParams{RelationModel: pool.SequenceDateRange(), ReverseFK: "Sequence"})
