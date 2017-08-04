@@ -22,7 +22,7 @@ import (
 	"github.com/hexya-erp/hexya/hexya/actions"
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/security"
-	"github.com/hexya-erp/hexya/hexya/models/types"
+	"github.com/hexya-erp/hexya/hexya/models/types/dates"
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools/generate"
 	"github.com/hexya-erp/hexya/hexya/tools/logging"
@@ -90,7 +90,7 @@ func init() {
 						Active:      true,
 						Company:     mainCompany,
 						Login:       "admin",
-						LoginDate:   types.DateTime{},
+						LoginDate:   dates.DateTime{},
 						Password:    "admin",
 						Partner:     adminPartner,
 						ActionID:    ActionID,

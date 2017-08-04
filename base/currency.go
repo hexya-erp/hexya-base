@@ -9,6 +9,7 @@ import (
 
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/types"
+	"github.com/hexya-erp/hexya/hexya/models/types/dates"
 	"github.com/hexya-erp/hexya/hexya/tools/nbutils"
 	"github.com/hexya-erp/hexya/pool"
 )
@@ -43,7 +44,7 @@ func init() {
 		 If a 'date' key (type DateTime) is given in the context, then it is used to compute the rate,
 		 otherwise now is used.`,
 		func(rs pool.CurrencySet) (*pool.CurrencyData, []models.FieldNamer) {
-			date := types.Now()
+			date := dates.Now()
 			if rs.Env().Context().HasKey("date") {
 				date = rs.Env().Context().GetDateTime("date")
 			}
@@ -79,7 +80,7 @@ func init() {
 	currencyModel.Methods().ComputeDate().DeclareMethod(
 		`ComputeDate returns the date of the last rate of this currency`,
 		func(rs pool.CurrencySet) (*pool.CurrencyData, []models.FieldNamer) {
-			var lastDate types.Date
+			var lastDate dates.Date
 			if rateLength := len(rs.Rates().Records()); rateLength > 0 {
 				lastDate = rs.Rates().Records()[rateLength-1].Name().ToDate()
 			}
