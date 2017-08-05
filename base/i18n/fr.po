@@ -62,11 +62,11 @@ msgstr ""
 msgid "Action ID"
 msgstr ""
 
-#. field:Currency.Active
-#. field:Partner.Active
-#. field:User.Active
 #. field:Bank.Active
+#. field:User.Active
 #. field:Lang.Active
+#. field:Partner.Active
+#. field:Currency.Active
 #. resource:base_view_currency_search
 #. resource:base_res_lang_search
 msgid "Active"
@@ -196,6 +196,10 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
+#. resource:base_view_users_form
+msgid "Change the user password."
+msgstr ""
+
 #. field:Company.Children
 msgid "Child Companies"
 msgstr ""
@@ -208,9 +212,9 @@ msgstr ""
 msgid "Children Tags"
 msgstr ""
 
+#. field:Bank.City
 #. field:Company.City
 #. field:Partner.City
-#. field:Bank.City
 #. resource:base_view_res_bank_form
 #. resource:base_view_company_form
 #. resource:base_view_partner_address_form
@@ -247,13 +251,13 @@ msgstr ""
 msgid "Companies"
 msgstr ""
 
-#. field:BankAccount.Company
-#. field:Partner.Company
-#. selection:Partner.CompanyType
-#. field:User.Company
 #. field:CurrencyRate.Company
 #. field:Sequence.Company
 #. field:Attachment.Company
+#. field:User.Company
+#. selection:Partner.CompanyType
+#. field:Partner.Company
+#. field:BankAccount.Company
 #. resource:base_view_attachment_search
 #. resource:base_view_company_form
 #. resource:base_view_partner_simple_form
@@ -313,10 +317,10 @@ msgstr ""
 msgid "Countries"
 msgstr "Pays"
 
-#. field:CountryState.Country
+#. field:Bank.Country
 #. field:Company.Country
 #. field:Partner.Country
-#. field:Bank.Country
+#. field:CountryState.Country
 #. resource:base_view_res_bank_form
 #. resource:base_view_company_form
 #. resource:base_view_country_tree
@@ -335,8 +339,8 @@ msgstr ""
 msgid "Country Code"
 msgstr ""
 
-#. resource:base_view_country_group_tree
 #. resource:base_view_country_group_form
+#. resource:base_view_country_group_tree
 #. resource:base_menu_country_group
 msgid "Country Group"
 msgstr ""
@@ -385,11 +389,11 @@ msgstr ""
 msgid "Currencies"
 msgstr "Devises"
 
-#. field:BankAccount.Currency
-#. field:Currency.Name
-#. field:Company.Currency
 #. field:CurrencyRate.Currency
+#. field:Company.Currency
 #. field:Country.Currency
+#. field:Currency.Name
+#. field:BankAccount.Currency
 #. resource:base_view_currency_search
 #. resource:base_view_currency_form
 msgid "Currency"
@@ -403,8 +407,8 @@ msgstr ""
 msgid "Currency Rate"
 msgstr ""
 
-#. resource:base_view_currency_rate_tree
 #. resource:base_view_currency_rate_search
+#. resource:base_view_currency_rate_tree
 #. resource:base_act_view_currency_rates
 msgid "Currency Rates"
 msgstr ""
@@ -455,9 +459,9 @@ msgstr ""
 msgid "Database Structure"
 msgstr ""
 
-#. field:Currency.Date
-#. field:Partner.Date
 #. field:CurrencyRate.Name
+#. field:Partner.Date
+#. field:Currency.Date
 #. resource:base_view_currency_rate_search
 msgid "Date"
 msgstr ""
@@ -511,9 +515,9 @@ msgstr ""
 msgid "EAN13"
 msgstr ""
 
+#. field:Bank.Email
 #. field:Company.Email
 #. field:Partner.Email
-#. field:Bank.Email
 msgid "Email"
 msgstr ""
 
@@ -533,9 +537,9 @@ msgstr ""
 msgid "Examples"
 msgstr ""
 
+#. field:Bank.Fax
 #. field:Company.Fax
 #. field:Partner.Fax
-#. field:Bank.Fax
 msgid "Fax"
 msgstr ""
 
@@ -557,6 +561,10 @@ msgstr ""
 
 #. field:Attachment.FileSize
 msgid "File Size"
+msgstr ""
+
+#. resource:base_view_attachment_search
+msgid "Filter on my documents"
 msgstr ""
 
 #. field:SequenceDateRange.DateFrom
@@ -594,8 +602,8 @@ msgstr ""
 
 #. field:ConfigParameter.Groups
 #. field:User.Groups
-#. resource:base_view_groups_search
 #. resource:base_view_groups_tree
+#. resource:base_view_groups_search
 #. resource:base_menu_action_groups
 #. resource:base_action_res_groups
 msgid "Groups"
@@ -617,26 +625,26 @@ msgstr ""
 msgid "Hour 00->24: %%(h24)s"
 msgstr ""
 
-#. field:BankAccount.ID
+#. field:CurrencyRate.ID
+#. field:Bank.ID
+#. field:Company.ID
 #. field:ConfigParameter.ID
-#. field:CountryGroup.ID
+#. field:PartnerCategory.ID
+#. field:SequenceDateRange.ID
+#. field:Sequence.ID
+#. field:UserChangePasswordWizardLine.ID
+#. field:Attachment.ID
+#. field:User.ID
+#. field:Lang.ID
+#. field:Partner.ID
+#. field:UserChangePasswordWizard.ID
 #. field:CountryState.ID
+#. field:CountryGroup.ID
+#. field:Country.ID
 #. field:Currency.ID
 #. field:Group.ID
-#. field:Company.ID
-#. field:PartnerCategory.ID
-#. field:Partner.ID
-#. field:SequenceDateRange.ID
-#. field:UserChangePasswordWizardLine.ID
-#. field:User.ID
-#. field:Bank.ID
-#. field:CurrencyRate.ID
-#. field:Lang.ID
-#. field:Sequence.ID
-#. field:Attachment.ID
-#. field:Country.ID
 #. field:PartnerTitle.ID
-#. field:UserChangePasswordWizard.ID
+#. field:BankAccount.ID
 msgid "ID"
 msgstr ""
 
@@ -709,9 +717,9 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#. resource:base_res_lang_tree
 #. resource:base_res_lang_form
 #. resource:base_res_lang_search
+#. resource:base_res_lang_tree
 #. resource:base_res_lang_act_window
 msgid "Languages"
 msgstr ""
@@ -789,12 +797,16 @@ msgstr ""
 msgid "My Document(s)"
 msgstr ""
 
+#. resource:base_view_res_partner_filter
+msgid "My Partners"
+msgstr ""
+
+#. field:Bank.Name
+#. field:Sequence.Name
+#. field:Lang.Name
+#. field:Partner.Name
 #. field:CountryGroup.Name
 #. field:Group.Name
-#. field:Partner.Name
-#. field:Bank.Name
-#. field:Lang.Name
-#. field:Sequence.Name
 #. resource:base_view_partner_simple_form
 #. resource:base_view_partner_form
 msgid "Name"
@@ -870,9 +882,9 @@ msgstr ""
 msgid "Persons"
 msgstr ""
 
+#. field:Bank.Phone
 #. field:Company.Phone
 #. field:Partner.Phone
-#. field:Bank.Phone
 msgid "Phone"
 msgstr ""
 
@@ -978,8 +990,8 @@ msgstr ""
 msgid "Separator Format"
 msgstr ""
 
-#. field:BankAccount.Sequence
 #. field:SequenceDateRange.Sequence
+#. field:BankAccount.Sequence
 #. resource:base_view_sequence_search
 #. resource:base_sequence_view
 msgid "Sequence"
@@ -989,10 +1001,10 @@ msgstr ""
 msgid "Sequence Size"
 msgstr ""
 
-#. resource:base_sequence_view_tree
 #. resource:base_view_sequence_search
 #. resource:base_sequence_date_range_tree
 #. resource:base_sequence_view
+#. resource:base_sequence_view_tree
 #. resource:base_ir_sequence_form
 msgid "Sequences"
 msgstr ""
@@ -1007,6 +1019,14 @@ msgstr ""
 
 #. selection:Partner.Type
 msgid "Shipping Address"
+msgstr ""
+
+#. resource:base_view_currency_search
+msgid "Show active currencies"
+msgstr ""
+
+#. resource:base_view_currency_search
+msgid "Show inactive currencies"
 msgstr ""
 
 #. field:User.Signature
@@ -1053,9 +1073,9 @@ msgstr ""
 msgid "Stored Filename"
 msgstr ""
 
+#. field:Bank.Street
 #. field:Company.Street
 #. field:Partner.Street
-#. field:Bank.Street
 msgid "Street"
 msgstr ""
 
@@ -1075,9 +1095,9 @@ msgstr ""
 msgid "Street..."
 msgstr ""
 
+#. field:Bank.Street2
 #. field:Company.Street2
 #. field:Partner.Street2
-#. field:Bank.Street2
 msgid "Street2"
 msgstr ""
 
@@ -1150,8 +1170,8 @@ msgstr ""
 msgid "The next number of the sequence will be incremented by this number"
 msgstr ""
 
-#. help:Currency.Rate
 #. help:CurrencyRate.Rate
+#. help:Currency.Rate
 msgid "The rate of the currency to the currency of rate 1"
 msgstr ""
 
@@ -1212,8 +1232,8 @@ msgid ""
 "gap in the sequence (while they are possible in the former)."
 msgstr ""
 
-#. field:Partner.Type
 #. field:Attachment.Type
+#. field:Partner.Type
 #. resource:base_view_attachment_search
 msgid "Type"
 msgstr ""
@@ -1222,6 +1242,10 @@ msgstr ""
 #. field:Attachment.URL
 #. resource:base_view_attachment_search
 msgid "URL"
+msgstr ""
+
+#. resource:base_res_lang_tree
+msgid "Update Language Terms"
 msgstr ""
 
 #. resource:base_res_lang_tree
@@ -1240,8 +1264,8 @@ msgstr ""
 msgid "Used to select automatically the right address according to the context in sales and purchases documents."
 msgstr ""
 
-#. field:Partner.User
 #. field:UserChangePasswordWizardLine.User
+#. field:Partner.User
 #. resource:base_view_users_search
 msgid "User"
 msgstr ""
@@ -1309,9 +1333,9 @@ msgstr ""
 msgid "ZIP"
 msgstr ""
 
+#. field:Bank.Zip
 #. field:Company.Zip
 #. field:Partner.Zip
-#. field:Bank.Zip
 msgid "Zip"
 msgstr ""
 
