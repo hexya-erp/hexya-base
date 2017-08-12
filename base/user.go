@@ -68,7 +68,6 @@ func init() {
 	userModel.AddCharField("ActionID", models.StringFieldParams{GoType: new(actions.ActionRef)})
 	userModel.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
 	userModel.AddMany2ManyField("Companies", models.Many2ManyFieldParams{RelationModel: pool.Company(), JSON: "company_ids"})
-	userModel.AddBinaryField("ImageSmall", models.SimpleFieldParams{})
 	userModel.AddMany2ManyField("Groups", models.Many2ManyFieldParams{RelationModel: pool.Group(), JSON: "group_ids"})
 
 	userModel.Methods().Write().Extend("",

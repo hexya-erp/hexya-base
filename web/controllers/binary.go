@@ -5,7 +5,7 @@ package controllers
 
 import (
 	"encoding/base64"
-	"errors"
+	"fmt"
 	"net/http"
 	"path/filepath"
 	"strconv"
@@ -27,9 +27,17 @@ func Image(c *server.Context) {
 	id, err := strconv.ParseInt(c.Query("id"), 10, 64)
 	uid := c.Session().Get("uid").(int64)
 	img, gErr := getFieldValue(uid, id, model, field)
+	if gErr != nil {
+		c.Error(fmt.Errorf("Unable to fetch image: %s", gErr))
+		return
+	}
+	if img.(string) == "" {
+		c.File(filepath.Join(generate.HexyaDir, "hexya", "server", "static", "web", "src", "img", "placeholder.png"))
+		return
+	}
 	res, err := base64.StdEncoding.DecodeString(img.(string))
-	if err != nil || gErr != nil {
-		c.Error(errors.New("Unable to fetch image"))
+	if err != nil {
+		c.Error(fmt.Errorf("Unable to convert image: %s", err))
 		return
 	}
 	c.Data(http.StatusOK, "image/png", res)

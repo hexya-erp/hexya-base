@@ -39,57 +39,58 @@ func init() {
 			return res, []models.FieldNamer{pool.PartnerCategory().CompleteName()}
 		})
 
-	partner := pool.Partner().DeclareModel()
-	partner.AddCharField("Name", models.StringFieldParams{Required: true, Index: true, NoCopy: true})
-	partner.AddDateField("Date", models.SimpleFieldParams{})
-	partner.AddMany2OneField("Title", models.ForeignKeyFieldParams{RelationModel: pool.PartnerTitle()})
-	partner.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: pool.Partner()})
-	partner.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: pool.Partner(), ReverseFK: "Parent"})
-	partner.AddCharField("Ref", models.StringFieldParams{})
-	partner.AddCharField("Lang", models.StringFieldParams{})
-	partner.AddCharField("TZ", models.StringFieldParams{})
-	partner.AddCharField("TZOffset", models.StringFieldParams{})
-	partner.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: pool.User()})
-	partner.AddCharField("VAT", models.StringFieldParams{})
+	partnerModel := pool.Partner().DeclareModel()
+	partnerModel.AddCharField("Name", models.StringFieldParams{Required: true, Index: true, NoCopy: true})
+	partnerModel.AddDateField("Date", models.SimpleFieldParams{})
+	partnerModel.AddMany2OneField("Title", models.ForeignKeyFieldParams{RelationModel: pool.PartnerTitle()})
+	partnerModel.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: pool.Partner()})
+	partnerModel.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: pool.Partner(), ReverseFK: "Parent"})
+	partnerModel.AddCharField("Ref", models.StringFieldParams{})
+	partnerModel.AddCharField("Lang", models.StringFieldParams{})
+	partnerModel.AddCharField("TZ", models.StringFieldParams{})
+	partnerModel.AddCharField("TZOffset", models.StringFieldParams{})
+	partnerModel.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: pool.User()})
+	partnerModel.AddCharField("VAT", models.StringFieldParams{})
 	//Banks            []*PartnerBank
-	partner.AddCharField("Website", models.StringFieldParams{})
-	partner.AddCharField("Comment", models.StringFieldParams{})
-	partner.AddMany2ManyField("Categories", models.Many2ManyFieldParams{RelationModel: pool.PartnerCategory()})
-	partner.AddFloatField("CreditLimit", models.FloatFieldParams{})
-	partner.AddCharField("EAN13", models.StringFieldParams{})
-	partner.AddBooleanField("Active", models.SimpleFieldParams{Default: models.DefaultValue(true)})
-	partner.AddBooleanField("Customer", models.SimpleFieldParams{})
-	partner.AddBooleanField("Supplier", models.SimpleFieldParams{})
-	partner.AddBooleanField("Employee", models.SimpleFieldParams{})
-	partner.AddCharField("Function", models.StringFieldParams{})
-	partner.AddSelectionField("Type", models.SelectionFieldParams{Selection: types.Selection{
+	partnerModel.AddCharField("Website", models.StringFieldParams{})
+	partnerModel.AddCharField("Comment", models.StringFieldParams{})
+	partnerModel.AddMany2ManyField("Categories", models.Many2ManyFieldParams{RelationModel: pool.PartnerCategory()})
+	partnerModel.AddFloatField("CreditLimit", models.FloatFieldParams{})
+	partnerModel.AddCharField("EAN13", models.StringFieldParams{})
+	partnerModel.AddBooleanField("Active", models.SimpleFieldParams{Default: models.DefaultValue(true)})
+	partnerModel.AddBooleanField("Customer", models.SimpleFieldParams{})
+	partnerModel.AddBooleanField("Supplier", models.SimpleFieldParams{})
+	partnerModel.AddBooleanField("Employee", models.SimpleFieldParams{})
+	partnerModel.AddCharField("Function", models.StringFieldParams{})
+	partnerModel.AddSelectionField("Type", models.SelectionFieldParams{Selection: types.Selection{
 		"contact": "Contact", "invoice": "Invoice Address", "delivery": "Shipping Address", "other": "Other Address"},
 		Help:    "Used to select automatically the right address according to the context in sales and purchases documents.",
 		Default: models.DefaultValue("contact"),
 	})
-	partner.AddCharField("Street", models.StringFieldParams{})
-	partner.AddCharField("Street2", models.StringFieldParams{})
-	partner.AddCharField("Zip", models.StringFieldParams{})
-	partner.AddCharField("City", models.StringFieldParams{})
-	partner.AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: pool.CountryState(),
+	partnerModel.AddCharField("Street", models.StringFieldParams{})
+	partnerModel.AddCharField("Street2", models.StringFieldParams{})
+	partnerModel.AddCharField("Zip", models.StringFieldParams{})
+	partnerModel.AddCharField("City", models.StringFieldParams{})
+	partnerModel.AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: pool.CountryState(),
 		Filter: pool.CountryState().Country().EqualsEval("country_id")})
-	partner.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country()})
-	partner.AddCharField("Email", models.StringFieldParams{})
-	partner.AddCharField("Phone", models.StringFieldParams{})
-	partner.AddCharField("Fax", models.StringFieldParams{})
-	partner.AddCharField("Mobile", models.StringFieldParams{})
-	partner.AddDateField("Birthdate", models.SimpleFieldParams{})
-	partner.AddBooleanField("IsCompany", models.SimpleFieldParams{Compute: "ComputeIsCompany", Stored: true, Depends: []string{"CompanyType"}})
-	partner.AddBooleanField("UseParentAddress", models.SimpleFieldParams{})
-	partner.AddBinaryField("Image", models.SimpleFieldParams{})
-	partner.AddBinaryField("ImageMedium", models.SimpleFieldParams{})
-	partner.AddSelectionField("CompanyType", models.SelectionFieldParams{Selection: types.Selection{"person": "Individual", "company": "Company"},
+	partnerModel.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country()})
+	partnerModel.AddCharField("Email", models.StringFieldParams{})
+	partnerModel.AddCharField("Phone", models.StringFieldParams{})
+	partnerModel.AddCharField("Fax", models.StringFieldParams{})
+	partnerModel.AddCharField("Mobile", models.StringFieldParams{})
+	partnerModel.AddDateField("Birthdate", models.SimpleFieldParams{})
+	partnerModel.AddBooleanField("IsCompany", models.SimpleFieldParams{Compute: "ComputeIsCompany", Stored: true, Depends: []string{"CompanyType"}})
+	partnerModel.AddBooleanField("UseParentAddress", models.SimpleFieldParams{})
+	partnerModel.AddBinaryField("Image", models.SimpleFieldParams{})
+	partnerModel.AddBinaryField("ImageMedium", models.SimpleFieldParams{})
+	partnerModel.AddBinaryField("ImageSmall", models.SimpleFieldParams{})
+	partnerModel.AddSelectionField("CompanyType", models.SelectionFieldParams{Selection: types.Selection{"person": "Individual", "company": "Company"},
 		OnChange: "ComputeIsCompany", Default: models.DefaultValue("person")})
-	partner.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
-	partner.AddIntegerField("Color", models.SimpleFieldParams{})
-	partner.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: pool.User(), ReverseFK: "Partner"})
+	partnerModel.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
+	partnerModel.AddIntegerField("Color", models.SimpleFieldParams{})
+	partnerModel.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: pool.User(), ReverseFK: "Partner"})
 
-	partner.Methods().ComputeIsCompany().DeclareMethod(
+	partnerModel.Methods().ComputeIsCompany().DeclareMethod(
 		`ComputeIsCompany computes the IsCompany field from the selected CompanyType`,
 		func(s pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
 			var res pool.PartnerData
@@ -97,7 +98,7 @@ func init() {
 			return &res, []models.FieldNamer{pool.Partner().IsCompany()}
 		})
 
-	partner.AddSQLConstraint("check_name", "CHECK( (type='contact' AND name IS NOT NULL) or (type != 'contact') )", "Contacts require a name.")
+	partnerModel.AddSQLConstraint("check_name", "CHECK( (type='contact' AND name IS NOT NULL) or (type != 'contact') )", "Contacts require a name.")
 	//'has_image': fields.function(_has_image, type="boolean"),
 	//'contact_address': fields.function(_address_display,  type='char', string='Complete Address'),
 	//'commercial_partner_id': fields.function(_commercial_partner_id, type='many2one', relation='res.partner', string='Commercial Entity', store=_commercial_partner_store_triggers)
