@@ -12,7 +12,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/davecgh/go-spew/spew"
 	_ "github.com/hexya-erp/hexya-base/web/controllers"
 	"github.com/hexya-erp/hexya/hexya/controllers"
 	"github.com/hexya-erp/hexya/hexya/server"
@@ -26,7 +25,6 @@ func login() *http.Cookie {
 	}.Encode()))
 	w := httptest.NewRecorder()
 	server.GetServer().ServeHTTP(w, req)
-	spew.Dump(w)
 	for _, c := range w.Result().Cookies() {
 		if c.Name == "hexya-session" {
 			return c
