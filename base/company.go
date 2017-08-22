@@ -20,25 +20,29 @@ func CompanyGetUserCurrency(env models.Environment, fMap models.FieldMap) interf
 
 func init() {
 	companyModel := pool.Company().DeclareModel()
-	companyModel.AddCharField("Name", models.StringFieldParams{String: "Company Name", Size: 128, Required: true, Related: "Partner.Name", Unique: true})
-	companyModel.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: pool.Company(), String: "Parent Company",
-		Index: true, Constraint: "CheckParent"})
-	companyModel.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: pool.Company(), ReverseFK: "Parent", String: "Child Companies"})
-	companyModel.AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(), Required: true, Index: true})
+	companyModel.AddCharField("Name", models.StringFieldParams{String: "Company Name", Size: 128, Required: true,
+		Related: "Partner.Name", Unique: true})
+	companyModel.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: pool.Company(),
+		String: "Parent Company", Index: true, Constraint: pool.Company().Methods().CheckParent()})
+	companyModel.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: pool.Company(),
+		ReverseFK: "Parent", String: "Child Companies"})
+	companyModel.AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(),
+		Required: true, Index: true})
 	companyModel.AddCharField("Tagline", models.StringFieldParams{})
 	companyModel.AddBinaryField("Logo", models.SimpleFieldParams{Related: "Partner.Image"})
-	companyModel.AddBinaryField("LogoWeb", models.SimpleFieldParams{Compute: "ComputeLogoWeb", Stored: true, Depends: []string{"Partner", "Partner.Image"}})
-	companyModel.AddMany2OneField("Currency", models.ForeignKeyFieldParams{RelationModel: pool.Currency(), Required: true,
-		Default: CompanyGetUserCurrency})
+	companyModel.AddBinaryField("LogoWeb", models.SimpleFieldParams{Compute: pool.Company().Methods().ComputeLogoWeb(),
+		Stored: true, Depends: []string{"Partner", "Partner.Image"}})
+	companyModel.AddMany2OneField("Currency", models.ForeignKeyFieldParams{RelationModel: pool.Currency(),
+		Required: true, Default: CompanyGetUserCurrency})
 	companyModel.AddMany2ManyField("Users", models.Many2ManyFieldParams{RelationModel: pool.User(), String: "Accepted Users"})
 	companyModel.AddCharField("Street", models.StringFieldParams{Related: "Partner.Street"})
 	companyModel.AddCharField("Street2", models.StringFieldParams{Related: "Partner.Street2"})
 	companyModel.AddCharField("Zip", models.StringFieldParams{Related: "Partner.Zip"})
 	companyModel.AddCharField("City", models.StringFieldParams{Related: "Partner.City"})
-	companyModel.AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: pool.CountryState(), Related: "Partner.State",
-		OnChange: "OnChangeState"})
-	companyModel.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country(), Related: "Partner.Country",
-		OnChange: "OnChangeCountry"})
+	companyModel.AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: pool.CountryState(),
+		Related: "Partner.State", OnChange: pool.Company().Methods().OnChangeState()})
+	companyModel.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country(),
+		Related: "Partner.Country", OnChange: pool.Company().Methods().OnChangeCountry()})
 	companyModel.AddCharField("Email", models.StringFieldParams{Related: "Partner.Email"})
 	companyModel.AddCharField("Phone", models.StringFieldParams{Related: "Partner.Phone"})
 	companyModel.AddCharField("Fax", models.StringFieldParams{Related: "Partner.Fax"})

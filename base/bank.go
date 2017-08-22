@@ -41,9 +41,9 @@ func init() {
 		})
 
 	pool.BankAccount().DeclareModel()
-	pool.BankAccount().AddCharField("AccountType", models.StringFieldParams{Compute: "ComputeAccountType"})
+	pool.BankAccount().AddCharField("AccountType", models.StringFieldParams{Compute: pool.BankAccount().Methods().ComputeAccountType()})
 	pool.BankAccount().AddCharField("Name", models.StringFieldParams{String: "Account Number", Required: true})
-	pool.BankAccount().AddCharField("SanitizedAccountNumber", models.StringFieldParams{Compute: "ComputeSanitizedAccountNumber",
+	pool.BankAccount().AddCharField("SanitizedAccountNumber", models.StringFieldParams{Compute: pool.BankAccount().Methods().ComputeSanitizedAccountNumber(),
 		Stored: true})
 	pool.BankAccount().AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(),
 		String: "Account Holder", OnDelete: models.Cascade, Index: true,

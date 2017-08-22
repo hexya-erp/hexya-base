@@ -14,8 +14,8 @@ func init() {
 	attachment.AddCharField("Name", models.StringFieldParams{String: "Attachment Name", Required: true})
 	attachment.AddCharField("DatasFname", models.StringFieldParams{String: "File Name"})
 	attachment.AddTextField("Description", models.StringFieldParams{})
-	attachment.AddCharField("ResName", models.StringFieldParams{String: "Resource Name", Compute: "ComputeResName",
-		Stored: true, Depends: []string{"ResModel", "ResID"}})
+	attachment.AddCharField("ResName", models.StringFieldParams{String: "Resource Name",
+		Compute: pool.Attachment().Methods().ComputeResName(), Stored: true, Depends: []string{"ResModel", "ResID"}})
 	attachment.AddCharField("ResModel", models.StringFieldParams{String: "Resource Model", Help: "The database object this attachment will be attached to"})
 	attachment.AddIntegerField("ResField", models.SimpleFieldParams{String: "Resource Field"})
 	attachment.AddIntegerField("ResID", models.SimpleFieldParams{String: "Resource ID", Help: "The record id this is attached to"})

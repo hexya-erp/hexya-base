@@ -32,12 +32,13 @@ func init() {
 	partnerCategory.AddIntegerField("Color", models.SimpleFieldParams{String: "Color Index"})
 	partnerCategory.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: pool.PartnerCategory(),
 		String: "Parent Tag", Index: true, OnDelete: models.Cascade})
-	partnerCategory.AddCharField("CompleteName", models.StringFieldParams{String: "Full Name", Compute: "ComputeCompleteName"})
+	partnerCategory.AddCharField("CompleteName", models.StringFieldParams{String: "Full Name",
+		Compute: pool.PartnerCategory().Methods().ComputeCompleteName()})
 	partnerCategory.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: pool.PartnerCategory(),
 		ReverseFK: "Parent", String: "Children Tags"})
 	partnerCategory.AddMany2ManyField("Partners", models.Many2ManyFieldParams{RelationModel: pool.Partner()})
 
-	partnerCategory.AddMethod("ComputeCompleteName",
+	partnerCategory.Methods().ComputeCompleteName().DeclareMethod(
 		`ComputeCompleteName returns the complete name of the tag with all the parents`,
 		func(s pool.PartnerCategorySet) (*pool.PartnerCategoryData, []models.FieldNamer) {
 			completeName := s.Name()
@@ -56,7 +57,7 @@ func init() {
 	partnerModel.AddDateField("Date", models.SimpleFieldParams{Index: true})
 	partnerModel.AddMany2OneField("Title", models.ForeignKeyFieldParams{RelationModel: pool.PartnerTitle()})
 	partnerModel.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: pool.Partner(), Index: true,
-		Constraint: "CheckParent"})
+		Constraint: pool.Partner().Methods().CheckParent()})
 	partnerModel.AddCharField("ParentName", models.StringFieldParams{Related: "Parent.Name"}).
 		RevokeAccess(security.GroupEveryone, security.Write)
 	partnerModel.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: pool.Partner(),
@@ -74,7 +75,7 @@ this contact will be printed in this language. If not, it will be English.`})
 inside printed reports. It is important to set a value for this field.
 You should use the same timezone that is otherwise used to pick and
 render date and time values: your computer's timezone.`})
-	partnerModel.AddCharField("TZOffset", models.StringFieldParams{Compute: "ComputeTZOffset",
+	partnerModel.AddCharField("TZOffset", models.StringFieldParams{Compute: pool.Partner().Methods().ComputeTZOffset(),
 		String: "Timezone Offset", Depends: []string{"TZ"}})
 	partnerModel.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: pool.User(),
 		String: "Salesperson", Help: "The internal user that is in charge of communicating with this contact if any."})
@@ -114,31 +115,31 @@ If it's not checked, purchase people will not see it when encoding a purchase or
 	partnerModel.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country(),
 		OnDelete: models.Restrict})
 	partnerModel.AddCharField("Email", models.StringFieldParams{})
-	partnerModel.AddCharField("EmailFormatted", models.StringFieldParams{Compute: "ComputeEmailFormatted",
+	partnerModel.AddCharField("EmailFormatted", models.StringFieldParams{Compute: pool.Partner().Methods().ComputeEmailFormatted(),
 		Help: "Formatted email address 'Name <email@domain>'", Depends: []string{"Name", "Email"}})
 	partnerModel.AddCharField("Phone", models.StringFieldParams{})
 	partnerModel.AddCharField("Fax", models.StringFieldParams{})
 	partnerModel.AddCharField("Mobile", models.StringFieldParams{})
-	partnerModel.AddBooleanField("IsCompany", models.SimpleFieldParams{Compute: "ComputeIsCompany", Stored: true,
-		Depends: []string{"CompanyType"}})
+	partnerModel.AddBooleanField("IsCompany", models.SimpleFieldParams{Compute: pool.Partner().Methods().ComputeIsCompany(),
+		Stored: true, Depends: []string{"CompanyType"}})
 	partnerModel.AddSelectionField("CompanyType", models.SelectionFieldParams{
 		Selection: types.Selection{"person": "Individual", "company": "Company"},
-		OnChange:  "ComputeIsCompany", Default: models.DefaultValue("person")})
+		OnChange:  pool.Partner().Methods().ComputeIsCompany(), Default: models.DefaultValue("person")})
 	partnerModel.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
 	partnerModel.AddIntegerField("Color", models.SimpleFieldParams{})
 	partnerModel.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: pool.User(), ReverseFK: "Partner"})
 	partnerModel.AddBooleanField("PartnerShare", models.SimpleFieldParams{String: "Share Partner",
-		Compute: "ComputePartnerShare", Stored: true, Depends: []string{"Users.Share"},
+		Compute: pool.Partner().Methods().ComputePartnerShare(), Stored: true, Depends: []string{"Users.Share"},
 		Help: `Either customer (no user), either shared user. Indicated the current partner is a customer without
 access or with a limited access created for sharing data.`})
-	partnerModel.AddCharField("ContactAddress", models.StringFieldParams{Compute: "ComputeContactAddress",
+	partnerModel.AddCharField("ContactAddress", models.StringFieldParams{Compute: pool.Partner().Methods().ComputeContactAddress(),
 		String: "Complete Address", Depends: []string{"Street", "Street2", "Zip", "City", "State", "Country",
 			"Country.AddressFormat", "Country.Code", "Country.Name", "CompanyName", "State.Code", "State.Name"}})
 
 	partnerModel.AddMany2OneField("CommercialPartner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(),
-		Compute: "ComputeCommercialPartner", String: "Commercial Entity", Stored: true, Index: true})
+		Compute: pool.Partner().Methods().ComputeCommercialPartner(), String: "Commercial Entity", Stored: true, Index: true})
 	partnerModel.AddCharField("CommercialCompanyName", models.StringFieldParams{
-		Compute: "ComputeCommercialCompanyName", Stored: true})
+		Compute: pool.Partner().Methods().ComputeCommercialCompanyName(), Stored: true})
 	partnerModel.AddCharField("CompanyName", models.StringFieldParams{})
 
 	partnerModel.AddBinaryField("Image", models.SimpleFieldParams{

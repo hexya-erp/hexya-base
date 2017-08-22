@@ -28,16 +28,16 @@ func init() {
 	currencyModel.AddCharField("Symbol", models.StringFieldParams{Help: "Currency sign, to be used when printing amounts", Size: 4})
 	currencyModel.AddFloatField("Rate", models.FloatFieldParams{String: "Current Rate",
 		Help: "The rate of the currency to the currency of rate 1", Digits: nbutils.Digits{Precision: 12, Scale: 6},
-		Compute: "ComputeCurrentRate"})
+		Compute: pool.Currency().Methods().ComputeCurrentRate()})
 	currencyModel.AddOne2ManyField("Rates", models.ReverseFieldParams{RelationModel: pool.CurrencyRate(), ReverseFK: "Currency"})
 	currencyModel.AddFloatField("Rounding", models.FloatFieldParams{String: "Rounding Factor", Digits: nbutils.Digits{Precision: 12,
 		Scale: 6}})
-	currencyModel.AddIntegerField("DecimalPlaces", models.SimpleFieldParams{GoType: new(int8), Compute: "ComputeDecimalPlaces",
-		Depends: []string{"Rounding"}})
+	currencyModel.AddIntegerField("DecimalPlaces", models.SimpleFieldParams{GoType: new(int8),
+		Compute: pool.Currency().Methods().ComputeDecimalPlaces(), Depends: []string{"Rounding"}})
 	currencyModel.AddBooleanField("Active", models.SimpleFieldParams{})
 	currencyModel.AddSelectionField("Position", models.SelectionFieldParams{Selection: types.Selection{"after": "After Amount", "before": "Before Amount"},
 		String: "Symbol Position", Help: "Determines where the currency symbol should be placed after or before the amount."})
-	currencyModel.AddDateField("Date", models.SimpleFieldParams{Compute: "ComputeDate"})
+	currencyModel.AddDateField("Date", models.SimpleFieldParams{Compute: pool.Currency().Methods().ComputeDate()})
 
 	currencyModel.Methods().ComputeCurrentRate().DeclareMethod(
 		`ComputeCurrentRate returns the current rate of this currency.

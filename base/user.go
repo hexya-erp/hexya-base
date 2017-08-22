@@ -69,8 +69,8 @@ func init() {
 	userModel.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
 	userModel.AddMany2ManyField("Companies", models.Many2ManyFieldParams{RelationModel: pool.Company(), JSON: "company_ids"})
 	userModel.AddMany2ManyField("Groups", models.Many2ManyFieldParams{RelationModel: pool.Group(), JSON: "group_ids"})
-	userModel.AddBooleanField("Share", models.SimpleFieldParams{Compute: "ComputeShare", String: "Share User",
-		Stored: true, Help: "External user with limited access, created only for the purpose of sharing data."})
+	userModel.AddBooleanField("Share", models.SimpleFieldParams{Compute: pool.User().Methods().ComputeShare(),
+		String: "Share User", Stored: true, Help: "External user with limited access, created only for the purpose of sharing data."})
 
 	userModel.Methods().ComputeShare().DeclareMethod(
 		`ComputeShare checks if this is a shared user`,
