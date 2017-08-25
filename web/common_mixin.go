@@ -5,6 +5,7 @@ package web
 
 import (
 	"encoding/json"
+	"fmt"
 	"strings"
 
 	"github.com/beevik/etree"
@@ -344,6 +345,7 @@ func init() {
 			rs.UpdateFieldNames(doc, &fieldInfos)
 			rs.SanitizeSearchView(doc)
 			rs.AddModifiers(doc, fieldInfos)
+			rs.AddOnchanges(doc, fieldInfos)
 			// Dump xml to string and return
 			res, err := doc.WriteToString()
 			if err != nil {
@@ -352,8 +354,24 @@ func init() {
 			return res
 		}).AllowGroup(security.GroupEveryone)
 
+	commonMixin.Methods().AddOnchanges().DeclareMethod(
+		`AddOnchanges adds onchange=1 for each field in the view which has an OnChange
+		 method defined`,
+		func(rs pool.CommonMixinSet, doc *etree.Document, fieldInfos map[string]*models.FieldInfo) {
+			for fieldName, fInfo := range fieldInfos {
+				if !fInfo.OnChange {
+					continue
+				}
+				for _, elt := range doc.FindElements(fmt.Sprintf("//field[@name='%s']", fieldName)) {
+					if elt.SelectAttr("on_change") == nil {
+						elt.CreateAttr("on_change", "1")
+					}
+				}
+			}
+		})
+
 	commonMixin.Methods().SanitizeSearchView().DeclareMethod(
-		`SanitizeSearchView adds the missing attribute if it does not exist`,
+		`SanitizeSearchView adds the missing domain attribute if it does not exist`,
 		func(rs pool.CommonMixinSet, doc *etree.Document) {
 			if doc.Root().Tag != "search" {
 				return
@@ -482,7 +500,7 @@ func init() {
 	commonMixin.Methods().SearchRead().DeclareMethod(
 		`SearchRead retrieves database records according to the filters defined in params.`,
 		func(rs pool.CommonMixinSet, params webdata.SearchParams) []models.FieldMap {
-			rSet := rs.AddDomainLimitOffset(params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order).Fetch()
+			rSet := rs.AddDomainLimitOffset(params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order)
 
 			records := rSet.Read(params.Fields)
 			return records

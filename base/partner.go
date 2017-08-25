@@ -82,8 +82,8 @@ render date and time values: your computer's timezone.`})
 	partnerModel.AddCharField("VAT", models.StringFieldParams{String: "TIN", Help: `Tax Identification Number.
 Fill it if the company is subjected to taxes.
 Used by the some of the legal statements.`})
-	partnerModel.AddOne2ManyField("Banks", models.ReverseFieldParams{RelationModel: pool.Bank(),
-		ReverseFK: "Partner"})
+	partnerModel.AddOne2ManyField("Banks", models.ReverseFieldParams{String: "Bank Accounts",
+		RelationModel: pool.BankAccount(), ReverseFK: "Partner"})
 	partnerModel.AddCharField("Website", models.StringFieldParams{Help: "Website of Partner or Company"})
 	partnerModel.AddCharField("Comment", models.StringFieldParams{String: "Notes"})
 	partnerModel.AddMany2ManyField("Categories", models.Many2ManyFieldParams{RelationModel: pool.PartnerCategory(),

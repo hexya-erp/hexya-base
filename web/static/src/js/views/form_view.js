@@ -438,7 +438,7 @@ var FormView = View.extend(common.FieldManagerMixin, {
             var change_spec = widget ? onchange_specs[widget.name] : null;
             if (!widget || (!_.isEmpty(change_spec) && change_spec !== "0")) {
                 var ids = [],
-                    trigger_field_name = widget ? widget.name : self._onchange_fields,
+                    trigger_field_name = widget ? [widget.name] : self._onchange_fields,
                     values = self._get_onchange_values(),
                     context = new data.CompoundContext(self.dataset.get_context());
 
@@ -455,7 +455,11 @@ var FormView = View.extend(common.FieldManagerMixin, {
                     ids.push(self.datarecord.id);
                 }
                 def = self.alive(self.dataset.call(
-                    "onchange", [ids, values, trigger_field_name, onchange_specs, context]));
+                    "onchange", [ids], {
+                        values: values,
+                        field_name: trigger_field_name,
+                        field_onchange: onchange_specs,
+                        context: context}));
             }
             this.onchanges_mutex.exec(function(){
                 return def.then(function(response) {
@@ -717,7 +721,7 @@ var FormView = View.extend(common.FieldManagerMixin, {
     on_button_duplicate: function() {
         var self = this;
         return this.has_been_loaded.then(function() {
-            return self.dataset.call('copy', [self.datarecord.id, {}, self.dataset.context]).then(function(new_id) {
+            return self.dataset.call('copy', [self.datarecord.id, {}], {context:self.dataset.context}).then(function(new_id) {
                 self.record_created(new_id);
                 self.to_edit_mode();
             });
