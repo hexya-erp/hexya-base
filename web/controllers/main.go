@@ -142,6 +142,7 @@ func init() {
 	initRoutes()
 	os.Remove(getAssetTempFile(commonCSSRoute))
 	os.Remove(getAssetTempFile(backendCSSRoute))
+	os.Remove(getAssetTempFile(frontendCSSRoute))
 }
 
 func initStaticPaths() {
