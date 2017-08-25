@@ -1,4 +1,4 @@
-hexya.define_section('web.dataset', ['web.data'], function (test, mock) {
+odoo.define_section('web.dataset', ['web.data'], function (test, mock) {
 
     test('read_ids', function (assert, data) {
         assert.expect(2);
@@ -27,7 +27,7 @@ hexya.define_section('web.dataset', ['web.data'], function (test, mock) {
     });
 });
 
-hexya.define_section('data.model.group_by', ['web.DataModel'], function (test, mock) {
+odoo.define_section('data.model.group_by', ['web.DataModel'], function (test, mock) {
 
     var group_result = [
         { bar: 3, bar_count: 5, __context: {}, __domain: [['bar', '=', 3]], },

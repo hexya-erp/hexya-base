@@ -1,4 +1,4 @@
-hexya.define_section('web.mutex', ['web.utils'], function (test) {
+odoo.define_section('web.mutex', ['web.utils'], function (test) {
 
     test('simple scheduling', function (assert, utils) {
         var m = new utils.Mutex();

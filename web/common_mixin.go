@@ -274,11 +274,11 @@ func init() {
 			for field, sViews := range view.SubViews {
 				fJSON := rs.Model().JSONizeFieldName(field)
 				relRS := rs.Env().Pool(fInfos[fJSON].Relation)
+				if res.Fields[fJSON].Views == nil {
+					res.Fields[fJSON].Views = make(map[string]interface{})
+				}
 				for svType, sv := range sViews {
 					svFields := relRS.Call("FieldsGet", models.FieldsGetArgs{Fields: sv.Fields}).(map[string]*models.FieldInfo)
-					if res.Fields[fJSON].Views == nil {
-						res.Fields[fJSON].Views = make(map[string]interface{})
-					}
 					res.Fields[fJSON].Views[string(svType)] = &webdata.SubViewData{
 						Fields: svFields,
 						Arch:   relRS.Call("ProcessView", sv.Arch(lang), svFields).(string),
@@ -287,6 +287,35 @@ func init() {
 			}
 			return &res
 		}).AllowGroup(security.GroupEveryone)
+
+	commonMixin.Methods().LoadViews().DeclareMethod(
+		`LoadViews returns the data for all the views and filters required in the parameters.`,
+		func(rs pool.CommonMixinSet, args webdata.LoadViewsArgs) *webdata.LoadViewsData {
+			var res webdata.LoadViewsData
+			res.FieldsViews = make(map[views.ViewType]*webdata.FieldsViewData)
+			for _, viewTuple := range args.Views {
+				vType := viewTuple.Type
+				if vType == views.VIEW_TYPE_LIST {
+					vType = views.VIEW_TYPE_TREE
+				}
+				toolbar := args.Options.Toolbar
+				if vType == views.VIEW_TYPE_SEARCH {
+					toolbar = false
+				}
+				res.FieldsViews[viewTuple.Type] = rs.FieldsViewGet(webdata.FieldsViewGetParams{
+					Toolbar:  toolbar,
+					ViewType: string(vType),
+					ViewID:   viewTuple.ID,
+				})
+			}
+			if args.Options.LoadFilters {
+				res.Filters = pool.Filter().NewSet(rs.Env()).GetFilters(rs.ModelName(), args.Options.ActionID)
+			}
+			if args.Options.LoadFields {
+				res.Fields = rs.FieldsGet(models.FieldsGetArgs{})
+			}
+			return &res
+		})
 
 	commonMixin.Methods().GetToolbar().DeclareMethod(
 		`GetToolbar returns a toolbar populated with the actions linked to this model`,

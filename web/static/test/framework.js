@@ -1,4 +1,4 @@
-hexya.define_section('class', ['web.Class'], function (test) {
+odoo.define_section('class', ['web.Class'], function (test) {
 
     test('Basic class creation', function (assert, Class) {
         var C = Class.extend({
@@ -141,7 +141,7 @@ hexya.define_section('class', ['web.Class'], function (test) {
     });
 });
 
-hexya.define_section('Widget.proxy', ['web.Widget'], function (test) {
+odoo.define_section('Widget.proxy', ['web.Widget'], function (test) {
     test('(String)', function (assert, Widget) {
         var W = Widget.extend({
             exec: function () {
@@ -203,7 +203,7 @@ hexya.define_section('Widget.proxy', ['web.Widget'], function (test) {
 
 });
 
-hexya.define_section('Widget.renderElement', ['web.Widget'], function (test) {
+odoo.define_section('Widget.renderElement', ['web.Widget'], function (test) {
 
     test('no template, default', function (assert, Widget) {
         var widget = new (Widget.extend({ }))();
@@ -336,7 +336,7 @@ hexya.define_section('Widget.renderElement', ['web.Widget'], function (test) {
 
 });
 
-hexya.define_section('Widget.$', ['web.Widget', 'web.core'], function (test) {
+odoo.define_section('Widget.$', ['web.Widget', 'web.core'], function (test) {
 
     test('basic-alias', function (assert, Widget, core) {
         core.qweb.add_template(
@@ -363,7 +363,7 @@ hexya.define_section('Widget.$', ['web.Widget', 'web.core'], function (test) {
 
 });
 
-hexya.define_section('Widget.events', ['web.Widget', 'web.core'], function (test) {
+odoo.define_section('Widget.events', ['web.Widget', 'web.core'], function (test) {
     function setup(qweb) {
        qweb.add_template(
             '<no>' +
@@ -433,30 +433,30 @@ hexya.define_section('Widget.events', ['web.Widget', 'web.core'], function (test
     });
 });
 
-hexya.define_section('Widget.async', ['web.Widget'], function (test) {
-    test("alive(alive)", function (assert, Widget) {
+odoo.define_section('Widget.async', ['web.Widget', 'web.utils'], function (test) {
+    test("alive(alive)", function (assert, Widget, utils) {
         assert.expect(1);
 
         var widget = new (Widget.extend({}));
 
-        return $.async_when(widget.start())
-            .then(function () { return widget.alive($.async_when()) })
+        return utils.async_when(widget.start())
+            .then(function () { return widget.alive(utils.async_when()) })
             .then(function () { assert.ok(true); });
     });
 
-    test("alive(dead)", function (assert, Widget) {
+    test("alive(dead)", function (assert, Widget, utils) {
         assert.expect(1);
         var widget = new (Widget.extend({}));
 
         return $.Deferred(function (d) {
-            $.async_when(widget.start())
+            utils.async_when(widget.start())
             .then(function () {
                 // destroy widget
                 widget.destroy();
-                var promise = $.async_when();
+                var promise = utils.async_when();
                 // leave time for alive() to do its stuff
                 promise.then(function () {
-                    return $.async_when();
+                    return utils.async_when();
                 }).then(function () {
                     assert.ok(true);
                     d.resolve();
@@ -470,26 +470,26 @@ hexya.define_section('Widget.async', ['web.Widget'], function (test) {
         });
     });
 
-    test("alive(alive, true)", function (assert, Widget) {
+    test("alive(alive, true)", function (assert, Widget, utils) {
         assert.expect(1);
         var widget = new (Widget.extend({}));
-        return $.async_when(widget.start())
-        .then(function () { return widget.alive($.async_when(), true) })
+        return utils.async_when(widget.start())
+        .then(function () { return widget.alive(utils.async_when(), true) })
         .then(function () { assert.ok(true); });
     });
 
-    test("alive(dead, true)", function (assert, Widget) {
+    test("alive(dead, true)", function (assert, Widget, utils) {
         assert.expect(1);
         var done = assert.async();
 
         var widget = new (Widget.extend({}));
 
-        $.async_when(widget.start())
+        utils.async_when(widget.start())
         .then(function () {
             // destroy widget
             widget.destroy();
             console.log('destroyed');
-            return widget.alive($.async_when().done(function () { console.log('when'); }), true);
+            return widget.alive(utils.async_when().done(function () { console.log('when'); }), true);
         }).then(function () {
             console.log('unfailed')
             assert.ok(false, "alive(p, true) should fail its promise");
@@ -504,7 +504,7 @@ hexya.define_section('Widget.async', ['web.Widget'], function (test) {
 });
 
 
-hexya.define_section('server-formats', ['web.time'], function (test) {
+odoo.define_section('server-formats', ['web.time'], function (test) {
 
     test('Parse server datetime', function (assert, time) {
         var date = time.str_to_datetime("2009-05-04 12:34:23");
@@ -630,4 +630,3 @@ hexya.define_section('server-formats', ['web.time'], function (test) {
     });
 
 });
-

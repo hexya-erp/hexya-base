@@ -10,7 +10,7 @@ var _t = translation._t;
 
 /**
  * Replacer function for JSON.stringify, serializes Date objects to UTC
- * datetime in the OpenERP Server format.
+ * datetime in the Hexya Server format.
  *
  * However, if a serialized value has a toJSON method that method is called
  * *before* the replacer is invoked. Date#toJSON exists, and thus the value
@@ -29,10 +29,10 @@ function date_to_utc (k, v) {
 }
 
 /**
- * Converts a string to a Date javascript object using OpenERP's
+ * Converts a string to a Date javascript object using Hexya's
  * datetime string format (exemple: '2011-12-01 15:12:35.832').
  * 
- * The time zone is assumed to be UTC (standard for OpenERP 6.1)
+ * The time zone is assumed to be UTC (standard for Hexya 6.1)
  * and will be converted to the browser's time zone.
  * 
  * @param {String} str A string representing a datetime.
@@ -63,7 +63,7 @@ function str_to_datetime (str) {
 }
 
 /**
- * Converts a string to a Date javascript object using OpenERP's
+ * Converts a string to a Date javascript object using Hexya's
  * date string format (exemple: '2011-12-01').
  * 
  * As a date is not subject to time zones, we assume it should be
@@ -93,10 +93,10 @@ function str_to_date (str) {
 }
 
 /**
- * Converts a string to a Date javascript object using OpenERP's
+ * Converts a string to a Date javascript object using Hexya's
  * time string format (exemple: '15:12:35').
  * 
- * The OpenERP times are supposed to always be naive times. We assume it is
+ * The Hexya times are supposed to always be naive times. We assume it is
  * represented using a javascript Date with a date 1 of January 1970 and a
  * time corresponding to the meant time in the browser's time zone.
  * 
@@ -124,11 +124,11 @@ function str_to_time (str) {
 }
 
 /**
- * Converts a Date javascript object to a string using OpenERP's
+ * Converts a Date javascript object to a string using Hexya's
  * datetime string format (exemple: '2011-12-01 15:12:35').
  * 
  * The time zone of the Date object is assumed to be the one of the
- * browser and it will be converted to UTC (standard for OpenERP 6.1).
+ * browser and it will be converted to UTC (standard for Hexya 6.1).
  * 
  * @param {Date} obj
  * @returns {String} A string representing a datetime.
@@ -143,7 +143,7 @@ function datetime_to_str (obj) {
 }
 
 /**
- * Converts a Date javascript object to a string using OpenERP's
+ * Converts a Date javascript object to a string using Hexya's
  * date string format (exemple: '2011-12-01').
  * 
  * As a date is not subject to time zones, we assume it should be
@@ -162,10 +162,10 @@ function date_to_str (obj) {
 }
 
 /**
- * Converts a Date javascript object to a string using OpenERP's
+ * Converts a Date javascript object to a string using Hexya's
  * time string format (exemple: '15:12:35').
  * 
- * The OpenERP times are supposed to always be naive times. We assume it is
+ * The Hexya times are supposed to always be naive times. We assume it is
  * represented using a javascript Date with a date 1 of January 1970 and a
  * time corresponding to the meant time in the browser's time zone.
  * 
@@ -238,6 +238,18 @@ function strftime_to_moment_format (value) {
     return _normalize_format_cache[value];
 }
 
+/**
+ * Convert moment.js format to python strftime
+ *
+ * @param {String} value original format
+ */
+function moment_to_strftime_format(value) {
+    var regex = /(MMMM|DDDD|dddd|YYYY|MMM|ddd|mm|ss|ww|WW|MM|YY|hh|HH|DD|A|d)/g;
+    return value.replace(regex, function(val){
+        return '%'+inverse_normalize_format_table[val];
+    });
+}
+
 var _normalize_format_cache = {};
 var normalize_format_table = {
     // Python strftime to moment.js conversion table
@@ -265,6 +277,7 @@ var normalize_format_table = {
     'x': 'MM/DD/YY',
     'X': 'HH:mm:ss'
 };
+var inverse_normalize_format_table = _.invert(normalize_format_table);
 
 
 
@@ -279,6 +292,7 @@ return {
     auto_str_to_date: auto_str_to_date,
     auto_date_to_str: auto_date_to_str,
     strftime_to_moment_format: strftime_to_moment_format,
+    moment_to_strftime_format: moment_to_strftime_format,
 };
 
 });

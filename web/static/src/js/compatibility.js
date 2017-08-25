@@ -22,7 +22,6 @@ var form_relational = require('web.form_relational'); // necessary
 var form_widgets = require('web.form_widgets'); // necessary
 var framework = require('web.framework');
 var ListView = require('web.ListView');
-var Menu = require('web.Menu');
 var Model = require('web.DataModel');
 var pyeval = require('web.pyeval');
 var Registry = require('web.Registry');
@@ -97,7 +96,6 @@ hexyaerp.web.FormView = FormView;
 hexyaerp.web.json_node_to_xml = utils.json_node_to_xml;
 
 hexyaerp.web.ListView = ListView;
-hexyaerp.web.Menu = Menu;
 hexyaerp.web.Model = Model;
 hexyaerp.web.normalize_format = time.strftime_to_moment_format;
 hexyaerp.web.py_eval = pyeval.py_eval;
@@ -156,7 +154,7 @@ function get_object(path) {
 }
 
 /**
- * OpenERP instance constructor
+ * Hexya instance constructor
  *
  * @param {Array|String} modules list of modules to initialize
  */
@@ -167,7 +165,7 @@ function start_modules (modules) {
     }
     modules = _.without(modules, "web");
     if (inited) {
-        throw new Error("OpenERP was already inited");
+        throw new Error("Hexya was already inited");
     }
     inited = true;
     for(var i=0; i < modules.length; i++) {
@@ -187,8 +185,7 @@ function start_modules (modules) {
 // Monkey-patching of the ListView for backward compatibiliy of the colors and
 // fonts row's attributes, as they are deprecated in 9.0.
 ListView.include({
-    load_list: function(data) {
-        this._super(data);
+    willStart: function() {
         if (this.fields_view.arch.attrs.colors) {
             this.colors = _(this.fields_view.arch.attrs.colors.split(';')).chain()
                 .compact()
@@ -209,6 +206,8 @@ ListView.include({
                     return [font, py.parse(py.tokenize(expr)), expr];
                 }).value();
         }
+
+        return this._super();
     },
     /**
      * Returns the style for the provided record in the current view (from the
@@ -262,5 +261,28 @@ ListView.include({
      },
 });
 
+// IE patch
+//-------------------------------------------------------------------------
+if (typeof(console) === "undefined") {
+    // Even IE9 only exposes console object if debug window opened
+    window.console = {};
+    ('log error debug info warn assert clear dir dirxml trace group'
+        + ' groupCollapsed groupEnd time timeEnd profile profileEnd count'
+        + ' exception').split(/\s+/).forEach(function(property) {
+            console[property] = _.identity;
+    });
+}
+
+/**
+    Some hack to make placeholders work in ie9.
+*/
+if (!('placeholder' in document.createElement('input'))) {
+    document.addEventListener("DOMNodeInserted",function(event){
+        var nodename =  event.target.nodeName.toLowerCase();
+        if ( nodename === "input" || nodename === "textarea" ) {
+            $(event.target).placeholder();
+        }
+    });
+}
 
 });

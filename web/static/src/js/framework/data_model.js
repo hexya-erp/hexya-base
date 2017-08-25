@@ -37,7 +37,7 @@ Model.include({
         return new data.CompoundContext(session.user_context, this._context, context || {});
     },
     /**
-     * Call a method (over RPC) on the bound OpenERP model.
+     * Call a method (over RPC) on the bound Hexya model.
      *
      * @param {String} method name of the method to call
      * @param {Array} [args] positional arguments

@@ -32,7 +32,7 @@ var mixins = core.mixins;
  *     },
  *     start: function() {
  *         // stuff you want to make after the rendering, `this.$el` holds a correct value
- *         this.$el.find(".my_button").click(/* an example of event binding * /);
+ *         this.$(".my_button").click(/* an example of event binding * /);
  *
  *         // if you have some asynchronous operations, it's a good idea to return
  *         // a promise in start()
@@ -380,7 +380,7 @@ var Widget = core.Class.extend(mixins.PropertiesMixin, {
      *
      * Other methods will fix the bound method to what it is when creating the
      * binding/proxy, which is fine in most javascript code but problematic in
-     * OpenERP Web where developers may want to replace existing callbacks with
+     * Hexya Web where developers may want to replace existing callbacks with
      * theirs.
      *
      * The semantics of this precisely replace closing over the method call.

@@ -11,6 +11,28 @@ import (
 	"github.com/hexya-erp/hexya/hexya/server"
 )
 
+type loginData struct {
+	ErrorMsg            string
+	CommonCSS           []string
+	CommonCompiledCSS   string
+	CommonJS            []string
+	FrontendCSS         []string
+	FrontendCompiledCSS string
+	FrontendJS          []string
+}
+
+func newLoginData(errMsg string) loginData {
+	return loginData{
+		ErrorMsg:            errMsg,
+		CommonCSS:           CommonCSS,
+		CommonCompiledCSS:   commonCSSRoute,
+		CommonJS:            CommonJS,
+		FrontendCSS:         FrontendCSS,
+		FrontendCompiledCSS: frontendCSSRoute,
+		FrontendJS:          FrontendJS,
+	}
+}
+
 // LoginGet is called when the client calls the login page
 func LoginGet(c *server.Context) {
 	redirect := c.DefaultQuery("redirect", "/web")
@@ -18,7 +40,7 @@ func LoginGet(c *server.Context) {
 		c.Redirect(http.StatusSeeOther, redirect)
 		return
 	}
-	data := struct{ ErrorMsg string }{ErrorMsg: ""}
+	data := newLoginData("")
 	c.HTML(http.StatusOK, "web.login", data)
 }
 
@@ -29,7 +51,7 @@ func LoginPost(c *server.Context) {
 	secret := c.DefaultPostForm("password", "")
 	uid, err := security.AuthenticationRegistry.Authenticate(login, secret, new(types.Context))
 	if err != nil {
-		data := struct{ ErrorMsg string }{ErrorMsg: "Wrong login or password"}
+		data := newLoginData("Wrong login or password")
 		c.HTML(http.StatusOK, "web.login", data)
 		return
 	}

@@ -110,3 +110,24 @@ type SearchReadResult struct {
 	Records []models.FieldMap `json:"records"`
 	Length  int               `json:"length"`
 }
+
+// LoadViewsArgs is the argument struct for the LoadViews method.
+type LoadViewsArgs struct {
+	Views   []views.ViewTuple `json:"views"`
+	Options LoadViewsOptions  `json:"options"`
+}
+
+// LoadViewsOptions are options that can be passed to LoadViews method
+type LoadViewsOptions struct {
+	Toolbar     bool   `json:"toolbar"`
+	LoadFilters bool   `json:"load_filters"`
+	ActionID    string `json:"action_id"`
+	LoadFields  bool   `json:"load_fields"`
+}
+
+// LoadViewsData is the result struct of the LoadViews method
+type LoadViewsData struct {
+	FieldsViews map[views.ViewType]*FieldsViewData `json:"fields_views"`
+	Filters     []models.FieldMap                  `json:"filters"`
+	Fields      map[string]*models.FieldInfo       `json:"fields"`
+}
