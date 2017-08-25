@@ -40,7 +40,8 @@ func init() {
 		func(rs pool.CommonMixinSet, fields []string) []models.FieldMap {
 			res := rs.Super().Read(fields)
 			for i, fMap := range res {
-				rec := pool.CommonMixin().NewSet(rs.Env(), rs.ModelName()).Search(pool.CommonMixin().ID().Equals(fMap["id"].(int64)))
+				id, _ := fMap.Get("ID", rs.Model().Underlying())
+				rec := pool.CommonMixin().NewSet(rs.Env(), rs.ModelName()).Search(pool.CommonMixin().ID().Equals(id.(int64)))
 				fInfos := rec.FieldsGet(models.FieldsGetArgs{})
 				res[i] = rec.AddNamesToRelations(fMap, fInfos)
 			}
