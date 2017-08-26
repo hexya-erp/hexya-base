@@ -112,7 +112,6 @@
     <li><a href="#" data-action="split_assets">Activate Assets Debugging</a></li>
     <li class="divider"/>
     <li><a href="#" data-action="perform_js_tests">Run JS Tests</a></li>
-    <li><a href="#" data-action="select_view">Open View</a></li>
     <t t-if="manager._events">
         <li class="divider"/>
         <li><a href="#" data-action="show_timelines">Toggle Timelines</a></li>
@@ -124,11 +123,9 @@
 <t t-name="WebClient.DebugManager.Action">
     <t t-if="action">
         <li class="divider"/>
-        <li><a href="#" data-action="edit" t-att-data-model="action.type" t-att-data-id="action.id">Edit Action</a></li>
         <t t-if="action.res_model">
             <li><a href="#" data-action="get_view_fields">View Fields</a></li>
             <li><a href="#" data-action="manage_filters">Manage Filters</a></li>
-            <li t-if="manager._is_admin"><a href="#" data-action="edit_workflow">Edit Workflow</a></li>
             <li><a href="#" data-action="translate">Technical Translation</a></li>
         </t>
     </t>
@@ -151,14 +148,9 @@
             <li><a href="#" data-action="set_defaults">Set Defaults</a></li>
             <t t-if="view.controller.get_selected_ids().length === 1">
                 <li><a href="#" data-action="get_metadata">View Metadata</a></li>
-                <li><a href="#" data-action="print_workflow">Print Workflow</a></li>
             </t>
         </t>
         <li><a href="#" data-action="fvg">Fields View Get</a></li>
-        <t t-if="can_edit">
-            <li><a href="#" data-action="edit" data-model="ir.ui.view" t-att-data-id="view.controller.fields_view.view_id">Edit <t t-esc="_.str.capitalize(view.controller.fields_view.type)"/>View</a></li>
-            <li t-if="searchview and searchview.$el.is(':visible')"><a href="#" data-action="edit" data-model="ir.ui.view" t-att-data-id="searchview.fields_view.view_id">Edit SearchView</a></li>
-        </t>
     </t>
 </t>
 <t t-name="WebClient.DebugViewLog">

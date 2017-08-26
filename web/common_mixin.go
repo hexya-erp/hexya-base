@@ -545,4 +545,23 @@ func init() {
 			return res
 		}).AllowGroup(security.GroupEveryone)
 
+	commonMixin.Methods().CheckAccessRights().DeclareMethod(
+		`CheckAccessRights verifies that the operation given by "operation" is allowed for
+			the current user according to the access rights.
+
+			operation must be one of "read", "create", "unlink", "write".
+			`,
+		func(rs pool.CommonMixinSet, args webdata.CheckAccessRightsArgs) bool {
+			switch args.Operation {
+			case "read":
+				return rs.CheckExecutionPermission(pool.CommonMixin().Methods().Read().Underlying(), !args.RaiseException)
+			case "write":
+				return rs.CheckExecutionPermission(pool.CommonMixin().Methods().Write().Underlying(), !args.RaiseException)
+			case "unlink":
+				return rs.CheckExecutionPermission(pool.CommonMixin().Methods().Unlink().Underlying(), !args.RaiseException)
+			case "create":
+				return rs.CheckExecutionPermission(pool.CommonMixin().Methods().Create().Underlying(), !args.RaiseException)
+			}
+			return false
+		})
 }

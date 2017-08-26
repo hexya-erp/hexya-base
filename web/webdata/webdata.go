@@ -131,3 +131,9 @@ type LoadViewsData struct {
 	Filters     []models.FieldMap                  `json:"filters"`
 	Fields      map[string]*models.FieldInfo       `json:"fields"`
 }
+
+// CheckAccessRightsArgs is the args struct for the CheckAccessRights method
+type CheckAccessRightsArgs struct {
+	Operation      string `json:"operation"`
+	RaiseException bool   `json:"raise_exception"`
+}

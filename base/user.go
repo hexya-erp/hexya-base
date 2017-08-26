@@ -173,10 +173,16 @@ func init() {
 		})
 
 	userModel.Methods().HasGroup().DeclareMethod(
-		`HasGroup returns true if this user belongs to the group with the given ID`,
+		`HasGroup returns true if this user belongs to the group with the given ID.
+		If this method is called on an empty RecordSet, then it checks if the current
+		user belongs to the given group.`,
 		func(rs pool.UserSet, groupID string) bool {
+			userID := rs.ID()
+			if userID == 0 {
+				userID = rs.Env().Uid()
+			}
 			group := security.Registry.GetGroup(groupID)
-			return security.Registry.HasMembership(rs.ID(), group)
+			return security.Registry.HasMembership(userID, group)
 		})
 
 	userModel.Methods().Authenticate().DeclareMethod(

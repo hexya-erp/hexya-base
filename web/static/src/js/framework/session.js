@@ -147,7 +147,7 @@ var Session = core.Class.extend(mixins.EventDispatcherMixin, {
             def = this._groups_def[group] = this.rpc('/web/dataset/call_kw/res.users/has_group', {
                 "model": "res.users",
                 "method": "has_group",
-                "args": [group],
+                "args": [[], group],
                 "kwargs": {}
             });
         }
