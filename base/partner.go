@@ -234,15 +234,6 @@ Use this field anywhere a small image is required.`})
 			}, []models.FieldNamer{pool.Partner().CommercialCompanyName()}
 		})
 
-	partnerModel.Methods().ComputeEmailFormatted().DeclareMethod(
-		`ComputeEmailFormatted returns a 'Name <email@domain>' formatted string`,
-		func(rs pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
-			addr := mail.Address{Name: rs.Name(), Address: rs.Email()}
-			return &pool.PartnerData{
-				EmailFormatted: addr.String(),
-			}, []models.FieldNamer{pool.Partner().EmailFormatted()}
-		})
-
 	partnerModel.Methods().GetDefaultImage().DeclareMethod(
 		`GetDefaultImage returns a default image for the partner (base64 encoded)`,
 		func(rs pool.PartnerSet, partnerType string, isCompany bool, Parent pool.PartnerSet) string {
@@ -300,6 +291,28 @@ Use this field anywhere a small image is required.`})
 			vals.Name = rs.T("%s (copy)", rs.Name())
 			fieldsToUnset = append(fieldsToUnset, pool.Partner().Name())
 			return rs.Super().Copy(vals, fieldsToUnset...)
+		})
+
+	//partnerModel.Methods().OnchangeParent().DeclareMethod(
+	//	`OnchangeParent updates the current partner data when its parent field
+	//	is modified`,
+	//	func(rs pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
+	//		var res pool.PartnerData
+	//		if rs.Parent().IsEmpty() {
+	//			return &res, []models.FieldNamer{}
+	//		}
+	//		if rs.Type() == "contact" {
+	//
+	//		}
+	//	})
+
+	partnerModel.Methods().ComputeEmailFormatted().DeclareMethod(
+		`ComputeEmailFormatted returns a 'Name <email@domain>' formatted string`,
+		func(rs pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
+			addr := mail.Address{Name: rs.Name(), Address: rs.Email()}
+			return &pool.PartnerData{
+				EmailFormatted: addr.String(),
+			}, []models.FieldNamer{pool.Partner().EmailFormatted()}
 		})
 
 	partnerModel.Methods().DisplayAddress().DeclareMethod(

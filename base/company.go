@@ -100,14 +100,14 @@ func init() {
 				return rs.Super().Create(data)
 			}
 			partner := pool.Partner().Create(rs.Env(), &pool.PartnerData{
-				Name:      vals.Name,
-				IsCompany: true,
-				Image:     vals.Logo,
-				Customer:  false,
-				Email:     vals.Email,
-				Phone:     vals.Phone,
-				Website:   vals.Website,
-				VAT:       vals.VAT,
+				Name:        vals.Name,
+				CompanyType: "company",
+				Image:       vals.Logo,
+				Customer:    false,
+				Email:       vals.Email,
+				Phone:       vals.Phone,
+				Website:     vals.Website,
+				VAT:         vals.VAT,
 			})
 			vals.Partner = partner
 			company := rs.Super().Create(vals)
