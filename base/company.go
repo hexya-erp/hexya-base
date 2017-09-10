@@ -95,7 +95,7 @@ func init() {
 
 	companyModel.Methods().Create().Extend("",
 		func(rs pool.CompanySet, data models.FieldMapper) pool.CompanySet {
-			vals := rs.DataStruct(data.FieldMap())
+			vals, _ := rs.DataStruct(data.FieldMap())
 			if !vals.Partner.IsEmpty() {
 				return rs.Super().Create(data)
 			}

@@ -16,6 +16,7 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models/fieldtype"
 	"github.com/hexya-erp/hexya/hexya/models/operator"
 	"github.com/hexya-erp/hexya/hexya/models/security"
+	"github.com/hexya-erp/hexya/hexya/tools/nbutils"
 	"github.com/hexya-erp/hexya/hexya/views"
 	"github.com/hexya-erp/hexya/pool"
 )
@@ -25,15 +26,26 @@ func init() {
 
 	commonMixin.Methods().Create().Extend("",
 		func(rs pool.CommonMixinSet, data models.FieldMapper) pool.CommonMixinSet {
-			fMap := rs.ProcessDataValues(data)
+			fMap := rs.ProcessDataValues(data.FieldMap())
 			res := rs.Super().Create(fMap)
 			return res
 		})
 
 	commonMixin.Methods().Write().Extend("",
 		func(rs pool.CommonMixinSet, data models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {
-			fMap := rs.ProcessDataValues(data)
+			fMap := data.FieldMap(fieldsToUnset...)
+			fMap = rs.ProcessDataValues(fMap)
 			res := rs.Super().Write(fMap, fieldsToUnset...)
+			return res
+		})
+
+	commonMixin.Methods().Onchange().Extend("",
+		func(rs pool.CommonMixinSet, params models.OnchangeParams) models.OnchangeResult {
+			params.Values = rs.ProcessDataValues(params.Values)
+			res := rs.Super().Onchange(params)
+			rec := pool.CommonMixin().NewSet(rs.Env(), rs.ModelName())
+			fInfos := rec.FieldsGet(models.FieldsGetArgs{})
+			res.Value = rec.AddNamesToRelations(res.Value.FieldMap(), fInfos)
 			return res
 		})
 
@@ -41,6 +53,7 @@ func init() {
 		func(rs pool.CommonMixinSet, fields []string) []models.FieldMap {
 			res := rs.Super().Read(fields)
 			for i, fMap := range res {
+				// Getting rec, which is this RecordSet but with its real type (not CommonMixinSet)
 				id, _ := fMap.Get("ID", rs.Model().Underlying())
 				rec := pool.CommonMixin().NewSet(rs.Env(), rs.ModelName()).Search(pool.CommonMixin().ID().Equals(id.(int64)))
 				fInfos := rec.FieldsGet(models.FieldsGetArgs{})
@@ -56,11 +69,12 @@ func init() {
 			for fName, value := range fMap {
 				fi := fInfos[fName]
 				switch v := value.(type) {
-				case models.RecordCollection:
+				case models.RecordSet:
+					relRS := v.Collection().WithEnv(rs.Env())
 					switch {
 					case fi.Type.Is2OneRelationType():
-						if rcId := v.Get("id"); rcId != int64(0) {
-							value = [2]interface{}{rcId, v.Call("NameGet").(string)}
+						if rcId := relRS.Get("ID"); rcId != int64(0) {
+							value = [2]interface{}{rcId, relRS.Call("NameGet").(string)}
 						} else {
 							value = false
 						}
@@ -69,8 +83,12 @@ func init() {
 					}
 				case int64:
 					if fi.Type.Is2OneRelationType() {
-						rSet := rs.Env().Pool(fi.Relation).Search(rs.Model().Field("id").Equals(v))
-						value = [2]interface{}{v, rSet.Call("NameGet").(string)}
+						if v != 0 {
+							rSet := rs.Env().Pool(fi.Relation).Search(rs.Model().Field("id").Equals(v))
+							value = [2]interface{}{v, rSet.Call("NameGet").(string)}
+						} else {
+							value = false
+						}
 					}
 				}
 				fMap[fName] = value
@@ -107,8 +125,7 @@ func init() {
 	commonMixin.Methods().ProcessDataValues().DeclareMethod(
 		`ProcessDataValues updates the given data values for Write and Create methods to be
 		compatible with the ORM, in particular for relation fields`,
-		func(rs pool.CommonMixinSet, data models.FieldMapper) models.FieldMap {
-			fMap := data.FieldMap()
+		func(rs pool.CommonMixinSet, fMap models.FieldMap) models.FieldMap {
 			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
 			for f, v := range fMap {
 				fJSON := rs.Model().JSONizeFieldName(f)
@@ -116,6 +133,15 @@ func init() {
 					log.Panic("Unable to find field", "model", rs.ModelName(), "field", f)
 				}
 				switch fInfos[fJSON].Type {
+				case fieldtype.Many2One, fieldtype.One2One:
+					if _, isRs := v.(models.RecordSet); isRs {
+						continue
+					}
+					id, err := nbutils.CastToInteger(v)
+					if err != nil {
+						log.Panic("Unable to cast field value", "error", err, "model", rs.ModelName(), "field", f, "value", fInfos[fJSON])
+					}
+					fMap[f] = id
 				case fieldtype.Many2Many:
 					fMap[f] = rs.NormalizeM2MData(f, fInfos[fJSON], v)
 				case fieldtype.One2Many:
@@ -134,7 +160,7 @@ func init() {
 				relSet := rs.Env().Pool(info.Relation)
 				recs := rs.Get(fieldName).(models.RecordCollection)
 				if len(v) == 0 {
-					return nil
+					return []int64{}
 				}
 				// We assume we have a list of triplets from client
 				for _, triplet := range v {

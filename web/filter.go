@@ -47,7 +47,7 @@ func init() {
 	filterModel.Methods().Copy().Extend("",
 		func(rs pool.FilterSet, overrides models.FieldMapper, fieldsToUnset ...models.FieldNamer) pool.FilterSet {
 			rs.EnsureOne()
-			vals := rs.DataStruct(overrides.FieldMap(fieldsToUnset...))
+			vals, fieldsToUnset := rs.DataStruct(overrides.FieldMap(fieldsToUnset...))
 			vals.Name = fmt.Sprintf("%s (copy)", rs.Name())
 			return rs.Super().Copy(overrides, fieldsToUnset...)
 		})
@@ -61,11 +61,11 @@ func init() {
 			fMap["domain"] = strings.Replace(fMap["domain"].(string), "false", "False", -1)
 			fMap["domain"] = strings.Replace(fMap["domain"].(string), "true", "True", -1)
 			fMap["context"] = strutils.MarshalToJSONString(fMap["context"])
-			values := rs.DataStruct(fMap)
+			values, _ := rs.DataStruct(fMap)
 			currentFilters := rs.GetFilters(values.ResModel, values.Action)
 			var matchingFilters []pool.FilterData
 			for _, f := range currentFilters {
-				filter := rs.DataStruct(f)
+				filter, _ := rs.DataStruct(f)
 				if strings.ToLower(filter.Name) != strings.ToLower(values.Name) {
 					continue
 				}
@@ -111,7 +111,7 @@ func init() {
 
 	       This method should only be called if 'vals' is trying to set 'IsDefault'`,
 		func(rs pool.FilterSet, vals models.FieldMapper, matchingFilters []pool.FilterData) {
-			values := rs.DataStruct(vals.FieldMap())
+			values, _ := rs.DataStruct(vals.FieldMap())
 			actionCondition := rs.GetActionCondition(values.Action)
 			defaults := pool.Filter().Search(rs.Env(), actionCondition.
 				And().ResModel().Equals(values.ResModel).

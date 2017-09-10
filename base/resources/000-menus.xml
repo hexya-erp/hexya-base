@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hexya>
+    <data>
+
+        <menuitem name="Sales"
+                  id="base_menu_base_partner"
+                  groups="base_group_sale_salesman"
+                  sequence="6"/>
+
+        <menuitem id="base_menu_sale_config" name="Configuration" parent="base_menu_base_partner"
+                  sequence="100" groups="base_group_configuration"/>
+        <menuitem id="base_menu_config_address_book" parent="base_menu_sale_config" name="Contacts" sequence="4"
+                  groups="base_group_system"/>
+
+        <menuitem id="base_menu_sales" name="Sales" parent="base_menu_base_partner" sequence="5"/>
+        <menuitem id="menu_partner_form" parent="base_menu_sales" action="base_action_partner_form" sequence="3"/>
+
+    </data>
+</hexya>
