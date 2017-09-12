@@ -144,7 +144,7 @@ If it's not checked, purchase people will not see it when encoding a purchase or
 	partnerModel.AddIntegerField("Color", models.SimpleFieldParams{})
 	partnerModel.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: pool.User(), ReverseFK: "Partner"})
 	partnerModel.AddBooleanField("PartnerShare", models.SimpleFieldParams{String: "Share Partner",
-		Compute: pool.Partner().Methods().ComputePartnerShare(), Stored: true, Depends: []string{"Users.Share"},
+		Compute: pool.Partner().Methods().ComputePartnerShare(), Stored: true, Depends: []string{"Users", "Users.Share"},
 		Help: `Either customer (no user), either shared user. Indicated the current partner is a customer without
 access or with a limited access created for sharing data.`})
 	partnerModel.AddCharField("ContactAddress", models.StringFieldParams{Compute: pool.Partner().Methods().ComputeContactAddress(),
@@ -153,10 +153,10 @@ access or with a limited access created for sharing data.`})
 
 	partnerModel.AddMany2OneField("CommercialPartner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(),
 		Compute: pool.Partner().Methods().ComputeCommercialPartner(), String: "Commercial Entity", Stored: true,
-		Index: true, Depends: []string{"IsCompany", "Parent.CommercialPartner"}})
+		Index: true, Depends: []string{"IsCompany", "Parent", "Parent.CommercialPartner"}})
 	partnerModel.AddCharField("CommercialCompanyName", models.StringFieldParams{
 		Compute: pool.Partner().Methods().ComputeCommercialCompanyName(), Stored: true,
-		Depends: []string{"CompanyName", "Parent.IsCompany", "CommercialPartner.Name"}})
+		Depends: []string{"CompanyName", "Parent", "Parent.IsCompany", "CommercialPartner", "CommercialPartner.Name"}})
 	partnerModel.AddCharField("CompanyName", models.StringFieldParams{})
 
 	partnerModel.AddBinaryField("Image", models.SimpleFieldParams{
@@ -420,7 +420,6 @@ Use this field anywhere a small image is required.`})
 			if len(res) == 0 {
 				return false
 			}
-			// TODO: this won't work because we can't call super for another method.
 			return rs.WithContext("goto_super", true).Write(res, rs.AddressFields()...)
 		})
 
