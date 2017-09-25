@@ -24,44 +24,6 @@ import (
 func init() {
 	commonMixin := pool.CommonMixin()
 
-	commonMixin.Methods().Create().Extend("",
-		func(rs pool.CommonMixinSet, data models.FieldMapper) pool.CommonMixinSet {
-			fMap := rs.ProcessDataValues(data.FieldMap())
-			res := rs.Super().Create(fMap)
-			return res
-		})
-
-	commonMixin.Methods().Write().Extend("",
-		func(rs pool.CommonMixinSet, data models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {
-			fMap := data.FieldMap(fieldsToUnset...)
-			fMap = rs.ProcessDataValues(fMap)
-			res := rs.Super().Write(fMap, fieldsToUnset...)
-			return res
-		})
-
-	commonMixin.Methods().Onchange().Extend("",
-		func(rs pool.CommonMixinSet, params models.OnchangeParams) models.OnchangeResult {
-			params.Values = rs.ProcessDataValues(params.Values)
-			res := rs.Super().Onchange(params)
-			rec := pool.CommonMixin().NewSet(rs.Env(), rs.ModelName())
-			fInfos := rec.FieldsGet(models.FieldsGetArgs{})
-			res.Value = rec.AddNamesToRelations(res.Value.FieldMap(), fInfos)
-			return res
-		})
-
-	commonMixin.Methods().Read().Extend("",
-		func(rs pool.CommonMixinSet, fields []string) []models.FieldMap {
-			res := rs.Super().Read(fields)
-			for i, fMap := range res {
-				// Getting rec, which is this RecordSet but with its real type (not CommonMixinSet)
-				id, _ := fMap.Get("ID", rs.Model().Underlying())
-				rec := pool.CommonMixin().NewSet(rs.Env(), rs.ModelName()).Search(pool.CommonMixin().ID().Equals(id.(int64)))
-				fInfos := rec.FieldsGet(models.FieldsGetArgs{})
-				res[i] = rec.AddNamesToRelations(fMap, fInfos)
-			}
-			return res
-		})
-
 	commonMixin.Methods().AddNamesToRelations().DeclareMethod(
 		`AddNameToRelations returns the given FieldMap after getting the name of all 2one relation ids`,
 		func(rs pool.CommonMixinSet, fMap models.FieldMap, fInfos map[string]*models.FieldInfo) models.FieldMap {
@@ -262,16 +224,6 @@ func init() {
 				Context:     rs.Env().Context(),
 			}
 		}).AllowGroup(security.GroupEveryone)
-
-	commonMixin.Methods().FieldsGet().Extend("",
-		func(rs pool.CommonMixinSet, args models.FieldsGetArgs) map[string]*models.FieldInfo {
-			res := rs.Super().FieldsGet(args)
-			for f, fInfo := range res {
-				dom, _ := fInfo.Domain.([]interface{})
-				res[f].Domain = domains.Domain(dom).String()
-			}
-			return res
-		})
 
 	commonMixin.Methods().FieldsViewGet().DeclareMethod(
 		`FieldsViewGet is the base implementation of the 'FieldsViewGet' method which

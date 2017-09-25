@@ -84,7 +84,12 @@ func Execute(uid int64, params CallParams) (res interface{}, rError error) {
 			}
 		}
 
-		res = rs.Call(methodName, fnArgs...)
+		adapter, ok := methodAdapters[methodName]
+		if ok {
+			res = adapter(rs, methodName, fnArgs)
+		} else {
+			res = rs.Call(methodName, fnArgs...)
+		}
 
 		resVal := reflect.ValueOf(res)
 		if single && resVal.Kind() == reflect.Slice {
@@ -154,7 +159,7 @@ func putParamsValuesInArgs(fnArgs *[]interface{}, methodType reflect.Type, parms
 		if (methodType.IsVariadic() && len(parms) < numArgs-1) ||
 			(!methodType.IsVariadic() && len(parms) < numArgs) {
 			// We have less arguments than the arguments of the method
-			return fmt.Errorf("Wrong number of args in non-struct function args (%d instead of %d)", len(parms), numArgs)
+			return fmt.Errorf("wrong number of args in non-struct function args (%d instead of %d)", len(parms), numArgs)
 		}
 		methInType := methodType.In(i + 1)
 		if val, ok := typeSubstitutions[methInType]; ok {
@@ -188,7 +193,7 @@ func createRecordCollection(env models.Environment, params CallParams) (rc model
 		if err := json.Unmarshal(params.Args[0], &ids); err != nil {
 			// Unable to unmarshal in a list of IDs, trying with a single id
 			var id float64
-			if err := json.Unmarshal(params.Args[0], &id); err == nil {
+			if err = json.Unmarshal(params.Args[0], &id); err == nil {
 				rc = rc.Search(rc.Model().Field("ID").Equals(id))
 				single = true
 				idsParsed = true
