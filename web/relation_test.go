@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hexya-erp/hexya-base/web/controllers"
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/pool"
@@ -23,10 +24,13 @@ func Test2ManyRelations(t *testing.T) {
 				var groupsData interface{}
 				json.Unmarshal([]byte(jsonGroupsData), &groupsData)
 
-				env.Pool("User").Call("Create", models.FieldMap{
-					"Name":   "Test User",
-					"Login":  "test_user",
-					"Groups": groupsData,
+				rc := env.Pool("User")
+				controllers.MethodAdapters["Create"](rc, "Create", []interface{}{
+					models.FieldMap{
+						"Name":   "Test User",
+						"Login":  "test_user",
+						"Groups": groupsData,
+					},
 				})
 				user := pool.User().Search(env, pool.User().Login().Equals("test_user"))
 				So(user.Groups().Len(), ShouldEqual, 1)

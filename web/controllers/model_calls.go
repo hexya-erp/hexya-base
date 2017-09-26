@@ -84,7 +84,7 @@ func Execute(uid int64, params CallParams) (res interface{}, rError error) {
 			}
 		}
 
-		adapter, ok := methodAdapters[methodName]
+		adapter, ok := MethodAdapters[methodName]
 		if ok {
 			res = adapter(rs, methodName, fnArgs)
 		} else {

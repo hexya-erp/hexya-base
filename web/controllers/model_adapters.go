@@ -12,7 +12,7 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models"
 )
 
-var methodAdapters = map[string]methodAdapter{
+var MethodAdapters = map[string]methodAdapter{
 	"Create":     createAdapter,
 	"Write":      writeAdapter,
 	"Onchange":   onchangeAdapter,
