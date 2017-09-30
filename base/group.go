@@ -50,7 +50,7 @@ func init() {
 			// Remove unknown groups from database
 			pool.Group().Search(rs.Env(), pool.Group().GroupID().NotIn(existingGroupIds)).Unlink()
 			// Sync memberships: DB => Registry
-			allUsers := pool.User().NewSet(rs.Env()).FetchAll()
+			allUsers := pool.User().NewSet(rs.Env()).SearchAll()
 			allUsers.AddMandatoryGroups()
 			allUsers.SyncMemberships()
 		})

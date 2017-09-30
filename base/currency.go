@@ -158,7 +158,7 @@ func init() {
 		func(rs pool.CurrencySet) string {
 			companyCurrency := pool.User().Browse(rs.Env(), []int64{rs.Env().Uid()}).Company().Currency()
 			var function string
-			for _, currency := range pool.Currency().NewSet(rs.Env()).FetchAll().Records() {
+			for _, currency := range pool.Currency().NewSet(rs.Env()).SearchAll().Records() {
 				symbol := currency.Symbol()
 				if symbol == "" {
 					symbol = currency.Name()

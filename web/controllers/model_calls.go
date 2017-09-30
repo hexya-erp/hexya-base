@@ -182,7 +182,7 @@ func putParamsValuesInArgs(fnArgs *[]interface{}, methodType reflect.Type, parms
 // of ids, then it is used to populate the RecordCollection. Otherwise, it returns an empty
 // RecordCollection. This function also returns the remaining arguments after id(s) have been
 // parsed, and a boolean value set to true if the RecordSet has only one ID.
-func createRecordCollection(env models.Environment, params CallParams) (rc models.RecordCollection, remainingParams []json.RawMessage, single bool) {
+func createRecordCollection(env models.Environment, params CallParams) (rc *models.RecordCollection, remainingParams []json.RawMessage, single bool) {
 	modelName := odooproxy.ConvertModelName(params.Model)
 	rc = env.Pool(modelName)
 
@@ -268,7 +268,7 @@ func searchRead(uid int64, params searchReadParams) (res *webdata.SearchReadResu
 			Order:  params.Sort,
 		}
 		records := rs.Call("SearchRead", srp).([]models.FieldMap)
-		length := rs.Call("AddDomainLimitOffset", srp.Domain, 0, srp.Offset, srp.Order).(models.RecordCollection).SearchCount()
+		length := rs.Call("AddDomainLimitOffset", srp.Domain, 0, srp.Offset, srp.Order).(models.RecordSet).Collection().SearchCount()
 		res = &webdata.SearchReadResult{
 			Records: records,
 			Length:  length,

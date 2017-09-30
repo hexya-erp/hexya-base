@@ -66,7 +66,7 @@ func init() {
 		This is used for example to provide suggestions based on a partial
 		value for a relational field. Sometimes be seen as the inverse
 		function of NameGet but it is not guaranteed to be.`,
-		func(rc models.RecordCollection, params webdata.NameSearchParams) []webdata.RecordIDWithName {
+		func(rc *models.RecordCollection, params webdata.NameSearchParams) []webdata.RecordIDWithName {
 			if params.Operator == "" {
 				params.Operator = operator.IContains
 			}
@@ -120,7 +120,7 @@ func init() {
 			switch v := value.(type) {
 			case []interface{}:
 				relSet := rs.Env().Pool(info.Relation)
-				recs := rs.Get(fieldName).(models.RecordCollection)
+				recs := rs.Get(fieldName).(models.RecordSet).Collection()
 				if len(v) == 0 {
 					return []int64{}
 				}
@@ -427,7 +427,7 @@ func init() {
 	commonMixin.Methods().ProcessElementAttrs().DeclareMethod(
 		`ProcessElementAttrs returns a modifiers map according to the domain
 		in attrs of the given element`,
-		func(rc models.RecordCollection, element *etree.Element) map[string]interface{} {
+		func(rc *models.RecordCollection, element *etree.Element) map[string]interface{} {
 			modifiers := map[string]interface{}{"readonly": false, "required": false, "invisible": false}
 			attrStr := element.SelectAttrValue("attrs", "")
 			if attrStr == "" {
@@ -457,7 +457,7 @@ func init() {
 		`UpdateFieldNames changes the field names in the view to the column names.
 		If a field name is already column names then it does nothing.
 		This method also modifies the fields in the given fieldInfo to match the new name.`,
-		func(rc models.RecordCollection, doc *etree.Document, fieldInfos *map[string]*models.FieldInfo) {
+		func(rc *models.RecordCollection, doc *etree.Document, fieldInfos *map[string]*models.FieldInfo) {
 			for _, fieldTag := range doc.FindElements("//field") {
 				fieldName := fieldTag.SelectAttr("name").Value
 				fieldJSON := rc.Model().JSONizeFieldName(fieldName)
@@ -487,23 +487,24 @@ func init() {
 	commonMixin.Methods().AddDomainLimitOffset().DeclareMethod(
 		`AddDomainLimitOffsetOrder adds the given domain, limit, offset
 		and order to the current RecordSet query.`,
-		func(rc models.RecordCollection, domain domains.Domain, limit int, offset int, order string) models.RecordCollection {
+		func(rc *models.RecordCollection, domain domains.Domain, limit int, offset int, order string) *models.RecordCollection {
+			rSet := rc
 			if searchCond := domains.ParseDomain(domain); searchCond != nil {
-				rc = rc.Search(searchCond)
+				rSet = rSet.Search(searchCond)
 			}
 			// Limit
-			rc = rc.Limit(limit)
+			rSet = rSet.Limit(limit)
 
 			// Offset
 			if offset != 0 {
-				rc = rc.Offset(offset)
+				rSet = rSet.Offset(offset)
 			}
 
 			// Order
 			if order != "" {
-				rc = rc.OrderBy(strings.Split(order, ",")...)
+				rSet = rSet.OrderBy(strings.Split(order, ",")...)
 			}
-			return rc
+			return rSet
 		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.Methods().ReadGroup().DeclareMethod(

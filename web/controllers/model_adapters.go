@@ -24,10 +24,10 @@ var MethodAdapters = map[string]methodAdapter{
 // An methodAdapter can modify calls made by the odoo client
 // to match the expected arguments of the Hexya ORM. Similarly
 // it can modify the returned values so that they are understood by the client
-type methodAdapter func(models.RecordCollection, string, []interface{}) interface{}
+type methodAdapter func(*models.RecordCollection, string, []interface{}) interface{}
 
 // createAdapter adapts json object received from client to Create's FieldMap argument.
-func createAdapter(rc models.RecordCollection, method string, args []interface{}) interface{} {
+func createAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
 	if odooproxy.ConvertMethodName(method) != "Create" {
 		log.Panic("createAdapter should only be called on Create methods", "method", method, "args", args)
 	}
@@ -45,7 +45,7 @@ func createAdapter(rc models.RecordCollection, method string, args []interface{}
 }
 
 // writeAdapter adapts json object received from client to Write's FieldMap and []FieldNamer argument.
-func writeAdapter(rc models.RecordCollection, method string, args []interface{}) interface{} {
+func writeAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
 	if odooproxy.ConvertMethodName(method) != "Write" {
 		log.Panic("writeAdapter should only be called on Write methods", "method", method, "args", args)
 	}
@@ -64,7 +64,7 @@ func writeAdapter(rc models.RecordCollection, method string, args []interface{})
 }
 
 // onchangeAdapter adapts json object received from client and add names to relation to the result.
-func onchangeAdapter(rc models.RecordCollection, method string, args []interface{}) interface{} {
+func onchangeAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
 	if odooproxy.ConvertMethodName(method) != "Onchange" {
 		log.Panic("onchangeAdapter should only be called on Onchange methods", "method", method, "args", args)
 	}
@@ -84,7 +84,7 @@ func onchangeAdapter(rc models.RecordCollection, method string, args []interface
 }
 
 // readAdapter add names to relation of the result.
-func readAdapter(rc models.RecordCollection, method string, args []interface{}) interface{} {
+func readAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
 	if odooproxy.ConvertMethodName(method) != "Read" {
 		log.Panic("readAdapter should only be called on Read methods", "method", method, "args", args)
 	}
@@ -107,7 +107,7 @@ func readAdapter(rc models.RecordCollection, method string, args []interface{}) 
 }
 
 // searchReadAdapter add names to relation of the result.
-func searchReadAdapter(rc models.RecordCollection, method string, args []interface{}) interface{} {
+func searchReadAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
 	if odooproxy.ConvertMethodName(method) != "SearchRead" {
 		log.Panic("readAdapter should only be called on SearchRead methods", "method", method, "args", args)
 	}
@@ -130,7 +130,7 @@ func searchReadAdapter(rc models.RecordCollection, method string, args []interfa
 }
 
 // fieldsGetAdapter stringifies the domain of each field in the returned value.
-func fieldsGetAdapter(rc models.RecordCollection, method string, args []interface{}) interface{} {
+func fieldsGetAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
 	if odooproxy.ConvertMethodName(method) != "FieldsGet" {
 		log.Panic("fieldsGetAdapter should only be called on FieldsGet methods", "method", method, "args", args)
 	}

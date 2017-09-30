@@ -20,7 +20,7 @@ func TestGroupLoading(t *testing.T) {
 		)
 		Convey("Testing Group Loading", t, func() {
 			pool.Group().NewSet(env).ReloadGroups()
-			groups := pool.Group().NewSet(env).FetchAll()
+			groups := pool.Group().NewSet(env).SearchAll()
 			So(groups.Len(), ShouldEqual, len(security.Registry.AllGroups()))
 			adminUser = pool.User().Search(env, pool.User().ID().Equals(security.SuperUserID))
 			adminGrp = pool.Group().Search(env, pool.Group().GroupID().Equals(security.GroupAdminID))
@@ -32,7 +32,7 @@ func TestGroupLoading(t *testing.T) {
 		Convey("Testing Group ReLoading with a new group", t, func() {
 			security.Registry.NewGroup("some_group", "Some Group")
 			pool.Group().NewSet(env).ReloadGroups()
-			groups := pool.Group().NewSet(env).FetchAll()
+			groups := pool.Group().NewSet(env).SearchAll()
 			So(groups.Len(), ShouldEqual, len(security.Registry.AllGroups()))
 		})
 		Convey("Creating a new user with a new group", t, func() {

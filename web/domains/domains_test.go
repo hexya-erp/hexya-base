@@ -48,7 +48,7 @@ func TestDomains(t *testing.T) {
 					"Zip":     "0305",
 					"Country": "USA",
 				}
-				profile := env.Pool("Profile").Call("Create", userJaneProfileData).(models.RecordCollection)
+				profile := env.Pool("Profile").Call("Create", userJaneProfileData).(models.RecordSet).Collection()
 				userJaneData := models.FieldMap{
 					"Name":    "Jane Smith",
 					"Email":   "jane.smith@example.com",
@@ -71,8 +71,8 @@ func TestDomains(t *testing.T) {
 					"Email":   "mweston@example.com",
 					"Profile": martinProfile,
 				}
-				user := env.Pool("User").Call("Create", userData).(models.RecordCollection)
-				So(user.Get("Profile").(models.RecordCollection).Get("Age"), ShouldEqual, 45)
+				user := env.Pool("User").Call("Create", userData).(models.RecordSet).Collection()
+				So(user.Get("Profile").(models.RecordSet).Collection().Get("Age"), ShouldEqual, 45)
 			})
 			Convey("Testing simple [(A), (B)] domain", func() {
 				dom1 := []interface{}{
