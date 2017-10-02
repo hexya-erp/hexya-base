@@ -11,26 +11,28 @@ import (
 
 func init() {
 	attachment := pool.Attachment().DeclareModel()
-	attachment.AddCharField("Name", models.StringFieldParams{String: "Attachment Name", Required: true})
-	attachment.AddCharField("DatasFname", models.StringFieldParams{String: "File Name"})
-	attachment.AddTextField("Description", models.StringFieldParams{})
-	attachment.AddCharField("ResName", models.StringFieldParams{String: "Resource Name",
-		Compute: pool.Attachment().Methods().ComputeResName(), Stored: true, Depends: []string{"ResModel", "ResID"}})
-	attachment.AddCharField("ResModel", models.StringFieldParams{String: "Resource Model", Help: "The database object this attachment will be attached to"})
-	attachment.AddIntegerField("ResField", models.SimpleFieldParams{String: "Resource Field"})
-	attachment.AddIntegerField("ResID", models.SimpleFieldParams{String: "Resource ID", Help: "The record id this is attached to"})
-	attachment.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company(), Default: func(env models.Environment, fMap models.FieldMap) interface{} {
-		currentUser := pool.User().Search(env, pool.User().ID().Equals(env.Uid()))
-		return currentUser.Company()
-	}})
-	attachment.AddSelectionField("Type", models.SelectionFieldParams{Selection: types.Selection{"binary": "Binary", "url": "URL"}})
-	attachment.AddCharField("URL", models.StringFieldParams{})
-	attachment.AddBinaryField("Datas", models.SimpleFieldParams{String: "File Content"}) //, Compute: "DataGet", Inverse: "DataSet"})
-	attachment.AddCharField("StoreFname", models.StringFieldParams{String: "Stored Filename"})
-	attachment.AddCharField("DBDatas", models.StringFieldParams{String: "Database Data"})
-	attachment.AddIntegerField("FileSize", models.SimpleFieldParams{})
-	attachment.AddCharField("MimeType", models.StringFieldParams{})
-	attachment.AddBooleanField("Public", models.SimpleFieldParams{String: "Is a public document"})
+	attachment.AddFields(map[string]models.FieldDefinition{
+		"Name":        models.CharField{String: "Attachment Name", Required: true},
+		"DatasFname":  models.CharField{String: "File Name"},
+		"Description": models.TextField{},
+		"ResName": models.CharField{String: "Resource Name",
+			Compute: pool.Attachment().Methods().ComputeResName(), Stored: true, Depends: []string{"ResModel", "ResID"}},
+		"ResModel": models.CharField{String: "Resource Model", Help: "The database object this attachment will be attached to"},
+		"ResField": models.CharField{String: "Resource Field"},
+		"ResID":    models.IntegerField{String: "Resource ID", Help: "The record id this is attached to"},
+		"Company": models.Many2OneField{RelationModel: pool.Company(), Default: func(env models.Environment, fMap models.FieldMap) interface{} {
+			currentUser := pool.User().Search(env, pool.User().ID().Equals(env.Uid()))
+			return currentUser.Company()
+		}},
+		"Type":       models.SelectionField{Selection: types.Selection{"binary": "Binary", "url": "URL"}},
+		"URL":        models.CharField{},
+		"Datas":      models.BinaryField{String: "File Content"}, //, Compute: "DataGet", Inverse: "DataSet"},
+		"StoreFname": models.CharField{String: "Stored Filename"},
+		"DBDatas":    models.CharField{String: "Database Data"},
+		"FileSize":   models.IntegerField{},
+		"MimeType":   models.CharField{},
+		"Public":     models.BooleanField{String: "Is a public document"},
+	})
 
 	attachment.Methods().ComputeResName().DeclareMethod(
 		`ComputeResName computes the display name of the ressource this document is attached to.`,

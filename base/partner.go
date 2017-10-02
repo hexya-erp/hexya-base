@@ -35,19 +35,23 @@ const gravatarBaseURL string = "https://www.gravatar.com/avatar"
 
 func init() {
 	partnerTitle := pool.PartnerTitle().DeclareModel()
-	partnerTitle.AddCharField("Name", models.StringFieldParams{String: "Title", Required: true, Translate: true, Unique: true})
-	partnerTitle.AddCharField("Shortcut", models.StringFieldParams{String: "Abbreviation", Translate: true})
+	partnerTitle.AddFields(map[string]models.FieldDefinition{
+		"Name":     models.CharField{String: "Title", Required: true, Translate: true, Unique: true},
+		"Shortcut": models.CharField{String: "Abbreviation", Translate: true},
+	})
 
 	partnerCategory := pool.PartnerCategory().DeclareModel()
-	partnerCategory.AddCharField("Name", models.StringFieldParams{String: "Category Name", Required: true, Translate: true})
-	partnerCategory.AddIntegerField("Color", models.SimpleFieldParams{String: "Color Index"})
-	partnerCategory.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: pool.PartnerCategory(),
-		String: "Parent Tag", Index: true, OnDelete: models.Cascade})
-	partnerCategory.AddCharField("CompleteName", models.StringFieldParams{String: "Full Name",
-		Compute: pool.PartnerCategory().Methods().ComputeCompleteName()})
-	partnerCategory.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: pool.PartnerCategory(),
-		ReverseFK: "Parent", String: "Children Tags"})
-	partnerCategory.AddMany2ManyField("Partners", models.Many2ManyFieldParams{RelationModel: pool.Partner()})
+	partnerCategory.AddFields(map[string]models.FieldDefinition{
+		"Name":  models.CharField{String: "Category Name", Required: true, Translate: true},
+		"Color": models.IntegerField{String: "Color Index"},
+		"Parent": models.Many2OneField{RelationModel: pool.PartnerCategory(),
+			String: "Parent Tag", Index: true, OnDelete: models.Cascade},
+		"CompleteName": models.CharField{String: "Full Name",
+			Compute: pool.PartnerCategory().Methods().ComputeCompleteName(), Depends: []string{"Parent", "Name"}},
+		"Children": models.One2ManyField{RelationModel: pool.PartnerCategory(),
+			ReverseFK: "Parent", String: "Children Tags"},
+		"Partners": models.Many2ManyField{RelationModel: pool.Partner()},
+	})
 
 	partnerCategory.Methods().ComputeCompleteName().DeclareMethod(
 		`ComputeCompleteName returns the complete name of the tag with all the parents`,
@@ -63,112 +67,113 @@ func init() {
 		})
 
 	partnerModel := pool.Partner().DeclareModel()
-	partnerModel.AddCharField("Name", models.StringFieldParams{Required: true, Index: true, NoCopy: true})
-	//partnerModel.Fields().DisplayName().SetDepends([]string{"IsCompany", "Name", "Parent.Name", "Type", "CompanyName"})
-	partnerModel.AddDateField("Date", models.SimpleFieldParams{Index: true})
-	partnerModel.AddMany2OneField("Title", models.ForeignKeyFieldParams{RelationModel: pool.PartnerTitle()})
-	partnerModel.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: pool.Partner(), Index: true,
-		Constraint: pool.Partner().Methods().CheckParent(), OnChange: pool.Partner().Methods().OnchangeParent()})
-	partnerModel.AddCharField("ParentName", models.StringFieldParams{Related: "Parent.Name"}).
-		RevokeAccess(security.GroupEveryone, security.Write)
-	partnerModel.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: pool.Partner(),
-		ReverseFK: "Parent", Filter: pool.Partner().Active().Equals(true)})
-	partnerModel.AddCharField("Ref", models.StringFieldParams{String: "Internal Reference", Index: true})
-	partnerModel.AddCharField("Lang", models.StringFieldParams{String: "Language",
-		Default: func(env models.Environment, maps models.FieldMap) interface{} {
-			return env.Context().GetString("lang")
-		}, Help: `If the selected language is loaded in the system, all documents related to
-this contact will be printed in this language. If not, it will be English.`})
-	partnerModel.AddCharField("TZ", models.StringFieldParams{String: "Timezone",
-		Default: func(env models.Environment, maps models.FieldMap) interface{} {
-			return env.Context().GetString("tz")
-		}, Help: `"The partner's timezone, used to output proper date and time values
+	partnerModel.AddFields(map[string]models.FieldDefinition{
+		"Name":  models.CharField{Required: true, Index: true, NoCopy: true},
+		"Date":  models.DateField{Index: true},
+		"Title": models.Many2OneField{RelationModel: pool.PartnerTitle()},
+		"Parent": models.Many2OneField{RelationModel: pool.Partner(), Index: true,
+			Constraint: pool.Partner().Methods().CheckParent(), OnChange: pool.Partner().Methods().OnchangeParent()},
+		"ParentName": models.CharField{Related: "Parent.Name"},
+
+		"Children": models.One2ManyField{RelationModel: pool.Partner(),
+			ReverseFK: "Parent", Filter: pool.Partner().Active().Equals(true)},
+		"Ref": models.CharField{String: "Internal Reference", Index: true},
+		"Lang": models.CharField{String: "Language",
+			Default: func(env models.Environment, maps models.FieldMap) interface{} {
+				return env.Context().GetString("lang")
+			}, Help: `If the selected language is loaded in the system, all documents related to
+this contact will be printed in this language. If not, it will be English.`},
+		"TZ": models.CharField{String: "Timezone",
+			Default: func(env models.Environment, maps models.FieldMap) interface{} {
+				return env.Context().GetString("tz")
+			}, Help: `"The partner's timezone, used to output proper date and time values
 inside printed reports. It is important to set a value for this field.
 You should use the same timezone that is otherwise used to pick and
-render date and time values: your computer's timezone.`})
-	partnerModel.AddCharField("TZOffset", models.StringFieldParams{Compute: pool.Partner().Methods().ComputeTZOffset(),
-		String: "Timezone Offset", Depends: []string{"TZ"}})
-	partnerModel.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: pool.User(),
-		String: "Salesperson", Help: "The internal user that is in charge of communicating with this contact if any."})
-	partnerModel.AddCharField("VAT", models.StringFieldParams{String: "TIN", Help: `Tax Identification Number.
+render date and time values: your computer's timezone.`},
+		"TZOffset": models.CharField{Compute: pool.Partner().Methods().ComputeTZOffset(),
+			String: "Timezone Offset", Depends: []string{"TZ"}},
+		"User": models.Many2OneField{RelationModel: pool.User(),
+			String: "Salesperson", Help: "The internal user that is in charge of communicating with this contact if any."},
+		"VAT": models.CharField{String: "TIN", Help: `Tax Identification Number.
 Fill it if the company is subjected to taxes.
-Used by the some of the legal statements.`})
-	partnerModel.AddOne2ManyField("Banks", models.ReverseFieldParams{String: "Bank Accounts",
-		RelationModel: pool.BankAccount(), ReverseFK: "Partner"})
-	partnerModel.AddCharField("Website", models.StringFieldParams{Help: "Website of Partner or Company"})
-	partnerModel.AddCharField("Comment", models.StringFieldParams{String: "Notes"})
-	partnerModel.AddMany2ManyField("Categories", models.Many2ManyFieldParams{RelationModel: pool.PartnerCategory(),
-		String: "Tags", Default: func(env models.Environment, maps models.FieldMap) interface{} {
-			return pool.PartnerCategory().Browse(env, []int64{env.Context().GetInteger("category_id")})
-		}})
-	partnerModel.AddFloatField("CreditLimit", models.FloatFieldParams{})
-	partnerModel.AddCharField("Barcode", models.StringFieldParams{})
-	partnerModel.AddBooleanField("Active", models.SimpleFieldParams{Default: models.DefaultValue(true)})
-	partnerModel.AddBooleanField("Customer", models.SimpleFieldParams{String: "Is a Customer",
-		Default: models.DefaultValue(true), Help: "Check this box if this contact is a customer."})
-	partnerModel.AddBooleanField("Supplier", models.SimpleFieldParams{String: "Is a Vendor",
-		Help: `Check this box if this contact is a vendor.
-If it's not checked, purchase people will not see it when encoding a purchase order.`})
-	partnerModel.AddBooleanField("Employee", models.SimpleFieldParams{
-		Help: "Check this box if this contact is an Employee."})
-	partnerModel.AddCharField("Function", models.StringFieldParams{String: "Job Position"})
-	partnerModel.AddSelectionField("Type", models.SelectionFieldParams{Selection: types.Selection{
-		"contact": "Contact", "invoice": "Invoice Address", "delivery": "Shipping Address", "other": "Other Address"},
-		Help:    "Used to select automatically the right address according to the context in sales and purchases documents.",
-		Default: models.DefaultValue("contact"),
-	})
-	partnerModel.AddCharField("Street", models.StringFieldParams{})
-	partnerModel.AddCharField("Street2", models.StringFieldParams{})
-	partnerModel.AddCharField("Zip", models.StringFieldParams{})
-	partnerModel.AddCharField("City", models.StringFieldParams{})
-	partnerModel.AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: pool.CountryState(),
-		Filter: pool.CountryState().Country().EqualsEval("country_id"), OnDelete: models.Restrict})
-	partnerModel.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country(),
-		OnDelete: models.Restrict})
-	partnerModel.AddCharField("Email", models.StringFieldParams{OnChange: pool.Partner().Methods().OnchangeEmail()})
-	partnerModel.AddCharField("EmailFormatted", models.StringFieldParams{Compute: pool.Partner().Methods().ComputeEmailFormatted(),
-		Help: "Formatted email address 'Name <email@domain>'", Depends: []string{"Name", "Email"}})
-	partnerModel.AddCharField("Phone", models.StringFieldParams{})
-	partnerModel.AddCharField("Fax", models.StringFieldParams{})
-	partnerModel.AddCharField("Mobile", models.StringFieldParams{})
-	partnerModel.AddBooleanField("IsCompany", models.SimpleFieldParams{Default: models.DefaultValue(false),
-		Help: "Check if the contact is a company, otherwise it is a person"})
-	// CompanyType is only an interface field, do not use it in business logic
-	partnerModel.AddSelectionField("CompanyType", models.SelectionFieldParams{
-		Selection: types.Selection{"person": "Individual", "company": "Company"},
-		Compute:   pool.Partner().Methods().ComputeCompanyType(),
-		Depends:   []string{"IsCompany"}, Inverse: pool.Partner().Methods().InverseCompanyType(),
-		OnChange: pool.Partner().Methods().OnchangeCompanyType(),
-		Default:  models.DefaultValue("person")})
-	partnerModel.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
-	partnerModel.AddIntegerField("Color", models.SimpleFieldParams{})
-	partnerModel.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: pool.User(), ReverseFK: "Partner"})
-	partnerModel.AddBooleanField("PartnerShare", models.SimpleFieldParams{String: "Share Partner",
-		Compute: pool.Partner().Methods().ComputePartnerShare(), Stored: true, Depends: []string{"Users", "Users.Share"},
-		Help: `Either customer (no user), either shared user. Indicated the current partner is a customer without
-access or with a limited access created for sharing data.`})
-	partnerModel.AddCharField("ContactAddress", models.StringFieldParams{Compute: pool.Partner().Methods().ComputeContactAddress(),
-		String: "Complete Address", Depends: []string{"Street", "Street2", "Zip", "City", "State", "Country",
-			"Country.AddressFormat", "Country.Code", "Country.Name", "CompanyName", "State.Code", "State.Name"}})
+Used by the some of the legal statements.`},
+		"Banks":   models.One2ManyField{String: "Bank Accounts", RelationModel: pool.BankAccount(), ReverseFK: "Partner"},
+		"Website": models.CharField{Help: "Website of Partner or Company"},
+		"Comment": models.CharField{String: "Notes"},
+		"Categories": models.Many2ManyField{RelationModel: pool.PartnerCategory(),
+			String: "Tags", Default: func(env models.Environment, maps models.FieldMap) interface{} {
+				return pool.PartnerCategory().Browse(env, []int64{env.Context().GetInteger("category_id")})
+			}},
+		"CreditLimit": models.FloatField{},
+		"Barcode":     models.CharField{},
+		"Active":      models.BooleanField{Default: models.DefaultValue(true)},
+		"Customer": models.BooleanField{String: "Is a Customer", Default: models.DefaultValue(true),
+			Help: "Check this box if this contact is a customer."},
+		"Supplier": models.BooleanField{String: "Is a Vendor",
+			Help: `Check this box if this contact is a vendor.
+If it's not checked, purchase people will not see it when encoding a purchase order.`},
+		"Employee": models.BooleanField{Help: "Check this box if this contact is an Employee."},
+		"Function": models.CharField{String: "Job Position"},
+		"Type": models.SelectionField{Selection: types.Selection{
+			"contact": "Contact", "invoice": "Invoice Address", "delivery": "Shipping Address", "other": "Other Address"},
+			Help:    "Used to select automatically the right address according to the context in sales and purchases documents.",
+			Default: models.DefaultValue("contact"),
+		},
+		"Street":  models.CharField{},
+		"Street2": models.CharField{},
+		"Zip":     models.CharField{},
+		"City":    models.CharField{},
+		"State": models.Many2OneField{RelationModel: pool.CountryState(),
+			Filter: pool.CountryState().Country().EqualsEval("country_id"), OnDelete: models.Restrict},
+		"Country": models.Many2OneField{RelationModel: pool.Country(),
+			OnDelete: models.Restrict},
+		"Email":          models.CharField{OnChange: pool.Partner().Methods().OnchangeEmail()},
+		"EmailFormatted": models.CharField{Compute: pool.Partner().Methods().ComputeEmailFormatted(), Help: "Formatted email address 'Name <email@domain>'", Depends: []string{"Name", "Email"}},
+		"Phone":          models.CharField{},
+		"Fax":            models.CharField{},
+		"Mobile":         models.CharField{},
+		"IsCompany": models.BooleanField{Default: models.DefaultValue(false),
+			Help: "Check if the contact is a company, otherwise it is a person"},
+		// CompanyType is only an interface field, do not use it in business logic
+		"CompanyType": models.SelectionField{
+			Selection: types.Selection{"person": "Individual", "company": "Company"},
+			Compute:   pool.Partner().Methods().ComputeCompanyType(),
+			Depends:   []string{"IsCompany"}, Inverse: pool.Partner().Methods().InverseCompanyType(),
+			OnChange: pool.Partner().Methods().OnchangeCompanyType(),
+			Default:  models.DefaultValue("person")},
+		"Company": models.Many2OneField{RelationModel: pool.Company()},
+		"Color":   models.IntegerField{},
+		"Users":   models.One2ManyField{RelationModel: pool.User(), ReverseFK: "Partner"},
+		"PartnerShare": models.BooleanField{String: "Share Partner",
+			Compute: pool.Partner().Methods().ComputePartnerShare(), Stored: true, Depends: []string{"Users", "Users.Share"},
+			Help: `Either customer (no user), either shared user. Indicated the current partner is a customer without
+access or with a limited access created for sharing data.`},
+		"ContactAddress": models.CharField{Compute: pool.Partner().Methods().ComputeContactAddress(),
+			String: "Complete Address", Depends: []string{"Street", "Street2", "Zip", "City", "State", "Country",
+				"Country.AddressFormat", "Country.Code", "Country.Name", "CompanyName", "State.Code", "State.Name"}},
 
-	partnerModel.AddMany2OneField("CommercialPartner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(),
-		Compute: pool.Partner().Methods().ComputeCommercialPartner(), String: "Commercial Entity", Stored: true,
-		Index: true, Depends: []string{"IsCompany", "Parent", "Parent.CommercialPartner"}})
-	partnerModel.AddCharField("CommercialCompanyName", models.StringFieldParams{
-		Compute: pool.Partner().Methods().ComputeCommercialCompanyName(), Stored: true,
-		Depends: []string{"CompanyName", "Parent", "Parent.IsCompany", "CommercialPartner", "CommercialPartner.Name"}})
-	partnerModel.AddCharField("CompanyName", models.StringFieldParams{})
+		"CommercialPartner": models.Many2OneField{RelationModel: pool.Partner(),
+			Compute: pool.Partner().Methods().ComputeCommercialPartner(), String: "Commercial Entity", Stored: true,
+			Index: true, Depends: []string{"IsCompany", "Parent", "Parent.CommercialPartner"}},
+		"CommercialCompanyName": models.CharField{
+			Compute: pool.Partner().Methods().ComputeCommercialCompanyName(), Stored: true,
+			Depends: []string{"CompanyName", "Parent", "Parent.IsCompany", "CommercialPartner", "CommercialPartner.Name"}},
+		"CompanyName": models.CharField{},
 
-	partnerModel.AddBinaryField("Image", models.SimpleFieldParams{
-		Help: "This field holds the image used as avatar for this contact, limited to 1024x1024px"})
-	partnerModel.AddBinaryField("ImageMedium", models.SimpleFieldParams{
-		Help: `Medium-sized image of this contact. It is automatically
+		"Image": models.BinaryField{
+			Help: "This field holds the image used as avatar for this contact, limited to 1024x1024px"},
+		"ImageMedium": models.BinaryField{
+			Help: `Medium-sized image of this contact. It is automatically
 resized as a 128x128px image, with aspect ratio preserved.
-Use this field in form views or some kanban views.`})
-	partnerModel.AddBinaryField("ImageSmall", models.SimpleFieldParams{
-		Help: `Small-sized image of this contact. It is automatically
+Use this field in form views or some kanban views.`},
+		"ImageSmall": models.BinaryField{
+			Help: `Small-sized image of this contact. It is automatically
 resized as a 64x64px image, with aspect ratio preserved.
-Use this field anywhere a small image is required.`})
+Use this field anywhere a small image is required.`},
+	})
+
+	partnerModel.Fields().ParentName().RevokeAccess(security.GroupEveryone, security.Write)
+	//partnerModel.Fields().DisplayName().SetDepends([]string{"IsCompany", "Name", "Parent.Name", "Type", "CompanyName"})
 
 	partnerModel.AddSQLConstraint("check_name",
 		"CHECK( (type='contact' AND name IS NOT NULL) or (type != 'contact') )",
@@ -627,9 +632,9 @@ Use this field anywhere a small image is required.`})
 
 	partnerModel.Methods().OpenCommercialEntity().DeclareMethod(
 		`OpenCommercialEntity is a utility method used to add an "Open Company" button in partner views`,
-		func(rs pool.PartnerSet) *actions.BaseAction {
+		func(rs pool.PartnerSet) actions.BaseAction {
 			rs.EnsureOne()
-			return &actions.BaseAction{
+			return actions.BaseAction{
 				Type:     actions.ActionActWindow,
 				Model:    "Partner",
 				ViewMode: "form",
@@ -641,10 +646,10 @@ Use this field anywhere a small image is required.`})
 
 	partnerModel.Methods().OpenParent().DeclareMethod(
 		`OpenParent is a utility method used to add an "Open Parent" button in partner views`,
-		func(rs pool.PartnerSet) *actions.BaseAction {
+		func(rs pool.PartnerSet) actions.BaseAction {
 			rs.EnsureOne()
 			addressFormID := "base_view_partner_address_form"
-			return &actions.BaseAction{
+			return actions.BaseAction{
 				Type:     actions.ActionActWindow,
 				Model:    "Partner",
 				ViewMode: "form",

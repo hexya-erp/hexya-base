@@ -27,20 +27,22 @@ func (bab *BaseAuthBackend) Authenticate(login, secret string, context *types.Co
 
 func init() {
 	cpWizard := pool.UserChangePasswordWizard().DeclareTransientModel()
-	cpWizard.AddOne2ManyField("Users", models.ReverseFieldParams{RelationModel: pool.UserChangePasswordWizardLine(),
-		ReverseFK: "Wizard", Default: func(env models.Environment, fMap models.FieldMap) interface{} {
-			activeIds := env.Context().GetIntegerSlice("active_ids")
-			userLines := pool.UserChangePasswordWizardLine().NewSet(env)
-			for _, user := range pool.User().Search(env, pool.User().ID().In(activeIds)).Records() {
-				ul := pool.UserChangePasswordWizardLine().Create(env, pool.UserChangePasswordWizardLineData{
-					User:        user,
-					UserLogin:   user.Login(),
-					NewPassword: user.Password(),
-				})
-				userLines = userLines.Union(ul)
-			}
-			return userLines
-		}})
+	cpWizard.AddFields(map[string]models.FieldDefinition{
+		"Users": models.One2ManyField{RelationModel: pool.UserChangePasswordWizardLine(),
+			ReverseFK: "Wizard", Default: func(env models.Environment, fMap models.FieldMap) interface{} {
+				activeIds := env.Context().GetIntegerSlice("active_ids")
+				userLines := pool.UserChangePasswordWizardLine().NewSet(env)
+				for _, user := range pool.User().Search(env, pool.User().ID().In(activeIds)).Records() {
+					ul := pool.UserChangePasswordWizardLine().Create(env, pool.UserChangePasswordWizardLineData{
+						User:        user,
+						UserLogin:   user.Login(),
+						NewPassword: user.Password(),
+					})
+					userLines = userLines.Union(ul)
+				}
+				return userLines
+			}},
+	})
 
 	cpWizard.Methods().ChangePasswordButton().DeclareMethod(
 		`ChangePasswordButton is called when the user clicks on 'Apply' button in the popup.
@@ -52,26 +54,29 @@ func init() {
 		})
 
 	cpWizardLine := pool.UserChangePasswordWizardLine().DeclareTransientModel()
-	cpWizardLine.AddMany2OneField("Wizard", models.ForeignKeyFieldParams{RelationModel: pool.UserChangePasswordWizard()})
-	cpWizardLine.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: pool.User(), OnDelete: models.Cascade})
-	cpWizardLine.AddCharField("UserLogin", models.StringFieldParams{})
-	cpWizardLine.AddCharField("NewPassword", models.StringFieldParams{})
+	cpWizardLine.AddFields(map[string]models.FieldDefinition{
+		"Wizard":      models.Many2OneField{RelationModel: pool.UserChangePasswordWizard()},
+		"User":        models.Many2OneField{RelationModel: pool.User(), OnDelete: models.Cascade},
+		"UserLogin":   models.CharField{},
+		"NewPassword": models.CharField{},
+	})
 
 	userModel := pool.User().DeclareModel()
-	userModel.AddDateTimeField("LoginDate", models.SimpleFieldParams{})
-	userModel.AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(), Embed: true})
-	userModel.AddCharField("Login", models.StringFieldParams{Required: true, Unique: true})
-	userModel.AddCharField("Password", models.StringFieldParams{})
-	userModel.AddCharField("NewPassword", models.StringFieldParams{})
-	userModel.AddTextField("Signature", models.StringFieldParams{})
-	userModel.AddBooleanField("Active", models.SimpleFieldParams{Default: models.DefaultValue(true)})
-	userModel.AddCharField("ActionID", models.StringFieldParams{GoType: new(actions.ActionRef)})
-	userModel.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
-	userModel.AddMany2ManyField("Companies", models.Many2ManyFieldParams{RelationModel: pool.Company(), JSON: "company_ids"})
-	userModel.AddMany2ManyField("Groups", models.Many2ManyFieldParams{RelationModel: pool.Group(), JSON: "group_ids"})
-	userModel.AddBooleanField("Share", models.SimpleFieldParams{Compute: pool.User().Methods().ComputeShare(),
-		String: "Share User", Stored: true, Help: "External user with limited access, created only for the purpose of sharing data."})
-
+	userModel.AddFields(map[string]models.FieldDefinition{
+		"LoginDate":   models.DateTimeField{},
+		"Partner":     models.Many2OneField{RelationModel: pool.Partner(), Embed: true},
+		"Login":       models.CharField{Required: true, Unique: true},
+		"Password":    models.CharField{},
+		"NewPassword": models.CharField{},
+		"Signature":   models.TextField{},
+		"Active":      models.BooleanField{Default: models.DefaultValue(true)},
+		"ActionID":    models.CharField{GoType: new(actions.ActionRef)},
+		"Company":     models.Many2OneField{RelationModel: pool.Company()},
+		"Companies":   models.Many2ManyField{RelationModel: pool.Company(), JSON: "company_ids"},
+		"Groups":      models.Many2ManyField{RelationModel: pool.Group(), JSON: "group_ids"},
+		"Share": models.BooleanField{Compute: pool.User().Methods().ComputeShare(), Depends: []string{"Groups"},
+			String: "Share User", Stored: true, Help: "External user with limited access, created only for the purpose of sharing data."},
+	})
 	userModel.Methods().ComputeShare().DeclareMethod(
 		`ComputeShare checks if this is a shared user`,
 		func(rs pool.UserSet) (*pool.UserData, []models.FieldNamer) {

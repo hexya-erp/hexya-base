@@ -14,20 +14,22 @@ import (
 
 func init() {
 	filterModel := pool.Filter().DeclareModel()
-	filterModel.AddCharField("Name", models.StringFieldParams{String: "Filter Name", Required: true, Translate: true})
-	filterModel.AddMany2OneField("User", models.ForeignKeyFieldParams{RelationModel: pool.User(), OnDelete: models.Cascade,
-		Default: func(env models.Environment, maps models.FieldMap) interface{} {
-			return pool.User().Search(env, pool.User().ID().Equals(env.Uid()))
-		}, Help: `The user this filter is private to. When left empty the filter is public and available to all users.`})
-	filterModel.AddTextField("Domain", models.StringFieldParams{Required: true, Default: models.DefaultValue("[]")})
-	filterModel.AddTextField("Context", models.StringFieldParams{Required: true, Default: models.DefaultValue("{}")})
-	filterModel.AddTextField("Sort", models.StringFieldParams{Required: true, Default: models.DefaultValue("[]")})
-	filterModel.AddCharField("ResModel", models.StringFieldParams{String: "Model", Required: true, JSON: "model_id"})
-	filterModel.AddBooleanField("IsDefault", models.SimpleFieldParams{String: "Default filter"})
-	filterModel.AddCharField("Action", models.StringFieldParams{
-		Help: `The menu action this filter applies to. When left empty the filter applies to all menus for this model.`,
-		JSON: "action_id"})
-	filterModel.AddBooleanField("Active", models.SimpleFieldParams{Default: models.DefaultValue(true)})
+	filterModel.AddFields(map[string]models.FieldDefinition{
+		"Name": models.CharField{String: "Filter Name", Required: true, Translate: true},
+		"User": models.Many2OneField{RelationModel: pool.User(), OnDelete: models.Cascade,
+			Default: func(env models.Environment, maps models.FieldMap) interface{} {
+				return pool.User().Search(env, pool.User().ID().Equals(env.Uid()))
+			}, Help: `The user this filter is private to. When left empty the filter is public and available to all users.`},
+		"Domain":    models.TextField{Required: true, Default: models.DefaultValue("[]")},
+		"Context":   models.TextField{Required: true, Default: models.DefaultValue("{}")},
+		"Sort":      models.TextField{Required: true, Default: models.DefaultValue("[]")},
+		"ResModel":  models.CharField{String: "Model", Required: true, JSON: "model_id"},
+		"IsDefault": models.BooleanField{String: "Default filter"},
+		"Action": models.CharField{
+			Help: `The menu action this filter applies to. When left empty the filter applies to all menus for this model.`,
+			JSON: "action_id"},
+		"Active": models.BooleanField{Default: models.DefaultValue(true)},
+	})
 
 	filterModel.AddSQLConstraint("name_model_uid_unique", "unique (name, model_id, user_id, action_id)", "Filter names must be unique")
 

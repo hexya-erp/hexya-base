@@ -19,9 +19,11 @@ var defaultParameters map[string](func(env models.Environment) (string, pool.Gro
 
 func init() {
 	pool.ConfigParameter().DeclareModel()
-	pool.ConfigParameter().AddCharField("Key", models.StringFieldParams{Index: true, Required: true, Unique: true})
-	pool.ConfigParameter().AddTextField("Value", models.StringFieldParams{Required: true})
-	pool.ConfigParameter().AddMany2ManyField("Groups", models.Many2ManyFieldParams{RelationModel: pool.Group()})
+	pool.ConfigParameter().AddFields(map[string]models.FieldDefinition{
+		"Key":    models.CharField{Index: true, Required: true, Unique: true},
+		"Value":  models.TextField{Required: true},
+		"Groups": models.Many2ManyField{RelationModel: pool.Group()},
+	})
 
 	pool.ConfigParameter().Methods().Init().DeclareMethod(
 		`Init Initializes the parameters listed in defaultParameters.

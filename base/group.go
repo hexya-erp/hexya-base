@@ -11,8 +11,10 @@ import (
 
 func init() {
 	group := pool.Group().DeclareModel()
-	group.AddCharField("GroupID", models.StringFieldParams{Required: true})
-	group.AddCharField("Name", models.StringFieldParams{Required: true, Translate: true})
+	group.AddFields(map[string]models.FieldDefinition{
+		"GroupID": models.CharField{Required: true},
+		"Name":    models.CharField{Required: true, Translate: true},
+	})
 
 	group.Methods().Create().Extend("",
 		func(rs pool.GroupSet, data models.FieldMapper) pool.GroupSet {

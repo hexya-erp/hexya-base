@@ -14,23 +14,24 @@ import (
 
 func init() {
 	pool.Bank().DeclareModel()
-	pool.Bank().AddCharField("Name", models.StringFieldParams{Required: true})
-	pool.Bank().AddCharField("Street", models.StringFieldParams{})
-	pool.Bank().AddCharField("Street2", models.StringFieldParams{})
-	pool.Bank().AddCharField("Zip", models.StringFieldParams{})
-	pool.Bank().AddCharField("City", models.StringFieldParams{})
-	pool.Bank().AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: pool.CountryState(), String: "Fed. State",
-		Filter: pool.CountryState().Country().EqualsFunc(func(rs models.RecordSet) pool.CountrySet {
-			bank := rs.(pool.BankSet)
-			return bank.Country()
-		})})
-	pool.Bank().AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country()})
-	pool.Bank().AddCharField("Email", models.StringFieldParams{})
-	pool.Bank().AddCharField("Phone", models.StringFieldParams{})
-	pool.Bank().AddCharField("Fax", models.StringFieldParams{})
-	pool.Bank().AddBooleanField("Active", models.SimpleFieldParams{Default: models.DefaultValue(true)})
-	pool.Bank().AddCharField("BIC", models.StringFieldParams{String: "Bank Identifier Cord", Index: true, Help: "Sometimes called BIC or Swift."})
-
+	pool.Bank().AddFields(map[string]models.FieldDefinition{
+		"Name":    models.CharField{Required: true},
+		"Street":  models.CharField{},
+		"Street2": models.CharField{},
+		"Zip":     models.CharField{},
+		"City":    models.CharField{},
+		"State": models.Many2OneField{RelationModel: pool.CountryState(), String: "Fed. State",
+			Filter: pool.CountryState().Country().EqualsFunc(func(rs models.RecordSet) pool.CountrySet {
+				bank := rs.(pool.BankSet)
+				return bank.Country()
+			})},
+		"Country": models.Many2OneField{RelationModel: pool.Country()},
+		"Email":   models.CharField{},
+		"Phone":   models.CharField{},
+		"Fax":     models.CharField{},
+		"Active":  models.BooleanField{Default: models.DefaultValue(true)},
+		"BIC":     models.CharField{String: "Bank Identifier Cord", Index: true, Help: "Sometimes called BIC or Swift."},
+	})
 	pool.Bank().Methods().NameGet().Extend("",
 		func(rs pool.BankSet) string {
 			res := rs.Name()
@@ -41,20 +42,21 @@ func init() {
 		})
 
 	pool.BankAccount().DeclareModel()
-	pool.BankAccount().AddCharField("AccountType", models.StringFieldParams{Compute: pool.BankAccount().Methods().ComputeAccountType()})
-	pool.BankAccount().AddCharField("Name", models.StringFieldParams{String: "Account Number", Required: true})
-	pool.BankAccount().AddCharField("SanitizedAccountNumber", models.StringFieldParams{Compute: pool.BankAccount().Methods().ComputeSanitizedAccountNumber(),
-		Stored: true})
-	pool.BankAccount().AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(),
-		String: "Account Holder", OnDelete: models.Cascade, Index: true,
-		Filter: pool.Partner().IsCompany().Equals(true).Or().Parent().IsNull()})
-	pool.BankAccount().AddMany2OneField("Bank", models.ForeignKeyFieldParams{RelationModel: pool.Bank()})
-	pool.BankAccount().AddCharField("BankName", models.StringFieldParams{Related: "Bank.Name"})
-	pool.BankAccount().AddCharField("BankBIC", models.StringFieldParams{Related: "Bank.BIC"})
-	pool.BankAccount().AddIntegerField("Sequence", models.SimpleFieldParams{})
-	pool.BankAccount().AddMany2OneField("Currency", models.ForeignKeyFieldParams{RelationModel: pool.Currency()})
-	pool.BankAccount().AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
-
+	pool.BankAccount().AddFields(map[string]models.FieldDefinition{
+		"AccountType": models.CharField{Compute: pool.BankAccount().Methods().ComputeAccountType(), Depends: []string{""}},
+		"Name":        models.CharField{String: "Account Number", Required: true},
+		"SanitizedAccountNumber": models.CharField{Compute: pool.BankAccount().Methods().ComputeSanitizedAccountNumber(),
+			Stored: true, Depends: []string{"Name"}},
+		"Partner": models.Many2OneField{RelationModel: pool.Partner(),
+			String: "Account Holder", OnDelete: models.Cascade, Index: true,
+			Filter: pool.Partner().IsCompany().Equals(true).Or().Parent().IsNull()},
+		"Bank":     models.Many2OneField{RelationModel: pool.Bank()},
+		"BankName": models.CharField{Related: "Bank.Name"},
+		"BankBIC":  models.CharField{Related: "Bank.BIC"},
+		"Sequence": models.IntegerField{},
+		"Currency": models.Many2OneField{RelationModel: pool.Currency()},
+		"Company":  models.Many2OneField{RelationModel: pool.Company()},
+	})
 	pool.BankAccount().AddSQLConstraint("unique_number", "unique(sanitized_account_number, company_id)", "Account Number must be unique")
 
 	pool.BankAccount().Methods().ComputeAccountType().DeclareMethod(

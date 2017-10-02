@@ -10,29 +10,32 @@ import (
 
 func init() {
 	countryGroup := pool.CountryGroup().DeclareModel()
-	countryGroup.AddCharField("Name", models.StringFieldParams{Required: true})
-	countryGroup.AddMany2ManyField("Countries", models.Many2ManyFieldParams{RelationModel: pool.Country()})
+	countryGroup.AddFields(map[string]models.FieldDefinition{
+		"Name":      models.CharField{Required: true},
+		"Countries": models.Many2ManyField{RelationModel: pool.Country()},
+	})
 
 	countryState := pool.CountryState().DeclareModel()
-	countryState.AddCharField("Name", models.StringFieldParams{String: "State Name", Required: true,
-		Help: "Administrative divisions of a country. E.g. Fed. State, Departement, Canton"})
-	countryState.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country(), Required: true})
-	countryState.AddCharField("Code", models.StringFieldParams{String: "State Code", Size: 3,
-		Help: "The state code in max. three chars.", Required: true})
-
+	countryState.AddFields(map[string]models.FieldDefinition{
+		"Name": models.CharField{String: "State Name", Required: true,
+			Help: "Administrative divisions of a country. E.g. Fed. State, Departement, Canton"},
+		"Country": models.Many2OneField{RelationModel: pool.Country(), Required: true},
+		"Code": models.CharField{String: "State Code", Size: 3,
+			Help: "The state code in max. three chars.", Required: true},
+	})
 	countryState.AddSQLConstraint("name_code_uniq", "unique(country_id, code)", "The code of the state must be unique by country !")
 
 	country := pool.Country().DeclareModel()
-	country.AddCharField("Name", models.StringFieldParams{String: "Country Name", Help: "The full name of the country.",
-		Translate: true, Required: true, Unique: true})
-	country.AddCharField("Code", models.StringFieldParams{String: "Country Code", Size: 2, Unique: true,
-		Help: "The ISO country code in two chars.\nYou can use this field for quick search."})
-	country.AddTextField("AddressFormat", models.StringFieldParams{Default: func(env models.Environment, fMap models.FieldMap) interface{} {
-		return "%(Street)s\n%(Street2)s\n%(City)s %(StateCode)s %(Zip)s\n%(CountryName)s"
-	}, Help: "You can state here the usual format to use for the addresses belonging to this country."})
-	country.AddMany2OneField("Currency", models.ForeignKeyFieldParams{RelationModel: pool.Currency()})
-	country.AddBinaryField("Image", models.SimpleFieldParams{})
-	country.AddIntegerField("PhoneCode", models.SimpleFieldParams{String: "Country Calling Code"})
-	country.AddMany2ManyField("CountryGroups", models.Many2ManyFieldParams{RelationModel: pool.CountryGroup()})
-	country.AddOne2ManyField("States", models.ReverseFieldParams{RelationModel: pool.CountryState(), ReverseFK: "Country"})
+	country.AddFields(map[string]models.FieldDefinition{
+		"Name": models.CharField{String: "Country Name", Help: "The full name of the country.", Translate: true, Required: true, Unique: true},
+		"Code": models.CharField{String: "Country Code", Size: 2, Unique: true, Help: "The ISO country code in two chars.\nYou can use this field for quick search."},
+		"AddressFormat": models.TextField{Default: func(env models.Environment, fMap models.FieldMap) interface{} {
+			return "%(Street)s\n%(Street2)s\n%(City)s %(StateCode)s %(Zip)s\n%(CountryName)s"
+		}, Help: "You can state here the usual format to use for the addresses belonging to this country."},
+		"Currency":      models.Many2OneField{RelationModel: pool.Currency()},
+		"Image":         models.BinaryField{},
+		"PhoneCode":     models.IntegerField{String: "Country Calling Code"},
+		"CountryGroups": models.Many2ManyField{RelationModel: pool.CountryGroup()},
+		"States":        models.One2ManyField{RelationModel: pool.CountryState(), ReverseFK: "Country"},
+	})
 }

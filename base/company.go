@@ -20,35 +20,37 @@ func CompanyGetUserCurrency(env models.Environment, fMap models.FieldMap) interf
 
 func init() {
 	companyModel := pool.Company().DeclareModel()
-	companyModel.AddCharField("Name", models.StringFieldParams{String: "Company Name", Size: 128, Required: true,
-		Related: "Partner.Name", Unique: true})
-	companyModel.AddMany2OneField("Parent", models.ForeignKeyFieldParams{RelationModel: pool.Company(),
-		String: "Parent Company", Index: true, Constraint: pool.Company().Methods().CheckParent()})
-	companyModel.AddOne2ManyField("Children", models.ReverseFieldParams{RelationModel: pool.Company(),
-		ReverseFK: "Parent", String: "Child Companies"})
-	companyModel.AddMany2OneField("Partner", models.ForeignKeyFieldParams{RelationModel: pool.Partner(),
-		Required: true, Index: true})
-	companyModel.AddCharField("Tagline", models.StringFieldParams{})
-	companyModel.AddBinaryField("Logo", models.SimpleFieldParams{Related: "Partner.Image"})
-	companyModel.AddBinaryField("LogoWeb", models.SimpleFieldParams{Compute: pool.Company().Methods().ComputeLogoWeb(),
-		Stored: true, Depends: []string{"Partner", "Partner.Image"}})
-	companyModel.AddMany2OneField("Currency", models.ForeignKeyFieldParams{RelationModel: pool.Currency(),
-		Required: true, Default: CompanyGetUserCurrency})
-	companyModel.AddMany2ManyField("Users", models.Many2ManyFieldParams{RelationModel: pool.User(), String: "Accepted Users"})
-	companyModel.AddCharField("Street", models.StringFieldParams{Related: "Partner.Street"})
-	companyModel.AddCharField("Street2", models.StringFieldParams{Related: "Partner.Street2"})
-	companyModel.AddCharField("Zip", models.StringFieldParams{Related: "Partner.Zip"})
-	companyModel.AddCharField("City", models.StringFieldParams{Related: "Partner.City"})
-	companyModel.AddMany2OneField("State", models.ForeignKeyFieldParams{RelationModel: pool.CountryState(),
-		Related: "Partner.State", OnChange: pool.Company().Methods().OnChangeState()})
-	companyModel.AddMany2OneField("Country", models.ForeignKeyFieldParams{RelationModel: pool.Country(),
-		Related: "Partner.Country", OnChange: pool.Company().Methods().OnChangeCountry()})
-	companyModel.AddCharField("Email", models.StringFieldParams{Related: "Partner.Email"})
-	companyModel.AddCharField("Phone", models.StringFieldParams{Related: "Partner.Phone"})
-	companyModel.AddCharField("Fax", models.StringFieldParams{Related: "Partner.Fax"})
-	companyModel.AddCharField("Website", models.StringFieldParams{Related: "Partner.Website"})
-	companyModel.AddCharField("VAT", models.StringFieldParams{Related: "Partner.VAT"})
-	companyModel.AddCharField("CompanyRegistry", models.StringFieldParams{Size: 64})
+	companyModel.AddFields(map[string]models.FieldDefinition{
+		"Name": models.CharField{String: "Company Name", Size: 128, Required: true,
+			Related: "Partner.Name", Unique: true},
+		"Parent": models.Many2OneField{RelationModel: pool.Company(),
+			String: "Parent Company", Index: true, Constraint: pool.Company().Methods().CheckParent()},
+		"Children": models.One2ManyField{RelationModel: pool.Company(),
+			ReverseFK: "Parent", String: "Child Companies"},
+		"Partner": models.Many2OneField{RelationModel: pool.Partner(),
+			Required: true, Index: true},
+		"Tagline": models.CharField{},
+		"Logo":    models.BinaryField{Related: "Partner.Image"},
+		"LogoWeb": models.BinaryField{Compute: pool.Company().Methods().ComputeLogoWeb(),
+			Stored: true, Depends: []string{"Partner", "Partner.Image"}},
+		"Currency": models.Many2OneField{RelationModel: pool.Currency(),
+			Required: true, Default: CompanyGetUserCurrency},
+		"Users":   models.Many2ManyField{RelationModel: pool.User(), String: "Accepted Users"},
+		"Street":  models.CharField{Related: "Partner.Street"},
+		"Street2": models.CharField{Related: "Partner.Street2"},
+		"Zip":     models.CharField{Related: "Partner.Zip"},
+		"City":    models.CharField{Related: "Partner.City"},
+		"State": models.Many2OneField{RelationModel: pool.CountryState(),
+			Related: "Partner.State", OnChange: pool.Company().Methods().OnChangeState()},
+		"Country": models.Many2OneField{RelationModel: pool.Country(),
+			Related: "Partner.Country", OnChange: pool.Company().Methods().OnChangeCountry()},
+		"Email":           models.CharField{Related: "Partner.Email"},
+		"Phone":           models.CharField{Related: "Partner.Phone"},
+		"Fax":             models.CharField{Related: "Partner.Fax"},
+		"Website":         models.CharField{Related: "Partner.Website"},
+		"VAT":             models.CharField{Related: "Partner.VAT"},
+		"CompanyRegistry": models.CharField{Size: 64},
+	})
 
 	companyModel.Methods().ComputeLogoWeb().DeclareMethod(
 		`ComputeLogoWeb returns a resized version of the company logo`,

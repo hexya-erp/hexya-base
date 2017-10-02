@@ -10,7 +10,9 @@ import (
 
 func init() {
 	baseMixin := pool.BaseMixin()
-	baseMixin.AddBooleanField("Active", models.SimpleFieldParams{})
+	baseMixin.AddFields(map[string]models.FieldDefinition{
+		"Active": models.BooleanField{},
+	})
 
 	baseMixin.Methods().ToggleActive().DeclareMethod(
 		`ToggleActive toggles the Active field of this object`,

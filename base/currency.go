@@ -16,28 +16,32 @@ import (
 
 func init() {
 	currencyRateModel := pool.CurrencyRate().DeclareModel()
-	currencyRateModel.AddDateTimeField("Name", models.SimpleFieldParams{String: "Date", Required: true, Index: true})
-	currencyRateModel.AddFloatField("Rate", models.FloatFieldParams{Digits: nbutils.Digits{Precision: 12, Scale: 6},
-		Help: "The rate of the currency to the currency of rate 1"})
-	currencyRateModel.AddMany2OneField("Currency", models.ForeignKeyFieldParams{RelationModel: pool.Currency()})
-	currencyRateModel.AddMany2OneField("Company", models.ForeignKeyFieldParams{RelationModel: pool.Company()})
+	currencyRateModel.AddFields(map[string]models.FieldDefinition{
+		"Name": models.DateTimeField{String: "Date", Required: true, Index: true},
+		"Rate": models.FloatField{Digits: nbutils.Digits{Precision: 12, Scale: 6},
+			Help: "The rate of the currency to the currency of rate 1"},
+		"Currency": models.Many2OneField{RelationModel: pool.Currency()},
+		"Company":  models.Many2OneField{RelationModel: pool.Company()},
+	})
 
 	currencyModel := pool.Currency().DeclareModel()
-	currencyModel.AddCharField("Name", models.StringFieldParams{String: "Currency", Help: "Currency Code [ISO 4217]", Size: 3,
-		Unique: true})
-	currencyModel.AddCharField("Symbol", models.StringFieldParams{Help: "Currency sign, to be used when printing amounts", Size: 4})
-	currencyModel.AddFloatField("Rate", models.FloatFieldParams{String: "Current Rate",
-		Help: "The rate of the currency to the currency of rate 1", Digits: nbutils.Digits{Precision: 12, Scale: 6},
-		Compute: pool.Currency().Methods().ComputeCurrentRate()})
-	currencyModel.AddOne2ManyField("Rates", models.ReverseFieldParams{RelationModel: pool.CurrencyRate(), ReverseFK: "Currency"})
-	currencyModel.AddFloatField("Rounding", models.FloatFieldParams{String: "Rounding Factor", Digits: nbutils.Digits{Precision: 12,
-		Scale: 6}})
-	currencyModel.AddIntegerField("DecimalPlaces", models.SimpleFieldParams{GoType: new(int8),
-		Compute: pool.Currency().Methods().ComputeDecimalPlaces(), Depends: []string{"Rounding"}})
-	currencyModel.AddBooleanField("Active", models.SimpleFieldParams{})
-	currencyModel.AddSelectionField("Position", models.SelectionFieldParams{Selection: types.Selection{"after": "After Amount", "before": "Before Amount"},
-		String: "Symbol Position", Help: "Determines where the currency symbol should be placed after or before the amount."})
-	currencyModel.AddDateField("Date", models.SimpleFieldParams{Compute: pool.Currency().Methods().ComputeDate()})
+	currencyModel.AddFields(map[string]models.FieldDefinition{
+		"Name": models.CharField{String: "Currency", Help: "Currency Code [ISO 4217]", Size: 3,
+			Unique: true},
+		"Symbol": models.CharField{Help: "Currency sign, to be used when printing amounts", Size: 4},
+		"Rate": models.FloatField{String: "Current Rate",
+			Help: "The rate of the currency to the currency of rate 1", Digits: nbutils.Digits{Precision: 12, Scale: 6},
+			Compute: pool.Currency().Methods().ComputeCurrentRate(), Depends: []string{"Rates", "Rates.Rate"}},
+		"Rates": models.One2ManyField{RelationModel: pool.CurrencyRate(), ReverseFK: "Currency"},
+		"Rounding": models.FloatField{String: "Rounding Factor", Digits: nbutils.Digits{Precision: 12,
+			Scale: 6}},
+		"DecimalPlaces": models.IntegerField{GoType: new(int8),
+			Compute: pool.Currency().Methods().ComputeDecimalPlaces(), Depends: []string{"Rounding"}},
+		"Active": models.BooleanField{},
+		"Position": models.SelectionField{Selection: types.Selection{"after": "After Amount", "before": "Before Amount"},
+			String: "Symbol Position", Help: "Determines where the currency symbol should be placed after or before the amount."},
+		"Date": models.DateField{Compute: pool.Currency().Methods().ComputeDate(), Depends: []string{"Rates", "Rates.Name"}},
+	})
 
 	currencyModel.Methods().ComputeCurrentRate().DeclareMethod(
 		`ComputeCurrentRate returns the current rate of this currency.
