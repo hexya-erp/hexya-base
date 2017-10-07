@@ -10,6 +10,7 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types"
+	"github.com/hexya-erp/hexya/hexya/tools/emailutils"
 	"github.com/hexya-erp/hexya/pool"
 )
 
@@ -61,28 +62,154 @@ func init() {
 		"NewPassword": models.CharField{},
 	})
 
+	userLogModel := pool.UserLog().DeclareModel()
+	userLogModel.SetDefaultOrder("id desc")
+
 	userModel := pool.User().DeclareModel()
+	userModel.SetDefaultOrder("Login")
 	userModel.AddFields(map[string]models.FieldDefinition{
-		"LoginDate":   models.DateTimeField{},
-		"Partner":     models.Many2OneField{RelationModel: pool.Partner(), Embed: true},
-		"Login":       models.CharField{Required: true, Unique: true},
-		"Password":    models.CharField{},
-		"NewPassword": models.CharField{},
-		"Signature":   models.TextField{},
-		"Active":      models.BooleanField{Default: models.DefaultValue(true)},
-		"ActionID":    models.CharField{GoType: new(actions.ActionRef)},
-		"Company":     models.Many2OneField{RelationModel: pool.Company()},
-		"Companies":   models.Many2ManyField{RelationModel: pool.Company(), JSON: "company_ids"},
-		"Groups":      models.Many2ManyField{RelationModel: pool.Group(), JSON: "group_ids"},
+		"Partner": models.Many2OneField{RelationModel: pool.Partner(), Required: true, Embed: true,
+			OnDelete: models.Restrict, String: "Related Partner", Help: "Partner-related data of the user"},
+		"Login": models.CharField{Required: true, Unique: true, Help: "Used to log into the system",
+			OnChange: pool.User().Methods().OnchangeLogin()},
+		"Password": models.CharField{Default: models.DefaultValue(""), NoCopy: true,
+			Help: "Keep empty if you don't want the user to be able to connect on the system."},
+		"NewPassword": models.CharField{String: "Set Password", Compute: pool.User().Methods().ComputePassword(),
+			Inverse: pool.User().Methods().InversePassword(), Depends: []string{""},
+			Help: `Specify a value only when creating a user or if you're
+changing the user's password, otherwise leave empty. After
+a change of password, the user has to login again.`},
+		"Signature": models.TextField{}, // TODO Switch to HTML field when implemented in client
+		"Active":    models.BooleanField{Default: models.DefaultValue(true)},
+		"ActionID": models.CharField{GoType: new(actions.ActionRef), String: "Home Action",
+			Help: "If specified, this action will be opened at log on for this user, in addition to the standard menu."},
+		"Groups": models.Many2ManyField{RelationModel: pool.Group(), JSON: "group_ids"},
+		"Logs": models.One2ManyField{RelationModel: pool.UserLog(), ReverseFK: "CreateUID", String: "User log entries",
+			JSON: "log_ids"},
+		"LoginDate": models.DateTimeField{Related: "Logs.CreateDate", String: "Latest Connection"},
 		"Share": models.BooleanField{Compute: pool.User().Methods().ComputeShare(), Depends: []string{"Groups"},
 			String: "Share User", Stored: true, Help: "External user with limited access, created only for the purpose of sharing data."},
+		"CompaniesCount": models.IntegerField{String: "Number of Companies",
+			Compute: pool.User().Methods().ComputeCompaniesCount(), GoType: new(int)},
+		"Company": models.Many2OneField{RelationModel: pool.Company(), Required: true, Default: func(env models.Environment, vals models.FieldMap) interface{} {
+			return pool.Company().NewSet(env).CompanyDefaultGet()
+		}, Help: "The company this user is currently working for.", Constraint: pool.User().Methods().CheckCompany()},
+		"Companies": models.Many2ManyField{RelationModel: pool.Company(), JSON: "company_ids",
+			Default: func(env models.Environment, vals models.FieldMap) interface{} {
+				return pool.Company().NewSet(env).CompanyDefaultGet()
+			}, Constraint: pool.User().Methods().CheckCompany()},
 	})
+
+	userModel.Methods().SelfReadableFields().DeclareMethod(
+		`SelfReadableFields returns the list of its own fields that a user can read.`,
+		func(rs pool.UserSet) map[string]bool {
+			return map[string]bool{
+				"Signature": true, "Company": true, "Login": true, "Email": true, "Name": true, "Image": true,
+				"ImageMedium": true, "ImageSmall": true, "Lang": true, "TZ": true, "TZOffset": true, "Groups": true,
+				"Partner": true, "LastUpdate": true, "ActionID": true,
+			}
+		})
+
+	userModel.Methods().SelfWritableFields().DeclareMethod(
+		`SelfWritableFields returns the list of its own fields that a user can write.`,
+		func(rs pool.UserSet) map[string]bool {
+			return map[string]bool{
+				"Signature": true, "ActionID": true, "Company": true, "Email": true, "Name": true,
+				"Image": true, "ImageMedium": true, "ImageSmall": true, "Lang": true, "TZ": true,
+			}
+		})
+
+	userModel.Methods().ComputePassword().DeclareMethod(
+		`ComputePassword is a technical function for the new password mechanism. It always returns an empty string`,
+		func(rs pool.UserSet) (*pool.UserData, []models.FieldNamer) {
+			return &pool.UserData{NewPassword: ""}, []models.FieldNamer{pool.User().NewPassword()}
+		})
+
+	userModel.Methods().InversePassword().DeclareMethod(
+		`InversePassword is used in the new password mechanism.`,
+		func(rs pool.UserSet, vals models.FieldMapper) {
+			if rs.NewPassword() == "" {
+				return
+			}
+			if rs.ID() == rs.Env().Uid() {
+				log.Panic(rs.T("Please use the change password wizard (in User Preferences or User menu) to change your own password."))
+			}
+			rs.SetPassword(rs.NewPassword())
+		})
+
 	userModel.Methods().ComputeShare().DeclareMethod(
 		`ComputeShare checks if this is a shared user`,
 		func(rs pool.UserSet) (*pool.UserData, []models.FieldNamer) {
 			return &pool.UserData{
 				Share: !rs.HasGroup(GroupUser.ID),
 			}, []models.FieldNamer{pool.User().Share()}
+		})
+
+	userModel.Methods().ComputeCompaniesCount().DeclareMethod(
+		`ComputeCompaniesCount retrieves the number of companies in the system`,
+		func(rs pool.UserSet) (*pool.UserData, []models.FieldNamer) {
+			return &pool.UserData{
+				CompaniesCount: pool.Company().NewSet(rs.Env()).Sudo().SearchCount(),
+			}, []models.FieldNamer{pool.User().CompaniesCount()}
+		})
+
+	userModel.Methods().OnchangeLogin().DeclareMethod(
+		`OnchangeLogin matches the email if the login is an email`,
+		func(rs pool.UserSet) (*pool.UserData, []models.FieldNamer) {
+			if rs.Login() == "" || !emailutils.IsValidAddress(rs.Login()) {
+				return &pool.UserData{}, []models.FieldNamer{}
+			}
+			return &pool.UserData{Email: rs.Login()}, []models.FieldNamer{pool.User().Email()}
+		})
+
+	userModel.Methods().CheckCompany().DeclareMethod(
+		`CheckCompany checks that the user's company is one of its authorized companies`,
+		func(rs pool.UserSet) {
+			for _, company := range rs.Companies().Records() {
+				if rs.Company().Equals(company) {
+					return
+				}
+			}
+			log.Panic(rs.T("The chosen company is not in the allowed companies for this user"))
+		})
+
+	userModel.Methods().Read().Extend("",
+		func(rs pool.UserSet, fields []string) []models.FieldMap {
+			rSet := rs
+			if len(fields) > 0 && rs.ID() == rs.Env().Uid() {
+				var hasUnsafeFields bool
+				for _, key := range fields {
+					if !rs.SelfReadableFields()[key] {
+						hasUnsafeFields = true
+						break
+					}
+				}
+				if !hasUnsafeFields {
+					rSet = rs.Sudo()
+				}
+			}
+			result := rSet.Super().Read(fields)
+			if !rs.CheckExecutionPermission(pool.User().Methods().Write().Underlying(), true) {
+				for i, res := range result {
+					if res["id"] != rs.Env().Uid() {
+						if _, exists := res["password"]; exists {
+							result[i]["password"] = "********"
+						}
+					}
+				}
+			}
+			return result
+
+		})
+
+	userModel.Methods().Search().Extend("",
+		func(rs pool.UserSet, cond pool.UserCondition) pool.UserSet {
+			for _, field := range cond.Fields() {
+				if pool.User().JSONizeFieldName(field) == "password" {
+					log.Panic(rs.T("Invalid search criterion: password"))
+				}
+			}
+			return rs.Super().Search(cond)
 		})
 
 	userModel.Methods().Write().Extend("",
@@ -198,7 +325,7 @@ func init() {
 				err = security.UserNotFoundError(login)
 				return
 			}
-			if user.Password() != secret {
+			if user.Password() == "" || user.Password() != secret {
 				err = security.InvalidCredentialsError(login)
 				return
 			}

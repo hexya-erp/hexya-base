@@ -89,6 +89,7 @@ func init() {
 						Name:        "Administrator",
 						Active:      true,
 						Company:     mainCompany,
+						Companies:   mainCompany,
 						Login:       "admin",
 						LoginDate:   dates.DateTime{},
 						Password:    "admin",

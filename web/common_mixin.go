@@ -490,7 +490,7 @@ func init() {
 		func(rc *models.RecordCollection, domain domains.Domain, limit int, offset int, order string) *models.RecordCollection {
 			rSet := rc
 			if searchCond := domains.ParseDomain(domain); searchCond != nil {
-				rSet = rSet.Search(searchCond)
+				rSet = rSet.Call("Search", searchCond).(models.RecordSet).Collection()
 			}
 			// Limit
 			rSet = rSet.Limit(limit)
