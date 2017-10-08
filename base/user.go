@@ -165,12 +165,9 @@ a change of password, the user has to login again.`},
 	userModel.Methods().CheckCompany().DeclareMethod(
 		`CheckCompany checks that the user's company is one of its authorized companies`,
 		func(rs pool.UserSet) {
-			for _, company := range rs.Companies().Records() {
-				if rs.Company().Equals(company) {
-					return
-				}
+			if rs.Company().Intersect(rs.Companies()).IsEmpty() {
+				log.Panic(rs.T("The chosen company is not in the allowed companies for this user"))
 			}
-			log.Panic(rs.T("The chosen company is not in the allowed companies for this user"))
 		})
 
 	userModel.Methods().Read().Extend("",
@@ -212,16 +209,60 @@ a change of password, the user has to login again.`},
 			return rs.Super().Search(cond)
 		})
 
+	userModel.Methods().Create().Extend("",
+		func(rs pool.UserSet, vals *pool.UserData) pool.UserSet {
+			user := rs.Super().Create(vals)
+			user.Partner().SetActive(user.Active())
+			if !user.Partner().Company().IsEmpty() {
+				user.Partner().SetCompany(user.Company())
+			}
+			return user
+		})
+
 	userModel.Methods().Write().Extend("",
 		func(rs pool.UserSet, data *pool.UserData, fieldsToUnset ...models.FieldNamer) bool {
-			res := rs.Super().Write(data, fieldsToUnset...)
-			fMap := data.FieldMap(fieldsToUnset...)
-			_, ok1 := fMap["Groups"]
-			_, ok2 := fMap["group_ids"]
-			if ok1 || ok2 {
+			if val, exists := data.Get(pool.User().Active(), fieldsToUnset...); exists && !val.(bool) {
+				for _, user := range rs.Records() {
+					if user.ID() == security.SuperUserID {
+						log.Panic(rs.T("You cannot deactivate the admin user."))
+					}
+					if user.ID() == rs.Env().Uid() {
+						log.Panic(rs.T("You cannot deactivate the user you're currently logged in as."))
+					}
+				}
+			}
+			rSet := rs
+			if rs.ID() == rs.Env().Uid() {
+				var hasUnsafeFields bool
+				for key := range data.FieldsSet(fieldsToUnset...) {
+					if !rs.SelfWritableFields()[string(key)] {
+						hasUnsafeFields = true
+						break
+					}
+				}
+				if !hasUnsafeFields {
+					if comp, exists := data.Get(pool.User().Company(), fieldsToUnset...); exists {
+						if comp.(pool.CompanySet).Intersect(pool.User().NewSet(rs.Env()).CurrentUser().Companies()).IsEmpty() {
+							data, fieldsToUnset = data.Remove(rs, pool.User().Company(), fieldsToUnset...)
+						}
+					}
+					// safe fields only, so we write as super-user to bypass access rights
+					rSet = rs.Sudo()
+				}
+			}
+			res := rSet.Super().Write(data, fieldsToUnset...)
+			if _, ok := data.Get(pool.User().Groups(), fieldsToUnset...); ok {
 				// We get groups before removing all memberships otherwise we might get stuck with permissions if we
 				// are modifying our own user memberships.
 				rs.SyncMemberships()
+			}
+			if comp, exists := data.Get(pool.User().Company(), fieldsToUnset...); exists {
+				for _, user := range rs.Records() {
+					// if partner is global we keep it that way
+					if !user.Partner().Company().Equals(comp.(pool.CompanySet)) {
+						user.Partner().SetCompany(user.Company())
+					}
+				}
 			}
 			return res
 		})
@@ -337,6 +378,12 @@ a change of password, the user has to login again.`},
 		`GetCompany returns the current user's company.`,
 		func(rs pool.UserSet) pool.CompanySet {
 			return pool.User().Browse(rs.Env(), []int64{rs.Env().Uid()}).Company()
+		})
+
+	userModel.Methods().CurrentUser().DeclareMethod(
+		`CurrentUser returns a UserSet with the currently logged in user.`,
+		func(rs pool.UserSet) pool.UserSet {
+			return pool.User().Browse(rs.Env(), []int64{rs.Env().Uid()})
 		})
 
 	security.AuthenticationRegistry.RegisterBackend(new(BaseAuthBackend))
