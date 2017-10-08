@@ -272,7 +272,7 @@ Use this field anywhere a small image is required.`},
 				case partnerType == "delivery":
 					imgFileName = "truck.png"
 				case isCompany:
-					imgFileName = "company_logo.png"
+					imgFileName = "company_image.png"
 				default:
 					imgFileName = "avatar.png"
 					colorize = true
@@ -301,10 +301,9 @@ Use this field anywhere a small image is required.`},
 	partnerModel.Methods().Copy().Extend("",
 		func(rs pool.PartnerSet, overrides *pool.PartnerData, fieldsToUnset ...models.FieldNamer) pool.PartnerSet {
 			rs.EnsureOne()
-			vals, fieldsToUnset := rs.DataStruct(overrides.FieldMap(fieldsToUnset...))
-			vals.Name = rs.T("%s (copy)", rs.Name())
+			overrides.Name = rs.T("%s (copy)", rs.Name())
 			fieldsToUnset = append(fieldsToUnset, pool.Partner().Name())
-			return rs.Super().Copy(vals, fieldsToUnset...)
+			return rs.Super().Copy(overrides, fieldsToUnset...)
 		})
 
 	partnerModel.Methods().OnchangeParent().DeclareMethod(
