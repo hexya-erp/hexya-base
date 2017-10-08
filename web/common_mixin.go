@@ -103,6 +103,10 @@ func init() {
 					if err != nil {
 						log.Panic("Unable to cast field value", "error", err, "model", rs.ModelName(), "field", f, "value", fInfos[fJSON])
 					}
+					if id == 0 {
+						fMap[f] = nil
+						continue
+					}
 					fMap[f] = id
 				case fieldtype.Many2Many:
 					fMap[f] = rs.NormalizeM2MData(f, fInfos[fJSON], v)
