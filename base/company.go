@@ -96,23 +96,22 @@ func init() {
 		})
 
 	companyModel.Methods().Create().Extend("",
-		func(rs pool.CompanySet, data models.FieldMapper) pool.CompanySet {
-			vals, _ := rs.DataStruct(data.FieldMap())
-			if !vals.Partner.IsEmpty() {
+		func(rs pool.CompanySet, data *pool.CompanyData) pool.CompanySet {
+			if !data.Partner.IsEmpty() {
 				return rs.Super().Create(data)
 			}
 			partner := pool.Partner().Create(rs.Env(), &pool.PartnerData{
-				Name:        vals.Name,
+				Name:        data.Name,
 				CompanyType: "company",
-				Image:       vals.Logo,
+				Image:       data.Logo,
 				Customer:    false,
-				Email:       vals.Email,
-				Phone:       vals.Phone,
-				Website:     vals.Website,
-				VAT:         vals.VAT,
+				Email:       data.Email,
+				Phone:       data.Phone,
+				Website:     data.Website,
+				VAT:         data.VAT,
 			})
-			vals.Partner = partner
-			company := rs.Super().Create(vals)
+			data.Partner = partner
+			company := rs.Super().Create(data)
 			partner.SetCompany(company)
 			return company
 		})

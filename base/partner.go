@@ -299,9 +299,9 @@ Use this field anywhere a small image is required.`},
 		})
 
 	partnerModel.Methods().Copy().Extend("",
-		func(rs pool.PartnerSet, defaults models.FieldMapper, fieldsToUnset ...models.FieldNamer) pool.PartnerSet {
+		func(rs pool.PartnerSet, overrides *pool.PartnerData, fieldsToUnset ...models.FieldNamer) pool.PartnerSet {
 			rs.EnsureOne()
-			vals, fieldsToUnset := rs.DataStruct(defaults.FieldMap(fieldsToUnset...))
+			vals, fieldsToUnset := rs.DataStruct(overrides.FieldMap(fieldsToUnset...))
 			vals.Name = rs.T("%s (copy)", rs.Name())
 			fieldsToUnset = append(fieldsToUnset, pool.Partner().Name())
 			return rs.Super().Copy(vals, fieldsToUnset...)
@@ -413,7 +413,7 @@ Use this field anywhere a small image is required.`},
 	partnerModel.Methods().UpdateAddress().DeclareMethod(
 		`UpdateAddress updates this PartnerSet only with the address fields of
 		the given vals. Other values passed are discarded.`,
-		func(rs pool.PartnerSet, vals models.FieldMapper, fieldsToReset ...models.FieldNamer) bool {
+		func(rs pool.PartnerSet, vals *pool.PartnerData, fieldsToReset ...models.FieldNamer) bool {
 			valsMap := vals.FieldMap(fieldsToReset...)
 			res := make(models.FieldMap)
 			for _, addrField := range rs.AddressFields() {
@@ -425,7 +425,8 @@ Use this field anywhere a small image is required.`},
 			if len(res) == 0 {
 				return false
 			}
-			return rs.WithContext("goto_super", true).Write(res, rs.AddressFields()...)
+			wData, fields := rs.DataStruct(res)
+			return rs.WithContext("goto_super", true).Write(wData, fields...)
 		})
 
 	partnerModel.Methods().CommercialFields().DeclareMethod(
@@ -468,7 +469,7 @@ Use this field anywhere a small image is required.`},
 	partnerModel.Methods().FieldsSync().DeclareMethod(
 		`FieldsSync syncs commercial fields and address fields from company and to children after create/update,
         just as if those were all modeled as fields.related to the parent`,
-		func(rs pool.PartnerSet, vals models.FieldMapper, fieldsToUnset ...models.FieldNamer) {
+		func(rs pool.PartnerSet, vals *pool.PartnerData, fieldsToUnset ...models.FieldNamer) {
 			values, fieldsToUnset := rs.DataStruct(vals.FieldMap(fieldsToUnset...))
 			// 1. From UPSTREAM: sync from parent
 			// 1a. Commercial fields: sync if parent changed
@@ -553,7 +554,7 @@ Use this field anywhere a small image is required.`},
 		})
 
 	partnerModel.Methods().Write().Extend("",
-		func(rs pool.PartnerSet, vals models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {
+		func(rs pool.PartnerSet, vals *pool.PartnerData, fieldsToUnset ...models.FieldNamer) bool {
 			if rs.Env().Context().HasKey("goto_super") {
 				return rs.Super().Write(vals, fieldsToUnset...)
 			}
@@ -594,21 +595,20 @@ Use this field anywhere a small image is required.`},
 		})
 
 	partnerModel.Methods().Create().Extend("",
-		func(rs pool.PartnerSet, vals models.FieldMapper) pool.PartnerSet {
-			values, _ := rs.DataStruct(vals.FieldMap())
-			if values.Website != "" {
-				values.Website = rs.CleanWebsite(values.Website)
+		func(rs pool.PartnerSet, vals *pool.PartnerData) pool.PartnerSet {
+			if vals.Website != "" {
+				vals.Website = rs.CleanWebsite(vals.Website)
 			}
-			if !values.Parent.IsEmpty() {
-				values.CompanyName = ""
+			if !vals.Parent.IsEmpty() {
+				vals.CompanyName = ""
 			}
-			if values.Image == "" {
-				values.Image = rs.GetDefaultImage(values.Type, values.IsCompany, values.Parent)
+			if vals.Image == "" {
+				vals.Image = rs.GetDefaultImage(vals.Type, vals.IsCompany, vals.Parent)
 			}
 			// TODO Resize images
 			// tools.image_resize_images(vals)
-			partner := rs.Super().Create(values)
-			partner.FieldsSync(values)
+			partner := rs.Super().Create(vals)
+			partner.FieldsSync(vals)
 			partner.HandleFirsrtContactCreation()
 			return partner
 		})
@@ -625,7 +625,7 @@ Use this field anywhere a small image is required.`},
 				newCompany := rs.Create(values)
 				// Set newCompany as my parent
 				rs.SetParent(newCompany)
-				rs.Children().Write(pool.PartnerData{Parent: newCompany}, pool.Partner().Parent())
+				rs.Children().Write(&pool.PartnerData{Parent: newCompany}, pool.Partner().Parent())
 			}
 			return true
 		})
@@ -715,7 +715,7 @@ Use this field anywhere a small image is required.`},
 			name, emailParsed := rs.ParsePartnerName(email)
 			partners := pool.Partner().Search(rs.Env(), pool.Partner().Email().ILike(emailParsed)).Limit(1)
 			if partners.IsEmpty() {
-				rs.Create(pool.PartnerData{
+				rs.Create(&pool.PartnerData{
 					Name:  name,
 					Email: emailParsed,
 				})

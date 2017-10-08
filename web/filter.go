@@ -47,7 +47,7 @@ func init() {
 		})
 
 	filterModel.Methods().Copy().Extend("",
-		func(rs pool.FilterSet, overrides models.FieldMapper, fieldsToUnset ...models.FieldNamer) pool.FilterSet {
+		func(rs pool.FilterSet, overrides *pool.FilterData, fieldsToUnset ...models.FieldNamer) pool.FilterSet {
 			rs.EnsureOne()
 			vals, fieldsToUnset := rs.DataStruct(overrides.FieldMap(fieldsToUnset...))
 			vals.Name = fmt.Sprintf("%s (copy)", rs.Name())
@@ -57,7 +57,7 @@ func init() {
 	filterModel.Methods().CreateOrReplace().DeclareMethod(
 		`CreateOrReplace creates or updates the filter with the given parameters.
 		Filter is considered the same if it has the same name (case insensitive) and the same user (if it has one).`,
-		func(rs pool.FilterSet, vals models.FieldMapper) pool.FilterSet {
+		func(rs pool.FilterSet, vals *pool.FilterData) pool.FilterSet {
 			fMap := vals.FieldMap()
 			fMap["domain"] = strutils.MarshalToJSONString(fMap["domain"])
 			fMap["domain"] = strings.Replace(fMap["domain"].(string), "false", "False", -1)
@@ -65,7 +65,7 @@ func init() {
 			fMap["context"] = strutils.MarshalToJSONString(fMap["context"])
 			values, _ := rs.DataStruct(fMap)
 			currentFilters := rs.GetFilters(values.ResModel, values.Action)
-			var matchingFilters []pool.FilterData
+			var matchingFilters []*pool.FilterData
 			for _, f := range currentFilters {
 				filter, _ := rs.DataStruct(f)
 				if strings.ToLower(filter.Name) != strings.ToLower(values.Name) {
@@ -74,7 +74,7 @@ func init() {
 				if !filter.User.Equals(values.User) {
 					continue
 				}
-				matchingFilters = append(matchingFilters, *filter)
+				matchingFilters = append(matchingFilters, filter)
 			}
 
 			if values.IsDefault {
@@ -112,7 +112,7 @@ func init() {
 	       have to explicitly remove the current default before setting a new one)
 
 	       This method should only be called if 'vals' is trying to set 'IsDefault'`,
-		func(rs pool.FilterSet, vals models.FieldMapper, matchingFilters []pool.FilterData) {
+		func(rs pool.FilterSet, vals *pool.FilterData, matchingFilters []*pool.FilterData) {
 			values, _ := rs.DataStruct(vals.FieldMap())
 			actionCondition := rs.GetActionCondition(values.Action)
 			defaults := pool.Filter().Search(rs.Env(), actionCondition.

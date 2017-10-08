@@ -17,7 +17,7 @@ func init() {
 	})
 
 	group.Methods().Create().Extend("",
-		func(rs pool.GroupSet, data models.FieldMapper) pool.GroupSet {
+		func(rs pool.GroupSet, data *pool.GroupData) pool.GroupSet {
 			if rs.Env().Context().HasKey("GroupForceCreate") {
 				return rs.Super().Create(data)
 			}
@@ -26,7 +26,7 @@ func init() {
 		})
 
 	group.Methods().Write().Extend("",
-		func(rs pool.GroupSet, data models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {
+		func(rs pool.GroupSet, data *pool.GroupData, fieldsToUnset ...models.FieldNamer) bool {
 			log.Panic(rs.T("Trying to modify a security group"))
 			panic("Unreachable")
 		})

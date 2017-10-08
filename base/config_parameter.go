@@ -59,7 +59,7 @@ func init() {
 			param := rs.Model().Search(rs.Env(), pool.ConfigParameter().Key().Equals(key))
 			if param.IsEmpty() {
 				if value != "" {
-					res = rs.Create(pool.ConfigParameterData{
+					res = rs.Create(&pool.ConfigParameterData{
 						Key:   key,
 						Value: value,
 					})

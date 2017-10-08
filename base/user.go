@@ -213,7 +213,7 @@ a change of password, the user has to login again.`},
 		})
 
 	userModel.Methods().Write().Extend("",
-		func(rs pool.UserSet, data models.FieldMapper, fieldsToUnset ...models.FieldNamer) bool {
+		func(rs pool.UserSet, data *pool.UserData, fieldsToUnset ...models.FieldNamer) bool {
 			res := rs.Super().Write(data, fieldsToUnset...)
 			fMap := data.FieldMap(fieldsToUnset...)
 			_, ok1 := fMap["Groups"]
