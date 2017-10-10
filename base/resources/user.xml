@@ -25,7 +25,7 @@
         <view id="base_change_password_wizard_user_tree_view" model="UserChangePasswordWizardLine">
             <!-- the user list is editable, but one cannot add or delete rows -->
             <tree string="Users" editable="bottom" create="false" delete="false">
-                <field name="user_login"/>
+                <field name="user_login" readonly="True"/>
                 <field name="new_password" required="True" password="True"/>
             </tree>
         </view>

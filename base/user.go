@@ -4,8 +4,6 @@
 package base
 
 import (
-	"fmt"
-
 	"github.com/hexya-erp/hexya/hexya/actions"
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/security"
@@ -56,8 +54,8 @@ func init() {
 
 	cpWizardLine := pool.UserChangePasswordWizardLine().DeclareTransientModel()
 	cpWizardLine.AddFields(map[string]models.FieldDefinition{
-		"Wizard":      models.Many2OneField{RelationModel: pool.UserChangePasswordWizard()},
-		"User":        models.Many2OneField{RelationModel: pool.User(), OnDelete: models.Cascade},
+		"Wizard":      models.Many2OneField{RelationModel: pool.UserChangePasswordWizard(), Required: true},
+		"User":        models.Many2OneField{RelationModel: pool.User(), OnDelete: models.Cascade, Required: true},
 		"UserLogin":   models.CharField{},
 		"NewPassword": models.CharField{},
 	})
@@ -267,6 +265,146 @@ a change of password, the user has to login again.`},
 			return res
 		})
 
+	userModel.Methods().Unlink().Extend("",
+		func(rs pool.UserSet) int64 {
+			for _, id := range rs.Ids() {
+				if id == security.SuperUserID {
+					log.Panic(rs.T("You can not remove the admin user as it is used internally for resources created by Hexya"))
+				}
+			}
+			return rs.Super().Unlink()
+		})
+
+	userModel.Methods().Copy().Extend("",
+		func(rs pool.UserSet, overrides *pool.UserData, fieldsToReset ...models.FieldNamer) pool.UserSet {
+			rs.EnsureOne()
+			_, eName := overrides.Get(pool.User().Name(), fieldsToReset...)
+			_, ePartner := overrides.Get(pool.User().Partner(), fieldsToReset...)
+			if !eName && !ePartner {
+				overrides.Name = rs.T("%s (copy)", rs.Name())
+				fieldsToReset = append(fieldsToReset, pool.User().Name())
+			}
+			_, eLogin := overrides.Get(pool.User().Login(), fieldsToReset...)
+			if !eLogin {
+				overrides.Login = rs.T("%s (copy)", rs.Login())
+				fieldsToReset = append(fieldsToReset, pool.User().Login())
+			}
+			return rs.Super().Copy(overrides, fieldsToReset...)
+		})
+
+	userModel.Methods().ContextGet().DeclareMethod(
+		`UsersContextGet returns a context with the user's lang, tz and uid
+		This method must be called on a singleton.`,
+		func(rs pool.UserSet) *types.Context {
+			rs.EnsureOne()
+			res := types.NewContext()
+			res = res.WithKey("lang", rs.Lang())
+			res = res.WithKey("tz", rs.TZ())
+			res = res.WithKey("uid", rs.ID())
+			return res
+		})
+
+	userModel.Methods().ActionGet().DeclareMethod(
+		`ActionGet returns the action for the preferences popup`,
+		func(rs pool.UserSet) *actions.Action {
+			return actions.Registry.GetById("base_action_res_users_my")
+		})
+
+	userModel.Methods().UpdateLastLogin().DeclareMethod(
+		`UpdateLastLogin updates the last login date of the user`,
+		func(rs pool.UserSet) {
+			// only create new records to avoid any side-effect on concurrent transactions
+			// extra records will be deleted by the periodical garbage collection
+			pool.UserLog().Create(rs.Env(), &pool.UserLogData{})
+		})
+
+	userModel.Methods().CheckCredentials().DeclareMethod(
+		`CheckCredentials checks that the user defined by its login and secret is allowed to log in.
+		It returns the uid of the user on success and an error otherwise.`,
+		func(rs pool.UserSet, login, secret string) (uid int64, err error) {
+			user := rs.Search(pool.User().Login().Equals(login))
+			if user.Len() == 0 {
+				err = security.UserNotFoundError(login)
+				return
+			}
+			if user.Password() == "" || user.Password() != secret {
+				err = security.InvalidCredentialsError(login)
+				return
+			}
+			uid = user.ID()
+			return
+		})
+
+	userModel.Methods().Authenticate().DeclareMethod(
+		"Authenticate the user defined by login and secret",
+		func(rs pool.UserSet, login, secret string) (uid int64, err error) {
+			uid, err = rs.CheckCredentials(login, secret)
+			if err != nil {
+				rs.UpdateLastLogin()
+			}
+			return
+		})
+
+	userModel.Methods().ChangePassword().DeclareMethod(
+		`ChangePassword changes current user password. Old password must be provided explicitly
+        to prevent hijacking an existing user session, or for cases where the cleartext
+        password is not used to authenticate requests. It returns true or panics.`,
+		func(rs pool.UserSet, oldPassword, newPassword string) bool {
+			currentUser := pool.User().NewSet(rs.Env()).CurrentUser()
+			uid, err := rs.CheckCredentials(currentUser.Login(), oldPassword)
+			if err != nil || rs.Env().Uid() != uid {
+				log.Panic("Invalid password", "user", currentUser.Login(), "uid", uid)
+			}
+			currentUser.SetPassword(newPassword)
+			return true
+		})
+
+	userModel.Methods().PreferenceSave().DeclareMethod(
+		`PreferenceSave is called when validating the preferences popup`,
+		func(rs pool.UserSet) *actions.Action {
+			return &actions.Action{
+				Type: actions.ActionClient,
+				Tag:  "reload_context",
+			}
+		})
+
+	userModel.Methods().PreferenceChangePassword().DeclareMethod(
+		`PreferenceChangePassword is called when clicking 'Change Password' in the preferences popup`,
+		func(rs pool.UserSet) *actions.Action {
+			return &actions.Action{
+				Type:   actions.ActionClient,
+				Tag:    "change_password",
+				Target: "new",
+			}
+		})
+
+	userModel.Methods().HasGroup().DeclareMethod(
+		`HasGroup returns true if this user belongs to the group with the given ID.
+		If this method is called on an empty RecordSet, then it checks if the current
+		user belongs to the given group.`,
+		func(rs pool.UserSet, groupID string) bool {
+			userID := rs.ID()
+			if userID == 0 {
+				userID = rs.Env().Uid()
+			}
+			group := security.Registry.GetGroup(groupID)
+			return security.Registry.HasMembership(userID, group)
+		})
+
+	userModel.Methods().IsAdmin().DeclareMethod(
+		`IsAdmin returns true if this user is the administrator or member of the 'Access Rights' group`,
+		func(rs pool.UserSet) bool {
+			rs.EnsureOne()
+			return rs.IsSuperUser() || rs.HasGroup(GroupERPManager.ID)
+		})
+
+	userModel.Methods().IsSuperUser().DeclareMethod(
+		`IsSuperUser returns true if this user is the administrator`,
+		func(rs pool.UserSet) bool {
+			rs.EnsureOne()
+			return rs.ID() == security.SuperUserID
+		})
+
 	userModel.Methods().AddMandatoryGroups().DeclareMethod(
 		`AddMandatoryGroups adds the group Everyone to everybody and the admin group to the admin`,
 		func(rs pool.UserSet) {
@@ -327,57 +465,16 @@ a change of password, the user has to login again.`},
 			return true
 		})
 
-	userModel.Methods().NameGet().Extend("",
-		func(rs pool.UserSet) string {
-			res := rs.Super().NameGet()
-			return fmt.Sprintf("%s (%s)", res, rs.Login())
-		})
-
-	userModel.Methods().ContextGet().DeclareMethod(
-		`UsersContextGet returns a context with the user's lang, tz and uid
-		This method must be called on a singleton.`,
-		func(rs pool.UserSet) *types.Context {
-			rs.EnsureOne()
-			res := types.NewContext()
-			res = res.WithKey("lang", rs.Lang())
-			res = res.WithKey("tz", rs.TZ())
-			res = res.WithKey("uid", rs.ID())
-			return res
-		})
-
-	userModel.Methods().HasGroup().DeclareMethod(
-		`HasGroup returns true if this user belongs to the group with the given ID.
-		If this method is called on an empty RecordSet, then it checks if the current
-		user belongs to the given group.`,
-		func(rs pool.UserSet, groupID string) bool {
-			userID := rs.ID()
-			if userID == 0 {
-				userID = rs.Env().Uid()
-			}
-			group := security.Registry.GetGroup(groupID)
-			return security.Registry.HasMembership(userID, group)
-		})
-
-	userModel.Methods().Authenticate().DeclareMethod(
-		"Authenticate the user defined by login and secret",
-		func(rs pool.UserSet, login, secret string) (uid int64, err error) {
-			user := rs.Search(pool.User().Login().Equals(login))
-			if user.Len() == 0 {
-				err = security.UserNotFoundError(login)
-				return
-			}
-			if user.Password() == "" || user.Password() != secret {
-				err = security.InvalidCredentialsError(login)
-				return
-			}
-			uid = user.ID()
-			return
-		})
-
 	userModel.Methods().GetCompany().DeclareMethod(
 		`GetCompany returns the current user's company.`,
 		func(rs pool.UserSet) pool.CompanySet {
-			return pool.User().Browse(rs.Env(), []int64{rs.Env().Uid()}).Company()
+			return pool.User().NewSet(rs.Env()).CurrentUser().Company()
+		})
+
+	userModel.Methods().GetCompanyCurrency().DeclareMethod(
+		`GetCompanyCurrency returns the currency of the current user's company.`,
+		func(rs pool.UserSet) pool.CurrencySet {
+			return pool.User().NewSet(rs.Env()).CurrentUser().Company().Currency()
 		})
 
 	userModel.Methods().CurrentUser().DeclareMethod(

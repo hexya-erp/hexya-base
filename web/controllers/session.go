@@ -5,6 +5,7 @@ package controllers
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -63,4 +64,47 @@ func Logout(c *server.Context) {
 	sess.Save()
 	redirect := c.DefaultQuery("redirect", "/web/login")
 	c.Redirect(http.StatusSeeOther, redirect)
+}
+
+type ChangePasswordData struct {
+	Fields []struct {
+		Name  string `json:"name"`
+		Value string `json:"value"`
+	} `json:"fields"`
+}
+
+// ChangePassword is called by the client to change the current user password
+func ChangePassword(c *server.Context) {
+	uid := c.Session().Get("uid").(int64)
+	var params ChangePasswordData
+	c.BindRPCParams(&params)
+	var oldPassword, newPassword, confirmPassword string
+	for _, d := range params.Fields {
+		switch d.Name {
+		case "old_pwd":
+			oldPassword = d.Value
+		case "new_password":
+			newPassword = d.Value
+		case "confirm_pwd":
+			confirmPassword = d.Value
+		}
+	}
+	res := make(gin.H)
+	err := models.ExecuteInNewEnvironment(uid, func(env models.Environment) {
+		rs := pool.User().NewSet(env)
+		if strings.TrimSpace(oldPassword) == "" ||
+			strings.TrimSpace(newPassword) == "" ||
+			strings.TrimSpace(confirmPassword) == "" {
+			log.Panic(rs.T("You cannot leave any password empty."))
+		}
+		if newPassword != confirmPassword {
+			log.Panic(rs.T("The new password and its confirmation must be identical."))
+		}
+		if rs.ChangePassword(oldPassword, newPassword) {
+			res["new_password"] = newPassword
+			return
+		}
+		log.Panic(rs.T("Error, password not changed !"))
+	})
+	c.RPC(http.StatusOK, res, err)
 }

@@ -215,9 +215,9 @@ func init() {
 		`GetFormviewAction returns an action to open the document.
 		This method is meant to be overridden in addons that want
 		to give specific view ids for example.`,
-		func(rs pool.CommonMixinSet) *actions.BaseAction {
+		func(rs pool.CommonMixinSet) *actions.Action {
 			viewID := rs.GetFormviewId()
-			return &actions.BaseAction{
+			return &actions.Action{
 				Type:        actions.ActionActWindow,
 				Model:       rs.ModelName(),
 				ActViewType: actions.ActionViewTypeForm,

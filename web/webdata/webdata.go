@@ -49,9 +49,9 @@ type SearchParams struct {
 
 // A Toolbar holds the actions in the toolbar of the action manager
 type Toolbar struct {
-	Print  []*actions.BaseAction `json:"print"`
-	Action []*actions.BaseAction `json:"action"`
-	Relate []*actions.BaseAction `json:"relate"`
+	Print  []*actions.Action `json:"print"`
+	Action []*actions.Action `json:"action"`
+	Relate []*actions.Action `json:"relate"`
 }
 
 // ReadGroupParams is the args struct for the ReadGroup method

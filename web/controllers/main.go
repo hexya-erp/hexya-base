@@ -344,6 +344,7 @@ func initRoutes() {
 			sess.AddController(http.MethodPost, "/get_session_info", GetSessionInfo)
 			sess.AddController(http.MethodPost, "/modules", Modules)
 			sess.AddController(http.MethodGet, "/logout", Logout)
+			sess.AddController(http.MethodPost, "/change_password", ChangePassword)
 		}
 
 		proxy := web.AddGroup("/proxy")

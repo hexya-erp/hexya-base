@@ -69,7 +69,7 @@ func ActionRun(c *server.Context) {
 		KWArgs: kwargs,
 	})
 
-	if _, ok := resAction.(*actions.BaseAction); ok {
+	if _, ok := resAction.(*actions.Action); ok {
 		c.RPC(http.StatusOK, resAction)
 	} else {
 		c.RPC(http.StatusOK, false)

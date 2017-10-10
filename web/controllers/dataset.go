@@ -26,7 +26,9 @@ func CallButton(c *server.Context) {
 	var params CallParams
 	c.BindRPCParams(&params)
 	res, err := Execute(uid, params)
-	if _, isAction := res.(actions.BaseAction); !isAction {
+	_, isAction := res.(actions.Action)
+	_, isActionPtr := res.(*actions.Action)
+	if !isAction && !isActionPtr {
 		res = false
 	}
 	c.RPC(http.StatusOK, res, err)

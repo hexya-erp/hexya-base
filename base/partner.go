@@ -42,28 +42,36 @@ func init() {
 
 	partnerCategory := pool.PartnerCategory().DeclareModel()
 	partnerCategory.AddFields(map[string]models.FieldDefinition{
-		"Name":  models.CharField{String: "Category Name", Required: true, Translate: true},
+		"Name":  models.CharField{String: "Tag Name", Required: true, Translate: true},
 		"Color": models.IntegerField{String: "Color Index"},
 		"Parent": models.Many2OneField{RelationModel: pool.PartnerCategory(),
 			String: "Parent Tag", Index: true, OnDelete: models.Cascade},
-		"CompleteName": models.CharField{String: "Full Name",
-			Compute: pool.PartnerCategory().Methods().ComputeCompleteName(), Depends: []string{"Parent", "Name"}},
 		"Children": models.One2ManyField{RelationModel: pool.PartnerCategory(),
 			ReverseFK: "Parent", String: "Children Tags"},
+		"Active": models.BooleanField{Default: models.DefaultValue(true),
+			Help: "The active field allows you to hide the category without removing it."},
 		"Partners": models.Many2ManyField{RelationModel: pool.Partner()},
 	})
 
-	partnerCategory.Methods().ComputeCompleteName().DeclareMethod(
-		`ComputeCompleteName returns the complete name of the tag with all the parents`,
-		func(s pool.PartnerCategorySet) (*pool.PartnerCategoryData, []models.FieldNamer) {
-			completeName := s.Name()
-			for rs := s; !rs.Parent().IsEmpty(); rs = rs.Parent() {
-				completeName = fmt.Sprintf("%s/%s", rs.Parent().Name(), completeName)
+	partnerCategory.Methods().CheckParent().DeclareMethod(
+		`CheckParent checks if we have a recursion in the parent tree.`,
+		func(rs pool.PartnerCategorySet) {
+			if !rs.CheckRecursion() {
+				log.Panic(rs.T("Error ! You can not create recursive tags."))
 			}
-			res := &pool.PartnerCategoryData{
-				CompleteName: completeName,
+		})
+
+	partnerCategory.Methods().NameGet().Extend("",
+		func(rs pool.PartnerCategorySet) string {
+			if rs.Env().Context().GetString("partner_category_display") == "short" {
+				return rs.Super().NameGet()
 			}
-			return res, []models.FieldNamer{pool.PartnerCategory().CompleteName()}
+			var names []string
+
+			for current := rs; !current.IsEmpty(); current = current.Parent() {
+				names = append([]string{current.Name()}, names...)
+			}
+			return strings.Join(names, " / ")
 		})
 
 	partnerModel := pool.Partner().DeclareModel()
@@ -631,9 +639,9 @@ Use this field anywhere a small image is required.`},
 
 	partnerModel.Methods().OpenCommercialEntity().DeclareMethod(
 		`OpenCommercialEntity is a utility method used to add an "Open Company" button in partner views`,
-		func(rs pool.PartnerSet) actions.BaseAction {
+		func(rs pool.PartnerSet) *actions.Action {
 			rs.EnsureOne()
-			return actions.BaseAction{
+			return &actions.Action{
 				Type:     actions.ActionActWindow,
 				Model:    "Partner",
 				ViewMode: "form",
@@ -645,10 +653,10 @@ Use this field anywhere a small image is required.`},
 
 	partnerModel.Methods().OpenParent().DeclareMethod(
 		`OpenParent is a utility method used to add an "Open Parent" button in partner views`,
-		func(rs pool.PartnerSet) actions.BaseAction {
+		func(rs pool.PartnerSet) *actions.Action {
 			rs.EnsureOne()
 			addressFormID := "base_view_partner_address_form"
-			return actions.BaseAction{
+			return &actions.Action{
 				Type:     actions.ActionActWindow,
 				Model:    "Partner",
 				ViewMode: "form",

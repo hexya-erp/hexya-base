@@ -50,7 +50,7 @@ var UserMenu = Widget.extend({
         var self = this;
         this.trigger_up('clear_uncommitted_changes', {
             callback: function() {
-                self.rpc("/web/action/load", { action_id: "base.action_res_users_my" }).done(function(result) {
+                self.rpc("/web/action/load", { action_id: "base_action_res_users_my" }).done(function(result) {
                     result.res_id = session.uid;
                     self.do_action(result);
                 });
