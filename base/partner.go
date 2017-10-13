@@ -374,9 +374,8 @@ Use this field anywhere a small image is required.`},
 
 	partnerModel.Methods().InverseCompanyType().DeclareMethod(
 		`InverseCompanyType sets the IsCompany field according to the given CompanyType`,
-		func(rs pool.PartnerSet, vals models.FieldMapper) {
-			values, _ := rs.DataStruct(vals.FieldMap())
-			rs.SetIsCompany(values.CompanyType == "company")
+		func(rs pool.PartnerSet, companyType string) {
+			rs.SetIsCompany(companyType == "company")
 		})
 
 	partnerModel.Methods().OnchangeCompanyType().DeclareMethod(
