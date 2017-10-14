@@ -331,7 +331,7 @@ func init() {
 
 	attachmentModel.Methods().Check().DeclareMethod(
 		`Check restricts the access to an ir.attachment, according to referred model
-        In the 'document' module, it is overriden to relax this hard rule, since
+        In the 'document' module, it is overridden to relax this hard rule, since
         more complex ones apply there.
 
 		This method panics if the user does not have the access rights.`,
