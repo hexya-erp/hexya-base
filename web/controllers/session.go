@@ -66,6 +66,7 @@ func Logout(c *server.Context) {
 	c.Redirect(http.StatusSeeOther, redirect)
 }
 
+// ChangePasswordData is the params format passed to ChangePassword controller
 type ChangePasswordData struct {
 	Fields []struct {
 		Name  string `json:"name"`

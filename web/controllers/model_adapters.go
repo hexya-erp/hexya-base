@@ -12,6 +12,7 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models"
 )
 
+// MethodAdapters is a map giving the adapter to call for each method
 var MethodAdapters = map[string]methodAdapter{
 	"Create":     createAdapter,
 	"Write":      writeAdapter,
@@ -21,7 +22,7 @@ var MethodAdapters = map[string]methodAdapter{
 	"FieldsGet":  fieldsGetAdapter,
 }
 
-// An methodAdapter can modify calls made by the odoo client
+// A methodAdapter can modify calls made by the odoo client
 // to match the expected arguments of the Hexya ORM. Similarly
 // it can modify the returned values so that they are understood by the client
 type methodAdapter func(*models.RecordCollection, string, []interface{}) interface{}

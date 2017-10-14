@@ -6,6 +6,7 @@
 package baseClient
 
 import (
+	// loading dependencies as blank imports
 	_ "github.com/hexya-erp/hexya-base/web"
 	"github.com/hexya-erp/hexya/hexya/server"
 )

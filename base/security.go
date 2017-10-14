@@ -9,8 +9,24 @@ import (
 )
 
 var (
-	GroupERPManager, GroupSystem, GroupUser, GroupMultiCompany, GroupMultiCurrency,
-	GroupTechnicalFeatures, GroupPartnerManager, GroupPortal, GroupPublic *security.Group
+	// GroupSystem is given to users who are allowed to modify general settings
+	GroupSystem *security.Group
+	// GroupUser is the group for Employees
+	GroupUser *security.Group
+	// GroupMultiCurrency displays data to work in a multi-currency context
+	GroupMultiCurrency *security.Group
+	// GroupPartnerManager is given to users who are allowed to manage contacts
+	GroupPartnerManager *security.Group
+	// GroupMultiCompany displays data to work in a multi-company context
+	GroupMultiCompany *security.Group
+	// GroupPortal is granted to portal users
+	GroupPortal *security.Group
+	// GroupPublic is granted to external users
+	GroupPublic *security.Group
+	// GroupERPManager can modify access rights for other users
+	GroupERPManager *security.Group
+	// GroupTechnicalFeatures can see and modify technical parameters of the ERP
+	GroupTechnicalFeatures *security.Group
 )
 
 func init() {

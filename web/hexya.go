@@ -15,13 +15,17 @@
 package web
 
 import (
+	// Loading dependencies as blank imports
 	_ "github.com/hexya-erp/hexya-base/base"
+	// Loading controllers package
 	_ "github.com/hexya-erp/hexya-base/web/controllers"
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools/logging"
 )
 
 const (
+	// MODULE_NAME is the name of this module.
+	// It is used by the framework to recognize a module from a simple go package.
 	MODULE_NAME = "web"
 )
 
