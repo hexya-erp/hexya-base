@@ -27,14 +27,19 @@ var MethodAdapters = map[string]methodAdapter{
 // it can modify the returned values so that they are understood by the client
 type methodAdapter func(*models.RecordCollection, string, []interface{}) interface{}
 
+// checkMethods panics if the given method is different from expected or if args does not have a length of numArgs.
+func checkMethod(method, expected string, args []interface{}, numArgs int) {
+	if odooproxy.ConvertMethodName(method) != expected {
+		log.Panic(fmt.Sprintf("%s adapter should only be called on %s methods", expected, expected), "method", method, "args", args)
+	}
+	if len(args) != numArgs {
+		log.Panic("Wrong number of arguments for method adapter", "method", method, "expected", numArgs, "args", args)
+	}
+}
+
 // createAdapter adapts json object received from client to Create's FieldMap argument.
 func createAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
-	if odooproxy.ConvertMethodName(method) != "Create" {
-		log.Panic("createAdapter should only be called on Create methods", "method", method, "args", args)
-	}
-	if len(args) != 1 {
-		log.Panic("Expected a single arg for Create method from client", "args", args)
-	}
+	checkMethod(method, "Create", args, 1)
 	data, ok := args[0].(models.FieldMap)
 	if !ok {
 		log.Panic("Expected arg for Create method to be FieldMap", "argType", fmt.Sprintf("%T", args[0]))
@@ -47,12 +52,7 @@ func createAdapter(rc *models.RecordCollection, method string, args []interface{
 
 // writeAdapter adapts json object received from client to Write's FieldMap and []FieldNamer argument.
 func writeAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
-	if odooproxy.ConvertMethodName(method) != "Write" {
-		log.Panic("writeAdapter should only be called on Write methods", "method", method, "args", args)
-	}
-	if len(args) != 1 {
-		log.Panic("Expected a single arg for Write method from client", "args", args)
-	}
+	checkMethod(method, "Write", args, 1)
 	data, ok := args[0].(models.FieldMap)
 	if !ok {
 		log.Panic("Expected arg for Write method to be models.FieldMap", "argType", fmt.Sprintf("%T", args[0]))
@@ -66,12 +66,7 @@ func writeAdapter(rc *models.RecordCollection, method string, args []interface{}
 
 // onchangeAdapter adapts json object received from client and add names to relation to the result.
 func onchangeAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
-	if odooproxy.ConvertMethodName(method) != "Onchange" {
-		log.Panic("onchangeAdapter should only be called on Onchange methods", "method", method, "args", args)
-	}
-	if len(args) != 1 {
-		log.Panic("Expected a single arg for Onchange method from client", "args", args)
-	}
+	checkMethod(method, "Onchange", args, 1)
 	params, ok := args[0].(models.OnchangeParams)
 	if !ok {
 		log.Panic("Expected arg for Onchange method to be OnchangeParams", "argType", fmt.Sprintf("%T", args[0]))
@@ -86,12 +81,7 @@ func onchangeAdapter(rc *models.RecordCollection, method string, args []interfac
 
 // readAdapter add names to relation of the result.
 func readAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
-	if odooproxy.ConvertMethodName(method) != "Read" {
-		log.Panic("readAdapter should only be called on Read methods", "method", method, "args", args)
-	}
-	if len(args) != 1 {
-		log.Panic("Expected a single arg for Read method from client", "args", args)
-	}
+	checkMethod(method, "Read", args, 1)
 	params, ok := args[0].([]string)
 	if !ok {
 		log.Panic("Expected arg for Read method to be []string", "argType", fmt.Sprintf("%T", args[0]))
@@ -109,12 +99,7 @@ func readAdapter(rc *models.RecordCollection, method string, args []interface{})
 
 // searchReadAdapter add names to relation of the result.
 func searchReadAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
-	if odooproxy.ConvertMethodName(method) != "SearchRead" {
-		log.Panic("readAdapter should only be called on SearchRead methods", "method", method, "args", args)
-	}
-	if len(args) != 1 {
-		log.Panic("Expected a single arg for SearchRead method from client", "args", args)
-	}
+	checkMethod(method, "SearchRead", args, 1)
 	params, ok := args[0].(webdata.SearchParams)
 	if !ok {
 		log.Panic("Expected arg for SearchRead method to be webdata.SearchParams", "argType", fmt.Sprintf("%T", args[0]))
@@ -132,12 +117,7 @@ func searchReadAdapter(rc *models.RecordCollection, method string, args []interf
 
 // fieldsGetAdapter stringifies the domain of each field in the returned value.
 func fieldsGetAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
-	if odooproxy.ConvertMethodName(method) != "FieldsGet" {
-		log.Panic("fieldsGetAdapter should only be called on FieldsGet methods", "method", method, "args", args)
-	}
-	if len(args) != 1 {
-		log.Panic("Expected a single arg for FieldsGet method from client", "args", args)
-	}
+	checkMethod(method, "FieldsGet", args, 1)
 	params, ok := args[0].(models.FieldsGetArgs)
 	if !ok {
 		log.Panic("Expected arg for FieldsGet method to be FieldsGetArgs", "args", args)

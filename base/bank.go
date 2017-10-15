@@ -9,6 +9,7 @@ import (
 	"regexp"
 
 	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/operator"
 	"github.com/hexya-erp/hexya/pool"
 )
 
@@ -39,6 +40,18 @@ func init() {
 				res = fmt.Sprintf("%s - %s", res, rs.BIC())
 			}
 			return res
+		})
+
+	pool.Bank().Methods().SearchByName().Extend("",
+		func(rs pool.BankSet, name string, op operator.Operator, additionalCond pool.BankCondition, limit int) pool.BankSet {
+			if name == "" {
+				return rs.Super().SearchByName(name, op, additionalCond, limit)
+			}
+			cond := pool.Bank().BIC().ILike(name+"%").Or().Name().AddOperator(op, name)
+			if !additionalCond.Underlying().IsEmpty() {
+				cond = cond.AndCond(additionalCond)
+			}
+			return pool.Bank().Search(rs.Env(), cond).Limit(limit)
 		})
 
 	pool.BankAccount().DeclareModel()
@@ -76,4 +89,5 @@ func init() {
 				SanitizedAccountNumber: san,
 			}, []models.FieldNamer{pool.BankAccount().SanitizedAccountNumber()}
 		})
+
 }

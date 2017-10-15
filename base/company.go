@@ -5,6 +5,7 @@ package base
 
 import (
 	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/operator"
 	"github.com/hexya-erp/hexya/pool"
 )
 
@@ -51,6 +52,20 @@ func init() {
 		"VAT":             models.CharField{Related: "Partner.VAT"},
 		"CompanyRegistry": models.CharField{Size: 64},
 	})
+
+	companyModel.Methods().Copy().Extend("",
+		func(rs pool.CompanySet, overrides *pool.CompanyData, fieldsToReset ...models.FieldNamer) pool.CompanySet {
+			rs.EnsureOne()
+			_, eName := overrides.Get(pool.Company().Name(), fieldsToReset...)
+			_, ePartner := overrides.Get(pool.Company().Partner(), fieldsToReset...)
+			if !eName && !ePartner {
+				copyPartner := rs.Partner().Copy(new(pool.PartnerData))
+				overrides.Partner = copyPartner
+				overrides.Name = copyPartner.Name()
+				fieldsToReset = append(fieldsToReset, pool.Company().Partner(), pool.Company().Name())
+			}
+			return rs.Super().Copy(overrides, fieldsToReset...)
+		})
 
 	companyModel.Methods().ComputeLogoWeb().DeclareMethod(
 		`ComputeLogoWeb returns a resized version of the company logo`,
@@ -120,5 +135,21 @@ func init() {
 		`CheckParent checks that there is no recursion in the company tree`,
 		func(rs pool.CompanySet) {
 			rs.CheckRecursion()
+		})
+
+	companyModel.Methods().SearchByName().Extend("",
+		func(rs pool.CompanySet, name string, op operator.Operator, additionalCond pool.CompanyCondition, limit int) pool.CompanySet {
+			// We browse as superuser. Otherwise, the user would be able to
+			// select only the currently visible companies (according to rules,
+			// which are probably to allow to see the child companies) even if
+			// she belongs to some other companies.
+			rSet := rs
+			companies := pool.Company().NewSet(rs.Env())
+			if rs.Env().Context().HasKey("user_preference") {
+				currentUser := pool.User().NewSet(rs.Env()).CurrentUser().Sudo()
+				companies = currentUser.Companies().Union(currentUser.Company())
+				rSet = rSet.Sudo()
+			}
+			return rSet.Super().SearchByName(name, op, additionalCond, limit).Union(companies)
 		})
 }

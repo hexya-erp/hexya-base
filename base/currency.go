@@ -6,13 +6,17 @@ package base
 import (
 	"fmt"
 	"math"
+	"regexp"
 
 	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/operator"
 	"github.com/hexya-erp/hexya/hexya/models/types"
 	"github.com/hexya-erp/hexya/hexya/models/types/dates"
 	"github.com/hexya-erp/hexya/hexya/tools/nbutils"
 	"github.com/hexya-erp/hexya/pool"
 )
+
+const CurrencyDisplayPattern string = `(\w+)\s*(?:\((.*)\))?`
 
 func init() {
 	currencyRateModel := pool.CurrencyRate().DeclareModel()
@@ -181,4 +185,15 @@ func init() {
 			return function
 		})
 
+	currencyModel.Methods().SearchByName().Extend("",
+		func(rs pool.CurrencySet, name string, op operator.Operator, additionalCond pool.CurrencyCondition, limit int) pool.CurrencySet {
+			res := rs.Super().SearchByName(name, op, additionalCond, limit)
+			if res.IsEmpty() {
+				re, _ := regexp.Compile(CurrencyDisplayPattern)
+				if m := re.FindString(name); m != "" {
+					res = rs.Super().SearchByName(m, op, additionalCond, limit)
+				}
+			}
+			return res
+		})
 }

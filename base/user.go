@@ -6,6 +6,7 @@ package base
 import (
 	"github.com/hexya-erp/hexya/hexya/actions"
 	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/operator"
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types"
 	"github.com/hexya-erp/hexya/hexya/tools/emailutils"
@@ -273,6 +274,21 @@ a change of password, the user has to login again.`},
 				}
 			}
 			return rs.Super().Unlink()
+		})
+
+	userModel.Methods().SearchByName().Extend("",
+		func(rs pool.UserSet, name string, op operator.Operator, additionalCond pool.UserCondition, limit int) pool.UserSet {
+			if name == "" {
+				return rs.Super().SearchByName(name, op, additionalCond, limit)
+			}
+			var users pool.UserSet
+			if op == operator.Equals || op == operator.IContains {
+				users = pool.User().Search(rs.Env(), pool.User().Login().Equals(name).AndCond(additionalCond)).Limit(limit)
+			}
+			if users.IsEmpty() {
+				users = pool.User().Search(rs.Env(), pool.User().Name().AddOperator(op, name).AndCond(additionalCond)).Limit(limit)
+			}
+			return users
 		})
 
 	userModel.Methods().Copy().Extend("",

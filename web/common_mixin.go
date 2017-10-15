@@ -14,7 +14,6 @@ import (
 	"github.com/hexya-erp/hexya/hexya/actions"
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/fieldtype"
-	"github.com/hexya-erp/hexya/hexya/models/operator"
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/tools/nbutils"
 	"github.com/hexya-erp/hexya/hexya/views"
@@ -67,13 +66,11 @@ func init() {
 		value for a relational field. Sometimes be seen as the inverse
 		function of NameGet but it is not guaranteed to be.`,
 		func(rc *models.RecordCollection, params webdata.NameSearchParams) []webdata.RecordIDWithName {
-			if params.Operator == "" {
-				params.Operator = operator.IContains
-			}
-			searchRs := rc.Model().Search(rc.Env(), rc.Model().Field("Name").AddOperator(params.Operator, params.Name)).Limit(models.ConvertLimitToInt(params.Limit))
-			if extraCondition := domains.ParseDomain(params.Args); extraCondition != nil {
-				searchRs = searchRs.Search(extraCondition)
-			}
+			searchRs := rc.Call("SearchByName",
+				params.Name,
+				params.Operator,
+				domains.ParseDomain(params.Args),
+				models.ConvertLimitToInt(params.Limit)).(models.RecordSet).Collection()
 			searchRs.Load("ID", "DisplayName")
 
 			res := make([]webdata.RecordIDWithName, searchRs.Len())

@@ -22,6 +22,7 @@ import (
 	"github.com/hexya-erp/hexya/hexya/actions"
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/fieldtype"
+	"github.com/hexya-erp/hexya/hexya/models/operator"
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types"
 	"github.com/hexya-erp/hexya/hexya/tools/b64image"
@@ -72,6 +73,15 @@ func init() {
 				names = append([]string{current.Name()}, names...)
 			}
 			return strings.Join(names, " / ")
+		})
+
+	partnerCategory.Methods().SearchByName().Extend("",
+		func(rs pool.PartnerCategorySet, name string, op operator.Operator, additionalCond pool.PartnerCategoryCondition, limit int) pool.PartnerCategorySet {
+			if name != "" {
+				tokens := strings.Split(name, " / ")
+				name = tokens[len(tokens)-1]
+			}
+			return rs.Super().SearchByName(name, op, additionalCond, limit)
 		})
 
 	partnerModel := pool.Partner().DeclareModel()
@@ -696,6 +706,21 @@ Use this field anywhere a small image is required.`},
 				name = strings.Replace(name, "\n", "<br/>", -1)
 			}
 			return name
+		})
+
+	partnerModel.Methods().SearchByName().Extend("",
+		func(rs pool.PartnerSet, name string, op operator.Operator, additionalCond pool.PartnerCondition, limit int) pool.PartnerSet {
+			if name == "" {
+				return rs.Super().SearchByName(name, op, additionalCond, limit)
+			}
+			var cond pool.PartnerCondition
+			switch op {
+			case operator.Equals, operator.Contains, operator.IContains, operator.Like, operator.ILike:
+				cond = pool.Partner().Name().AddOperator(op, name).Or().
+					Email().AddOperator(op, name).Or().
+					Ref().AddOperator(op, name)
+			}
+			return rs.Search(cond).Limit(limit)
 		})
 
 	partnerModel.Methods().ParsePartnerName().DeclareMethod(
