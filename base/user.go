@@ -55,7 +55,7 @@ func init() {
 
 	cpWizardLine := pool.UserChangePasswordWizardLine().DeclareTransientModel()
 	cpWizardLine.AddFields(map[string]models.FieldDefinition{
-		"Wizard":      models.Many2OneField{RelationModel: pool.UserChangePasswordWizard(), Required: true},
+		"Wizard":      models.Many2OneField{RelationModel: pool.UserChangePasswordWizard()},
 		"User":        models.Many2OneField{RelationModel: pool.User(), OnDelete: models.Cascade, Required: true},
 		"UserLogin":   models.CharField{},
 		"NewPassword": models.CharField{},
