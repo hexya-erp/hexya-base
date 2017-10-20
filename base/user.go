@@ -33,7 +33,7 @@ func init() {
 				activeIds := env.Context().GetIntegerSlice("active_ids")
 				userLines := pool.UserChangePasswordWizardLine().NewSet(env)
 				for _, user := range pool.User().Search(env, pool.User().ID().In(activeIds)).Records() {
-					ul := pool.UserChangePasswordWizardLine().Create(env, pool.UserChangePasswordWizardLineData{
+					ul := pool.UserChangePasswordWizardLine().Create(env, &pool.UserChangePasswordWizardLineData{
 						User:        user,
 						UserLogin:   user.Login(),
 						NewPassword: user.Password(),

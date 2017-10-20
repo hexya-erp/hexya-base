@@ -58,10 +58,11 @@ func init() {
 					log.Debug(mainCompany.T("Creating main company"))
 					euro := pool.Currency().Search(env, pool.Currency().HexyaExternalID().Equals("base_EUR"))
 					mainCompany = pool.Company().Create(env, &pool.CompanyData{
-						ID:       1,
-						Name:     mainCompanyPartner.Name(),
-						Partner:  mainCompanyPartner,
-						Currency: euro,
+						ID:              1,
+						Name:            mainCompanyPartner.Name(),
+						Partner:         mainCompanyPartner,
+						Currency:        euro,
+						HexyaExternalID: "base_main_company",
 					})
 					env.Cr().Execute("SELECT nextval('company_id_seq')")
 				}

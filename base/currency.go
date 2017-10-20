@@ -98,7 +98,7 @@ func init() {
 	currencyModel.Methods().Round().DeclareMethod(
 		`Round returns the given amount rounded according to this currency rounding rules`,
 		func(rs pool.CurrencySet, amount float64) float64 {
-			return nbutils.Round(amount, nbutils.Digits{Scale: rs.DecimalPlaces()})
+			return nbutils.Round(amount, float64(10^-rs.DecimalPlaces()))
 		})
 
 	currencyModel.Methods().CompareAmounts().DeclareMethod(
@@ -118,7 +118,7 @@ func init() {
          they respectively round to 0.01 and 0.0, even though 0.006-0.002 = 0.004
          which would be considered zero at 2 digits precision.`,
 		func(rs pool.CurrencySet, amount1, amount2 float64) (greater, equal bool) {
-			return nbutils.Compare(amount1, amount2, nbutils.Digits{Scale: rs.DecimalPlaces()})
+			return nbutils.Compare(amount1, amount2, float64(10^(-rs.DecimalPlaces())))
 		})
 
 	currencyModel.Methods().IsZero().DeclareMethod(
@@ -131,7 +131,7 @@ func init() {
 		before, giving different results for e.g. 0.006 and 0.002 at 2
 		digits precision.`,
 		func(rs pool.CurrencySet, amount float64) bool {
-			return nbutils.IsZero(amount, nbutils.Digits{Scale: rs.DecimalPlaces()})
+			return nbutils.IsZero(amount, float64(10^(-rs.DecimalPlaces())))
 		})
 
 	currencyModel.Methods().GetConversionRateTo().DeclareMethod(
