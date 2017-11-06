@@ -446,7 +446,7 @@ func init() {
 			}
 			for modifier := range modifiers {
 				cond := domains.ParseDomain(attrs[modifier])
-				if cond == nil {
+				if cond.IsEmpty() {
 					continue
 				}
 				modifiers[modifier] = attrs[modifier]
@@ -490,7 +490,7 @@ func init() {
 		and order to the current RecordSet query.`,
 		func(rc *models.RecordCollection, domain domains.Domain, limit int, offset int, order string) *models.RecordCollection {
 			rSet := rc
-			if searchCond := domains.ParseDomain(domain); searchCond != nil {
+			if searchCond := domains.ParseDomain(domain); !searchCond.IsEmpty() {
 				rSet = rSet.Call("Search", searchCond).(models.RecordSet).Collection()
 			}
 			// Limit

@@ -110,11 +110,11 @@ const (
 var log *logging.Logger
 
 // ParseDomain gets Domain and parses it into a RecordSet query Condition.
-// Returns nil if the domain is []
+// Returns an empty condition if the domain is []
 func ParseDomain(dom Domain) *models.Condition {
 	res := parseDomain(&dom)
 	if res == nil {
-		return nil
+		return &models.Condition{}
 	}
 	for len(dom) > 0 {
 		res = models.Condition{}.AndCond(res).AndCond(parseDomain(&dom))
