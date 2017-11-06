@@ -176,7 +176,7 @@ func init() {
 				if currency.Position() == "before" {
 					returnStr = fmt.Sprintf("return %s + '\\xA0' + %s;", symbol, formatNumberStr)
 				}
-				function += fmt.Sprintf("if (arguments[1] === %s) { %s }", currency.ID(), returnStr)
+				function += fmt.Sprintf("if (arguments[1] === %v) { %s }", currency.ID(), returnStr)
 				if currency.Equals(companyCurrency) {
 					companyCurrentFormat := returnStr
 					function = fmt.Sprintf("if (arguments[1] === false || arguments[1] === undefined) { %s }%s", companyCurrentFormat, function)
