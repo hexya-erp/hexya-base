@@ -87,7 +87,7 @@ func (d Domain) String() string {
 			}
 			res = append(res, fmt.Sprintf(`["%s", "%s", %s]`, t[0], t[1], argStr))
 		default:
-			log.Panic("Unexpected Domain term", "domain", d)
+			log.Panic("Unexpected Domain term", "term", term)
 		}
 	}
 	return fmt.Sprintf("[%s]", strings.Join(res, ","))
