@@ -171,7 +171,7 @@
                                        options='{"no_open": True, "no_create": True}'
                                        attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
                             </div>
-                            <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
+                            <field name="website" widget="url" placeholder="e.g. www.hexya.io"/>
                             <field name="Categories" widget="many2many_tags" placeholder="Tags..."
                                    options="{'no_create_edit': True}"/>
                         </group>

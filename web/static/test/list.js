@@ -1,4 +1,4 @@
-odoo.define_section('list.buttons', ['web.ListView', 'web.data', 'web.data_manager'], function (test, mock) {
+hexya.define_section('list.buttons', ['web.ListView', 'web.data', 'web.data_manager'], function (test, mock) {
 
     test('record-deletion', function (assert, ListView, data, data_manager) {
         assert.expect(2);
@@ -31,7 +31,7 @@ odoo.define_section('list.buttons', ['web.ListView', 'web.data', 'web.data_manag
             arch: '<tree><field name="a"/><button type="object" name="foo"/></tree>',
         });
         var list = new ListView({
-            do_action: odoo.testing.noop
+            do_action: hexya.testing.noop
         }, ds, fields_view, {editable: 'top'});
 
         var $fix = $( "#qunit-fixture");

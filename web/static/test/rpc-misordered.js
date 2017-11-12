@@ -1,4 +1,4 @@
-odoo.define_section('web.misordered-resolution', ['web.utils'], function (test) {
+hexya.define_section('web.misordered-resolution', ['web.utils'], function (test) {
 
     test('resolve all correctly ordered, sync', function (assert, utils) {
         var dm = new utils.DropMisordered(),

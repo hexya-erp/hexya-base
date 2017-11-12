@@ -8204,7 +8204,7 @@
                 s *= this.session.$getStringScreenWidth(o)[0] + 2, i += 2
             }
             n -= this.scrollLeft, n > this.$size.scrollerWidth - s && (n = this.$size.scrollerWidth - s), n += this.gutterWidth, r.height = i + "px", r.width = s + "px", r.left = Math.min(n, this.$size.scrollerWidth - s) + "px", r.top = Math.min(t, this.$size.height - i) + "px"
-        // ODOO monkeypatch: When we use firefox top or bottom arrow the ace container does not scroll automatically if the cursor is not visible.
+        // hexya monkeypatch: When we use firefox top or bottom arrow the ace container does not scroll automatically if the cursor is not visible.
             this.$scrollViewToTextArea();
         }, this.$scrollViewToTextArea = function() {
             // scroll the page/container to the cursor
@@ -8238,7 +8238,7 @@
                     }
                 }
             });
-        // ODOO end monkeypatch
+        // hexya end monkeypatch
         }, this.getFirstVisibleRow = function() {
             return this.layerConfig.firstRow
         }, this.getFirstFullyVisibleRow = function() {

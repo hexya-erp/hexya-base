@@ -36,7 +36,7 @@
                                                options='{"no_open": True}'
                                                on_change="on_change_country(country_id)"/>
                                     </div>
-                                    <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
+                                    <field name="website" widget="url" placeholder="e.g. www.hexya.io"/>
                                 </group>
                                 <group>
                                     <field name="phone"/>

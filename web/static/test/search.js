@@ -1,4 +1,4 @@
-odoo.define_section('search.query', ['web.SearchView'], function (test) {
+hexya.define_section('search.query', ['web.SearchView'], function (test) {
 
     test('Adding a facet to the query creates a facet and a value', function (assert, SearchView) {
         var query = new SearchView.SearchQuery();
@@ -202,7 +202,7 @@ function makeSearchView (test, dummy_widget_attributes, defaults, options, raw_f
     return view;
 };
 
-odoo.define_section('search.defaults', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
+hexya.define_section('search.defaults', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
     test('calling', function (assert) {
         assert.expect(2);
         var defaults_called = false;
@@ -428,7 +428,7 @@ odoo.define_section('search.defaults', ['web.search_inputs', 'web.SearchView', '
 
 });
 
-odoo.define_section('search.completions', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
+hexya.define_section('search.completions', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
 
     test('calling', function (assert) {
         assert.expect(4);
@@ -472,9 +472,9 @@ odoo.define_section('search.completions', ['web.search_inputs', 'web.SearchView'
             label: "Dummy",
             facet: {
                 field: {
-                    get_domain: odoo.testing.noop,
-                    get_context: odoo.testing.noop,
-                    get_groupby: odoo.testing.noop
+                    get_domain: hexya.testing.noop,
+                    get_context: hexya.testing.noop,
+                    get_groupby: hexya.testing.noop
                 },
                 category: 'Dummy',
                 values: [{label: 'dummy', value: 42}]
@@ -499,9 +499,9 @@ odoo.define_section('search.completions', ['web.search_inputs', 'web.SearchView'
     test('facet selection: new value existing facet', function (assert) {
         assert.expect(8);
         var field = {
-            get_domain: odoo.testing.noop,
-            get_context: odoo.testing.noop,
-            get_groupby: odoo.testing.noop
+            get_domain: hexya.testing.noop,
+            get_context: hexya.testing.noop,
+            get_groupby: hexya.testing.noop
         };
         var completion = {
             label: "Dummy",
@@ -848,7 +848,7 @@ odoo.define_section('search.completions', ['web.search_inputs', 'web.SearchView'
     });
 });
 
-odoo.define_section('search.serialization', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
+hexya.define_section('search.serialization', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
 
     test('No facet, no call', function (assert, search_inputs, SearchView, core) {
         assert.expect(6);
@@ -1188,7 +1188,7 @@ odoo.define_section('search.serialization', ['web.search_inputs', 'web.SearchVie
     });
 });
 
-odoo.define_section('search.serialization', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
+hexya.define_section('search.serialization', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
 
     test('is-drawn', function (assert) {
         assert.expect(3);
@@ -1207,7 +1207,7 @@ odoo.define_section('search.serialization', ['web.search_inputs', 'web.SearchVie
 
 });
 
-odoo.define_section('search.filters', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
+hexya.define_section('search.filters', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
     function fields_view_get () {
         // view with a single group of filters
         return {
@@ -1315,7 +1315,7 @@ odoo.define_section('search.filters', ['web.search_inputs', 'web.SearchView', 'w
     });
 });
 
-odoo.define_section('search.groupby', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
+hexya.define_section('search.groupby', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
 
     test('basic', ['web.FavoriteMenu', 'web.FilterMenu', 'web.GroupByMenu'], function (assert, search_inputs, SearchView, core, data, data_manager, FavoriteMenu, FilterMenu, GroupByMenu) {
         assert.expect(12);
@@ -1399,7 +1399,7 @@ odoo.define_section('search.groupby', ['web.search_inputs', 'web.SearchView', 'w
     });
 });
 
-odoo.define_section('search.filters.saved', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
+hexya.define_section('search.filters.saved', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
 
     test('checkboxing', function (assert) {
         assert.expect(6);
@@ -1515,7 +1515,7 @@ odoo.define_section('search.filters.saved', ['web.search_inputs', 'web.SearchVie
     });
 });
 
-odoo.define_section('search.advanced', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
+hexya.define_section('search.advanced', ['web.search_inputs', 'web.SearchView', 'web.core', 'web.data', 'web.data_manager'], function (test, mock) {
 
     test('single-advanced', function (assert) {
         assert.expect(6);

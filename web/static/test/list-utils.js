@@ -1,4 +1,4 @@
-odoo.define_section('list.events', ['web.list_common'], function (test) {
+hexya.define_section('list.events', ['web.list_common'], function (test) {
 
     test('Simple event triggering', function (assert, list_common) {
         var e = Object.create(list_common.Events), 
@@ -101,7 +101,7 @@ odoo.define_section('list.events', ['web.list_common'], function (test) {
     });
 });
 
-odoo.define_section('list.records', ['web.list_common'], function (test) {
+hexya.define_section('list.records', ['web.list_common'], function (test) {
 
     test('Basic record initialization', function (assert, list_common) {
         var r = new list_common.Record({qux: 3});
@@ -141,7 +141,7 @@ odoo.define_section('list.records', ['web.list_common'], function (test) {
     });
 });
 
-odoo.define_section('list.Collection', ['web.list_common'], function (test) {
+hexya.define_section('list.Collection', ['web.list_common'], function (test) {
     test('degenerate-fetch', function (assert, list_common) {
         var c = new list_common.Collection();
         assert.strictEqual(c.length, 0);
@@ -369,7 +369,7 @@ odoo.define_section('list.Collection', ['web.list_common'], function (test) {
 });
 
 
-odoo.define_section('list.collections.higherordermethods', ['web.list_common'], function (test) {
+hexya.define_section('list.collections.higherordermethods', ['web.list_common'], function (test) {
 
     test('each, degenerate', function (assert, list_common) {
         var c = new list_common.Collection([
@@ -447,7 +447,7 @@ odoo.define_section('list.collections.higherordermethods', ['web.list_common'], 
     });
 });
 
-odoo.define_section('list.collections.weirdoes', ['web.list_common'], function (test) {
+hexya.define_section('list.collections.weirdoes', ['web.list_common'], function (test) {
     test('set-from-noid', function (assert, list_common) {
         var root = new list_common.Collection();
         root.add({v: 3});
