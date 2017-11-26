@@ -34,6 +34,17 @@ import (
 
 const gravatarBaseURL string = "https://www.gravatar.com/avatar"
 
+var (
+	PartnerWarningMessage = types.Selection{
+		"no-message": "No Message",
+		"warning":    "Warning",
+		"block":      "Blocking Message",
+	}
+	PartnerWarningHelp = `Selecting the "Warning" option will notify user with the message,
+Selecting "Blocking Message" will throw an exception with the message and block the flow.
+The Message has to be written in the next field.`
+)
+
 func init() {
 	partnerTitle := pool.PartnerTitle().DeclareModel()
 	partnerTitle.AddFields(map[string]models.FieldDefinition{
