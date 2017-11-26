@@ -268,6 +268,10 @@ func searchRead(uid int64, params searchReadParams) (res *webdata.SearchReadResu
 			Order:  params.Sort,
 		}
 		records := rs.Call("SearchRead", srp).([]models.FieldMap)
+		if records == nil {
+			// Client expect [] and not null in JSON.
+			records = []models.FieldMap{}
+		}
 		length := rs.Call("AddDomainLimitOffset", srp.Domain, 0, srp.Offset, srp.Order).(models.RecordSet).Collection().SearchCount()
 		res = &webdata.SearchReadResult{
 			Records: records,
