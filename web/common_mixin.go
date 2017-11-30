@@ -442,7 +442,7 @@ func init() {
 			attrStr = strings.Replace(attrStr, "False", "false", -1)
 			err := json.Unmarshal([]byte(attrStr), &attrs)
 			if err != nil {
-				log.Panic("Invalid attrs definition", "model", rc.ModelName(), "attrs", attrStr)
+				log.Panic("Invalid attrs definition", "model", rc.ModelName(), "error", err, "attrs", attrStr)
 			}
 			for modifier := range modifiers {
 				cond := domains.ParseDomain(attrs[modifier])
@@ -524,6 +524,15 @@ func init() {
 			}
 			return res
 		}).AllowGroup(security.GroupEveryone)
+
+	commonMixin.Methods().SearchDomain().DeclareMethod(
+		`SearchDomain execute a search on the given domain.`,
+		func(rs pool.CommonMixinSet, domain domains.Domain) pool.CommonMixinSet {
+			cond := pool.CommonMixinCondition{
+				Condition: domains.ParseDomain(domain),
+			}
+			return rs.Search(cond)
+		})
 
 	commonMixin.Methods().CheckAccessRights().DeclareMethod(
 		`CheckAccessRights verifies that the operation given by "operation" is allowed for

@@ -921,7 +921,7 @@ var FieldRadio = common.AbstractField.extend(common.ReinitializeFieldMixin, {
             if (! _.isEqual(self.domain, domain)) {
                 self.domain = domain;
                 var ds = new data.DataSetStatic(self, self.field.relation, self.build_context());
-                ds.call('search', [self.domain])
+                ds.call('search_domain', [self.domain])
                     .then(function (records) {
                         ds.name_get(records).then(function (records) {
                             selection = records;

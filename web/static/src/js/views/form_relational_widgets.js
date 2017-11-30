@@ -1695,7 +1695,7 @@ var FieldMany2ManyCheckBoxes = AbstractManyField.extend(common.ReinitializeField
     query_records: function() {
         var self = this;
         var model = new Model(this.field.relation);
-        this.records_orderer.add(model.call("search", [this.get("domain")], {"context": this.build_context()}).then(function(record_ids) {
+        this.records_orderer.add(model.call("search_domain", [this.get("domain")], {"context": this.build_context()}).then(function(record_ids) {
             return model.call("name_get", [record_ids] , {"context": self.build_context()});
         })).then(function(res) {
             self.set("records", res);

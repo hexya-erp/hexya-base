@@ -20,6 +20,7 @@ var MethodAdapters = map[string]methodAdapter{
 	"Read":       readAdapter,
 	"SearchRead": searchReadAdapter,
 	"FieldsGet":  fieldsGetAdapter,
+	"NameGet":    nameGetAdapter,
 }
 
 // A methodAdapter can modify calls made by the odoo client
@@ -126,6 +127,20 @@ func fieldsGetAdapter(rc *models.RecordCollection, method string, args []interfa
 	for f, fInfo := range res {
 		dom, _ := fInfo.Domain.([]interface{})
 		res[f].Domain = domains.Domain(dom).String()
+	}
+	return res
+}
+
+// nameGetAdapter handles calls with multiple ids.
+func nameGetAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
+	checkMethod(method, "NameGet", args, 0)
+	// We make the slice to be sure not to have nil returned
+	res := make([][2]interface{}, 0)
+	for _, rec := range rc.Records() {
+		res = append(res, [2]interface{}{
+			rec.Ids()[0],
+			rec.Call("NameGet").(string),
+		})
 	}
 	return res
 }

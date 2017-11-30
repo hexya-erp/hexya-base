@@ -102,9 +102,12 @@ func Execute(uid int64, params CallParams) (res interface{}, rError error) {
 		}
 		// Return ID(s) if res is a *RecordSet
 		if rec, ok := res.(models.RecordSet); ok {
-			if len(rec.Ids()) == 1 {
+			switch {
+			case rec.IsEmpty():
+				res = []int64{}
+			case rec.Len() == 1:
 				res = rec.Ids()[0]
-			} else {
+			default:
 				res = rec.Ids()
 			}
 		}
