@@ -129,8 +129,8 @@ Used by the some of the legal statements.`},
 		"Banks":   models.One2ManyField{String: "Bank Accounts", RelationModel: pool.BankAccount(), ReverseFK: "Partner"},
 		"Website": models.CharField{Help: "Website of Partner or Company"},
 		"Comment": models.CharField{String: "Notes"},
-		"Categories": models.Many2ManyField{RelationModel: pool.PartnerCategory(),
-			String: "Tags", Default: func(env models.Environment, maps models.FieldMap) interface{} {
+		"Categories": models.Many2ManyField{RelationModel: pool.PartnerCategory(), String: "Tags",
+			Default: func(env models.Environment, maps models.FieldMap) interface{} {
 				return pool.PartnerCategory().Browse(env, []int64{env.Context().GetInteger("category_id")})
 			}},
 		"CreditLimit": models.FloatField{},

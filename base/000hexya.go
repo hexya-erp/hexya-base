@@ -47,8 +47,10 @@ func init() {
 				if mainCompanyPartner.IsEmpty() {
 					log.Debug(mainCompanyPartner.T("Creating main company partner"))
 					mainCompanyPartner = pool.Partner().Create(env, &pool.PartnerData{
-						ID:   1,
-						Name: "Your Company",
+						ID:        1,
+						Name:      "Your Company",
+						IsCompany: true,
+						Customer:  false,
 					})
 					env.Cr().Execute("SELECT nextval('partner_id_seq')")
 				}
@@ -75,6 +77,7 @@ func init() {
 						Lang:     "en_US",
 						Name:     "Administrator",
 						Function: "IT Manager",
+						Customer: false,
 					})
 					env.Cr().Execute("SELECT nextval('partner_id_seq')")
 				}

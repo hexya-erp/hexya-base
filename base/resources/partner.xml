@@ -26,9 +26,6 @@
             </help>
         </action>
 
-        <menuitem action="base_action_partner_title_contact" id="base_menu_partner_title_contact" name="Contact Titles"
-                  parent="base_menu_config_address_book" sequence="3" groups="base_group_no_one"/>
-
         <!-- Partners -->
         <view id="base_view_partner_tree" model="Partner" priority="8">
             <tree string="Contacts">
@@ -225,14 +222,14 @@
                                                                                          t-att-src="'data:image/png;base64,'+record.image.raw_value"/>
                                                                                     <t t-if="!record.image.raw_value">
                                                                                         <img t-if="record.type.raw_value === 'delivery'"
-                                                                                             t-att-src='_s + "/base/static/src/img/truck.png"'/>
+                                                                                             t-att-src='_s + "/static/base/src/img/truck.png"'/>
                                                                                         <img t-if="record.type.raw_value === 'invoice'"
-                                                                                             t-att-src='_s + "/base/static/src/img/money.png"'/>
+                                                                                             t-att-src='_s + "/static/base/src/img/money.png"'/>
                                                                                         <t t-if="record.type.raw_value !== 'invoice' &amp;&amp; record.type.raw_value !== 'delivery'">
                                                                                             <img t-if="record.is_company.raw_value === true"
-                                                                                                 t-att-src='_s + "/base/static/src/img/company_image.png"'/>
+                                                                                                 t-att-src='_s + "/static/base/src/img/company_image.png"'/>
                                                                                             <img t-if="record.is_company.raw_value === false"
-                                                                                                 t-att-src='_s + "/base/static/src/img/avatar.png"'/>
+                                                                                                 t-att-src='_s + "/static/base/src/img/avatar.png"'/>
                                                                                         </t>
                                                                                     </t>
                                                                                 </div>
@@ -365,7 +362,7 @@
             <kanban class="o_res_partner_kanban">
                 <field name="color"/>
                 <field name="display_name"/>
-                <field name="title"/>
+                <field name="title_id"/>
                 <field name="email"/>
                 <field name="parent_id"/>
                 <field name="is_company"/>
@@ -378,7 +375,7 @@
                 <field name="country_id"/>
                 <field name="mobile"/>
                 <field name="state_id"/>
-                <field name="category_id"/>
+                <field name="Categories"/>
                 <field name="image_small"/>
                 <field name="type"/>
                 <templates>
@@ -391,19 +388,19 @@
                                 </t>
                                 <t t-if="!record.image_small.raw_value">
                                     <t t-if="record.type.raw_value === 'delivery'">
-                                        <img t-att-src='_s + "/base/static/src/img/truck.png"'
+                                        <img t-att-src='_s + "/static/base/src/img/truck.png"'
                                              class="o_kanban_image oe_kanban_avatar_smallbox"/>
                                     </t>
                                     <t t-if="record.type.raw_value === 'invoice'">
-                                        <img t-att-src='_s + "/base/static/src/img/money.png"'
+                                        <img t-att-src='_s + "/static/base/src/img/money.png"'
                                              class="o_kanban_image oe_kanban_avatar_smallbox"/>
                                     </t>
                                     <t t-if="record.type.raw_value != 'invoice' &amp;&amp; record.type.raw_value != 'delivery'">
                                         <t t-if="record.is_company.raw_value === true">
-                                            <img t-att-src='_s + "/base/static/src/img/company_image.png"'/>
+                                            <img t-att-src='_s + "/static/base/src/img/company_image.png"'/>
                                         </t>
                                         <t t-if="record.is_company.raw_value === false">
-                                            <img t-att-src='_s + "/base/static/src/img/avatar.png"'/>
+                                            <img t-att-src='_s + "/static/base/src/img/avatar.png"'/>
                                         </t>
                                     </t>
                                 </t>
@@ -448,7 +445,7 @@
         </view>
 
         <action id="base_action_partner_form" type="ir.actions.act_window" name="Customers" model="Partner"
-                search_view_id="base_view_res_partner_filter" view_mode="tree,form"
+                search_view_id="base_view_res_partner_filter" view_mode="kanban,tree,form"
                 context='{"search_default_customer": true}'>
             <help>
                 <p class="oe_view_nocontent_create">

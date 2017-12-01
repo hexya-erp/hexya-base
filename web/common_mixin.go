@@ -40,7 +40,11 @@ func init() {
 							value = false
 						}
 					case fi.Type.Is2ManyRelationType():
-						value = v.Ids()
+						if v.Len() > 0 {
+							value = v.Ids()
+						} else {
+							value = []int64{}
+						}
 					}
 				case int64:
 					if fi.Type.Is2OneRelationType() {

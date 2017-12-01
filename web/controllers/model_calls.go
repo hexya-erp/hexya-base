@@ -270,7 +270,7 @@ func searchRead(uid int64, params searchReadParams) (res *webdata.SearchReadResu
 			Limit:  params.Limit,
 			Order:  params.Sort,
 		}
-		records := rs.Call("SearchRead", srp).([]models.FieldMap)
+		records := searchReadAdapter(rs, "SearchRead", []interface{}{srp}).([]models.FieldMap)
 		if records == nil {
 			// Client expect [] and not null in JSON.
 			records = []models.FieldMap{}

@@ -96,8 +96,5 @@
                 view_mode="tree,form" search_view_id="base_view_currency_search" context='{"active_test": false}'>
         </action>
 
-        <menuitem action="base_action_currency_form" id="base_menu_action_currency_form" parent="base_menu_localisation"
-                  name="Currencies" sequence="3"/>
-
     </data>
 </hexya>

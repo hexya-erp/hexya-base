@@ -43,13 +43,6 @@
             </help>
         </action>
 
-        <menuitem id="base_menu_localisation" name="Localization" parent="base_menu_config_address_book" sequence="5"
-                  groups="base_group_no_one"/>
-
-        <menuitem action="base_action_country" id="base_menu_country_partner" parent="base_menu_localisation"
-                  sequence="1"
-                  groups="base_group_no_one"/>
-
         <view id="base_view_country_group_tree" model="CountryGroup">
             <tree string="Country Group">
                 <field name="name"/>
@@ -77,10 +70,6 @@
             </help>
         </action>
 
-        <menuitem action="base_action_country_group" id="base_menu_country_group" name="Country Group"
-                  parent="base_menu_localisation"
-                  sequence="3" groups="base_group_no_one"/>
-
         <!-- State -->
         <view id="base_view_country_state_tree" model="CountryState">
             <tree string="State">
@@ -106,10 +95,6 @@
                 you are working on from here. Each state is attached to one country.
             </help>
         </action>
-
-        <menuitem action="base_action_country_state" id="base_menu_country_state_partner"
-                  parent="base_menu_localisation" sequence="2"
-                  groups="base_group_no_one"/>
 
     </data>
 </hexya>
