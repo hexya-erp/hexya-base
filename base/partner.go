@@ -35,12 +35,12 @@ import (
 const gravatarBaseURL string = "https://www.gravatar.com/avatar"
 
 var (
-	PartnerWarningMessage = types.Selection{
+	WarningMessage = types.Selection{
 		"no-message": "No Message",
 		"warning":    "Warning",
 		"block":      "Blocking Message",
 	}
-	PartnerWarningHelp = `Selecting the "Warning" option will notify user with the message,
+	WarningHelp = `Selecting the "Warning" option will notify user with the message,
 Selecting "Blocking Message" will throw an exception with the message and block the flow.
 The Message has to be written in the next field.`
 )
@@ -801,7 +801,13 @@ Use this field anywhere a small image is required.`},
 			if _, exists := atMap["contact"]; !exists {
 				atMap["contact"] = true
 			}
-			result := make(map[string]pool.PartnerSet)
+			result := map[string]pool.PartnerSet{
+				"contact":  rs,
+				"delivery": rs,
+				"invoice":  rs,
+				"other":    rs,
+				"default":  rs,
+			}
 			visited := make(map[int64]bool)
 			for _, partner := range rs.Records() {
 				currentPartner := partner
@@ -831,7 +837,7 @@ Use this field anywhere a small image is required.`},
 					currentPartner = currentPartner.Parent()
 				}
 			}
-			return nil
+			return result
 		})
 
 	partnerModel.Methods().DisplayAddress().DeclareMethod(

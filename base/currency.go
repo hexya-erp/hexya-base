@@ -105,9 +105,9 @@ func init() {
 		`CompareAmounts compares 'amount1' and 'amount2' after rounding them according
 		 to the given currency's precision. The returned values are per the following table:
 
-		     value1 > value2 : true, false
-    	     value1 == value2: false, true
-    	     value1 < value2 : false, false
+		     value1 > value2 : 1
+    	     value1 == value2: 0
+    	     value1 < value2 : -1
 
 		 An amount is considered lower/greater than another amount if their rounded
          value is different. This is not the same as having a non-zero difference!
@@ -117,7 +117,7 @@ func init() {
          However 0.006 and 0.002 are considered different (returns 1) because
          they respectively round to 0.01 and 0.0, even though 0.006-0.002 = 0.004
          which would be considered zero at 2 digits precision.`,
-		func(rs pool.CurrencySet, amount1, amount2 float64) (greater, equal bool) {
+		func(rs pool.CurrencySet, amount1, amount2 float64) int8 {
 			return nbutils.Compare(amount1, amount2, float64(10^(-rs.DecimalPlaces())))
 		})
 
@@ -183,6 +183,25 @@ func init() {
 				}
 			}
 			return function
+		})
+
+	currencyModel.Methods().SelectCompaniesRates().DeclareMethod(`
+		SelectCompaniesRates returns an SQL query to get the currency rates per companies.`,
+		func(rs pool.CurrencySet) string {
+			return `
+			SELECT
+                r.currency_id,
+                COALESCE(r.company_id, c.id) as company_id,
+                r.rate,
+                r.name AS date_start,
+                (SELECT name FROM currency_rate r2
+                 WHERE r2.name > r.name AND
+                       r2.currency_id = r.currency_id AND
+                       (r2.company_id is null or r2.company_id = c.id)
+                 ORDER BY r2.name ASC
+                 LIMIT 1) AS date_end
+            FROM currency_rate r
+            JOIN company c ON (r.company_id is null or r.company_id = c.id)`
 		})
 
 	currencyModel.Methods().SearchByName().Extend("",

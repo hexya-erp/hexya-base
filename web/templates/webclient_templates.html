@@ -62,9 +62,9 @@
                 {{ if .HasChildren }}
                     {{ range .Children }}
                         <div class="oe_secondary_menu_section" data-menu-xmlid="{{ .ID }}">
-                            {{ if .HasChildren }}{{ .Name }}{{ else }}{{ template "web.menu_link" }}{{ end }}
+                            {{ if .HasChildren }}{{ .Name }}{{ else }}{{ template "web.menu_link" . }}{{ end }}
                         </div>
-                        {{ template "web.menu_secondary_submenu" .}}
+                        {{ template "web.menu_secondary_submenu" . }}
                     {{ end }}
                 {{ end }}
             </div>
