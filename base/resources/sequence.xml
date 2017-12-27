@@ -42,28 +42,28 @@
                             <field name="DateRanges" attrs="{'invisible': [('use_date_range', '=', False)]}"/>
                             <group col="3" string="Legend (for prefix, suffix)">
                                 <group>
-                                    <label colspan="2" string="Current Year with Century: %%(year)s"/>
-                                    <label colspan="2" string="Current Year without Century: %%(y)s"/>
-                                    <label colspan="2" string="Month: %%(month)s"/>
-                                    <label colspan="2" string="Day: %%(day)s"/>
+                                    <label colspan="2" string="Current Year with Century: %(year)s"/>
+                                    <label colspan="2" string="Current Year without Century: %(y)s"/>
+                                    <label colspan="2" string="Month: %(month)s"/>
+                                    <label colspan="2" string="Day: %(day)s"/>
                                 </group>
                                 <group>
-                                    <label colspan="2" string="Day of the Year: %%(doy)s"/>
-                                    <label colspan="2" string="Week of the Year: %%(woy)s"/>
-                                    <label colspan="2" string="Day of the Week (0:Monday): %%(weekday)s"/>
+                                    <label colspan="2" string="Day of the Year: %(doy)s"/>
+                                    <label colspan="2" string="Week of the Year: %(woy)s"/>
+                                    <label colspan="2" string="Day of the Week (0:Monday): %(weekday)s"/>
                                 </group>
                                 <group>
-                                    <label colspan="2" string="Hour 00->24: %%(h24)s"/>
-                                    <label colspan="2" string="Hour 00->12: %%(h12)s"/>
-                                    <label colspan="2" string="Minute: %%(min)s"/>
-                                    <label colspan="2" string="Second: %%(sec)s"/>
+                                    <label colspan="2" string="Hour 00->24: %(h24)s"/>
+                                    <label colspan="2" string="Hour 00->12: %(h12)s"/>
+                                    <label colspan="2" string="Minute: %(min)s"/>
+                                    <label colspan="2" string="Second: %(sec)s"/>
                                 </group>
                             </group>
                             <group attrs="{'invisible': [('use_date_range', '=', False)]}">
                                 <div>
                                     When subsequences per date range are used, you can prefix variables with 'range_'
-                                    to use the beginning of the range instead of the current date, e.g. %%(range_year)s
-                                    instead of %%(year)s.
+                                    to use the beginning of the range instead of the current date, e.g. %(range_year)s
+                                    instead of %(year)s.
                                 </div>
                             </group>
                         </page>
