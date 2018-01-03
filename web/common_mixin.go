@@ -142,8 +142,10 @@ func init() {
 					}
 					switch action {
 					case 0:
+						// Add reverse FK to point to this RecordSet if this is not the case
+						values.Set(info.ReverseFK, rs.ID(), relSet.Model())
 						// Create a new record with values
-						newRec := relSet.Call("Create", models.FieldMap(values)).(models.RecordSet).Collection()
+						newRec := relSet.Call("Create", values).(models.RecordSet).Collection()
 						recs = recs.Union(newRec)
 					case 1:
 						// Update the id record with the given values

@@ -39,7 +39,7 @@ func init() {
 		"Rates": models.One2ManyField{RelationModel: pool.CurrencyRate(), ReverseFK: "Currency"},
 		"Rounding": models.FloatField{String: "Rounding Factor", Digits: nbutils.Digits{Precision: 12,
 			Scale: 6}},
-		"DecimalPlaces": models.IntegerField{GoType: new(int8),
+		"DecimalPlaces": models.IntegerField{GoType: new(int),
 			Compute: pool.Currency().Methods().ComputeDecimalPlaces(), Depends: []string{"Rounding"}},
 		"Active": models.BooleanField{},
 		"Position": models.SelectionField{Selection: types.Selection{"after": "After Amount", "before": "Before Amount"},
@@ -78,9 +78,9 @@ func init() {
 	currencyModel.Methods().ComputeDecimalPlaces().DeclareMethod(
 		`ComputeDecimalPlaces returns the decimal place from the currency's rounding`,
 		func(rs pool.CurrencySet) (*pool.CurrencyData, []models.FieldNamer) {
-			var dp int8
+			var dp int
 			if rs.Rounding() > 0 && rs.Rounding() < 1 {
-				dp = int8(math.Ceil(math.Log10(1 / rs.Rounding())))
+				dp = int(math.Ceil(math.Log10(1 / rs.Rounding())))
 			}
 			return &pool.CurrencyData{DecimalPlaces: dp}, []models.FieldNamer{pool.Currency().DecimalPlaces()}
 		})
@@ -98,7 +98,7 @@ func init() {
 	currencyModel.Methods().Round().DeclareMethod(
 		`Round returns the given amount rounded according to this currency rounding rules`,
 		func(rs pool.CurrencySet, amount float64) float64 {
-			return nbutils.Round(amount, float64(10^-rs.DecimalPlaces()))
+			return nbutils.Round(amount, math.Pow10(-rs.DecimalPlaces()))
 		})
 
 	currencyModel.Methods().CompareAmounts().DeclareMethod(
@@ -118,7 +118,7 @@ func init() {
          they respectively round to 0.01 and 0.0, even though 0.006-0.002 = 0.004
          which would be considered zero at 2 digits precision.`,
 		func(rs pool.CurrencySet, amount1, amount2 float64) int8 {
-			return nbutils.Compare(amount1, amount2, float64(10^(-rs.DecimalPlaces())))
+			return nbutils.Compare(amount1, amount2, math.Pow10(-rs.DecimalPlaces()))
 		})
 
 	currencyModel.Methods().IsZero().DeclareMethod(
@@ -131,7 +131,7 @@ func init() {
 		before, giving different results for e.g. 0.006 and 0.002 at 2
 		digits precision.`,
 		func(rs pool.CurrencySet, amount float64) bool {
-			return nbutils.IsZero(amount, float64(10^(-rs.DecimalPlaces())))
+			return nbutils.IsZero(amount, math.Pow10(-rs.DecimalPlaces()))
 		})
 
 	currencyModel.Methods().GetConversionRateTo().DeclareMethod(
