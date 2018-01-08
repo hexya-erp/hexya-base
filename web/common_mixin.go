@@ -145,12 +145,14 @@ func init() {
 						// Add reverse FK to point to this RecordSet if this is not the case
 						values.Set(info.ReverseFK, rs.ID(), relSet.Model())
 						// Create a new record with values
+						values = relSet.Call("ProcessDataValues", values).(models.FieldMap)
 						newRec := relSet.Call("Create", values).(models.RecordSet).Collection()
 						recs = recs.Union(newRec)
 					case 1:
 						// Update the id record with the given values
 						id := int(triplet.([]interface{})[1].(float64))
 						rec := relSet.Search(relSet.Model().Field("ID").Equals(id))
+						values = relSet.Call("ProcessDataValues", values).(models.FieldMap)
 						rec.Call("Write", values)
 						// add rec to recs in case we are in create
 						recs = recs.Union(rec)
