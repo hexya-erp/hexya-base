@@ -6,6 +6,7 @@ package web
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/beevik/etree"
@@ -382,17 +383,25 @@ func init() {
 			for _, fieldTag := range doc.FindElements("//field") {
 				mods, exists := allModifiers[fieldTag]
 				if !exists {
-					mods = map[string]interface{}{"readonly": false, "required": false, "invisible": false}
+					mods = map[string]interface{}{"readonly": false, "required": false, "invisible": false,
+						"tree_invisible": false}
 				}
 				allModifiers[fieldTag] = rs.ProcessFieldElementModifiers(fieldTag, fieldInfos, mods)
 			}
 			// Set modifier attributes on elements
 			for element, modifiers := range allModifiers {
-				// Remove false keys
+				// Remove false or not applicable keys
 				for mod, val := range modifiers {
 					v, ok := val.(bool)
 					if ok && !v {
 						delete(modifiers, mod)
+						continue
+					}
+					viewType := doc.Root().Tag
+					toks := strings.Split(mod, "_")
+					if len(toks) > 1 && toks[0] != viewType {
+						delete(modifiers, mod)
+						continue
 					}
 				}
 				// Remove required if field is invisible or readonly
@@ -418,10 +427,24 @@ func init() {
 			fieldName := element.SelectAttr("name").Value
 			// Check if we have the modifier as attribute in the field node
 			for modifier := range modifiers {
-				modTag := element.SelectAttrValue(modifier, "")
-				if modTag != "" && modTag != "0" && modTag != "false" {
-					modifiers[modifier] = true
+				modView := modifier
+				toks := strings.Split(modifier, "_")
+				if len(toks) > 1 {
+					modView = toks[1]
 				}
+				modTag := element.SelectAttrValue(modView, "")
+				if modTag == "" {
+					continue
+				}
+				modVal, err := strconv.ParseBool(modTag)
+				if modVal || err != nil {
+					// If we have an error, we assume it is true
+					modifiers[modView] = true
+					modifiers[modifier] = true
+					continue
+				}
+				modifiers[modView] = false
+				modifiers[modifier] = false
 			}
 			// Force modifiers if defined in the model
 			if fieldInfos[fieldName].ReadOnly {
