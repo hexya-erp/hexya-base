@@ -46,8 +46,11 @@ func createAdapter(rc *models.RecordCollection, method string, args []interface{
 		log.Panic("Expected arg for Create method to be FieldMap", "argType", fmt.Sprintf("%T", args[0]))
 	}
 	fMap := models.FieldMap(data)
-	fMap = rc.Call("ProcessDataValues", fMap).(models.FieldMap)
-	res := rc.Call("Create", fMap)
+	pcv := rc.CallMulti("ProcessCreateValues", fMap)
+	cMap := pcv[0].(models.FieldMap)
+	dMap := pcv[1].(models.FieldMap)
+	res := rc.Call("Create", cMap).(models.RecordSet).Collection()
+	res.Call("PostProcessCreateValues", dMap)
 	return res
 }
 
@@ -60,7 +63,7 @@ func writeAdapter(rc *models.RecordCollection, method string, args []interface{}
 	}
 	fMap := models.FieldMap(data)
 	fieldsToUnset := fMap.FieldNames()
-	fMap = rc.Call("ProcessDataValues", fMap).(models.FieldMap)
+	fMap = rc.Call("ProcessWriteValues", fMap).(models.FieldMap)
 	res := rc.Call("Write", fMap, fieldsToUnset)
 	return res
 }
@@ -72,7 +75,7 @@ func onchangeAdapter(rc *models.RecordCollection, method string, args []interfac
 	if !ok {
 		log.Panic("Expected arg for Onchange method to be OnchangeParams", "argType", fmt.Sprintf("%T", args[0]))
 	}
-	params.Values = rc.Call("ProcessDataValues", params.Values).(models.FieldMap)
+	params.Values = rc.Call("ProcessWriteValues", params.Values).(models.FieldMap)
 	res := rc.Call("Onchange", params).(models.OnchangeResult)
 	fInfos := rc.Call("FieldsGet", models.FieldsGetArgs{})
 	res.Value = rc.Call("AddNamesToRelations", res.Value.FieldMap(), fInfos).(models.FieldMapper)

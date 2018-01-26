@@ -86,8 +86,8 @@ func init() {
 			return res
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.Methods().ProcessDataValues().DeclareMethod(
-		`ProcessDataValues updates the given data values for Write and Create methods to be
+	commonMixin.Methods().ProcessWriteValues().DeclareMethod(
+		`ProcessWriteValues updates the given data values for Write method to be
 		compatible with the ORM, in particular for relation fields`,
 		func(rs pool.CommonMixinSet, fMap models.FieldMap) models.FieldMap {
 			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
@@ -119,6 +119,70 @@ func init() {
 			return fMap
 		}).AllowGroup(security.GroupEveryone)
 
+	commonMixin.Methods().ProcessCreateValues().DeclareMethod(
+		`ProcessCreateValues updates the given data values for Create method to be
+		compatible with the ORM, in particular for relation fields.
+
+		It returns a first FieldMap to be used as argument to the Create method, and 
+		a second map to be used with a subsequent call to PostProcessCreateValues (for
+		updating FKs pointing to the newly created record).`,
+		func(rs pool.CommonMixinSet, fMap models.FieldMap) (models.FieldMap, models.FieldMap) {
+			createMap := make(models.FieldMap)
+			deferredMap := make(models.FieldMap)
+			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
+			for f, v := range fMap {
+				fJSON := rs.Model().JSONizeFieldName(f)
+				if _, exists := fInfos[fJSON]; !exists {
+					log.Panic("Unable to find field", "model", rs.ModelName(), "field", f)
+				}
+				switch fInfos[fJSON].Type {
+				case fieldtype.Many2One, fieldtype.One2One:
+					if _, isRs := v.(models.RecordSet); isRs {
+						continue
+					}
+					id, err := nbutils.CastToInteger(v)
+					if err != nil {
+						log.Panic("Unable to cast field value", "error", err, "model", rs.ModelName(), "field", f, "value", fInfos[fJSON])
+					}
+					if id == 0 {
+						createMap[f] = nil
+						continue
+					}
+					createMap[f] = id
+				case fieldtype.One2Many, fieldtype.Many2Many:
+					deferredMap[f] = v
+				default:
+					createMap[f] = v
+				}
+			}
+			return createMap, deferredMap
+		}).AllowGroup(security.GroupEveryone)
+
+	commonMixin.Methods().PostProcessCreateValues().DeclareMethod(`
+		PostProcessCreateValues updates FK of related records created at the same time.
+		
+		This method is meant to be called with the second returned value of ProcessCreateValues
+		after record creation.`,
+		func(rs pool.CommonMixinSet, fMap models.FieldMap) {
+			if len(fMap) == 0 {
+				return
+			}
+			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
+			for f, v := range fMap {
+				fJSON := rs.Model().JSONizeFieldName(f)
+				if _, exists := fInfos[fJSON]; !exists {
+					log.Panic("Unable to find field", "model", rs.ModelName(), "field", f)
+				}
+				switch fInfos[fJSON].Type {
+				case fieldtype.Many2Many:
+					fMap[f] = rs.NormalizeM2MData(f, fInfos[fJSON], v)
+				case fieldtype.One2Many:
+					fMap[f] = rs.ExecuteO2MActions(f, fInfos[fJSON], v)
+				}
+			}
+			rs.Call("Write", fMap)
+		}).AllowGroup(security.GroupEveryone)
+
 	commonMixin.Methods().ExecuteO2MActions().DeclareMethod(
 		`ExecuteO2MActions executes the actions on one2many fields given by
 		the list of triplets received from the client`,
@@ -146,14 +210,17 @@ func init() {
 						// Add reverse FK to point to this RecordSet if this is not the case
 						values.Set(info.ReverseFK, rs.ID(), relSet.Model())
 						// Create a new record with values
-						values = relSet.Call("ProcessDataValues", values).(models.FieldMap)
-						newRec := relSet.Call("Create", values).(models.RecordSet).Collection()
+						res := relSet.CallMulti("ProcessCreateValues", values)
+						cMap := res[0].(models.FieldMap)
+						dMap := res[1].(models.FieldMap)
+						newRec := relSet.Call("Create", cMap).(models.RecordSet).Collection()
+						newRec.Call("PostProcessCreateValues", dMap)
 						recs = recs.Union(newRec)
 					case 1:
 						// Update the id record with the given values
 						id := int(triplet.([]interface{})[1].(float64))
 						rec := relSet.Search(relSet.Model().Field("ID").Equals(id))
-						values = relSet.Call("ProcessDataValues", values).(models.FieldMap)
+						values = relSet.Call("ProcessWriteValues", values).(models.FieldMap)
 						rec.Call("Write", values)
 						// add rec to recs in case we are in create
 						recs = recs.Union(rec)
