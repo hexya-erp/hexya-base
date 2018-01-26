@@ -108,12 +108,12 @@ func init() {
 			ReverseFK: "Parent", Filter: pool.Partner().Active().Equals(true)},
 		"Ref": models.CharField{String: "Internal Reference", Index: true},
 		"Lang": models.CharField{String: "Language",
-			Default: func(env models.Environment, maps models.FieldMap) interface{} {
+			Default: func(env models.Environment) interface{} {
 				return env.Context().GetString("lang")
 			}, Help: `If the selected language is loaded in the system, all documents related to
 this contact will be printed in this language. If not, it will be English.`},
 		"TZ": models.CharField{String: "Timezone",
-			Default: func(env models.Environment, maps models.FieldMap) interface{} {
+			Default: func(env models.Environment) interface{} {
 				return env.Context().GetString("tz")
 			}, Help: `"The partner's timezone, used to output proper date and time values
 inside printed reports. It is important to set a value for this field.
@@ -130,7 +130,7 @@ Used by the some of the legal statements.`},
 		"Website": models.CharField{Help: "Website of Partner or Company"},
 		"Comment": models.CharField{String: "Notes"},
 		"Categories": models.Many2ManyField{RelationModel: pool.PartnerCategory(), String: "Tags",
-			Default: func(env models.Environment, maps models.FieldMap) interface{} {
+			Default: func(env models.Environment) interface{} {
 				return pool.PartnerCategory().Browse(env, []int64{env.Context().GetInteger("category_id")})
 			}},
 		"CreditLimit": models.FloatField{},

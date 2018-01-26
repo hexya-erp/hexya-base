@@ -56,7 +56,7 @@ gap in the sequence (while they are possible in the former).`},
 		"Padding": models.IntegerField{String: "Sequence Size", Required: true,
 			Default: models.DefaultValue(0),
 			Help:    "Hexya will automatically adds some '0' on the left of the 'Next Number' to get the required padding size."},
-		"Company": models.Many2OneField{RelationModel: pool.Company(), Default: func(env models.Environment, maps models.FieldMap) interface{} {
+		"Company": models.Many2OneField{RelationModel: pool.Company(), Default: func(env models.Environment) interface{} {
 			return pool.Company().NewSet(env).CompanyDefaultGet()
 		}},
 		"UseDateRange": models.BooleanField{String: "Use subsequences per Date Range"},

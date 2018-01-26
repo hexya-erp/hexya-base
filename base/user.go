@@ -29,7 +29,7 @@ func init() {
 	cpWizard := pool.UserChangePasswordWizard().DeclareTransientModel()
 	cpWizard.AddFields(map[string]models.FieldDefinition{
 		"Users": models.One2ManyField{RelationModel: pool.UserChangePasswordWizardLine(),
-			ReverseFK: "Wizard", Default: func(env models.Environment, fMap models.FieldMap) interface{} {
+			ReverseFK: "Wizard", Default: func(env models.Environment) interface{} {
 				activeIds := env.Context().GetIntegerSlice("active_ids")
 				userLines := pool.UserChangePasswordWizardLine().NewSet(env)
 				for _, user := range pool.User().Search(env, pool.User().ID().In(activeIds)).Records() {
@@ -90,11 +90,11 @@ a change of password, the user has to login again.`},
 			String: "Share User", Stored: true, Help: "External user with limited access, created only for the purpose of sharing data."},
 		"CompaniesCount": models.IntegerField{String: "Number of Companies",
 			Compute: pool.User().Methods().ComputeCompaniesCount(), GoType: new(int)},
-		"Company": models.Many2OneField{RelationModel: pool.Company(), Required: true, Default: func(env models.Environment, vals models.FieldMap) interface{} {
+		"Company": models.Many2OneField{RelationModel: pool.Company(), Required: true, Default: func(env models.Environment) interface{} {
 			return pool.Company().NewSet(env).CompanyDefaultGet()
 		}, Help: "The company this user is currently working for.", Constraint: pool.User().Methods().CheckCompany()},
 		"Companies": models.Many2ManyField{RelationModel: pool.Company(), JSON: "company_ids",
-			Default: func(env models.Environment, vals models.FieldMap) interface{} {
+			Default: func(env models.Environment) interface{} {
 				return pool.Company().NewSet(env).CompanyDefaultGet()
 			}, Constraint: pool.User().Methods().CheckCompany()},
 	})

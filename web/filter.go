@@ -17,7 +17,7 @@ func init() {
 	filterModel.AddFields(map[string]models.FieldDefinition{
 		"Name": models.CharField{String: "Filter Name", Required: true, Translate: true},
 		"User": models.Many2OneField{RelationModel: pool.User(), OnDelete: models.Cascade,
-			Default: func(env models.Environment, maps models.FieldMap) interface{} {
+			Default: func(env models.Environment) interface{} {
 				return pool.User().Search(env, pool.User().ID().Equals(env.Uid()))
 			}, Help: `The user this filter is private to. When left empty the filter is public and available to all users.`},
 		"Domain":    models.TextField{Required: true, Default: models.DefaultValue("[]")},

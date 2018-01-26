@@ -35,7 +35,7 @@ func init() {
 			Index: true},
 		"ResField": models.CharField{String: "Resource Field", Index: true},
 		"ResID":    models.IntegerField{String: "Resource ID", Help: "The record id this is attached to"},
-		"Company": models.Many2OneField{RelationModel: pool.Company(), Default: func(env models.Environment, fMap models.FieldMap) interface{} {
+		"Company": models.Many2OneField{RelationModel: pool.Company(), Default: func(env models.Environment) interface{} {
 			return pool.User().NewSet(env).CurrentUser().Company()
 		}},
 		"Type": models.SelectionField{Selection: types.Selection{"binary": "Binary", "url": "URL"},

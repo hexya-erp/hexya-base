@@ -29,7 +29,7 @@ func init() {
 	country.AddFields(map[string]models.FieldDefinition{
 		"Name": models.CharField{String: "Country Name", Help: "The full name of the country.", Translate: true, Required: true, Unique: true},
 		"Code": models.CharField{String: "Country Code", Size: 2, Unique: true, Help: "The ISO country code in two chars.\nYou can use this field for quick search."},
-		"AddressFormat": models.TextField{Default: func(env models.Environment, fMap models.FieldMap) interface{} {
+		"AddressFormat": models.TextField{Default: func(env models.Environment) interface{} {
 			return "%(Street)s\n%(Street2)s\n%(City)s %(StateCode)s %(Zip)s\n%(CountryName)s"
 		}, Help: "You can state here the usual format to use for the addresses belonging to this country."},
 		"Currency":      models.Many2OneField{RelationModel: pool.Currency()},

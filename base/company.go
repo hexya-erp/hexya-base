@@ -11,7 +11,7 @@ import (
 
 // CompanyGetUserCurrency returns the currency of the current user's company if it exists
 // or the default currency otherwise
-func CompanyGetUserCurrency(env models.Environment, fMap models.FieldMap) interface{} {
+func CompanyGetUserCurrency(env models.Environment) interface{} {
 	currency := pool.User().NewSet(env).GetCompany().Currency()
 	if currency.IsEmpty() {
 		return pool.Company().NewSet(env).GetEuro()
@@ -94,7 +94,7 @@ func init() {
 		`OnChangeCountry updates the currency of this company on a country change`,
 		func(rs pool.CompanySet) (*pool.CompanyData, []models.FieldNamer) {
 			if rs.Country().IsEmpty() {
-				userCurrency := CompanyGetUserCurrency(rs.Env(), rs.First().FieldMap()).(pool.CurrencySet)
+				userCurrency := CompanyGetUserCurrency(rs.Env()).(pool.CurrencySet)
 				return &pool.CompanyData{
 					Currency: userCurrency,
 				}, []models.FieldNamer{pool.Company().Currency()}
