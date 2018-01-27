@@ -93,7 +93,7 @@ a change of password, the user has to login again.`},
 		"Company": models.Many2OneField{RelationModel: pool.Company(), Required: true, Default: func(env models.Environment) interface{} {
 			return pool.Company().NewSet(env).CompanyDefaultGet()
 		}, Help: "The company this user is currently working for.", Constraint: pool.User().Methods().CheckCompany()},
-		"Companies": models.Many2ManyField{RelationModel: pool.Company(), JSON: "company_ids",
+		"Companies": models.Many2ManyField{RelationModel: pool.Company(), JSON: "company_ids", Required: true,
 			Default: func(env models.Environment) interface{} {
 				return pool.Company().NewSet(env).CompanyDefaultGet()
 			}, Constraint: pool.User().Methods().CheckCompany()},
