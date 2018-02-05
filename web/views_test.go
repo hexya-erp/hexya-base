@@ -8,11 +8,11 @@ import (
 
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/security"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-var viewDef1 string = `
+var viewDef1 = `
 <view id="my_id" name="My View" model="ResUSers">
 	<form>
 		<group>
@@ -23,12 +23,12 @@ var viewDef1 string = `
 </view>
 `
 
-var viewFieldInfos1 map[string]*models.FieldInfo = map[string]*models.FieldInfo{
+var viewFieldInfos1 = map[string]*models.FieldInfo{
 	"name": {},
 	"tz":   {},
 }
 
-var viewDef2 string = `
+var viewDef2 = `
 <view id="my_id" name="My View" model="ResUSers">
 	<form>
 		<group>
@@ -39,7 +39,7 @@ var viewDef2 string = `
 </view>
 `
 
-var viewFieldInfos2 map[string]*models.FieldInfo = map[string]*models.FieldInfo{
+var viewFieldInfos2 = map[string]*models.FieldInfo{
 	"name": {Required: true},
 	"tz":   {ReadOnly: true},
 }
@@ -48,7 +48,7 @@ func TestViewModifiers(t *testing.T) {
 	Convey("Testing correct modifiers injection in views", t, func() {
 		models.SimulateInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 			Convey("'invisible', 'required' and 'readonly' field attributes should be set in modifiers", func() {
-				view := pool.User().NewSet(env).ProcessView(viewDef1, viewFieldInfos1)
+				view := h.User().NewSet(env).ProcessView(viewDef1, viewFieldInfos1)
 				So(view, ShouldEqual, `
 <view id="my_id" name="My View" model="ResUSers">
 	<form>
@@ -61,7 +61,7 @@ func TestViewModifiers(t *testing.T) {
 `)
 			})
 			Convey("attrs should be set in modifiers", func() {
-				view := pool.User().NewSet(env).ProcessView(viewDef2, viewFieldInfos1)
+				view := h.User().NewSet(env).ProcessView(viewDef2, viewFieldInfos1)
 				So(view, ShouldEqual, `
 <view id="my_id" name="My View" model="ResUSers">
 	<form>
@@ -74,7 +74,7 @@ func TestViewModifiers(t *testing.T) {
 `)
 			})
 			Convey("'Readonly' and 'Required' field data should be taken into account", func() {
-				view := pool.User().NewSet(env).ProcessView(viewDef2, viewFieldInfos2)
+				view := h.User().NewSet(env).ProcessView(viewDef2, viewFieldInfos2)
 				So(view, ShouldEqual, `
 <view id="my_id" name="My View" model="ResUSers">
 	<form>

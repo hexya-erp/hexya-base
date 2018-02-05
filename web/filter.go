@@ -9,16 +9,17 @@ import (
 
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/tools/strutils"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
+	"github.com/hexya-erp/hexya/pool/q"
 )
 
 func init() {
-	filterModel := pool.Filter().DeclareModel()
+	filterModel := h.Filter().DeclareModel()
 	filterModel.AddFields(map[string]models.FieldDefinition{
 		"Name": models.CharField{String: "Filter Name", Required: true, Translate: true},
-		"User": models.Many2OneField{RelationModel: pool.User(), OnDelete: models.Cascade,
+		"User": models.Many2OneField{RelationModel: h.User(), OnDelete: models.Cascade,
 			Default: func(env models.Environment) interface{} {
-				return pool.User().Search(env, pool.User().ID().Equals(env.Uid()))
+				return h.User().Search(env, q.User().ID().Equals(env.Uid()))
 			}, Help: `The user this filter is private to. When left empty the filter is public and available to all users.`},
 		"Domain":    models.TextField{Required: true, Default: models.DefaultValue("[]")},
 		"Context":   models.TextField{Required: true, Default: models.DefaultValue("{}")},
@@ -35,19 +36,19 @@ func init() {
 
 	filterModel.Methods().GetFilters().DeclareMethod(
 		`GetFilters returns the filters for the given model and actionID for the current user`,
-		func(rs pool.FilterSet, modelName, actionID string) []models.FieldMap {
-			condition := pool.Filter().ResModel().Equals(modelName).
+		func(rs h.FilterSet, modelName, actionID string) []models.FieldMap {
+			condition := q.Filter().ResModel().Equals(modelName).
 				And().Action().Equals(actionID).
-				AndCond(pool.Filter().UserFilteredOn(pool.User().ID().Equals(rs.Env().Uid())).
+				AndCond(q.Filter().UserFilteredOn(q.User().ID().Equals(rs.Env().Uid())).
 					Or().User().IsNull())
-			userContext := pool.User().Browse(rs.Env(), []int64{rs.Env().Uid()}).ContextGet()
-			filterRS := pool.Filter().NewSet(rs.Env())
+			userContext := h.User().Browse(rs.Env(), []int64{rs.Env().Uid()}).ContextGet()
+			filterRS := h.Filter().NewSet(rs.Env())
 			res := filterRS.WithNewContext(userContext).Search(condition).Read([]string{"Name", "IsDefault", "Domain", "Context", "User", "Sort"})
 			return res
 		})
 
 	filterModel.Methods().Copy().Extend("",
-		func(rs pool.FilterSet, overrides *pool.FilterData, fieldsToUnset ...models.FieldNamer) pool.FilterSet {
+		func(rs h.FilterSet, overrides *h.FilterData, fieldsToUnset ...models.FieldNamer) h.FilterSet {
 			rs.EnsureOne()
 			vals, fieldsToUnset := rs.DataStruct(overrides.FieldMap(fieldsToUnset...))
 			vals.Name = fmt.Sprintf("%s (copy)", rs.Name())
@@ -57,7 +58,7 @@ func init() {
 	filterModel.Methods().CreateOrReplace().DeclareMethod(
 		`CreateOrReplace creates or updates the filter with the given parameters.
 		Filter is considered the same if it has the same name (case insensitive) and the same user (if it has one).`,
-		func(rs pool.FilterSet, vals *pool.FilterData) pool.FilterSet {
+		func(rs h.FilterSet, vals *h.FilterData) h.FilterSet {
 			fMap := vals.FieldMap()
 			fMap["domain"] = strutils.MarshalToJSONString(fMap["domain"])
 			fMap["domain"] = strings.Replace(fMap["domain"].(string), "false", "False", -1)
@@ -65,7 +66,7 @@ func init() {
 			fMap["context"] = strutils.MarshalToJSONString(fMap["context"])
 			values, _ := rs.DataStruct(fMap)
 			currentFilters := rs.GetFilters(values.ResModel, values.Action)
-			var matchingFilters []*pool.FilterData
+			var matchingFilters []*h.FilterData
 			for _, f := range currentFilters {
 				filter, _ := rs.DataStruct(f)
 				if strings.ToLower(filter.Name) != strings.ToLower(values.Name) {
@@ -82,7 +83,7 @@ func init() {
 					// Setting new default: any other default that belongs to the user
 					// should be turned off
 					actionCondition := rs.GetActionCondition(values.Action)
-					defaults := pool.Filter().Search(rs.Env(), actionCondition.
+					defaults := h.Filter().Search(rs.Env(), actionCondition.
 						And().ResModel().Equals(values.ResModel).
 						And().User().Equals(values.User).
 						And().IsDefault().Equals(true))
@@ -96,7 +97,7 @@ func init() {
 			if len(matchingFilters) > 0 {
 				// When a filter exists for the same (name, model, user) triple, we simply
 				// replace its definition (considering action_id irrelevant here)
-				matchingFilter := pool.Filter().Browse(rs.Env(), []int64{matchingFilters[0].ID})
+				matchingFilter := h.Filter().Browse(rs.Env(), []int64{matchingFilters[0].ID})
 				matchingFilter.Write(values)
 				return matchingFilter
 			}
@@ -112,10 +113,10 @@ func init() {
 	       have to explicitly remove the current default before setting a new one)
 
 	       This method should only be called if 'vals' is trying to set 'IsDefault'`,
-		func(rs pool.FilterSet, vals *pool.FilterData, matchingFilters []*pool.FilterData) {
+		func(rs h.FilterSet, vals *h.FilterData, matchingFilters []*h.FilterData) {
 			values, _ := rs.DataStruct(vals.FieldMap())
 			actionCondition := rs.GetActionCondition(values.Action)
-			defaults := pool.Filter().Search(rs.Env(), actionCondition.
+			defaults := h.Filter().Search(rs.Env(), actionCondition.
 				And().ResModel().Equals(values.ResModel).
 				And().User().IsNull().
 				And().IsDefault().Equals(true))
@@ -131,11 +132,11 @@ func init() {
 	filterModel.Methods().GetActionCondition().DeclareMethod(
 		`GetActionCondition returns a condition for matching filters that are visible in the
 		same context (menu/view) as the given action.`,
-		func(rs pool.FilterSet, action string) pool.FilterCondition {
+		func(rs h.FilterSet, action string) q.FilterCondition {
 			if action != "" {
 				// filters specific to this menu + global ones
-				return pool.Filter().Action().Equals(action).Or().Action().IsNull()
+				return q.Filter().Action().Equals(action).Or().Action().IsNull()
 			}
-			return pool.Filter().Action().IsNull()
+			return q.Filter().Action().IsNull()
 		})
 }

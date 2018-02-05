@@ -12,7 +12,8 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types"
 	"github.com/hexya-erp/hexya/hexya/server"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
+	"github.com/hexya-erp/hexya/pool/q"
 )
 
 // ActionLoad returns the action with the given id
@@ -20,7 +21,7 @@ func ActionLoad(c *server.Context) {
 	var lang string
 	if c.Session().Get("uid") != nil {
 		models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
-			user := pool.User().Search(env, pool.User().ID().Equals(c.Session().Get("uid").(int64)))
+			user := h.User().Search(env, q.User().ID().Equals(c.Session().Get("uid").(int64)))
 			lang = user.ContextGet().GetString("lang")
 		})
 	}

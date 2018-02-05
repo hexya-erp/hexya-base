@@ -19,32 +19,33 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types"
 	"github.com/hexya-erp/hexya/hexya/tools/strutils"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
+	"github.com/hexya-erp/hexya/pool/q"
 	"github.com/spf13/viper"
 )
 
 func init() {
-	attachmentModel := pool.Attachment().DeclareModel()
+	attachmentModel := h.Attachment().DeclareModel()
 	attachmentModel.AddFields(map[string]models.FieldDefinition{
 		"Name":        models.CharField{String: "Attachment Name", Required: true},
 		"DatasFname":  models.CharField{String: "File Name"},
 		"Description": models.TextField{},
 		"ResName": models.CharField{String: "Resource Name",
-			Compute: pool.Attachment().Methods().ComputeResName(), Stored: true, Depends: []string{"ResModel", "ResID"}},
+			Compute: h.Attachment().Methods().ComputeResName(), Stored: true, Depends: []string{"ResModel", "ResID"}},
 		"ResModel": models.CharField{String: "Resource Model", Help: "The database object this attachment will be attached to",
 			Index: true},
 		"ResField": models.CharField{String: "Resource Field", Index: true},
 		"ResID":    models.IntegerField{String: "Resource ID", Help: "The record id this is attached to"},
-		"Company": models.Many2OneField{RelationModel: pool.Company(), Default: func(env models.Environment) interface{} {
-			return pool.User().NewSet(env).CurrentUser().Company()
+		"Company": models.Many2OneField{RelationModel: h.Company(), Default: func(env models.Environment) interface{} {
+			return h.User().NewSet(env).CurrentUser().Company()
 		}},
 		"Type": models.SelectionField{Selection: types.Selection{"binary": "Binary", "url": "URL"},
 			Help: "You can either upload a file from your computer or copy/paste an internet link to your file."},
 		"URL":    models.CharField{Index: true, Size: 1024},
 		"Public": models.BooleanField{String: "Is a public document"},
 
-		"Datas": models.BinaryField{String: "File Content", Compute: pool.Attachment().Methods().ComputeDatas(),
-			Inverse: pool.Attachment().Methods().InverseDatas()},
+		"Datas": models.BinaryField{String: "File Content", Compute: h.Attachment().Methods().ComputeDatas(),
+			Inverse: h.Attachment().Methods().InverseDatas()},
 		"DBDatas":      models.CharField{String: "Database Data"},
 		"StoreFname":   models.CharField{String: "Stored Filename"},
 		"FileSize":     models.IntegerField{GoType: new(int)},
@@ -55,41 +56,41 @@ func init() {
 
 	attachmentModel.Methods().ComputeResName().DeclareMethod(
 		`ComputeResName computes the display name of the ressource this document is attached to.`,
-		func(rs pool.AttachmentSet) (*pool.AttachmentData, []models.FieldNamer) {
-			var res pool.AttachmentData
+		func(rs h.AttachmentSet) (*h.AttachmentData, []models.FieldNamer) {
+			var res h.AttachmentData
 			if rs.ResModel() != "" && rs.ResID() != 0 {
 				record := rs.Env().Pool(rs.ResModel()).Search(models.Registry.MustGet(rs.ResModel()).Field("ID").Equals(rs.ResID()))
 				res.ResName = record.Get("DisplayName").(string)
 			}
-			return &res, []models.FieldNamer{pool.Attachment().ResName()}
+			return &res, []models.FieldNamer{h.Attachment().ResName()}
 		})
 
 	attachmentModel.Methods().Storage().DeclareMethod(
 		`Storage returns the configured storage mechanism for attachments (e.g. database, file, etc.)`,
-		func(rs pool.AttachmentSet) string {
-			return pool.ConfigParameter().NewSet(rs.Env()).GetParam("attachment.location", "file")
+		func(rs h.AttachmentSet) string {
+			return h.ConfigParameter().NewSet(rs.Env()).GetParam("attachment.location", "file")
 		})
 
 	attachmentModel.Methods().FileStore().DeclareMethod(
 		`FileStore returns the directory in which the attachment files are saved.`,
-		func(rs pool.AttachmentSet) string {
+		func(rs h.AttachmentSet) string {
 			return filepath.Join(viper.GetString("DataDir"), "filestore")
 		})
 
 	attachmentModel.Methods().ForceStorage().DeclareMethod(
 		`ForceStorage forces all attachments to be stored in the currently configured storage`,
-		func(rs pool.AttachmentSet) bool {
-			if !pool.User().NewSet(rs.Env()).CurrentUser().IsAdmin() {
+		func(rs h.AttachmentSet) bool {
+			if !h.User().NewSet(rs.Env()).CurrentUser().IsAdmin() {
 				log.Panic(rs.T("Only administrators can execute this action."))
 			}
-			var cond pool.AttachmentCondition
+			var cond q.AttachmentCondition
 			switch rs.Storage() {
 			case "db":
-				cond = pool.Attachment().StoreFname().IsNotNull()
+				cond = q.Attachment().StoreFname().IsNotNull()
 			case "file":
-				cond = pool.Attachment().DBDatas().IsNotNull()
+				cond = q.Attachment().DBDatas().IsNotNull()
 			}
-			for _, attach := range pool.Attachment().Search(rs.Env(), cond).Records() {
+			for _, attach := range h.Attachment().Search(rs.Env(), cond).Records() {
 				attach.SetDatas(attach.Datas())
 			}
 			return true
@@ -97,14 +98,14 @@ func init() {
 
 	attachmentModel.Methods().FullPath().DeclareMethod(
 		`FullPath returns the given relative path as a full sanitized path`,
-		func(rs pool.AttachmentSet, path string) string {
+		func(rs h.AttachmentSet, path string) string {
 			return filepath.Join(rs.FileStore(), path)
 		})
 
 	attachmentModel.Methods().GetPath().DeclareMethod(
 		`GetPath returns the relative and full paths of the file with the given sha.
 		This methods creates the directory if it does not exist.`,
-		func(rs pool.AttachmentSet, sha string) (string, string) {
+		func(rs h.AttachmentSet, sha string) (string, string) {
 			fName := filepath.Join(sha[:2], sha)
 			fullPath := rs.FullPath(fName)
 			if os.MkdirAll(filepath.Dir(fullPath), 0755) != nil {
@@ -116,7 +117,7 @@ func init() {
 	attachmentModel.Methods().FileRead().DeclareMethod(
 		`FileRead returns the base64 encoded content of the given fileName (relative path).
 		If binSize is true, it returns the file size instead as a human readable string`,
-		func(rs pool.AttachmentSet, fileName string, binSize bool) string {
+		func(rs h.AttachmentSet, fileName string, binSize bool) string {
 			fullPath := rs.FullPath(fileName)
 			if binSize {
 				fInfo, err := os.Stat(fullPath)
@@ -138,7 +139,7 @@ func init() {
 		`FileWrite writes value into the file given by sha. If the file already exists, nothing is done.
 
 		It returns the filename of the written file.`,
-		func(rs pool.AttachmentSet, value, sha string) string {
+		func(rs h.AttachmentSet, value, sha string) string {
 			fName, fullPath := rs.GetPath(sha)
 			_, err := os.Stat(fullPath)
 			if err == nil {
@@ -157,13 +158,13 @@ func init() {
 
 	attachmentModel.Methods().FileDelete().DeclareMethod(
 		`FileDelete adds the given file name to the checklist for the garbage collector`,
-		func(rs pool.AttachmentSet, fName string) {
+		func(rs h.AttachmentSet, fName string) {
 			rs.MarkForGC(fName)
 		})
 
 	attachmentModel.Methods().MarkForGC().DeclareMethod(
 		`MarkForGC adds fName in a checklist for filestore garbage collection.`,
-		func(rs pool.AttachmentSet, fName string) {
+		func(rs h.AttachmentSet, fName string) {
 			// we use a spooldir: add an empty file in the subdirectory 'checklist'
 			fullPath := filepath.Join(rs.FullPath("checklist"), fName)
 			os.MkdirAll(filepath.Dir(fullPath), 0755)
@@ -172,7 +173,7 @@ func init() {
 
 	attachmentModel.Methods().FileGC().DeclareMethod(
 		`FileGC performs the garbage collection of the filestore.`,
-		func(rs pool.AttachmentSet) {
+		func(rs h.AttachmentSet) {
 			if rs.Storage() != "file" {
 				return
 			}
@@ -186,7 +187,7 @@ func init() {
 			models.ExecuteInNewEnvironment(rs.Env().Uid(), func(env models.Environment) {
 				env.Cr().Execute("LOCK ir_attachment IN SHARE MODE")
 
-				rSet := pool.Attachment().NewSet(env)
+				rSet := h.Attachment().NewSet(env)
 
 				//retrieve the file names from the checklist
 				var checklist []string
@@ -234,7 +235,7 @@ func init() {
 
 	attachmentModel.Methods().ComputeDatas().DeclareMethod(
 		`ComputeDatas returns the data of the attachment, reading either from file or database`,
-		func(rs pool.AttachmentSet) (*pool.AttachmentData, []models.FieldNamer) {
+		func(rs h.AttachmentSet) (*h.AttachmentData, []models.FieldNamer) {
 			var datas string
 			binSize := rs.Env().Context().GetBool("bin_size")
 			if rs.StoreFname() != "" {
@@ -242,14 +243,14 @@ func init() {
 			} else {
 				datas = rs.DBDatas()
 			}
-			return &pool.AttachmentData{
+			return &h.AttachmentData{
 				Datas: datas,
-			}, []models.FieldNamer{pool.Attachment().Datas()}
+			}, []models.FieldNamer{h.Attachment().Datas()}
 		})
 
 	attachmentModel.Methods().InverseDatas().DeclareMethod(
 		`InverseDatas stores the given data either in database or in file.`,
-		func(rs pool.AttachmentSet, val string) {
+		func(rs h.AttachmentSet, val string) {
 			var binData string
 			if val != "" {
 				binBytes, err := base64.StdEncoding.DecodeString(val)
@@ -258,7 +259,7 @@ func init() {
 				}
 				binData = string(binBytes)
 			}
-			vals := &pool.AttachmentData{
+			vals := &h.AttachmentData{
 				FileSize:     len(binData),
 				CheckSum:     rs.ComputeCheckSum(binData),
 				IndexContent: rs.Index(binData, rs.MimeType()),
@@ -273,11 +274,11 @@ func init() {
 			fName := rs.StoreFname()
 			// write as superuser, as user probably does not have write access
 			rs.Sudo().Super().Write(vals,
-				pool.Attachment().FileSize(),
-				pool.Attachment().CheckSum(),
-				pool.Attachment().IndexContent(),
-				pool.Attachment().DBDatas(),
-				pool.Attachment().StoreFname())
+				h.Attachment().FileSize(),
+				h.Attachment().CheckSum(),
+				h.Attachment().IndexContent(),
+				h.Attachment().DBDatas(),
+				h.Attachment().StoreFname())
 			if fName != "" {
 				rs.FileDelete(fName)
 			}
@@ -285,13 +286,13 @@ func init() {
 
 	attachmentModel.Methods().ComputeCheckSum().DeclareMethod(
 		`ComputeCheckSum computes the SHA1 checksum of the given data`,
-		func(rs pool.AttachmentSet, data string) string {
+		func(rs h.AttachmentSet, data string) string {
 			return fmt.Sprintf("%x", sha1.Sum([]byte(data)))
 		})
 
 	attachmentModel.Methods().ComputeMimeType().DeclareMethod(
 		`ComputeMimeType of the given values`,
-		func(rs pool.AttachmentSet, values *pool.AttachmentData) string {
+		func(rs h.AttachmentSet, values *h.AttachmentData) string {
 			mimeType := values.MimeType
 			if mimeType == "" && values.Datas != "" {
 				mimeType = http.DetectContentType([]byte(values.Datas))
@@ -304,11 +305,11 @@ func init() {
 
 	attachmentModel.Methods().CheckContents().DeclareMethod(
 		`CheckContents updates the given values`,
-		func(rs pool.AttachmentSet, values *pool.AttachmentData) *pool.AttachmentData {
+		func(rs h.AttachmentSet, values *h.AttachmentData) *h.AttachmentData {
 			res := *values
 			res.MimeType = rs.ComputeMimeType(values)
 			if strings.Contains(res.MimeType, "ht") || strings.Contains(res.MimeType, "xml") &&
-				(!pool.User().NewSet(rs.Env()).CurrentUser().IsAdmin() ||
+				(!h.User().NewSet(rs.Env()).CurrentUser().IsAdmin() ||
 					rs.Env().Context().GetBool("attachments_mime_plainxml")) {
 				res.MimeType = "text/plain"
 			}
@@ -317,7 +318,7 @@ func init() {
 
 	attachmentModel.Methods().Index().DeclareMethod(
 		`Index computes the index content of the given filename, or binary data.`,
-		func(rs pool.AttachmentSet, binData, fileType string) string {
+		func(rs h.AttachmentSet, binData, fileType string) string {
 			if fileType == "" {
 				return ""
 			}
@@ -335,16 +336,16 @@ func init() {
         more complex ones apply there.
 
 		This method panics if the user does not have the access rights.`,
-		func(rs pool.AttachmentSet, mode string, values *pool.AttachmentData) {
+		func(rs h.AttachmentSet, mode string, values *h.AttachmentData) {
 			// collect the records to check (by model)
 			var requireEmployee bool
 			modelIds := make(map[string][]int64)
 			if !rs.IsEmpty() {
 				rs.Load(
-					pool.Attachment().ResModel().String(),
-					pool.Attachment().ResID().String(),
-					pool.Attachment().CreateUID().String(),
-					pool.Attachment().Public().String())
+					h.Attachment().ResModel().String(),
+					h.Attachment().ResID().String(),
+					h.Attachment().CreateUID().String(),
+					h.Attachment().Public().String())
 				for _, attach := range rs.Records() {
 					if attach.Public() && mode == "read" {
 						continue
@@ -386,7 +387,7 @@ func init() {
 				}
 			}
 			if requireEmployee {
-				currentUser := pool.User().NewSet(rs.Env()).CurrentUser()
+				currentUser := h.User().NewSet(rs.Env()).CurrentUser()
 				if !currentUser.IsAdmin() && !currentUser.HasGroup(GroupUser.ID) {
 					log.Panic(rs.T("Sorry, you are not allowed to access this document."))
 				}
@@ -394,11 +395,11 @@ func init() {
 		})
 
 	attachmentModel.Methods().Search().Extend("",
-		func(rs pool.AttachmentSet, cond pool.AttachmentCondition) pool.AttachmentSet {
+		func(rs h.AttachmentSet, cond q.AttachmentCondition) h.AttachmentSet {
 			// add res_field=False in domain if not present
 			var hasResField bool
 			for _, c := range cond.Fields() {
-				if rs.Model().JSONizeFieldName(c) == rs.Model().JSONizeFieldName(pool.Attachment().ResField().String()) {
+				if rs.Model().JSONizeFieldName(c) == rs.Model().JSONizeFieldName(h.Attachment().ResField().String()) {
 					hasResField = true
 					break
 				}
@@ -414,10 +415,10 @@ func init() {
 			// the linked document.
 			modelAttachments := make(map[models.RecordRef][]int64)
 			rs.Load(
-				pool.Attachment().ID().String(),
-				pool.Attachment().ResModel().String(),
-				pool.Attachment().ResID().String(),
-				pool.Attachment().Public().String())
+				h.Attachment().ID().String(),
+				h.Attachment().ResModel().String(),
+				h.Attachment().ResID().String(),
+				h.Attachment().Public().String())
 			for _, attach := range rs.Records() {
 				if attach.ResModel() == "" || attach.Public() {
 					continue
@@ -442,20 +443,20 @@ func init() {
 				allowed := rs.Env().Pool(rRef.ModelName).Search(rModel.Field("ID").In(targets))
 				allowedIds = append(allowedIds, allowed.Ids()...)
 			}
-			return pool.Attachment().Browse(rs.Env(), allowedIds)
+			return h.Attachment().Browse(rs.Env(), allowedIds)
 		})
 
 	attachmentModel.Methods().Load().Extend("",
-		func(rs pool.AttachmentSet, fields ...string) pool.AttachmentSet {
+		func(rs h.AttachmentSet, fields ...string) h.AttachmentSet {
 			rs.Check("read", nil)
 			return rs.Super().Load(fields...)
 		})
 
 	attachmentModel.Methods().Write().Extend("",
-		func(rs pool.AttachmentSet, vals *pool.AttachmentData, fieldsToReset ...models.FieldNamer) bool {
+		func(rs h.AttachmentSet, vals *h.AttachmentData, fieldsToReset ...models.FieldNamer) bool {
 			rs.Check("write", vals)
-			_, mtExists := vals.Get(pool.Attachment().MimeType(), fieldsToReset...)
-			_, dtExists := vals.Get(pool.Attachment().Datas(), fieldsToReset...)
+			_, mtExists := vals.Get(h.Attachment().MimeType(), fieldsToReset...)
+			_, dtExists := vals.Get(h.Attachment().Datas(), fieldsToReset...)
 			if mtExists || dtExists {
 				vals = rs.CheckContents(vals)
 			}
@@ -463,19 +464,19 @@ func init() {
 		})
 
 	attachmentModel.Methods().Copy().Extend("",
-		func(rs pool.AttachmentSet, overrides *pool.AttachmentData, fieldsToReset ...models.FieldNamer) pool.AttachmentSet {
+		func(rs h.AttachmentSet, overrides *h.AttachmentData, fieldsToReset ...models.FieldNamer) h.AttachmentSet {
 			rs.Check("write", nil)
 			return rs.Super().Copy(overrides, fieldsToReset...)
 		})
 
 	attachmentModel.Methods().Unlink().Extend("",
-		func(rs pool.AttachmentSet) int64 {
+		func(rs h.AttachmentSet) int64 {
 			rs.Check("unlink", nil)
 			return rs.Super().Unlink()
 		})
 
 	attachmentModel.Methods().Create().Extend("",
-		func(rs pool.AttachmentSet, vals *pool.AttachmentData) pool.AttachmentSet {
+		func(rs h.AttachmentSet, vals *h.AttachmentData) h.AttachmentSet {
 			vals = rs.CheckContents(vals)
 			rs.Check("write", vals)
 			return rs.Super().Create(vals)
@@ -483,7 +484,7 @@ func init() {
 
 	attachmentModel.Methods().ActionGet().DeclareMethod(
 		`ActionGet returns the action for displaying attachments`,
-		func(rs pool.AttachmentSet) *actions.Action {
+		func(rs h.AttachmentSet) *actions.Action {
 			return actions.Registry.GetById("base_action_attachment")
 		})
 }

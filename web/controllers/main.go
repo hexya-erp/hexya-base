@@ -16,13 +16,14 @@ import (
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools/generate"
 	"github.com/hexya-erp/hexya/hexya/tools/logging"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
+	"github.com/hexya-erp/hexya/pool/q"
 )
 
 const (
-	commonCSSRoute   string = "/web/assets/common.css"
-	backendCSSRoute  string = "/web/assets/backend.css"
-	frontendCSSRoute string = "/web/assets/frontend.css"
+	commonCSSRoute   = "/web/assets/common.css"
+	backendCSSRoute  = "/web/assets/backend.css"
+	frontendCSSRoute = "/web/assets/frontend.css"
 )
 
 var (
@@ -118,7 +119,7 @@ func WebClient(c *server.Context) {
 	var lang string
 	if c.Session().Get("uid") != nil {
 		models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
-			user := pool.User().Search(env, pool.User().ID().Equals(c.Session().Get("uid").(int64)))
+			user := h.User().Search(env, q.User().ID().Equals(c.Session().Get("uid").(int64)))
 			lang = user.ContextGet().GetString("lang")
 		})
 	}

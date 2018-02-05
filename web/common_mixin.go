@@ -18,15 +18,16 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/tools/nbutils"
 	"github.com/hexya-erp/hexya/hexya/views"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
+	"github.com/hexya-erp/hexya/pool/q"
 )
 
 func init() {
-	commonMixin := pool.CommonMixin()
+	commonMixin := h.CommonMixin()
 
 	commonMixin.Methods().AddNamesToRelations().DeclareMethod(
 		`AddNameToRelations returns the given FieldMap after getting the name of all 2one relation ids`,
-		func(rs pool.CommonMixinSet, fMap models.FieldMap, fInfos map[string]*models.FieldInfo) models.FieldMap {
+		func(rs h.CommonMixinSet, fMap models.FieldMap, fInfos map[string]*models.FieldInfo) models.FieldMap {
 			fMap = fMap.JSONized(rs.Model().Underlying())
 			for fName, value := range fMap {
 				fi := fInfos[fName]
@@ -89,7 +90,7 @@ func init() {
 	commonMixin.Methods().ProcessWriteValues().DeclareMethod(
 		`ProcessWriteValues updates the given data values for Write method to be
 		compatible with the ORM, in particular for relation fields`,
-		func(rs pool.CommonMixinSet, fMap models.FieldMap) models.FieldMap {
+		func(rs h.CommonMixinSet, fMap models.FieldMap) models.FieldMap {
 			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
 			for f, v := range fMap {
 				fJSON := rs.Model().JSONizeFieldName(f)
@@ -126,7 +127,7 @@ func init() {
 		It returns a first FieldMap to be used as argument to the Create method, and 
 		a second map to be used with a subsequent call to PostProcessCreateValues (for
 		updating FKs pointing to the newly created record).`,
-		func(rs pool.CommonMixinSet, fMap models.FieldMap) (models.FieldMap, models.FieldMap) {
+		func(rs h.CommonMixinSet, fMap models.FieldMap) (models.FieldMap, models.FieldMap) {
 			createMap := make(models.FieldMap)
 			deferredMap := make(models.FieldMap)
 			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
@@ -163,7 +164,7 @@ func init() {
 		
 		This method is meant to be called with the second returned value of ProcessCreateValues
 		after record creation.`,
-		func(rs pool.CommonMixinSet, fMap models.FieldMap) {
+		func(rs h.CommonMixinSet, fMap models.FieldMap) {
 			if len(fMap) == 0 {
 				return
 			}
@@ -186,7 +187,7 @@ func init() {
 	commonMixin.Methods().ExecuteO2MActions().DeclareMethod(
 		`ExecuteO2MActions executes the actions on one2many fields given by
 		the list of triplets received from the client`,
-		func(rs pool.CommonMixinSet, fieldName string, info *models.FieldInfo, value interface{}) interface{} {
+		func(rs h.CommonMixinSet, fieldName string, info *models.FieldInfo, value interface{}) interface{} {
 			switch v := value.(type) {
 			case []interface{}:
 				relSet := rs.Env().Pool(info.Relation)
@@ -245,7 +246,7 @@ func init() {
 	commonMixin.Methods().NormalizeM2MData().DeclareMethod(
 		`NormalizeM2MData converts the list of triplets received from the client into the final list of ids
 		to keep in the Many2Many relationship of this model through the given field.`,
-		func(rs pool.CommonMixinSet, fieldName string, info *models.FieldInfo, value interface{}) interface{} {
+		func(rs h.CommonMixinSet, fieldName string, info *models.FieldInfo, value interface{}) interface{} {
 			switch v := value.(type) {
 			case []interface{}:
 				resSet := rs.Env().Pool(info.Relation)
@@ -280,7 +281,7 @@ func init() {
 		`GetFormviewID returns an view id to open the document with.
 		This method is meant to be overridden in addons that want
  		to give specific view ids for example.`,
-		func(rs pool.CommonMixinSet) string {
+		func(rs h.CommonMixinSet) string {
 			return ""
 		}).AllowGroup(security.GroupEveryone)
 
@@ -288,7 +289,7 @@ func init() {
 		`GetFormviewAction returns an action to open the document.
 		This method is meant to be overridden in addons that want
 		to give specific view ids for example.`,
-		func(rs pool.CommonMixinSet) *actions.Action {
+		func(rs h.CommonMixinSet) *actions.Action {
 			viewID := rs.GetFormviewId()
 			return &actions.Action{
 				Type:        actions.ActionActWindow,
@@ -306,7 +307,7 @@ func init() {
 		`FieldsViewGet is the base implementation of the 'FieldsViewGet' method which
 		gets the detailed composition of the requested view like fields, mixin,
 		view architecture.`,
-		func(rs pool.CommonMixinSet, args webdata.FieldsViewGetParams) *webdata.FieldsViewData {
+		func(rs h.CommonMixinSet, args webdata.FieldsViewGetParams) *webdata.FieldsViewData {
 			lang := rs.Env().Context().GetString("lang")
 			view := views.Registry.GetByID(args.ViewID)
 			if view == nil {
@@ -347,7 +348,7 @@ func init() {
 
 	commonMixin.Methods().LoadViews().DeclareMethod(
 		`LoadViews returns the data for all the views and filters required in the parameters.`,
-		func(rs pool.CommonMixinSet, args webdata.LoadViewsArgs) *webdata.LoadViewsData {
+		func(rs h.CommonMixinSet, args webdata.LoadViewsArgs) *webdata.LoadViewsData {
 			var res webdata.LoadViewsData
 			res.FieldsViews = make(map[views.ViewType]*webdata.FieldsViewData)
 			for _, viewTuple := range args.Views {
@@ -366,7 +367,7 @@ func init() {
 				})
 			}
 			if args.Options.LoadFilters {
-				res.Filters = pool.Filter().NewSet(rs.Env()).GetFilters(rs.ModelName(), args.Options.ActionID)
+				res.Filters = h.Filter().NewSet(rs.Env()).GetFilters(rs.ModelName(), args.Options.ActionID)
 			}
 			if args.Options.LoadFields {
 				res.Fields = rs.FieldsGet(models.FieldsGetArgs{})
@@ -376,7 +377,7 @@ func init() {
 
 	commonMixin.Methods().GetToolbar().DeclareMethod(
 		`GetToolbar returns a toolbar populated with the actions linked to this model`,
-		func(rs pool.CommonMixinSet) webdata.Toolbar {
+		func(rs h.CommonMixinSet) webdata.Toolbar {
 			var res webdata.Toolbar
 			for _, a := range actions.Registry.GetActionLinksForModel(rs.ModelName()) {
 				switch a.Type {
@@ -390,7 +391,7 @@ func init() {
 	commonMixin.Methods().ProcessView().DeclareMethod(
 		`ProcessView makes all the necessary modifications to the view
 		arch and returns the new xml string.`,
-		func(rs pool.CommonMixinSet, arch string, fieldInfos map[string]*models.FieldInfo) string {
+		func(rs h.CommonMixinSet, arch string, fieldInfos map[string]*models.FieldInfo) string {
 			// Load arch as etree
 			doc := etree.NewDocument()
 			if err := doc.ReadFromString(arch); err != nil {
@@ -412,7 +413,7 @@ func init() {
 	commonMixin.Methods().AddOnchanges().DeclareMethod(
 		`AddOnchanges adds onchange=1 for each field in the view which has an OnChange
 		 method defined`,
-		func(rs pool.CommonMixinSet, doc *etree.Document, fieldInfos map[string]*models.FieldInfo) {
+		func(rs h.CommonMixinSet, doc *etree.Document, fieldInfos map[string]*models.FieldInfo) {
 			for fieldName, fInfo := range fieldInfos {
 				if !fInfo.OnChange {
 					continue
@@ -427,7 +428,7 @@ func init() {
 
 	commonMixin.Methods().SanitizeSearchView().DeclareMethod(
 		`SanitizeSearchView adds the missing domain attribute if it does not exist`,
-		func(rs pool.CommonMixinSet, doc *etree.Document) {
+		func(rs h.CommonMixinSet, doc *etree.Document) {
 			if doc.Root().Tag != "search" {
 				return
 			}
@@ -440,7 +441,7 @@ func init() {
 
 	commonMixin.Methods().AddModifiers().DeclareMethod(
 		`AddModifiers adds the modifiers attribute nodes to given xml doc.`,
-		func(rs pool.CommonMixinSet, doc *etree.Document, fieldInfos map[string]*models.FieldInfo) {
+		func(rs h.CommonMixinSet, doc *etree.Document, fieldInfos map[string]*models.FieldInfo) {
 			allModifiers := make(map[*etree.Element]map[string]interface{})
 			// Process attrs on all nodes
 			for _, attrsTag := range doc.FindElements("[@attrs]") {
@@ -490,7 +491,7 @@ func init() {
 		- 'invisible', 'readonly' and 'required' attributes in field tags
 		- 'ReadOnly' and 'Required' parameters of the model's field'
 		It returns the modified map.`,
-		func(rs pool.CommonMixinSet, element *etree.Element, fieldInfos map[string]*models.FieldInfo, modifiers map[string]interface{}) map[string]interface{} {
+		func(rs h.CommonMixinSet, element *etree.Element, fieldInfos map[string]*models.FieldInfo, modifiers map[string]interface{}) map[string]interface{} {
 			fieldName := element.SelectAttr("name").Value
 			// Check if we have the modifier as attribute in the field node
 			for modifier := range modifiers {
@@ -576,7 +577,7 @@ func init() {
 
 	commonMixin.Methods().SearchRead().DeclareMethod(
 		`SearchRead retrieves database records according to the filters defined in params.`,
-		func(rs pool.CommonMixinSet, params webdata.SearchParams) []models.FieldMap {
+		func(rs h.CommonMixinSet, params webdata.SearchParams) []models.FieldMap {
 			rSet := rs.AddDomainLimitOffset(params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order)
 
 			records := rSet.Read(params.Fields)
@@ -608,7 +609,7 @@ func init() {
 
 	commonMixin.Methods().ReadGroup().DeclareMethod(
 		`Get a list of record aggregates according to the given parameters.`,
-		func(rs pool.CommonMixinSet, params webdata.ReadGroupParams) []models.FieldMap {
+		func(rs h.CommonMixinSet, params webdata.ReadGroupParams) []models.FieldMap {
 			rSet := rs.AddDomainLimitOffset(params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order)
 			rSet = rSet.GroupBy(models.ConvertToFieldNameSlice(params.GroupBy)...)
 			aggregates := rSet.Aggregates(models.ConvertToFieldNameSlice(params.Fields)...)
@@ -625,8 +626,8 @@ func init() {
 
 	commonMixin.Methods().SearchDomain().DeclareMethod(
 		`SearchDomain execute a search on the given domain.`,
-		func(rs pool.CommonMixinSet, domain domains.Domain) pool.CommonMixinSet {
-			cond := pool.CommonMixinCondition{
+		func(rs h.CommonMixinSet, domain domains.Domain) h.CommonMixinSet {
+			cond := q.CommonMixinCondition{
 				Condition: domains.ParseDomain(domain),
 			}
 			return rs.Search(cond)
@@ -638,16 +639,16 @@ func init() {
 
 			operation must be one of "read", "create", "unlink", "write".
 			`,
-		func(rs pool.CommonMixinSet, args webdata.CheckAccessRightsArgs) bool {
+		func(rs h.CommonMixinSet, args webdata.CheckAccessRightsArgs) bool {
 			switch args.Operation {
 			case "read":
-				return rs.CheckExecutionPermission(pool.CommonMixin().Methods().Read().Underlying(), !args.RaiseException)
+				return rs.CheckExecutionPermission(h.CommonMixin().Methods().Read().Underlying(), !args.RaiseException)
 			case "write":
-				return rs.CheckExecutionPermission(pool.CommonMixin().Methods().Write().Underlying(), !args.RaiseException)
+				return rs.CheckExecutionPermission(h.CommonMixin().Methods().Write().Underlying(), !args.RaiseException)
 			case "unlink":
-				return rs.CheckExecutionPermission(pool.CommonMixin().Methods().Unlink().Underlying(), !args.RaiseException)
+				return rs.CheckExecutionPermission(h.CommonMixin().Methods().Unlink().Underlying(), !args.RaiseException)
 			case "create":
-				return rs.CheckExecutionPermission(pool.CommonMixin().Methods().Create().Underlying(), !args.RaiseException)
+				return rs.CheckExecutionPermission(h.CommonMixin().Methods().Create().Underlying(), !args.RaiseException)
 			}
 			return false
 		})

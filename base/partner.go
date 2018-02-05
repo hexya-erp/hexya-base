@@ -29,10 +29,11 @@ import (
 	"github.com/hexya-erp/hexya/hexya/tools/generate"
 	"github.com/hexya-erp/hexya/hexya/tools/typesutils"
 	"github.com/hexya-erp/hexya/hexya/views"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
+	"github.com/hexya-erp/hexya/pool/q"
 )
 
-const gravatarBaseURL string = "https://www.gravatar.com/avatar"
+const gravatarBaseURL = "https://www.gravatar.com/avatar"
 
 var (
 	WarningMessage = types.Selection{
@@ -46,35 +47,35 @@ The Message has to be written in the next field.`
 )
 
 func init() {
-	partnerTitle := pool.PartnerTitle().DeclareModel()
+	partnerTitle := h.PartnerTitle().DeclareModel()
 	partnerTitle.AddFields(map[string]models.FieldDefinition{
 		"Name":     models.CharField{String: "Title", Required: true, Translate: true, Unique: true},
 		"Shortcut": models.CharField{String: "Abbreviation", Translate: true},
 	})
 
-	partnerCategory := pool.PartnerCategory().DeclareModel()
+	partnerCategory := h.PartnerCategory().DeclareModel()
 	partnerCategory.AddFields(map[string]models.FieldDefinition{
 		"Name":  models.CharField{String: "Tag Name", Required: true, Translate: true},
 		"Color": models.IntegerField{String: "Color Index"},
-		"Parent": models.Many2OneField{RelationModel: pool.PartnerCategory(),
+		"Parent": models.Many2OneField{RelationModel: h.PartnerCategory(),
 			String: "Parent Tag", Index: true, OnDelete: models.Cascade},
-		"Children": models.One2ManyField{RelationModel: pool.PartnerCategory(),
+		"Children": models.One2ManyField{RelationModel: h.PartnerCategory(),
 			ReverseFK: "Parent", String: "Children Tags"},
 		"Active": models.BooleanField{Default: models.DefaultValue(true),
 			Help: "The active field allows you to hide the category without removing it."},
-		"Partners": models.Many2ManyField{RelationModel: pool.Partner()},
+		"Partners": models.Many2ManyField{RelationModel: h.Partner()},
 	})
 
 	partnerCategory.Methods().CheckParent().DeclareMethod(
 		`CheckParent checks if we have a recursion in the parent tree.`,
-		func(rs pool.PartnerCategorySet) {
+		func(rs h.PartnerCategorySet) {
 			if !rs.CheckRecursion() {
 				log.Panic(rs.T("Error ! You can not create recursive tags."))
 			}
 		})
 
 	partnerCategory.Methods().NameGet().Extend("",
-		func(rs pool.PartnerCategorySet) string {
+		func(rs h.PartnerCategorySet) string {
 			if rs.Env().Context().GetString("partner_category_display") == "short" {
 				return rs.Super().NameGet()
 			}
@@ -87,7 +88,7 @@ func init() {
 		})
 
 	partnerCategory.Methods().SearchByName().Extend("",
-		func(rs pool.PartnerCategorySet, name string, op operator.Operator, additionalCond pool.PartnerCategoryCondition, limit int) pool.PartnerCategorySet {
+		func(rs h.PartnerCategorySet, name string, op operator.Operator, additionalCond q.PartnerCategoryCondition, limit int) h.PartnerCategorySet {
 			if name != "" {
 				tokens := strings.Split(name, " / ")
 				name = tokens[len(tokens)-1]
@@ -95,17 +96,17 @@ func init() {
 			return rs.Super().SearchByName(name, op, additionalCond, limit)
 		})
 
-	partnerModel := pool.Partner().DeclareModel()
+	partnerModel := h.Partner().DeclareModel()
 	partnerModel.AddFields(map[string]models.FieldDefinition{
 		"Name":  models.CharField{Required: true, Index: true, NoCopy: true},
 		"Date":  models.DateField{Index: true},
-		"Title": models.Many2OneField{RelationModel: pool.PartnerTitle()},
-		"Parent": models.Many2OneField{RelationModel: pool.Partner(), Index: true,
-			Constraint: pool.Partner().Methods().CheckParent(), OnChange: pool.Partner().Methods().OnchangeParent()},
+		"Title": models.Many2OneField{RelationModel: h.PartnerTitle()},
+		"Parent": models.Many2OneField{RelationModel: h.Partner(), Index: true,
+			Constraint: h.Partner().Methods().CheckParent(), OnChange: h.Partner().Methods().OnchangeParent()},
 		"ParentName": models.CharField{Related: "Parent.Name"},
 
-		"Children": models.One2ManyField{RelationModel: pool.Partner(),
-			ReverseFK: "Parent", Filter: pool.Partner().Active().Equals(true)},
+		"Children": models.One2ManyField{RelationModel: h.Partner(),
+			ReverseFK: "Parent", Filter: q.Partner().Active().Equals(true)},
 		"Ref": models.CharField{String: "Internal Reference", Index: true},
 		"Lang": models.CharField{String: "Language",
 			Default: func(env models.Environment) interface{} {
@@ -119,19 +120,19 @@ this contact will be printed in this language. If not, it will be English.`},
 inside printed reports. It is important to set a value for this field.
 You should use the same timezone that is otherwise used to pick and
 render date and time values: your computer's timezone.`},
-		"TZOffset": models.CharField{Compute: pool.Partner().Methods().ComputeTZOffset(),
+		"TZOffset": models.CharField{Compute: h.Partner().Methods().ComputeTZOffset(),
 			String: "Timezone Offset", Depends: []string{"TZ"}},
-		"User": models.Many2OneField{RelationModel: pool.User(),
+		"User": models.Many2OneField{RelationModel: h.User(),
 			String: "Salesperson", Help: "The internal user that is in charge of communicating with this contact if any."},
 		"VAT": models.CharField{String: "TIN", Help: `Tax Identification Number.
 Fill it if the company is subjected to taxes.
 Used by the some of the legal statements.`},
-		"Banks":   models.One2ManyField{String: "Bank Accounts", RelationModel: pool.BankAccount(), ReverseFK: "Partner"},
+		"Banks":   models.One2ManyField{String: "Bank Accounts", RelationModel: h.BankAccount(), ReverseFK: "Partner"},
 		"Website": models.CharField{Help: "Website of Partner or Company"},
 		"Comment": models.CharField{String: "Notes"},
-		"Categories": models.Many2ManyField{RelationModel: pool.PartnerCategory(), String: "Tags",
+		"Categories": models.Many2ManyField{RelationModel: h.PartnerCategory(), String: "Tags",
 			Default: func(env models.Environment) interface{} {
-				return pool.PartnerCategory().Browse(env, []int64{env.Context().GetInteger("category_id")})
+				return h.PartnerCategory().Browse(env, []int64{env.Context().GetInteger("category_id")})
 			}},
 		"CreditLimit": models.FloatField{},
 		"Barcode":     models.CharField{},
@@ -152,12 +153,12 @@ If it's not checked, purchase people will not see it when encoding a purchase or
 		"Street2": models.CharField{},
 		"Zip":     models.CharField{},
 		"City":    models.CharField{},
-		"State": models.Many2OneField{RelationModel: pool.CountryState(),
-			Filter: pool.CountryState().Country().EqualsEval("country_id"), OnDelete: models.Restrict},
-		"Country": models.Many2OneField{RelationModel: pool.Country(),
+		"State": models.Many2OneField{RelationModel: h.CountryState(),
+			Filter: q.CountryState().Country().EqualsEval("country_id"), OnDelete: models.Restrict},
+		"Country": models.Many2OneField{RelationModel: h.Country(),
 			OnDelete: models.Restrict},
-		"Email":          models.CharField{OnChange: pool.Partner().Methods().OnchangeEmail()},
-		"EmailFormatted": models.CharField{Compute: pool.Partner().Methods().ComputeEmailFormatted(), Help: "Formatted email address 'Name <email@domain>'", Depends: []string{"Name", "Email"}},
+		"Email":          models.CharField{OnChange: h.Partner().Methods().OnchangeEmail()},
+		"EmailFormatted": models.CharField{Compute: h.Partner().Methods().ComputeEmailFormatted(), Help: "Formatted email address 'Name <email@domain>'", Depends: []string{"Name", "Email"}},
 		"Phone":          models.CharField{},
 		"Fax":            models.CharField{},
 		"Mobile":         models.CharField{},
@@ -166,26 +167,26 @@ If it's not checked, purchase people will not see it when encoding a purchase or
 		// CompanyType is only an interface field, do not use it in business logic
 		"CompanyType": models.SelectionField{
 			Selection: types.Selection{"person": "Individual", "company": "Company"},
-			Compute:   pool.Partner().Methods().ComputeCompanyType(),
-			Depends:   []string{"IsCompany"}, Inverse: pool.Partner().Methods().InverseCompanyType(),
-			OnChange: pool.Partner().Methods().OnchangeCompanyType(),
+			Compute:   h.Partner().Methods().ComputeCompanyType(),
+			Depends:   []string{"IsCompany"}, Inverse: h.Partner().Methods().InverseCompanyType(),
+			OnChange: h.Partner().Methods().OnchangeCompanyType(),
 			Default:  models.DefaultValue("person")},
-		"Company": models.Many2OneField{RelationModel: pool.Company()},
+		"Company": models.Many2OneField{RelationModel: h.Company()},
 		"Color":   models.IntegerField{},
-		"Users":   models.One2ManyField{RelationModel: pool.User(), ReverseFK: "Partner"},
+		"Users":   models.One2ManyField{RelationModel: h.User(), ReverseFK: "Partner"},
 		"PartnerShare": models.BooleanField{String: "Share Partner",
-			Compute: pool.Partner().Methods().ComputePartnerShare(), Stored: true, Depends: []string{"Users", "Users.Share"},
+			Compute: h.Partner().Methods().ComputePartnerShare(), Stored: true, Depends: []string{"Users", "Users.Share"},
 			Help: `Either customer (no user), either shared user. Indicated the current partner is a customer without
 access or with a limited access created for sharing data.`},
-		"ContactAddress": models.CharField{Compute: pool.Partner().Methods().ComputeContactAddress(),
+		"ContactAddress": models.CharField{Compute: h.Partner().Methods().ComputeContactAddress(),
 			String: "Complete Address", Depends: []string{"Street", "Street2", "Zip", "City", "State", "Country",
 				"Country.AddressFormat", "Country.Code", "Country.Name", "CompanyName", "State.Code", "State.Name"}},
 
-		"CommercialPartner": models.Many2OneField{RelationModel: pool.Partner(),
-			Compute: pool.Partner().Methods().ComputeCommercialPartner(), String: "Commercial Entity", Stored: true,
+		"CommercialPartner": models.Many2OneField{RelationModel: h.Partner(),
+			Compute: h.Partner().Methods().ComputeCommercialPartner(), String: "Commercial Entity", Stored: true,
 			Index: true, Depends: []string{"IsCompany", "Parent", "Parent.CommercialPartner"}},
 		"CommercialCompanyName": models.CharField{
-			Compute: pool.Partner().Methods().ComputeCommercialCompanyName(), Stored: true,
+			Compute: h.Partner().Methods().ComputeCommercialCompanyName(), Stored: true,
 			Depends: []string{"CompanyName", "Parent", "Parent.IsCompany", "CommercialPartner", "CommercialPartner.Name"}},
 		"CompanyName": models.CharField{},
 
@@ -209,7 +210,7 @@ Use this field anywhere a small image is required.`},
 		"Contacts require a name.")
 
 	partnerModel.Methods().ComputeDisplayName().Extend("",
-		func(rs pool.PartnerSet) (models.FieldMap, []models.FieldNamer) {
+		func(rs h.PartnerSet) (models.FieldMap, []models.FieldNamer) {
 			rSet := rs.
 				WithContext("show_address", false).
 				WithContext("show_address_only", false).
@@ -219,16 +220,16 @@ Use this field anywhere a small image is required.`},
 
 	partnerModel.Methods().ComputeTZOffset().DeclareMethod(
 		`ComputeTZOffset computes the timezone offset`,
-		func(rs pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
 			// TODO Implement TZOffset
-			return &pool.PartnerData{
+			return &h.PartnerData{
 				TZOffset: "",
-			}, []models.FieldNamer{pool.Partner().TZOffset()}
+			}, []models.FieldNamer{h.Partner().TZOffset()}
 		})
 
 	partnerModel.Methods().ComputePartnerShare().DeclareMethod(
 		`ComputePartnerShare computes the PartnerShare field`,
-		func(rs pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
 			var partnerShare bool
 			if rs.Users().IsEmpty() {
 				partnerShare = true
@@ -239,47 +240,47 @@ Use this field anywhere a small image is required.`},
 					break
 				}
 			}
-			return &pool.PartnerData{
+			return &h.PartnerData{
 				PartnerShare: partnerShare,
-			}, []models.FieldNamer{pool.Partner().PartnerShare()}
+			}, []models.FieldNamer{h.Partner().PartnerShare()}
 		})
 
 	partnerModel.Methods().ComputeContactAddress().DeclareMethod(
 		`ComputeContactAddress computes the contact's address according to the contact's country standards`,
-		func(rs pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
-			return &pool.PartnerData{
+		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
+			return &h.PartnerData{
 				ContactAddress: rs.DisplayAddress(false),
-			}, []models.FieldNamer{pool.Partner().ContactAddress()}
+			}, []models.FieldNamer{h.Partner().ContactAddress()}
 		})
 
 	partnerModel.Methods().ComputeCommercialPartner().DeclareMethod(
 		`ComputeCommercialPartner computes the commercial partner, which is the first company ancestor or the top
 		ancestor if none are companies`,
-		func(rs pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
 			commercialPartner := rs
 			if !rs.IsCompany() && !rs.Parent().IsEmpty() {
 				commercialPartner = rs.Parent().CommercialPartner()
 			}
-			return &pool.PartnerData{
+			return &h.PartnerData{
 				CommercialPartner: commercialPartner,
-			}, []models.FieldNamer{pool.Partner().CommercialPartner()}
+			}, []models.FieldNamer{h.Partner().CommercialPartner()}
 		})
 
 	partnerModel.Methods().ComputeCommercialCompanyName().DeclareMethod(
 		`ComputeCommercialCompanyName returns the name of the commercial partner company`,
-		func(rs pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
 			commPartnerName := rs.CommercialPartner().Name()
 			if !rs.CommercialPartner().IsCompany() {
 				commPartnerName = rs.CompanyName()
 			}
-			return &pool.PartnerData{
+			return &h.PartnerData{
 				CommercialCompanyName: commPartnerName,
-			}, []models.FieldNamer{pool.Partner().CommercialCompanyName()}
+			}, []models.FieldNamer{h.Partner().CommercialCompanyName()}
 		})
 
 	partnerModel.Methods().GetDefaultImage().DeclareMethod(
 		`GetDefaultImage returns a default image for the partner (base64 encoded)`,
-		func(rs pool.PartnerSet, partnerType string, isCompany bool, Parent pool.PartnerSet) string {
+		func(rs h.PartnerSet, partnerType string, isCompany bool, Parent h.PartnerSet) string {
 			if rs.Env().Context().HasKey("install_mode") {
 				return ""
 			}
@@ -321,26 +322,26 @@ Use this field anywhere a small image is required.`},
 
 	partnerModel.Methods().CheckParent().DeclareMethod(
 		`CheckParent checks for recursion in the partners parenthood`,
-		func(rs pool.PartnerSet) {
+		func(rs h.PartnerSet) {
 			if !rs.CheckRecursion() {
 				log.Panic(rs.T("You cannot create recursive Partner hierarchies."))
 			}
 		})
 
 	partnerModel.Methods().Copy().Extend("",
-		func(rs pool.PartnerSet, overrides *pool.PartnerData, fieldsToUnset ...models.FieldNamer) pool.PartnerSet {
+		func(rs h.PartnerSet, overrides *h.PartnerData, fieldsToUnset ...models.FieldNamer) h.PartnerSet {
 			rs.EnsureOne()
 			overrides.Name = rs.T("%s (copy)", rs.Name())
-			fieldsToUnset = append(fieldsToUnset, pool.Partner().Name())
+			fieldsToUnset = append(fieldsToUnset, h.Partner().Name())
 			return rs.Super().Copy(overrides, fieldsToUnset...)
 		})
 
 	partnerModel.Methods().OnchangeParent().DeclareMethod(
 		`OnchangeParent updates the current partner data when its parent field
 		is modified`,
-		func(rs pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
 			if rs.Parent().IsEmpty() || rs.Type() != "contact" {
-				return &pool.PartnerData{}, []models.FieldNamer{}
+				return &h.PartnerData{}, []models.FieldNamer{}
 			}
 
 			var parentHasAddress bool
@@ -351,11 +352,11 @@ Use this field anywhere a small image is required.`},
 				}
 			}
 			if !parentHasAddress {
-				return &pool.PartnerData{}, []models.FieldNamer{}
+				return &h.PartnerData{}, []models.FieldNamer{}
 			}
 			resMap := make(models.FieldMap)
 			for _, addrField := range rs.AddressFields() {
-				resMap.Set(addrField.String(), rs.Parent().Get(addrField.String()), pool.Partner().Underlying())
+				resMap.Set(addrField.String(), rs.Parent().Get(addrField.String()), h.Partner().Underlying())
 			}
 
 			return rs.DataStruct(resMap)
@@ -363,49 +364,49 @@ Use this field anywhere a small image is required.`},
 
 	partnerModel.Methods().OnchangeEmail().DeclareMethod(
 		`OnchangeEmail updates the user Gravatar image`,
-		func(rs pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
 			if rs.Image() != "" || rs.Email() == "" || rs.Env().Context().HasKey("no_gravatar") {
-				return &pool.PartnerData{}, []models.FieldNamer{}
+				return &h.PartnerData{}, []models.FieldNamer{}
 			}
-			return &pool.PartnerData{
+			return &h.PartnerData{
 				Image: rs.GetGravatarImage(rs.Email()),
-			}, []models.FieldNamer{pool.Partner().Image()}
+			}, []models.FieldNamer{h.Partner().Image()}
 		})
 
 	partnerModel.Methods().ComputeEmailFormatted().DeclareMethod(
 		`ComputeEmailFormatted returns a 'Name <email@domain>' formatted string`,
-		func(rs pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
 			addr := mail.Address{Name: rs.Name(), Address: rs.Email()}
-			return &pool.PartnerData{
+			return &h.PartnerData{
 				EmailFormatted: addr.String(),
-			}, []models.FieldNamer{pool.Partner().EmailFormatted()}
+			}, []models.FieldNamer{h.Partner().EmailFormatted()}
 		})
 
 	partnerModel.Methods().ComputeCompanyType().DeclareMethod(
 		`ComputeIsCompany computes the IsCompany field from the selected CompanyType`,
-		func(rs pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
 			companyType := "person"
 			if rs.IsCompany() {
 				companyType = "company"
 			}
-			return &pool.PartnerData{
+			return &h.PartnerData{
 				CompanyType: companyType,
-			}, []models.FieldNamer{pool.Partner().CompanyType()}
+			}, []models.FieldNamer{h.Partner().CompanyType()}
 		})
 
 	partnerModel.Methods().InverseCompanyType().DeclareMethod(
 		`InverseCompanyType sets the IsCompany field according to the given CompanyType`,
-		func(rs pool.PartnerSet, companyType string) {
+		func(rs h.PartnerSet, companyType string) {
 			rs.SetIsCompany(companyType == "company")
 		})
 
 	partnerModel.Methods().OnchangeCompanyType().DeclareMethod(
 		`OnchangeCompanyType updates the IsCompany field according to the selected type`,
-		func(rs pool.PartnerSet) (*pool.PartnerData, []models.FieldNamer) {
-			res := &pool.PartnerData{
+		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
+			res := &h.PartnerData{
 				IsCompany: rs.CompanyType() == "company",
 			}
-			return res, []models.FieldNamer{pool.Partner().IsCompany()}
+			return res, []models.FieldNamer{h.Partner().IsCompany()}
 
 		})
 
@@ -414,11 +415,11 @@ Use this field anywhere a small image is required.`},
 		this partner's values on the given fields. The other fields are left to their
 		Go default value. This method is used to update fields from a partner to its
 		relatives.`,
-		func(rs pool.PartnerSet, fields ...models.FieldNamer) (*pool.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet, fields ...models.FieldNamer) (*h.PartnerData, []models.FieldNamer) {
 			res := make(models.FieldMap)
 			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
 			for _, f := range fields {
-				fJSON := pool.Partner().JSONizeFieldName(f.String())
+				fJSON := h.Partner().JSONizeFieldName(f.String())
 				if fInfos[fJSON].Type == fieldtype.One2Many {
 					log.Panic(rs.T("One2Many fields cannot be synchronized as part of 'commercial_fields' or 'address fields'"))
 				}
@@ -430,23 +431,23 @@ Use this field anywhere a small image is required.`},
 	partnerModel.Methods().AddressFields().DeclareMethod(
 		`AddressFields returns the list of fields which are part of the address.
 		These are used to automate behaviours on contact addresses.`,
-		func(rs pool.PartnerSet) []models.FieldNamer {
+		func(rs h.PartnerSet) []models.FieldNamer {
 			return []models.FieldNamer{
-				pool.Partner().Street(), pool.Partner().Street2(), pool.Partner().Zip(),
-				pool.Partner().City(), pool.Partner().State(), pool.Partner().Country(),
+				h.Partner().Street(), h.Partner().Street2(), h.Partner().Zip(),
+				h.Partner().City(), h.Partner().State(), h.Partner().Country(),
 			}
 		})
 
 	partnerModel.Methods().UpdateAddress().DeclareMethod(
 		`UpdateAddress updates this PartnerSet only with the address fields of
 		the given vals. Other values passed are discarded.`,
-		func(rs pool.PartnerSet, vals *pool.PartnerData, fieldsToReset ...models.FieldNamer) bool {
+		func(rs h.PartnerSet, vals *h.PartnerData, fieldsToReset ...models.FieldNamer) bool {
 			valsMap := vals.FieldMap(fieldsToReset...)
 			res := make(models.FieldMap)
 			for _, addrField := range rs.AddressFields() {
-				fValue, _ := valsMap.Get(addrField.String(), pool.Partner().Underlying())
+				fValue, _ := valsMap.Get(addrField.String(), h.Partner().Underlying())
 				if !typesutils.IsZero(fValue) {
-					res[addrField.String()], _ = vals.FieldMap(fieldsToReset...).Get(addrField.String(), pool.Partner().Underlying())
+					res[addrField.String()], _ = vals.FieldMap(fieldsToReset...).Get(addrField.String(), h.Partner().Underlying())
 				}
 			}
 			if len(res) == 0 {
@@ -462,17 +463,17 @@ Use this field anywhere a small image is required.`},
         partners that aren't "commercial entities"" themselves, and will be
         delegated to the parent "commercial entity"". The list is meant to be
         extended by inheriting classes.`,
-		func(rs pool.PartnerSet) []models.FieldNamer {
+		func(rs h.PartnerSet) []models.FieldNamer {
 			return []models.FieldNamer{
-				pool.Partner().VAT(),
-				pool.Partner().CreditLimit(),
+				h.Partner().VAT(),
+				h.Partner().CreditLimit(),
 			}
 		})
 
 	partnerModel.Methods().CommercialSyncFromCompany().DeclareMethod(
 		`CommercialSyncFromCompany handle sync of commercial fields when a new parent commercial entity is set,
         as if they were related fields.`,
-		func(rs pool.PartnerSet) bool {
+		func(rs h.PartnerSet) bool {
 			if rs.Equals(rs.CommercialPartner()) {
 				return false
 			}
@@ -482,21 +483,21 @@ Use this field anywhere a small image is required.`},
 
 	partnerModel.Methods().CommercialSyncToChildren().DeclareMethod(
 		`CommercialSyncToChildren handle sync of commercial fields to descendants`,
-		func(rs pool.PartnerSet) bool {
+		func(rs h.PartnerSet) bool {
 			partnerData, fieldsToUnset := rs.CommercialPartner().UpdateFieldValues(rs.CommercialFields()...)
-			syncChildren := rs.Children().Search(pool.Partner().IsCompany().NotEquals(true))
+			syncChildren := rs.Children().Search(q.Partner().IsCompany().NotEquals(true))
 			for _, child := range syncChildren.Records() {
 				child.CommercialSyncToChildren()
 			}
 			partnerData.CommercialPartner = rs.CommercialPartner()
-			fieldsToUnset = append(fieldsToUnset, pool.Partner().CommercialPartner())
+			fieldsToUnset = append(fieldsToUnset, h.Partner().CommercialPartner())
 			return syncChildren.WithContext("hexya_force_compute_write", true).Write(partnerData, fieldsToUnset...)
 		})
 
 	partnerModel.Methods().FieldsSync().DeclareMethod(
 		`FieldsSync syncs commercial fields and address fields from company and to children after create/update,
         just as if those were all modeled as fields.related to the parent`,
-		func(rs pool.PartnerSet, vals *pool.PartnerData, fieldsToUnset ...models.FieldNamer) {
+		func(rs h.PartnerSet, vals *h.PartnerData, fieldsToUnset ...models.FieldNamer) {
 			values, fieldsToUnset := rs.DataStruct(vals.FieldMap(fieldsToUnset...))
 			// 1. From UPSTREAM: sync from parent
 			// 1a. Commercial fields: sync if parent changed
@@ -521,7 +522,7 @@ Use this field anywhere a small image is required.`},
 					}
 				}
 			}
-			for _, child := range rs.Children().Search(pool.Partner().IsCompany().NotEquals(true)).Records() {
+			for _, child := range rs.Children().Search(q.Partner().IsCompany().NotEquals(true)).Records() {
 				if !child.CommercialPartner().Equals(rs.CommercialPartner()) {
 					rs.CommercialSyncToChildren()
 					break
@@ -531,9 +532,9 @@ Use this field anywhere a small image is required.`},
 			// 2b. Address fields: sync if address changed
 			valsMap := vals.FieldMap(fieldsToUnset...)
 			for _, addrField := range rs.AddressFields() {
-				fValue, _ := valsMap.Get(addrField.String(), pool.Partner().Underlying())
+				fValue, _ := valsMap.Get(addrField.String(), h.Partner().Underlying())
 				if !typesutils.IsZero(fValue) {
-					contacts := rs.Children().Search(pool.Partner().Type().Equals("contact"))
+					contacts := rs.Children().Search(q.Partner().Type().Equals("contact"))
 					contacts.UpdateAddress(vals, fieldsToUnset...)
 					break
 				}
@@ -543,7 +544,7 @@ Use this field anywhere a small image is required.`},
 	partnerModel.Methods().HandleFirsrtContactCreation().DeclareMethod(
 		`HandleFirsrtContactCreation: on creation of first contact for a company (or root) that has no address,
 		assume contact address was meant to be company address`,
-		func(rs pool.PartnerSet) {
+		func(rs h.PartnerSet) {
 			if !rs.Parent().IsCompany() && !rs.Parent().Parent().IsEmpty() {
 				// Our parent is not a company, nor a root contact
 				return
@@ -569,7 +570,7 @@ Use this field anywhere a small image is required.`},
 
 	partnerModel.Methods().CleanWebsite().DeclareMethod(
 		`CleanWebsite returns a cleaned website url including scheme.`,
-		func(rs pool.PartnerSet, website string) string {
+		func(rs h.PartnerSet, website string) string {
 			websiteURL, err := url.Parse(website)
 			if err != nil {
 				log.Panic("Invalid URL for website", "URL", website)
@@ -581,7 +582,7 @@ Use this field anywhere a small image is required.`},
 		})
 
 	partnerModel.Methods().Write().Extend("",
-		func(rs pool.PartnerSet, vals *pool.PartnerData, fieldsToUnset ...models.FieldNamer) bool {
+		func(rs h.PartnerSet, vals *h.PartnerData, fieldsToUnset ...models.FieldNamer) bool {
 			if rs.Env().Context().HasKey("goto_super") {
 				return rs.Super().Write(vals, fieldsToUnset...)
 			}
@@ -612,7 +613,7 @@ Use this field anywhere a small image is required.`},
 			for _, partner := range rs.Records() {
 				for _, user := range partner.Users().Records() {
 					if user.HasGroup("base_group_user") {
-						pool.User().NewSet(rs.Env()).CheckExecutionPermission(pool.CommonMixin().Methods().Write().Underlying())
+						h.User().NewSet(rs.Env()).CheckExecutionPermission(h.CommonMixin().Methods().Write().Underlying())
 						break
 					}
 				}
@@ -622,7 +623,7 @@ Use this field anywhere a small image is required.`},
 		})
 
 	partnerModel.Methods().Create().Extend("",
-		func(rs pool.PartnerSet, vals *pool.PartnerData) pool.PartnerSet {
+		func(rs h.PartnerSet, vals *h.PartnerData) h.PartnerSet {
 			if vals.Website != "" {
 				vals.Website = rs.CleanWebsite(vals.Website)
 			}
@@ -642,7 +643,7 @@ Use this field anywhere a small image is required.`},
 
 	partnerModel.Methods().CreateCompany().DeclareMethod(
 		`CreateCompany creates the parent company of this partner if it has been given a CompanyName.`,
-		func(rs pool.PartnerSet) bool {
+		func(rs h.PartnerSet) bool {
 			rs.EnsureOne()
 			if rs.CompanyName() != "" {
 				// Create parent company
@@ -652,14 +653,14 @@ Use this field anywhere a small image is required.`},
 				newCompany := rs.Create(values)
 				// Set newCompany as my parent
 				rs.SetParent(newCompany)
-				rs.Children().Write(&pool.PartnerData{Parent: newCompany}, pool.Partner().Parent())
+				rs.Children().Write(&h.PartnerData{Parent: newCompany}, h.Partner().Parent())
 			}
 			return true
 		})
 
 	partnerModel.Methods().OpenCommercialEntity().DeclareMethod(
 		`OpenCommercialEntity is a utility method used to add an "Open Company" button in partner views`,
-		func(rs pool.PartnerSet) *actions.Action {
+		func(rs h.PartnerSet) *actions.Action {
 			rs.EnsureOne()
 			return &actions.Action{
 				Type:     actions.ActionActWindow,
@@ -673,7 +674,7 @@ Use this field anywhere a small image is required.`},
 
 	partnerModel.Methods().OpenParent().DeclareMethod(
 		`OpenParent is a utility method used to add an "Open Parent" button in partner views`,
-		func(rs pool.PartnerSet) *actions.Action {
+		func(rs h.PartnerSet) *actions.Action {
 			rs.EnsureOne()
 			addressFormID := "base_view_partner_address_form"
 			return &actions.Action{
@@ -688,13 +689,13 @@ Use this field anywhere a small image is required.`},
 		})
 
 	partnerModel.Methods().NameGet().Extend("",
-		func(rs pool.PartnerSet) string {
+		func(rs h.PartnerSet) string {
 			name := rs.Name()
 			if rs.CompanyName() != "" || !rs.Parent().IsEmpty() {
 				if name == "" {
 					switch rs.Type() {
 					case "invoice", "delivery", "other":
-						fInfo := rs.FieldGet(pool.Partner().Type())
+						fInfo := rs.FieldGet(h.Partner().Type())
 						name = fInfo.Selection[rs.Type()]
 					}
 				}
@@ -720,14 +721,14 @@ Use this field anywhere a small image is required.`},
 		})
 
 	partnerModel.Methods().SearchByName().Extend("",
-		func(rs pool.PartnerSet, name string, op operator.Operator, additionalCond pool.PartnerCondition, limit int) pool.PartnerSet {
+		func(rs h.PartnerSet, name string, op operator.Operator, additionalCond q.PartnerCondition, limit int) h.PartnerSet {
 			if name == "" {
 				return rs.Super().SearchByName(name, op, additionalCond, limit)
 			}
-			var cond pool.PartnerCondition
+			var cond q.PartnerCondition
 			switch op {
 			case operator.Equals, operator.Contains, operator.IContains, operator.Like, operator.ILike:
-				cond = pool.Partner().Name().AddOperator(op, name).Or().
+				cond = q.Partner().Name().AddOperator(op, name).Or().
 					Email().AddOperator(op, name).Or().
 					Ref().AddOperator(op, name)
 			}
@@ -741,7 +742,7 @@ Use this field anywhere a small image is required.`},
 		Supported syntax:
             - 'Raoul <raoul@grosbedon.fr>': will find name and email address
             - otherwise: default, everything is set as the name (email is returned empty)`,
-		func(rs pool.PartnerSet, email string) (string, string) {
+		func(rs h.PartnerSet, email string) (string, string) {
 			addr, err := mail.ParseAddress(email)
 			if err != nil || addr.Name == "" {
 				return email, ""
@@ -753,11 +754,11 @@ Use this field anywhere a small image is required.`},
 		`FindOrCreate finds a partner with the given 'email' or creates one.
 		The given string should contain at least one email,
                 e.g. "Raoul Grosbedon <r.g@grosbedon.fr>"`,
-		func(rs pool.PartnerSet, email string) pool.PartnerSet {
+		func(rs h.PartnerSet, email string) h.PartnerSet {
 			name, emailParsed := rs.ParsePartnerName(email)
-			partners := pool.Partner().Search(rs.Env(), pool.Partner().Email().ILike(emailParsed)).Limit(1)
+			partners := h.Partner().Search(rs.Env(), q.Partner().Email().ILike(emailParsed)).Limit(1)
 			if partners.IsEmpty() {
-				rs.Create(&pool.PartnerData{
+				rs.Create(&h.PartnerData{
 					Name:  name,
 					Email: emailParsed,
 				})
@@ -768,7 +769,7 @@ Use this field anywhere a small image is required.`},
 	partnerModel.Methods().GetGravatarImage().DeclareMethod(
 		`GetGravatarImage returns the image from Gravatar associated with the given email.
 		Image is returned as a base64 encoded string.`,
-		func(rs pool.PartnerSet, email string) string {
+		func(rs h.PartnerSet, email string) string {
 			emailHash := md5.Sum([]byte(strings.ToLower(email)))
 			gravatarURL := fmt.Sprintf("%s/%x?%s", gravatarBaseURL, emailHash, "d=404&s=128")
 			client := &http.Client{
@@ -793,7 +794,7 @@ Use this field anywhere a small image is required.`},
         provided partner itself if no type 'default' is found either.
 
 		Result map keys are the contact types, such as 'contact', 'delivery', etc.`,
-		func(rs pool.PartnerSet, addrTypes []string) map[string]pool.PartnerSet {
+		func(rs h.PartnerSet, addrTypes []string) map[string]h.PartnerSet {
 			atMap := make(map[string]bool)
 			for _, at := range addrTypes {
 				atMap[at] = true
@@ -801,7 +802,7 @@ Use this field anywhere a small image is required.`},
 			if _, exists := atMap["contact"]; !exists {
 				atMap["contact"] = true
 			}
-			result := map[string]pool.PartnerSet{
+			result := map[string]h.PartnerSet{
 				"contact":  rs,
 				"delivery": rs,
 				"invoice":  rs,
@@ -812,7 +813,7 @@ Use this field anywhere a small image is required.`},
 			for _, partner := range rs.Records() {
 				currentPartner := partner
 				for !currentPartner.IsEmpty() {
-					toScan := []pool.PartnerSet{currentPartner}
+					toScan := []h.PartnerSet{currentPartner}
 					for len(toScan) > 0 {
 						record := toScan[0]
 						toScan = toScan[1:]
@@ -843,7 +844,7 @@ Use this field anywhere a small image is required.`},
 	partnerModel.Methods().DisplayAddress().DeclareMethod(
 		`DisplayAddress builds and returns an address formatted accordingly to the
         standards of the country where it belongs.`,
-		func(rs pool.PartnerSet, withoutCompany bool) string {
+		func(rs h.PartnerSet, withoutCompany bool) string {
 			addressFormat := rs.Country().AddressFormat()
 			if addressFormat == "" {
 				addressFormat = "{{ .Street }}\n{{ .Street2 }}\n{{ .City }} {{ .StateCode }} {{ .Zip }}\n{{ .CountryName}}"

@@ -5,18 +5,18 @@ package web
 
 import (
 	"github.com/hexya-erp/hexya/hexya/models"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
 )
 
 func init() {
-	baseMixin := pool.BaseMixin()
+	baseMixin := h.BaseMixin()
 	baseMixin.AddFields(map[string]models.FieldDefinition{
 		"Active": models.BooleanField{},
 	})
 
 	baseMixin.Methods().ToggleActive().DeclareMethod(
 		`ToggleActive toggles the Active field of this object`,
-		func(rs pool.BaseMixinSet) {
+		func(rs h.BaseMixinSet) {
 			if rs.Active() {
 				rs.SetActive(false)
 			} else {

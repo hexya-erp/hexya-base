@@ -6,45 +6,46 @@ package base
 import (
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/operator"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
+	"github.com/hexya-erp/hexya/pool/q"
 )
 
 // CompanyGetUserCurrency returns the currency of the current user's company if it exists
 // or the default currency otherwise
 func CompanyGetUserCurrency(env models.Environment) interface{} {
-	currency := pool.User().NewSet(env).GetCompany().Currency()
+	currency := h.User().NewSet(env).GetCompany().Currency()
 	if currency.IsEmpty() {
-		return pool.Company().NewSet(env).GetEuro()
+		return h.Company().NewSet(env).GetEuro()
 	}
 	return currency
 }
 
 func init() {
-	companyModel := pool.Company().DeclareModel()
+	companyModel := h.Company().DeclareModel()
 	companyModel.AddFields(map[string]models.FieldDefinition{
 		"Name": models.CharField{String: "Company Name", Size: 128, Required: true,
 			Related: "Partner.Name", Unique: true},
-		"Parent": models.Many2OneField{RelationModel: pool.Company(),
-			String: "Parent Company", Index: true, Constraint: pool.Company().Methods().CheckParent()},
-		"Children": models.One2ManyField{RelationModel: pool.Company(),
+		"Parent": models.Many2OneField{RelationModel: h.Company(),
+			String: "Parent Company", Index: true, Constraint: h.Company().Methods().CheckParent()},
+		"Children": models.One2ManyField{RelationModel: h.Company(),
 			ReverseFK: "Parent", String: "Child Companies"},
-		"Partner": models.Many2OneField{RelationModel: pool.Partner(),
+		"Partner": models.Many2OneField{RelationModel: h.Partner(),
 			Required: true, Index: true},
 		"Tagline": models.CharField{},
 		"Logo":    models.BinaryField{Related: "Partner.Image"},
-		"LogoWeb": models.BinaryField{Compute: pool.Company().Methods().ComputeLogoWeb(),
+		"LogoWeb": models.BinaryField{Compute: h.Company().Methods().ComputeLogoWeb(),
 			Stored: true, Depends: []string{"Partner", "Partner.Image"}},
-		"Currency": models.Many2OneField{RelationModel: pool.Currency(),
+		"Currency": models.Many2OneField{RelationModel: h.Currency(),
 			Required: true, Default: CompanyGetUserCurrency},
-		"Users":   models.Many2ManyField{RelationModel: pool.User(), String: "Accepted Users"},
+		"Users":   models.Many2ManyField{RelationModel: h.User(), String: "Accepted Users"},
 		"Street":  models.CharField{Related: "Partner.Street"},
 		"Street2": models.CharField{Related: "Partner.Street2"},
 		"Zip":     models.CharField{Related: "Partner.Zip"},
 		"City":    models.CharField{Related: "Partner.City"},
-		"State": models.Many2OneField{RelationModel: pool.CountryState(),
-			Related: "Partner.State", OnChange: pool.Company().Methods().OnChangeState()},
-		"Country": models.Many2OneField{RelationModel: pool.Country(),
-			Related: "Partner.Country", OnChange: pool.Company().Methods().OnChangeCountry()},
+		"State": models.Many2OneField{RelationModel: h.CountryState(),
+			Related: "Partner.State", OnChange: h.Company().Methods().OnChangeState()},
+		"Country": models.Many2OneField{RelationModel: h.Country(),
+			Related: "Partner.Country", OnChange: h.Company().Methods().OnChangeCountry()},
 		"Email":           models.CharField{Related: "Partner.Email"},
 		"Phone":           models.CharField{Related: "Partner.Phone"},
 		"Fax":             models.CharField{Related: "Partner.Fax"},
@@ -54,23 +55,23 @@ func init() {
 	})
 
 	companyModel.Methods().Copy().Extend("",
-		func(rs pool.CompanySet, overrides *pool.CompanyData, fieldsToReset ...models.FieldNamer) pool.CompanySet {
+		func(rs h.CompanySet, overrides *h.CompanyData, fieldsToReset ...models.FieldNamer) h.CompanySet {
 			rs.EnsureOne()
-			_, eName := overrides.Get(pool.Company().Name(), fieldsToReset...)
-			_, ePartner := overrides.Get(pool.Company().Partner(), fieldsToReset...)
+			_, eName := overrides.Get(h.Company().Name(), fieldsToReset...)
+			_, ePartner := overrides.Get(h.Company().Partner(), fieldsToReset...)
 			if !eName && !ePartner {
-				copyPartner := rs.Partner().Copy(new(pool.PartnerData))
+				copyPartner := rs.Partner().Copy(new(h.PartnerData))
 				overrides.Partner = copyPartner
 				overrides.Name = copyPartner.Name()
-				fieldsToReset = append(fieldsToReset, pool.Company().Partner(), pool.Company().Name())
+				fieldsToReset = append(fieldsToReset, h.Company().Partner(), h.Company().Name())
 			}
 			return rs.Super().Copy(overrides, fieldsToReset...)
 		})
 
 	companyModel.Methods().ComputeLogoWeb().DeclareMethod(
 		`ComputeLogoWeb returns a resized version of the company logo`,
-		func(rs pool.CompanySet) (*pool.CompanyData, []models.FieldNamer) {
-			res := pool.CompanyData{
+		func(rs h.CompanySet) (*h.CompanyData, []models.FieldNamer) {
+			res := h.CompanyData{
 				LogoWeb: rs.Logo(),
 			}
 			return &res, []models.FieldNamer{rs.Model().LogoWeb()}
@@ -78,44 +79,44 @@ func init() {
 
 	companyModel.Methods().OnChangeState().DeclareMethod(
 		`OnchangeState sets the country to the country of the state when you select one.`,
-		func(rs pool.CompanySet) (*pool.CompanyData, []models.FieldNamer) {
-			return &pool.CompanyData{
+		func(rs h.CompanySet) (*h.CompanyData, []models.FieldNamer) {
+			return &h.CompanyData{
 				Country: rs.State().Country(),
-			}, []models.FieldNamer{pool.Company().Country()}
+			}, []models.FieldNamer{h.Company().Country()}
 		})
 
 	companyModel.Methods().GetEuro().DeclareMethod(
 		`GetEuro returns the currency with rate 1 (euro by default, unless changed by the user)`,
-		func(rs pool.CompanySet) pool.CurrencySet {
-			return pool.CurrencyRate().Search(rs.Env(), pool.CurrencyRate().Rate().Equals(1)).Limit(1).Currency()
+		func(rs h.CompanySet) h.CurrencySet {
+			return h.CurrencyRate().Search(rs.Env(), q.CurrencyRate().Rate().Equals(1)).Limit(1).Currency()
 		})
 
 	companyModel.Methods().OnChangeCountry().DeclareMethod(
 		`OnChangeCountry updates the currency of this company on a country change`,
-		func(rs pool.CompanySet) (*pool.CompanyData, []models.FieldNamer) {
+		func(rs h.CompanySet) (*h.CompanyData, []models.FieldNamer) {
 			if rs.Country().IsEmpty() {
-				userCurrency := CompanyGetUserCurrency(rs.Env()).(pool.CurrencySet)
-				return &pool.CompanyData{
+				userCurrency := CompanyGetUserCurrency(rs.Env()).(h.CurrencySet)
+				return &h.CompanyData{
 					Currency: userCurrency,
-				}, []models.FieldNamer{pool.Company().Currency()}
+				}, []models.FieldNamer{h.Company().Currency()}
 			}
-			return &pool.CompanyData{
+			return &h.CompanyData{
 				Currency: rs.Country().Currency(),
-			}, []models.FieldNamer{pool.Company().Currency()}
+			}, []models.FieldNamer{h.Company().Currency()}
 		})
 
 	companyModel.Methods().CompanyDefaultGet().DeclareMethod(
 		`CompanyDefaultGet returns the default company (usually the user's company).`,
-		func(rs pool.CompanySet) pool.CompanySet {
-			return pool.User().NewSet(rs.Env()).GetCompany()
+		func(rs h.CompanySet) h.CompanySet {
+			return h.User().NewSet(rs.Env()).GetCompany()
 		})
 
 	companyModel.Methods().Create().Extend("",
-		func(rs pool.CompanySet, data *pool.CompanyData) pool.CompanySet {
+		func(rs h.CompanySet, data *h.CompanyData) h.CompanySet {
 			if !data.Partner.IsEmpty() {
 				return rs.Super().Create(data)
 			}
-			partner := pool.Partner().Create(rs.Env(), &pool.PartnerData{
+			partner := h.Partner().Create(rs.Env(), &h.PartnerData{
 				Name:        data.Name,
 				CompanyType: "company",
 				Image:       data.Logo,
@@ -133,20 +134,20 @@ func init() {
 
 	companyModel.Methods().CheckParent().DeclareMethod(
 		`CheckParent checks that there is no recursion in the company tree`,
-		func(rs pool.CompanySet) {
+		func(rs h.CompanySet) {
 			rs.CheckRecursion()
 		})
 
 	companyModel.Methods().SearchByName().Extend("",
-		func(rs pool.CompanySet, name string, op operator.Operator, additionalCond pool.CompanyCondition, limit int) pool.CompanySet {
+		func(rs h.CompanySet, name string, op operator.Operator, additionalCond q.CompanyCondition, limit int) h.CompanySet {
 			// We browse as superuser. Otherwise, the user would be able to
 			// select only the currently visible companies (according to rules,
 			// which are probably to allow to see the child companies) even if
 			// she belongs to some other companies.
 			rSet := rs
-			companies := pool.Company().NewSet(rs.Env())
+			companies := h.Company().NewSet(rs.Env())
 			if rs.Env().Context().HasKey("user_preference") {
-				currentUser := pool.User().NewSet(rs.Env()).CurrentUser().Sudo()
+				currentUser := h.User().NewSet(rs.Env()).CurrentUser().Sudo()
 				companies = currentUser.Companies().Union(currentUser.Company())
 				rSet = rSet.Sudo()
 			}
