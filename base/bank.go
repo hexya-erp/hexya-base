@@ -5,36 +5,36 @@ package base
 
 import (
 	"fmt"
-
 	"regexp"
 
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/operator"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
+	"github.com/hexya-erp/hexya/pool/q"
 )
 
 func init() {
-	pool.Bank().DeclareModel()
-	pool.Bank().AddFields(map[string]models.FieldDefinition{
+	h.Bank().DeclareModel()
+	h.Bank().AddFields(map[string]models.FieldDefinition{
 		"Name":    models.CharField{Required: true},
 		"Street":  models.CharField{},
 		"Street2": models.CharField{},
 		"Zip":     models.CharField{},
 		"City":    models.CharField{},
-		"State": models.Many2OneField{RelationModel: pool.CountryState(), String: "Fed. State",
-			Filter: pool.CountryState().Country().EqualsFunc(func(rs models.RecordSet) pool.CountrySet {
-				bank := rs.(pool.BankSet)
+		"State": models.Many2OneField{RelationModel: h.CountryState(), String: "Fed. State",
+			Filter: q.CountryState().Country().EqualsFunc(func(rs models.RecordSet) models.RecordSet {
+				bank := rs.(h.BankSet)
 				return bank.Country()
 			})},
-		"Country": models.Many2OneField{RelationModel: pool.Country()},
+		"Country": models.Many2OneField{RelationModel: h.Country()},
 		"Email":   models.CharField{},
 		"Phone":   models.CharField{},
 		"Fax":     models.CharField{},
 		"Active":  models.BooleanField{Default: models.DefaultValue(true)},
 		"BIC":     models.CharField{String: "Bank Identifier Cord", Index: true, Help: "Sometimes called BIC or Swift."},
 	})
-	pool.Bank().Methods().NameGet().Extend("",
-		func(rs pool.BankSet) string {
+	h.Bank().Methods().NameGet().Extend("",
+		func(rs h.BankSet) string {
 			res := rs.Name()
 			if rs.BIC() != "" {
 				res = fmt.Sprintf("%s - %s", res, rs.BIC())
@@ -42,52 +42,52 @@ func init() {
 			return res
 		})
 
-	pool.Bank().Methods().SearchByName().Extend("",
-		func(rs pool.BankSet, name string, op operator.Operator, additionalCond pool.BankCondition, limit int) pool.BankSet {
+	h.Bank().Methods().SearchByName().Extend("",
+		func(rs h.BankSet, name string, op operator.Operator, additionalCond q.BankCondition, limit int) h.BankSet {
 			if name == "" {
 				return rs.Super().SearchByName(name, op, additionalCond, limit)
 			}
-			cond := pool.Bank().BIC().ILike(name+"%").Or().Name().AddOperator(op, name)
+			cond := q.Bank().BIC().ILike(name+"%").Or().Name().AddOperator(op, name)
 			if !additionalCond.Underlying().IsEmpty() {
 				cond = cond.AndCond(additionalCond)
 			}
-			return pool.Bank().Search(rs.Env(), cond).Limit(limit)
+			return h.Bank().Search(rs.Env(), cond).Limit(limit)
 		})
 
-	pool.BankAccount().DeclareModel()
-	pool.BankAccount().AddFields(map[string]models.FieldDefinition{
-		"AccountType": models.CharField{Compute: pool.BankAccount().Methods().ComputeAccountType(), Depends: []string{""}},
+	h.BankAccount().DeclareModel()
+	h.BankAccount().AddFields(map[string]models.FieldDefinition{
+		"AccountType": models.CharField{Compute: h.BankAccount().Methods().ComputeAccountType(), Depends: []string{""}},
 		"Name":        models.CharField{String: "Account Number", Required: true},
-		"SanitizedAccountNumber": models.CharField{Compute: pool.BankAccount().Methods().ComputeSanitizedAccountNumber(),
+		"SanitizedAccountNumber": models.CharField{Compute: h.BankAccount().Methods().ComputeSanitizedAccountNumber(),
 			Stored: true, Depends: []string{"Name"}},
-		"Partner": models.Many2OneField{RelationModel: pool.Partner(),
+		"Partner": models.Many2OneField{RelationModel: h.Partner(),
 			String: "Account Holder", OnDelete: models.Cascade, Index: true,
-			Filter: pool.Partner().IsCompany().Equals(true).Or().Parent().IsNull()},
-		"Bank":     models.Many2OneField{RelationModel: pool.Bank()},
+			Filter: q.Partner().IsCompany().Equals(true).Or().Parent().IsNull()},
+		"Bank":     models.Many2OneField{RelationModel: h.Bank()},
 		"BankName": models.CharField{Related: "Bank.Name"},
 		"BankBIC":  models.CharField{Related: "Bank.BIC"},
 		"Sequence": models.IntegerField{},
-		"Currency": models.Many2OneField{RelationModel: pool.Currency()},
-		"Company":  models.Many2OneField{RelationModel: pool.Company()},
+		"Currency": models.Many2OneField{RelationModel: h.Currency()},
+		"Company":  models.Many2OneField{RelationModel: h.Company()},
 	})
-	pool.BankAccount().AddSQLConstraint("unique_number", "unique(sanitized_account_number, company_id)", "Account Number must be unique")
+	h.BankAccount().AddSQLConstraint("unique_number", "unique(sanitized_account_number, company_id)", "Account Number must be unique")
 
-	pool.BankAccount().Methods().ComputeAccountType().DeclareMethod(
+	h.BankAccount().Methods().ComputeAccountType().DeclareMethod(
 		`ComputeAccountType computes the type of account from the account number`,
-		func(rs pool.BankAccountSet) (*pool.BankAccountData, []models.FieldNamer) {
-			return &pool.BankAccountData{
+		func(rs h.BankAccountSet) (*h.BankAccountData, []models.FieldNamer) {
+			return &h.BankAccountData{
 				AccountType: "bank",
-			}, []models.FieldNamer{pool.BankAccount().AccountType()}
+			}, []models.FieldNamer{h.BankAccount().AccountType()}
 		})
 
-	pool.BankAccount().Methods().ComputeSanitizedAccountNumber().DeclareMethod(
+	h.BankAccount().Methods().ComputeSanitizedAccountNumber().DeclareMethod(
 		`ComputeSanitizedAccountNumber removes all spaces and invalid characters from account number`,
-		func(rs pool.BankAccountSet) (*pool.BankAccountData, []models.FieldNamer) {
+		func(rs h.BankAccountSet) (*h.BankAccountData, []models.FieldNamer) {
 			rg, _ := regexp.Compile("\\W+")
 			san := rg.ReplaceAllString(rs.Name(), "")
-			return &pool.BankAccountData{
+			return &h.BankAccountData{
 				SanitizedAccountNumber: san,
-			}, []models.FieldNamer{pool.BankAccount().SanitizedAccountNumber()}
+			}, []models.FieldNamer{h.BankAccount().SanitizedAccountNumber()}
 		})
 
 }

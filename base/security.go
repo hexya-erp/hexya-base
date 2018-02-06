@@ -5,7 +5,7 @@ package base
 
 import (
 	"github.com/hexya-erp/hexya/hexya/models/security"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
 )
 
 var (
@@ -40,30 +40,30 @@ func init() {
 	GroupPortal = security.Registry.NewGroup("base_group_portal", "Portal")
 	GroupPublic = security.Registry.NewGroup("base_group_public", "Public")
 
-	pool.Attachment().Methods().Load().AllowGroup(security.GroupEveryone)
-	pool.Attachment().Methods().AllowAllToGroup(GroupUser)
+	h.Attachment().Methods().Load().AllowGroup(security.GroupEveryone)
+	h.Attachment().Methods().AllowAllToGroup(GroupUser)
 
-	pool.User().Methods().Load().AllowGroup(security.GroupEveryone)
-	pool.User().Methods().HasGroup().AllowGroup(security.GroupEveryone)
-	pool.User().Methods().AllowAllToGroup(GroupERPManager)
+	h.User().Methods().Load().AllowGroup(security.GroupEveryone)
+	h.User().Methods().HasGroup().AllowGroup(security.GroupEveryone)
+	h.User().Methods().AllowAllToGroup(GroupERPManager)
 
-	pool.CurrencyRate().Methods().Load().AllowGroup(security.GroupEveryone)
-	pool.CurrencyRate().Methods().AllowAllToGroup(GroupSystem)
+	h.CurrencyRate().Methods().Load().AllowGroup(security.GroupEveryone)
+	h.CurrencyRate().Methods().AllowAllToGroup(GroupSystem)
 
-	pool.Currency().Methods().Load().AllowGroup(security.GroupEveryone)
-	pool.Currency().Methods().AllowAllToGroup(GroupSystem)
+	h.Currency().Methods().Load().AllowGroup(security.GroupEveryone)
+	h.Currency().Methods().AllowAllToGroup(GroupSystem)
 
-	pool.Partner().Methods().Load().AllowGroup(GroupPublic)
-	pool.Partner().Methods().Load().AllowGroup(GroupPortal)
-	pool.Partner().Methods().Load().AllowGroup(GroupUser)
-	pool.Partner().Methods().AllowAllToGroup(GroupPartnerManager)
+	h.Partner().Methods().Load().AllowGroup(GroupPublic)
+	h.Partner().Methods().Load().AllowGroup(GroupPortal)
+	h.Partner().Methods().Load().AllowGroup(GroupUser)
+	h.Partner().Methods().AllowAllToGroup(GroupPartnerManager)
 
-	pool.PartnerTitle().Methods().Load().AllowGroup(security.GroupEveryone)
-	pool.PartnerTitle().Methods().AllowAllToGroup(GroupPartnerManager)
+	h.PartnerTitle().Methods().Load().AllowGroup(security.GroupEveryone)
+	h.PartnerTitle().Methods().AllowAllToGroup(GroupPartnerManager)
 
-	pool.PartnerCategory().Methods().Load().AllowGroup(GroupUser)
-	pool.PartnerCategory().Methods().AllowAllToGroup(GroupPartnerManager)
+	h.PartnerCategory().Methods().Load().AllowGroup(GroupUser)
+	h.PartnerCategory().Methods().AllowAllToGroup(GroupPartnerManager)
 
-	pool.Bank().Methods().Load().AllowGroup(GroupUser)
-	pool.Bank().Methods().AllowAllToGroup(GroupPartnerManager)
+	h.Bank().Methods().Load().AllowGroup(GroupUser)
+	h.Bank().Methods().AllowAllToGroup(GroupPartnerManager)
 }

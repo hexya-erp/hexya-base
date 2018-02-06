@@ -13,58 +13,59 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models/types"
 	"github.com/hexya-erp/hexya/hexya/models/types/dates"
 	"github.com/hexya-erp/hexya/hexya/tools/nbutils"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
+	"github.com/hexya-erp/hexya/pool/q"
 )
 
-const CurrencyDisplayPattern string = `(\w+)\s*(?:\((.*)\))?`
+const CurrencyDisplayPattern = `(\w+)\s*(?:\((.*)\))?`
 
 func init() {
-	currencyRateModel := pool.CurrencyRate().DeclareModel()
+	currencyRateModel := h.CurrencyRate().DeclareModel()
 	currencyRateModel.AddFields(map[string]models.FieldDefinition{
 		"Name": models.DateTimeField{String: "Date", Required: true, Index: true},
 		"Rate": models.FloatField{Digits: nbutils.Digits{Precision: 12, Scale: 6},
 			Help: "The rate of the currency to the currency of rate 1"},
-		"Currency": models.Many2OneField{RelationModel: pool.Currency()},
-		"Company":  models.Many2OneField{RelationModel: pool.Company()},
+		"Currency": models.Many2OneField{RelationModel: h.Currency()},
+		"Company":  models.Many2OneField{RelationModel: h.Company()},
 	})
 
-	currencyModel := pool.Currency().DeclareModel()
+	currencyModel := h.Currency().DeclareModel()
 	currencyModel.AddFields(map[string]models.FieldDefinition{
 		"Name": models.CharField{String: "Currency", Help: "Currency Code [ISO 4217]", Size: 3,
 			Unique: true},
 		"Symbol": models.CharField{Help: "Currency sign, to be used when printing amounts", Size: 4},
 		"Rate": models.FloatField{String: "Current Rate",
 			Help: "The rate of the currency to the currency of rate 1", Digits: nbutils.Digits{Precision: 12, Scale: 6},
-			Compute: pool.Currency().Methods().ComputeCurrentRate(), Depends: []string{"Rates", "Rates.Rate"}},
-		"Rates": models.One2ManyField{RelationModel: pool.CurrencyRate(), ReverseFK: "Currency"},
+			Compute: h.Currency().Methods().ComputeCurrentRate(), Depends: []string{"Rates", "Rates.Rate"}},
+		"Rates": models.One2ManyField{RelationModel: h.CurrencyRate(), ReverseFK: "Currency"},
 		"Rounding": models.FloatField{String: "Rounding Factor", Digits: nbutils.Digits{Precision: 12,
 			Scale: 6}},
 		"DecimalPlaces": models.IntegerField{GoType: new(int),
-			Compute: pool.Currency().Methods().ComputeDecimalPlaces(), Depends: []string{"Rounding"}},
+			Compute: h.Currency().Methods().ComputeDecimalPlaces(), Depends: []string{"Rounding"}},
 		"Active": models.BooleanField{},
 		"Position": models.SelectionField{Selection: types.Selection{"after": "After Amount", "before": "Before Amount"},
 			String: "Symbol Position", Help: "Determines where the currency symbol should be placed after or before the amount."},
-		"Date": models.DateField{Compute: pool.Currency().Methods().ComputeDate(), Depends: []string{"Rates", "Rates.Name"}},
+		"Date": models.DateField{Compute: h.Currency().Methods().ComputeDate(), Depends: []string{"Rates", "Rates.Name"}},
 	})
 
 	currencyModel.Methods().ComputeCurrentRate().DeclareMethod(
 		`ComputeCurrentRate returns the current rate of this currency.
 		 If a 'date' key (type DateTime) is given in the context, then it is used to compute the rate,
 		 otherwise now is used.`,
-		func(rs pool.CurrencySet) (*pool.CurrencyData, []models.FieldNamer) {
+		func(rs h.CurrencySet) (*h.CurrencyData, []models.FieldNamer) {
 			date := dates.Now()
 			if rs.Env().Context().HasKey("date") {
 				date = rs.Env().Context().GetDateTime("date")
 			}
-			company := pool.User().NewSet(rs.Env()).GetCompany()
+			company := h.User().NewSet(rs.Env()).GetCompany()
 			if rs.Env().Context().HasKey("company_id") {
-				company = pool.Company().Browse(rs.Env(), []int64{rs.Env().Context().GetInteger("company_id")})
+				company = h.Company().Browse(rs.Env(), []int64{rs.Env().Context().GetInteger("company_id")})
 			}
-			rate := pool.CurrencyRate().Search(rs.Env(),
-				pool.CurrencyRate().Currency().Equals(rs).
+			rate := h.CurrencyRate().Search(rs.Env(),
+				q.CurrencyRate().Currency().Equals(rs).
 					And().Name().LowerOrEqual(date).
 					AndCond(
-						pool.CurrencyRate().Company().IsNull().
+						q.CurrencyRate().Company().IsNull().
 							Or().Company().Equals(company))).
 				OrderBy("Company", "Name desc").
 				Limit(1)
@@ -72,32 +73,32 @@ func init() {
 			if res == 0 {
 				res = 1.0
 			}
-			return &pool.CurrencyData{Rate: res}, []models.FieldNamer{pool.Currency().Rate()}
+			return &h.CurrencyData{Rate: res}, []models.FieldNamer{h.Currency().Rate()}
 		})
 
 	currencyModel.Methods().ComputeDecimalPlaces().DeclareMethod(
 		`ComputeDecimalPlaces returns the decimal place from the currency's rounding`,
-		func(rs pool.CurrencySet) (*pool.CurrencyData, []models.FieldNamer) {
+		func(rs h.CurrencySet) (*h.CurrencyData, []models.FieldNamer) {
 			var dp int
 			if rs.Rounding() > 0 && rs.Rounding() < 1 {
 				dp = int(math.Ceil(math.Log10(1 / rs.Rounding())))
 			}
-			return &pool.CurrencyData{DecimalPlaces: dp}, []models.FieldNamer{pool.Currency().DecimalPlaces()}
+			return &h.CurrencyData{DecimalPlaces: dp}, []models.FieldNamer{h.Currency().DecimalPlaces()}
 		})
 
 	currencyModel.Methods().ComputeDate().DeclareMethod(
 		`ComputeDate returns the date of the last rate of this currency`,
-		func(rs pool.CurrencySet) (*pool.CurrencyData, []models.FieldNamer) {
+		func(rs h.CurrencySet) (*h.CurrencyData, []models.FieldNamer) {
 			var lastDate dates.Date
 			if rateLength := len(rs.Rates().Records()); rateLength > 0 {
 				lastDate = rs.Rates().Records()[rateLength-1].Name().ToDate()
 			}
-			return &pool.CurrencyData{Date: lastDate}, []models.FieldNamer{pool.Currency().Date()}
+			return &h.CurrencyData{Date: lastDate}, []models.FieldNamer{h.Currency().Date()}
 		})
 
 	currencyModel.Methods().Round().DeclareMethod(
 		`Round returns the given amount rounded according to this currency rounding rules`,
-		func(rs pool.CurrencySet, amount float64) float64 {
+		func(rs h.CurrencySet, amount float64) float64 {
 			return nbutils.Round(amount, math.Pow10(-rs.DecimalPlaces()))
 		})
 
@@ -117,7 +118,7 @@ func init() {
          However 0.006 and 0.002 are considered different (returns 1) because
          they respectively round to 0.01 and 0.0, even though 0.006-0.002 = 0.004
          which would be considered zero at 2 digits precision.`,
-		func(rs pool.CurrencySet, amount1, amount2 float64) int8 {
+		func(rs h.CurrencySet, amount1, amount2 float64) int8 {
 			return nbutils.Compare(amount1, amount2, math.Pow10(-rs.DecimalPlaces()))
 		})
 
@@ -130,20 +131,20 @@ func init() {
 		round after computing the difference, while the latter will round
 		before, giving different results for e.g. 0.006 and 0.002 at 2
 		digits precision.`,
-		func(rs pool.CurrencySet, amount float64) bool {
+		func(rs h.CurrencySet, amount float64) bool {
 			return nbutils.IsZero(amount, math.Pow10(-rs.DecimalPlaces()))
 		})
 
 	currencyModel.Methods().GetConversionRateTo().DeclareMethod(
 		`GetConversionRateTo returns the conversion rate from this currency to 'target' currency`,
-		func(rs pool.CurrencySet, target pool.CurrencySet) float64 {
+		func(rs h.CurrencySet, target h.CurrencySet) float64 {
 			return target.WithEnv(rs.Env()).Rate() / rs.Rate()
 		})
 
 	currencyModel.Methods().Compute().DeclareMethod(
 		`Compute converts 'amount' from this currency to 'targetCurrency'.
 		 The result is rounded to the 'target' currency if 'round' is true.`,
-		func(rs pool.CurrencySet, amount float64, target pool.CurrencySet, round bool) float64 {
+		func(rs h.CurrencySet, amount float64, target h.CurrencySet, round bool) float64 {
 			if rs.Equals(target) {
 				if round {
 					return rs.Round(amount)
@@ -163,10 +164,10 @@ func init() {
 
 		That function expects the number as first parameter	and the currency id as second parameter.
 		If the currency id parameter is false or undefined, the	company currency is used.`,
-		func(rs pool.CurrencySet) string {
-			companyCurrency := pool.User().Browse(rs.Env(), []int64{rs.Env().Uid()}).Company().Currency()
+		func(rs h.CurrencySet) string {
+			companyCurrency := h.User().Browse(rs.Env(), []int64{rs.Env().Uid()}).Company().Currency()
 			var function string
-			for _, currency := range pool.Currency().NewSet(rs.Env()).SearchAll().Records() {
+			for _, currency := range h.Currency().NewSet(rs.Env()).SearchAll().Records() {
 				symbol := currency.Symbol()
 				if symbol == "" {
 					symbol = currency.Name()
@@ -187,7 +188,7 @@ func init() {
 
 	currencyModel.Methods().SelectCompaniesRates().DeclareMethod(`
 		SelectCompaniesRates returns an SQL query to get the currency rates per companies.`,
-		func(rs pool.CurrencySet) string {
+		func(rs h.CurrencySet) string {
 			return `
 			SELECT
                 r.currency_id,
@@ -205,7 +206,7 @@ func init() {
 		})
 
 	currencyModel.Methods().SearchByName().Extend("",
-		func(rs pool.CurrencySet, name string, op operator.Operator, additionalCond pool.CurrencyCondition, limit int) pool.CurrencySet {
+		func(rs h.CurrencySet, name string, op operator.Operator, additionalCond q.CurrencyCondition, limit int) h.CurrencySet {
 			res := rs.Super().SearchByName(name, op, additionalCond, limit)
 			if res.IsEmpty() {
 				re, _ := regexp.Compile(CurrencyDisplayPattern)

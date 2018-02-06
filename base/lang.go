@@ -6,12 +6,12 @@ package base
 import (
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/types"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
 )
 
 func init() {
-	pool.Lang().DeclareModel()
-	pool.Lang().AddFields(map[string]models.FieldDefinition{
+	h.Lang().DeclareModel()
+	h.Lang().AddFields(map[string]models.FieldDefinition{
 		"Name": models.CharField{Required: true, Unique: true},
 		"Code": models.CharField{String: "Locale Code", Required: true,
 			Help: "This field is used to set/get locales for user", Unique: true},

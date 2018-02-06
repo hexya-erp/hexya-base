@@ -6,34 +6,34 @@ package base
 import (
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/types"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
 )
 
 func init() {
-	pool.SequenceDateRange().DeclareModel()
-	pool.SequenceDateRange().AddFields(map[string]models.FieldDefinition{
+	h.SequenceDateRange().DeclareModel()
+	h.SequenceDateRange().AddFields(map[string]models.FieldDefinition{
 		"DateFrom": models.DateField{String: "From", Required: true},
 		"DateTo":   models.DateField{String: "True", Required: true},
-		"Sequence": models.Many2OneField{RelationModel: pool.Sequence(),
+		"Sequence": models.Many2OneField{RelationModel: h.Sequence(),
 			Required: true, OnDelete: models.Cascade},
 		"NumberNext": models.IntegerField{String: "Next Number",
 			Required: true, Default: models.DefaultValue(1), Help: "Next number of this sequence"},
 		"NumberNextActual": models.IntegerField{
-			Compute: pool.SequenceDateRange().Methods().ComputeNumberNextActual(), String: "Next Number",
+			Compute: h.SequenceDateRange().Methods().ComputeNumberNextActual(), String: "Next Number",
 			Help:    "Next number that will be used. This number can be incremented frequently so the displayed value might already be obsolete",
 			Depends: []string{"NumberNext"}},
 	})
 
-	pool.SequenceDateRange().Methods().ComputeNumberNextActual().DeclareMethod(
+	h.SequenceDateRange().Methods().ComputeNumberNextActual().DeclareMethod(
 		`ComputeNumberNextActual returns the real next number for the sequence depending on the implementation`,
-		func(rs pool.SequenceDateRangeSet) (*pool.SequenceDateRangeData, []models.FieldNamer) {
-			var res pool.SequenceDateRangeData
+		func(rs h.SequenceDateRangeSet) (*h.SequenceDateRangeData, []models.FieldNamer) {
+			var res h.SequenceDateRangeData
 			res.NumberNextActual = rs.NumberNext()
-			return &res, []models.FieldNamer{pool.Sequence().NumberNextActual()}
+			return &res, []models.FieldNamer{h.Sequence().NumberNextActual()}
 		})
 
-	pool.Sequence().DeclareModel()
-	pool.Sequence().AddFields(map[string]models.FieldDefinition{
+	h.Sequence().DeclareModel()
+	h.Sequence().AddFields(map[string]models.FieldDefinition{
 		"Name": models.CharField{Required: true},
 		"Code": models.CharField{},
 		"Implementation": models.SelectionField{
@@ -48,7 +48,7 @@ gap in the sequence (while they are possible in the former).`},
 		"NumberNext": models.IntegerField{String: "Next Number", Required: true,
 			Default: models.DefaultValue(1), Help: "Next number of this sequence"},
 		"NumberNextActual": models.IntegerField{
-			Compute: pool.Sequence().Methods().ComputeNumberNextActual(), String: "Next Number",
+			Compute: h.Sequence().Methods().ComputeNumberNextActual(), String: "Next Number",
 			Help:    "Next number that will be used. This number can be incremented frequently so the displayed value might already be obsolete",
 			Depends: []string{"NumberNext"}},
 		"NumberIncrement": models.IntegerField{String: "Step", Required: true,
@@ -56,24 +56,24 @@ gap in the sequence (while they are possible in the former).`},
 		"Padding": models.IntegerField{String: "Sequence Size", Required: true,
 			Default: models.DefaultValue(0),
 			Help:    "Hexya will automatically adds some '0' on the left of the 'Next Number' to get the required padding size."},
-		"Company": models.Many2OneField{RelationModel: pool.Company(), Default: func(env models.Environment) interface{} {
-			return pool.Company().NewSet(env).CompanyDefaultGet()
+		"Company": models.Many2OneField{RelationModel: h.Company(), Default: func(env models.Environment) interface{} {
+			return h.Company().NewSet(env).CompanyDefaultGet()
 		}},
 		"UseDateRange": models.BooleanField{String: "Use subsequences per Date Range"},
-		"DateRanges":   models.One2ManyField{RelationModel: pool.SequenceDateRange(), ReverseFK: "Sequence"},
+		"DateRanges":   models.One2ManyField{RelationModel: h.SequenceDateRange(), ReverseFK: "Sequence"},
 	})
 
-	pool.Sequence().Methods().ComputeNumberNextActual().DeclareMethod(
+	h.Sequence().Methods().ComputeNumberNextActual().DeclareMethod(
 		`ComputeNumberNextActual returns the real next number for the sequence depending on the implementation`,
-		func(rs pool.SequenceSet) (*pool.SequenceData, []models.FieldNamer) {
-			var res pool.SequenceData
+		func(rs h.SequenceSet) (*h.SequenceData, []models.FieldNamer) {
+			var res h.SequenceData
 			res.NumberNextActual = rs.NumberNext()
-			return &res, []models.FieldNamer{pool.Sequence().NumberNextActual()}
+			return &res, []models.FieldNamer{h.Sequence().NumberNextActual()}
 		})
 
-	pool.Sequence().Methods().NextByID().DeclareMethod(
+	h.Sequence().Methods().NextByID().DeclareMethod(
 		`NextByID draws an interpolated string using the specified sequence.`,
-		func(rs pool.SequenceSet) string {
+		func(rs h.SequenceSet) string {
 			/*
 				    @api.multi
 					def next_by_id(self):
@@ -84,11 +84,11 @@ gap in the sequence (while they are possible in the former).`},
 			return ""
 		})
 
-	pool.Sequence().Methods().NextByCode().DeclareMethod(
+	h.Sequence().Methods().NextByCode().DeclareMethod(
 		`NextByID draw an interpolated string using a sequence with the requested code.
 		If several sequences with the correct code are available to the user
 		(multi-company cases), the one from the user's current company will be used.`,
-		func(rs pool.SequenceSet, sequenceCode string) string {
+		func(rs h.SequenceSet, sequenceCode string) string {
 			/*
 				@api.model
 				def next_by_code(self, sequence_code):

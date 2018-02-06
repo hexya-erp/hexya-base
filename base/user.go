@@ -10,7 +10,8 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types"
 	"github.com/hexya-erp/hexya/hexya/tools/emailutils"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
+	"github.com/hexya-erp/hexya/pool/q"
 )
 
 // BaseAuthBackend is the authentication backend of the Base module
@@ -20,20 +21,20 @@ type BaseAuthBackend struct{}
 // Authenticate the user defined by login and secret.
 func (bab *BaseAuthBackend) Authenticate(login, secret string, context *types.Context) (uid int64, err error) {
 	models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
-		uid, err = pool.User().NewSet(env).WithNewContext(context).Authenticate(login, secret)
+		uid, err = h.User().NewSet(env).WithNewContext(context).Authenticate(login, secret)
 	})
 	return
 }
 
 func init() {
-	cpWizard := pool.UserChangePasswordWizard().DeclareTransientModel()
+	cpWizard := h.UserChangePasswordWizard().DeclareTransientModel()
 	cpWizard.AddFields(map[string]models.FieldDefinition{
-		"Users": models.One2ManyField{RelationModel: pool.UserChangePasswordWizardLine(),
+		"Users": models.One2ManyField{RelationModel: h.UserChangePasswordWizardLine(),
 			ReverseFK: "Wizard", Default: func(env models.Environment) interface{} {
 				activeIds := env.Context().GetIntegerSlice("active_ids")
-				userLines := pool.UserChangePasswordWizardLine().NewSet(env)
-				for _, user := range pool.User().Search(env, pool.User().ID().In(activeIds)).Records() {
-					ul := pool.UserChangePasswordWizardLine().Create(env, &pool.UserChangePasswordWizardLineData{
+				userLines := h.UserChangePasswordWizardLine().NewSet(env)
+				for _, user := range h.User().Search(env, q.User().ID().In(activeIds)).Records() {
+					ul := h.UserChangePasswordWizardLine().Create(env, &h.UserChangePasswordWizardLineData{
 						User:        user,
 						UserLogin:   user.Login(),
 						NewPassword: user.Password(),
@@ -47,34 +48,34 @@ func init() {
 	cpWizard.Methods().ChangePasswordButton().DeclareMethod(
 		`ChangePasswordButton is called when the user clicks on 'Apply' button in the popup.
 		It updates the user's password.`,
-		func(rs pool.UserChangePasswordWizardSet) {
+		func(rs h.UserChangePasswordWizardSet) {
 			for _, userLine := range rs.Users().Records() {
 				userLine.User().SetPassword(userLine.NewPassword())
 			}
 		})
 
-	cpWizardLine := pool.UserChangePasswordWizardLine().DeclareTransientModel()
+	cpWizardLine := h.UserChangePasswordWizardLine().DeclareTransientModel()
 	cpWizardLine.AddFields(map[string]models.FieldDefinition{
-		"Wizard":      models.Many2OneField{RelationModel: pool.UserChangePasswordWizard()},
-		"User":        models.Many2OneField{RelationModel: pool.User(), OnDelete: models.Cascade, Required: true},
+		"Wizard":      models.Many2OneField{RelationModel: h.UserChangePasswordWizard()},
+		"User":        models.Many2OneField{RelationModel: h.User(), OnDelete: models.Cascade, Required: true},
 		"UserLogin":   models.CharField{},
 		"NewPassword": models.CharField{},
 	})
 
-	userLogModel := pool.UserLog().DeclareModel()
+	userLogModel := h.UserLog().DeclareModel()
 	userLogModel.SetDefaultOrder("id desc")
 
-	userModel := pool.User().DeclareModel()
+	userModel := h.User().DeclareModel()
 	userModel.SetDefaultOrder("Login")
 	userModel.AddFields(map[string]models.FieldDefinition{
-		"Partner": models.Many2OneField{RelationModel: pool.Partner(), Required: true, Embed: true,
+		"Partner": models.Many2OneField{RelationModel: h.Partner(), Required: true, Embed: true,
 			OnDelete: models.Restrict, String: "Related Partner", Help: "Partner-related data of the user"},
 		"Login": models.CharField{Required: true, Unique: true, Help: "Used to log into the system",
-			OnChange: pool.User().Methods().OnchangeLogin()},
+			OnChange: h.User().Methods().OnchangeLogin()},
 		"Password": models.CharField{Default: models.DefaultValue(""), NoCopy: true,
 			Help: "Keep empty if you don't want the user to be able to connect on the system."},
-		"NewPassword": models.CharField{String: "Set Password", Compute: pool.User().Methods().ComputePassword(),
-			Inverse: pool.User().Methods().InversePassword(), Depends: []string{""},
+		"NewPassword": models.CharField{String: "Set Password", Compute: h.User().Methods().ComputePassword(),
+			Inverse: h.User().Methods().InversePassword(), Depends: []string{""},
 			Help: `Specify a value only when creating a user or if you're
 changing the user's password, otherwise leave empty. After
 a change of password, the user has to login again.`},
@@ -82,26 +83,26 @@ a change of password, the user has to login again.`},
 		"Active":    models.BooleanField{Default: models.DefaultValue(true)},
 		"ActionID": models.CharField{GoType: new(actions.ActionRef), String: "Home Action",
 			Help: "If specified, this action will be opened at log on for this user, in addition to the standard menu."},
-		"Groups": models.Many2ManyField{RelationModel: pool.Group(), JSON: "group_ids"},
-		"Logs": models.One2ManyField{RelationModel: pool.UserLog(), ReverseFK: "CreateUID", String: "User log entries",
+		"Groups": models.Many2ManyField{RelationModel: h.Group(), JSON: "group_ids"},
+		"Logs": models.One2ManyField{RelationModel: h.UserLog(), ReverseFK: "CreateUID", String: "User log entries",
 			JSON: "log_ids"},
 		"LoginDate": models.DateTimeField{Related: "Logs.CreateDate", String: "Latest Connection"},
-		"Share": models.BooleanField{Compute: pool.User().Methods().ComputeShare(), Depends: []string{"Groups"},
+		"Share": models.BooleanField{Compute: h.User().Methods().ComputeShare(), Depends: []string{"Groups"},
 			String: "Share User", Stored: true, Help: "External user with limited access, created only for the purpose of sharing data."},
 		"CompaniesCount": models.IntegerField{String: "Number of Companies",
-			Compute: pool.User().Methods().ComputeCompaniesCount(), GoType: new(int)},
-		"Company": models.Many2OneField{RelationModel: pool.Company(), Required: true, Default: func(env models.Environment) interface{} {
-			return pool.Company().NewSet(env).CompanyDefaultGet()
-		}, Help: "The company this user is currently working for.", Constraint: pool.User().Methods().CheckCompany()},
-		"Companies": models.Many2ManyField{RelationModel: pool.Company(), JSON: "company_ids", Required: true,
+			Compute: h.User().Methods().ComputeCompaniesCount(), GoType: new(int)},
+		"Company": models.Many2OneField{RelationModel: h.Company(), Required: true, Default: func(env models.Environment) interface{} {
+			return h.Company().NewSet(env).CompanyDefaultGet()
+		}, Help: "The company this user is currently working for.", Constraint: h.User().Methods().CheckCompany()},
+		"Companies": models.Many2ManyField{RelationModel: h.Company(), JSON: "company_ids", Required: true,
 			Default: func(env models.Environment) interface{} {
-				return pool.Company().NewSet(env).CompanyDefaultGet()
-			}, Constraint: pool.User().Methods().CheckCompany()},
+				return h.Company().NewSet(env).CompanyDefaultGet()
+			}, Constraint: h.User().Methods().CheckCompany()},
 	})
 
 	userModel.Methods().SelfReadableFields().DeclareMethod(
 		`SelfReadableFields returns the list of its own fields that a user can read.`,
-		func(rs pool.UserSet) map[string]bool {
+		func(rs h.UserSet) map[string]bool {
 			return map[string]bool{
 				"Signature": true, "Company": true, "Login": true, "Email": true, "Name": true, "Image": true,
 				"ImageMedium": true, "ImageSmall": true, "Lang": true, "TZ": true, "TZOffset": true, "Groups": true,
@@ -111,7 +112,7 @@ a change of password, the user has to login again.`},
 
 	userModel.Methods().SelfWritableFields().DeclareMethod(
 		`SelfWritableFields returns the list of its own fields that a user can write.`,
-		func(rs pool.UserSet) map[string]bool {
+		func(rs h.UserSet) map[string]bool {
 			return map[string]bool{
 				"Signature": true, "ActionID": true, "Company": true, "Email": true, "Name": true,
 				"Image": true, "ImageMedium": true, "ImageSmall": true, "Lang": true, "TZ": true,
@@ -120,13 +121,13 @@ a change of password, the user has to login again.`},
 
 	userModel.Methods().ComputePassword().DeclareMethod(
 		`ComputePassword is a technical function for the new password mechanism. It always returns an empty string`,
-		func(rs pool.UserSet) (*pool.UserData, []models.FieldNamer) {
-			return &pool.UserData{NewPassword: ""}, []models.FieldNamer{pool.User().NewPassword()}
+		func(rs h.UserSet) (*h.UserData, []models.FieldNamer) {
+			return &h.UserData{NewPassword: ""}, []models.FieldNamer{h.User().NewPassword()}
 		})
 
 	userModel.Methods().InversePassword().DeclareMethod(
 		`InversePassword is used in the new password mechanism.`,
-		func(rs pool.UserSet, vals models.FieldMapper) {
+		func(rs h.UserSet, vals models.FieldMapper) {
 			if rs.NewPassword() == "" {
 				return
 			}
@@ -138,39 +139,39 @@ a change of password, the user has to login again.`},
 
 	userModel.Methods().ComputeShare().DeclareMethod(
 		`ComputeShare checks if this is a shared user`,
-		func(rs pool.UserSet) (*pool.UserData, []models.FieldNamer) {
-			return &pool.UserData{
+		func(rs h.UserSet) (*h.UserData, []models.FieldNamer) {
+			return &h.UserData{
 				Share: !rs.HasGroup(GroupUser.ID),
-			}, []models.FieldNamer{pool.User().Share()}
+			}, []models.FieldNamer{h.User().Share()}
 		})
 
 	userModel.Methods().ComputeCompaniesCount().DeclareMethod(
 		`ComputeCompaniesCount retrieves the number of companies in the system`,
-		func(rs pool.UserSet) (*pool.UserData, []models.FieldNamer) {
-			return &pool.UserData{
-				CompaniesCount: pool.Company().NewSet(rs.Env()).Sudo().SearchCount(),
-			}, []models.FieldNamer{pool.User().CompaniesCount()}
+		func(rs h.UserSet) (*h.UserData, []models.FieldNamer) {
+			return &h.UserData{
+				CompaniesCount: h.Company().NewSet(rs.Env()).Sudo().SearchCount(),
+			}, []models.FieldNamer{h.User().CompaniesCount()}
 		})
 
 	userModel.Methods().OnchangeLogin().DeclareMethod(
 		`OnchangeLogin matches the email if the login is an email`,
-		func(rs pool.UserSet) (*pool.UserData, []models.FieldNamer) {
+		func(rs h.UserSet) (*h.UserData, []models.FieldNamer) {
 			if rs.Login() == "" || !emailutils.IsValidAddress(rs.Login()) {
-				return &pool.UserData{}, []models.FieldNamer{}
+				return &h.UserData{}, []models.FieldNamer{}
 			}
-			return &pool.UserData{Email: rs.Login()}, []models.FieldNamer{pool.User().Email()}
+			return &h.UserData{Email: rs.Login()}, []models.FieldNamer{h.User().Email()}
 		})
 
 	userModel.Methods().CheckCompany().DeclareMethod(
 		`CheckCompany checks that the user's company is one of its authorized companies`,
-		func(rs pool.UserSet) {
+		func(rs h.UserSet) {
 			if rs.Company().Intersect(rs.Companies()).IsEmpty() {
 				log.Panic(rs.T("The chosen company is not in the allowed companies for this user"))
 			}
 		})
 
 	userModel.Methods().Read().Extend("",
-		func(rs pool.UserSet, fields []string) []models.FieldMap {
+		func(rs h.UserSet, fields []string) []models.FieldMap {
 			rSet := rs
 			if len(fields) > 0 && rs.ID() == rs.Env().Uid() {
 				var hasUnsafeFields bool
@@ -185,7 +186,7 @@ a change of password, the user has to login again.`},
 				}
 			}
 			result := rSet.Super().Read(fields)
-			if !rs.CheckExecutionPermission(pool.User().Methods().Write().Underlying(), true) {
+			if !rs.CheckExecutionPermission(h.User().Methods().Write().Underlying(), true) {
 				for i, res := range result {
 					if res["id"] != rs.Env().Uid() {
 						if _, exists := res["password"]; exists {
@@ -199,9 +200,9 @@ a change of password, the user has to login again.`},
 		})
 
 	userModel.Methods().Search().Extend("",
-		func(rs pool.UserSet, cond pool.UserCondition) pool.UserSet {
+		func(rs h.UserSet, cond q.UserCondition) h.UserSet {
 			for _, field := range cond.Fields() {
-				if pool.User().JSONizeFieldName(field) == "password" {
+				if h.User().JSONizeFieldName(field) == "password" {
 					log.Panic(rs.T("Invalid search criterion: password"))
 				}
 			}
@@ -209,7 +210,7 @@ a change of password, the user has to login again.`},
 		})
 
 	userModel.Methods().Create().Extend("",
-		func(rs pool.UserSet, vals *pool.UserData) pool.UserSet {
+		func(rs h.UserSet, vals *h.UserData) h.UserSet {
 			user := rs.Super().Create(vals)
 			user.Partner().SetActive(user.Active())
 			if !user.Partner().Company().IsEmpty() {
@@ -219,8 +220,8 @@ a change of password, the user has to login again.`},
 		})
 
 	userModel.Methods().Write().Extend("",
-		func(rs pool.UserSet, data *pool.UserData, fieldsToUnset ...models.FieldNamer) bool {
-			if val, exists := data.Get(pool.User().Active(), fieldsToUnset...); exists && !val.(bool) {
+		func(rs h.UserSet, data *h.UserData, fieldsToUnset ...models.FieldNamer) bool {
+			if val, exists := data.Get(h.User().Active(), fieldsToUnset...); exists && !val.(bool) {
 				for _, user := range rs.Records() {
 					if user.ID() == security.SuperUserID {
 						log.Panic(rs.T("You cannot deactivate the admin user."))
@@ -240,9 +241,9 @@ a change of password, the user has to login again.`},
 					}
 				}
 				if !hasUnsafeFields {
-					if comp, exists := data.Get(pool.User().Company(), fieldsToUnset...); exists {
-						if comp.(pool.CompanySet).Intersect(pool.User().NewSet(rs.Env()).CurrentUser().Companies()).IsEmpty() {
-							data, fieldsToUnset = data.Remove(rs, pool.User().Company(), fieldsToUnset...)
+					if comp, exists := data.Get(h.User().Company(), fieldsToUnset...); exists {
+						if comp.(h.CompanySet).Intersect(h.User().NewSet(rs.Env()).CurrentUser().Companies()).IsEmpty() {
+							data, fieldsToUnset = data.Remove(rs, h.User().Company(), fieldsToUnset...)
 						}
 					}
 					// safe fields only, so we write as super-user to bypass access rights
@@ -250,15 +251,15 @@ a change of password, the user has to login again.`},
 				}
 			}
 			res := rSet.Super().Write(data, fieldsToUnset...)
-			if _, ok := data.Get(pool.User().Groups(), fieldsToUnset...); ok {
+			if _, ok := data.Get(h.User().Groups(), fieldsToUnset...); ok {
 				// We get groups before removing all memberships otherwise we might get stuck with permissions if we
 				// are modifying our own user memberships.
 				rs.SyncMemberships()
 			}
-			if comp, exists := data.Get(pool.User().Company(), fieldsToUnset...); exists {
+			if comp, exists := data.Get(h.User().Company(), fieldsToUnset...); exists {
 				for _, user := range rs.Records() {
 					// if partner is global we keep it that way
-					if !user.Partner().Company().Equals(comp.(pool.CompanySet)) {
+					if !user.Partner().Company().Equals(comp.(h.CompanySet)) {
 						user.Partner().SetCompany(user.Company())
 					}
 				}
@@ -267,7 +268,7 @@ a change of password, the user has to login again.`},
 		})
 
 	userModel.Methods().Unlink().Extend("",
-		func(rs pool.UserSet) int64 {
+		func(rs h.UserSet) int64 {
 			for _, id := range rs.Ids() {
 				if id == security.SuperUserID {
 					log.Panic(rs.T("You can not remove the admin user as it is used internally for resources created by Hexya"))
@@ -277,33 +278,33 @@ a change of password, the user has to login again.`},
 		})
 
 	userModel.Methods().SearchByName().Extend("",
-		func(rs pool.UserSet, name string, op operator.Operator, additionalCond pool.UserCondition, limit int) pool.UserSet {
+		func(rs h.UserSet, name string, op operator.Operator, additionalCond q.UserCondition, limit int) h.UserSet {
 			if name == "" {
 				return rs.Super().SearchByName(name, op, additionalCond, limit)
 			}
-			var users pool.UserSet
+			var users h.UserSet
 			if op == operator.Equals || op == operator.IContains {
-				users = pool.User().Search(rs.Env(), pool.User().Login().Equals(name).AndCond(additionalCond)).Limit(limit)
+				users = h.User().Search(rs.Env(), q.User().Login().Equals(name).AndCond(additionalCond)).Limit(limit)
 			}
 			if users.IsEmpty() {
-				users = pool.User().Search(rs.Env(), pool.User().Name().AddOperator(op, name).AndCond(additionalCond)).Limit(limit)
+				users = h.User().Search(rs.Env(), q.User().Name().AddOperator(op, name).AndCond(additionalCond)).Limit(limit)
 			}
 			return users
 		})
 
 	userModel.Methods().Copy().Extend("",
-		func(rs pool.UserSet, overrides *pool.UserData, fieldsToReset ...models.FieldNamer) pool.UserSet {
+		func(rs h.UserSet, overrides *h.UserData, fieldsToReset ...models.FieldNamer) h.UserSet {
 			rs.EnsureOne()
-			_, eName := overrides.Get(pool.User().Name(), fieldsToReset...)
-			_, ePartner := overrides.Get(pool.User().Partner(), fieldsToReset...)
+			_, eName := overrides.Get(h.User().Name(), fieldsToReset...)
+			_, ePartner := overrides.Get(h.User().Partner(), fieldsToReset...)
 			if !eName && !ePartner {
 				overrides.Name = rs.T("%s (copy)", rs.Name())
-				fieldsToReset = append(fieldsToReset, pool.User().Name())
+				fieldsToReset = append(fieldsToReset, h.User().Name())
 			}
-			_, eLogin := overrides.Get(pool.User().Login(), fieldsToReset...)
+			_, eLogin := overrides.Get(h.User().Login(), fieldsToReset...)
 			if !eLogin {
 				overrides.Login = rs.T("%s (copy)", rs.Login())
-				fieldsToReset = append(fieldsToReset, pool.User().Login())
+				fieldsToReset = append(fieldsToReset, h.User().Login())
 			}
 			return rs.Super().Copy(overrides, fieldsToReset...)
 		})
@@ -311,7 +312,7 @@ a change of password, the user has to login again.`},
 	userModel.Methods().ContextGet().DeclareMethod(
 		`UsersContextGet returns a context with the user's lang, tz and uid
 		This method must be called on a singleton.`,
-		func(rs pool.UserSet) *types.Context {
+		func(rs h.UserSet) *types.Context {
 			rs.EnsureOne()
 			res := types.NewContext()
 			res = res.WithKey("lang", rs.Lang())
@@ -322,23 +323,23 @@ a change of password, the user has to login again.`},
 
 	userModel.Methods().ActionGet().DeclareMethod(
 		`ActionGet returns the action for the preferences popup`,
-		func(rs pool.UserSet) *actions.Action {
+		func(rs h.UserSet) *actions.Action {
 			return actions.Registry.GetById("base_action_res_users_my")
 		})
 
 	userModel.Methods().UpdateLastLogin().DeclareMethod(
 		`UpdateLastLogin updates the last login date of the user`,
-		func(rs pool.UserSet) {
+		func(rs h.UserSet) {
 			// only create new records to avoid any side-effect on concurrent transactions
 			// extra records will be deleted by the periodical garbage collection
-			pool.UserLog().Create(rs.Env(), &pool.UserLogData{})
+			h.UserLog().Create(rs.Env(), &h.UserLogData{})
 		})
 
 	userModel.Methods().CheckCredentials().DeclareMethod(
 		`CheckCredentials checks that the user defined by its login and secret is allowed to log in.
 		It returns the uid of the user on success and an error otherwise.`,
-		func(rs pool.UserSet, login, secret string) (uid int64, err error) {
-			user := rs.Search(pool.User().Login().Equals(login))
+		func(rs h.UserSet, login, secret string) (uid int64, err error) {
+			user := rs.Search(q.User().Login().Equals(login))
 			if user.Len() == 0 {
 				err = security.UserNotFoundError(login)
 				return
@@ -353,7 +354,7 @@ a change of password, the user has to login again.`},
 
 	userModel.Methods().Authenticate().DeclareMethod(
 		"Authenticate the user defined by login and secret",
-		func(rs pool.UserSet, login, secret string) (uid int64, err error) {
+		func(rs h.UserSet, login, secret string) (uid int64, err error) {
 			uid, err = rs.CheckCredentials(login, secret)
 			if err != nil {
 				rs.UpdateLastLogin()
@@ -365,8 +366,8 @@ a change of password, the user has to login again.`},
 		`ChangePassword changes current user password. Old password must be provided explicitly
         to prevent hijacking an existing user session, or for cases where the cleartext
         password is not used to authenticate requests. It returns true or panics.`,
-		func(rs pool.UserSet, oldPassword, newPassword string) bool {
-			currentUser := pool.User().NewSet(rs.Env()).CurrentUser()
+		func(rs h.UserSet, oldPassword, newPassword string) bool {
+			currentUser := h.User().NewSet(rs.Env()).CurrentUser()
 			uid, err := rs.CheckCredentials(currentUser.Login(), oldPassword)
 			if err != nil || rs.Env().Uid() != uid {
 				log.Panic("Invalid password", "user", currentUser.Login(), "uid", uid)
@@ -377,7 +378,7 @@ a change of password, the user has to login again.`},
 
 	userModel.Methods().PreferenceSave().DeclareMethod(
 		`PreferenceSave is called when validating the preferences popup`,
-		func(rs pool.UserSet) *actions.Action {
+		func(rs h.UserSet) *actions.Action {
 			return &actions.Action{
 				Type: actions.ActionClient,
 				Tag:  "reload_context",
@@ -386,7 +387,7 @@ a change of password, the user has to login again.`},
 
 	userModel.Methods().PreferenceChangePassword().DeclareMethod(
 		`PreferenceChangePassword is called when clicking 'Change Password' in the preferences popup`,
-		func(rs pool.UserSet) *actions.Action {
+		func(rs h.UserSet) *actions.Action {
 			return &actions.Action{
 				Type:   actions.ActionClient,
 				Tag:    "change_password",
@@ -398,7 +399,7 @@ a change of password, the user has to login again.`},
 		`HasGroup returns true if this user belongs to the group with the given ID.
 		If this method is called on an empty RecordSet, then it checks if the current
 		user belongs to the given group.`,
-		func(rs pool.UserSet, groupID string) bool {
+		func(rs h.UserSet, groupID string) bool {
 			userID := rs.ID()
 			if userID == 0 {
 				userID = rs.Env().Uid()
@@ -409,24 +410,24 @@ a change of password, the user has to login again.`},
 
 	userModel.Methods().IsAdmin().DeclareMethod(
 		`IsAdmin returns true if this user is the administrator or member of the 'Access Rights' group`,
-		func(rs pool.UserSet) bool {
+		func(rs h.UserSet) bool {
 			rs.EnsureOne()
 			return rs.IsSuperUser() || rs.HasGroup(GroupERPManager.ID)
 		})
 
 	userModel.Methods().IsSuperUser().DeclareMethod(
 		`IsSuperUser returns true if this user is the administrator`,
-		func(rs pool.UserSet) bool {
+		func(rs h.UserSet) bool {
 			rs.EnsureOne()
 			return rs.ID() == security.SuperUserID
 		})
 
 	userModel.Methods().AddMandatoryGroups().DeclareMethod(
 		`AddMandatoryGroups adds the group Everyone to everybody and the admin group to the admin`,
-		func(rs pool.UserSet) {
+		func(rs h.UserSet) {
 			for _, user := range rs.Records() {
-				dbGroupEveryone := pool.Group().Search(rs.Env(), pool.Group().GroupID().Equals(security.GroupEveryoneID))
-				dbGroupAdmin := pool.Group().Search(rs.Env(), pool.Group().GroupID().Equals(security.GroupAdminID))
+				dbGroupEveryone := h.Group().Search(rs.Env(), q.Group().GroupID().Equals(security.GroupEveryoneID))
+				dbGroupAdmin := h.Group().Search(rs.Env(), q.Group().GroupID().Equals(security.GroupAdminID))
 				groups := user.Groups()
 				// Add groupAdmin for admin
 				if user.ID() == security.SuperUserID {
@@ -441,7 +442,7 @@ a change of password, the user has to login again.`},
 
 	userModel.Methods().SyncMemberships().DeclareMethod(
 		`SyncMemberships synchronises the users memberships with the Hexya internal registry`,
-		func(rs pool.UserSet) {
+		func(rs h.UserSet) {
 			for _, user := range rs.Records() {
 				if user.CheckGroupsSync() {
 					continue
@@ -458,7 +459,7 @@ a change of password, the user has to login again.`},
 	userModel.Methods().CheckGroupsSync().DeclareMethod(
 		`CheckGroupSync returns true if the groups in the internal registry match exactly
 		database groups of the given users. This method must be called on a singleton`,
-		func(rs pool.UserSet) bool {
+		func(rs h.UserSet) bool {
 			rs.EnsureOne()
 		dbLoop:
 			for _, dbGroup := range rs.Groups().Records() {
@@ -483,20 +484,20 @@ a change of password, the user has to login again.`},
 
 	userModel.Methods().GetCompany().DeclareMethod(
 		`GetCompany returns the current user's company.`,
-		func(rs pool.UserSet) pool.CompanySet {
-			return pool.User().NewSet(rs.Env()).CurrentUser().Company()
+		func(rs h.UserSet) h.CompanySet {
+			return h.User().NewSet(rs.Env()).CurrentUser().Company()
 		})
 
 	userModel.Methods().GetCompanyCurrency().DeclareMethod(
 		`GetCompanyCurrency returns the currency of the current user's company.`,
-		func(rs pool.UserSet) pool.CurrencySet {
-			return pool.User().NewSet(rs.Env()).CurrentUser().Company().Currency()
+		func(rs h.UserSet) h.CurrencySet {
+			return h.User().NewSet(rs.Env()).CurrentUser().Company().Currency()
 		})
 
 	userModel.Methods().CurrentUser().DeclareMethod(
 		`CurrentUser returns a UserSet with the currently logged in user.`,
-		func(rs pool.UserSet) pool.UserSet {
-			return pool.User().Browse(rs.Env(), []int64{rs.Env().Uid()})
+		func(rs h.UserSet) h.UserSet {
+			return h.User().Browse(rs.Env(), []int64{rs.Env().Uid()})
 		})
 
 	security.AuthenticationRegistry.RegisterBackend(new(BaseAuthBackend))

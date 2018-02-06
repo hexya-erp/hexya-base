@@ -13,7 +13,8 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types"
 	"github.com/hexya-erp/hexya/hexya/server"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
+	"github.com/hexya-erp/hexya/pool/q"
 )
 
 // SessionInfo returns a map with information about the given session
@@ -24,7 +25,7 @@ func SessionInfo(sess sessions.Session) gin.H {
 	)
 	if sess.Get("uid") != nil {
 		models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
-			user := pool.User().Search(env, pool.User().ID().Equals(sess.Get("uid").(int64)))
+			user := h.User().Search(env, q.User().ID().Equals(sess.Get("uid").(int64)))
 			userContext = user.ContextGet()
 			companyID = user.Company().ID()
 		})
@@ -92,7 +93,7 @@ func ChangePassword(c *server.Context) {
 	}
 	res := make(gin.H)
 	err := models.ExecuteInNewEnvironment(uid, func(env models.Environment) {
-		rs := pool.User().NewSet(env)
+		rs := h.User().NewSet(env)
 		if strings.TrimSpace(oldPassword) == "" ||
 			strings.TrimSpace(newPassword) == "" ||
 			strings.TrimSpace(confirmPassword) == "" {

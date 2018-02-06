@@ -26,12 +26,13 @@ import (
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools/generate"
 	"github.com/hexya-erp/hexya/hexya/tools/logging"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
+	"github.com/hexya-erp/hexya/pool/q"
 )
 
 const (
 	// MODULE_NAME is the name of this module
-	MODULE_NAME string = "base"
+	MODULE_NAME = "base"
 )
 
 var log *logging.Logger
@@ -43,10 +44,10 @@ func init() {
 		PostInit: func() {
 			err := models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 
-				mainCompanyPartner := pool.Partner().Search(env, pool.Partner().ID().Equals(1))
+				mainCompanyPartner := h.Partner().Search(env, q.Partner().ID().Equals(1))
 				if mainCompanyPartner.IsEmpty() {
 					log.Debug(mainCompanyPartner.T("Creating main company partner"))
-					mainCompanyPartner = pool.Partner().Create(env, &pool.PartnerData{
+					mainCompanyPartner = h.Partner().Create(env, &h.PartnerData{
 						ID:        1,
 						Name:      "Your Company",
 						IsCompany: true,
@@ -55,11 +56,11 @@ func init() {
 					env.Cr().Execute("SELECT nextval('partner_id_seq')")
 				}
 
-				mainCompany := pool.Company().Search(env, pool.Company().ID().Equals(1))
+				mainCompany := h.Company().Search(env, q.Company().ID().Equals(1))
 				if mainCompany.IsEmpty() {
 					log.Debug(mainCompany.T("Creating main company"))
-					euro := pool.Currency().Search(env, pool.Currency().HexyaExternalID().Equals("base_EUR"))
-					mainCompany = pool.Company().Create(env, &pool.CompanyData{
+					euro := h.Currency().Search(env, q.Currency().HexyaExternalID().Equals("base_EUR"))
+					mainCompany = h.Company().Create(env, &h.CompanyData{
 						ID:              1,
 						Name:            mainCompanyPartner.Name(),
 						Partner:         mainCompanyPartner,
@@ -69,10 +70,10 @@ func init() {
 					env.Cr().Execute("SELECT nextval('company_id_seq')")
 				}
 
-				adminPartner := pool.Partner().Search(env, pool.Partner().ID().Equals(2))
+				adminPartner := h.Partner().Search(env, q.Partner().ID().Equals(2))
 				if adminPartner.IsEmpty() {
 					log.Debug(adminPartner.T("Creating admin partner"))
-					adminPartner = pool.Partner().Create(env, &pool.PartnerData{
+					adminPartner = h.Partner().Create(env, &h.PartnerData{
 						ID:       2,
 						Lang:     "en_US",
 						Name:     "Administrator",
@@ -84,11 +85,11 @@ func init() {
 
 				avatarImg, _ := ioutil.ReadFile(filepath.Join(generate.HexyaDir, "hexya", "server", "static", "base", "src", "img", "avatar.png"))
 
-				adminUser := pool.User().Search(env, pool.User().ID().Equals(security.SuperUserID))
+				adminUser := h.User().Search(env, q.User().ID().Equals(security.SuperUserID))
 				ActionID := actions.MakeActionRef("base_action_res_users")
 				if adminUser.IsEmpty() {
 					log.Debug(adminUser.T("Creating admin user"))
-					pool.User().Create(env, &pool.UserData{
+					h.User().Create(env, &h.UserData{
 						ID:          security.SuperUserID,
 						Name:        "Administrator",
 						Active:      true,
@@ -106,9 +107,9 @@ func init() {
 					env.Cr().Execute("SELECT nextval('user_id_seq')")
 				}
 
-				pool.Group().NewSet(env).ReloadGroups()
+				h.Group().NewSet(env).ReloadGroups()
 
-				pool.ConfigParameter().NewSet(env).Init()
+				h.ConfigParameter().NewSet(env).Init()
 			})
 			if err != nil {
 				log.Panic("Error while initializing", "error", err)

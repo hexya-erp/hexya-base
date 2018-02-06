@@ -5,9 +5,9 @@ package web
 
 import (
 	"github.com/hexya-erp/hexya/hexya/models/security"
-	"github.com/hexya-erp/hexya/pool"
+	"github.com/hexya-erp/hexya/pool/h"
 )
 
 func init() {
-	pool.Filter().Methods().AllowAllToGroup(security.GroupEveryone)
+	h.Filter().Methods().AllowAllToGroup(security.GroupEveryone)
 }
