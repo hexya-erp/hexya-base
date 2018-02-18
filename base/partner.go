@@ -549,7 +549,7 @@ Use this field anywhere a small image is required.`},
 				// Our parent is not a company, nor a root contact
 				return
 			}
-			if rs.Parent().Children().Len() > 1 {
+			if rs.Parent().Children().Len() != 1 {
 				// Our parent already has other children
 				return
 			}
