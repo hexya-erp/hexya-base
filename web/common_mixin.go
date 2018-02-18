@@ -47,6 +47,11 @@ func init() {
 						} else {
 							value = []int64{}
 						}
+						displayNames := make([]string, v.Len())
+						for i, val := range v.Collection().Records() {
+							displayNames[i] = val.Call("NameGet").(string)
+						}
+						fMap[fName+"__display"] = strings.Join(displayNames, ", ")
 					}
 				case int64:
 					if fi.Type.Is2OneRelationType() {
