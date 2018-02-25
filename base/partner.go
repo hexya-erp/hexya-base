@@ -203,7 +203,7 @@ Use this field anywhere a small image is required.`},
 	})
 
 	partnerModel.Fields().ParentName().RevokeAccess(security.GroupEveryone, security.Write)
-	//partnerModel.Fields().DisplayName().SetDepends([]string{"IsCompany", "Name", "Parent.Name", "Type", "CompanyName"})
+	partnerModel.Fields().DisplayName().SetDepends([]string{"IsCompany", "Name", "Parent.Name", "Type", "CompanyName"})
 
 	partnerModel.AddSQLConstraint("check_name",
 		"CHECK( (type='contact' AND name IS NOT NULL) or (type != 'contact') )",

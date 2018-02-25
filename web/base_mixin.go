@@ -10,17 +10,21 @@ import (
 
 func init() {
 	baseMixin := h.BaseMixin()
-	baseMixin.AddFields(map[string]models.FieldDefinition{
-		"Active": models.BooleanField{},
-	})
 
 	baseMixin.Methods().ToggleActive().DeclareMethod(
 		`ToggleActive toggles the Active field of this object`,
 		func(rs h.BaseMixinSet) {
-			if rs.Active() {
-				rs.SetActive(false)
-			} else {
-				rs.SetActive(true)
+			fInfos := rs.FieldsGet(models.FieldsGetArgs{})
+			for fName := range fInfos {
+				if fName != "active" {
+					continue
+				}
+				if rs.Get("Active").(bool) {
+					rs.Set("Active", false)
+				} else {
+					rs.Set("Active", true)
+				}
+				return
 			}
 		})
 }
