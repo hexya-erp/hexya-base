@@ -70,19 +70,6 @@ func init() {
 					env.Cr().Execute("SELECT nextval('company_id_seq')")
 				}
 
-				adminPartner := h.Partner().Search(env, q.Partner().ID().Equals(2))
-				if adminPartner.IsEmpty() {
-					log.Debug(adminPartner.T("Creating admin partner"))
-					adminPartner = h.Partner().Create(env, &h.PartnerData{
-						ID:       2,
-						Lang:     "en_US",
-						Name:     "Administrator",
-						Function: "IT Manager",
-						Customer: false,
-					})
-					env.Cr().Execute("SELECT nextval('partner_id_seq')")
-				}
-
 				avatarImg, _ := ioutil.ReadFile(filepath.Join(generate.HexyaDir, "hexya", "server", "static", "base", "src", "img", "avatar.png"))
 
 				adminUser := h.User().Search(env, q.User().ID().Equals(security.SuperUserID))
@@ -98,7 +85,9 @@ func init() {
 						Login:       "admin",
 						LoginDate:   dates.DateTime{},
 						Password:    "admin",
-						Partner:     adminPartner,
+						Customer:    false,
+						Function:    "IT Manager",
+						Lang:        "en_US",
 						ActionID:    ActionID,
 						ImageSmall:  base64.StdEncoding.EncodeToString(avatarImg),
 						ImageMedium: base64.StdEncoding.EncodeToString(avatarImg),

@@ -80,7 +80,6 @@ func init() {
 changing the user's password, otherwise leave empty. After
 a change of password, the user has to login again.`},
 		"Signature": models.TextField{}, // TODO Switch to HTML field when implemented in client
-		"Active":    models.BooleanField{Default: models.DefaultValue(true)},
 		"ActionID": models.CharField{GoType: new(actions.ActionRef), String: "Home Action",
 			Help: "If specified, this action will be opened at log on for this user, in addition to the standard menu."},
 		"Groups": models.Many2ManyField{RelationModel: h.Group(), JSON: "group_ids"},
@@ -91,14 +90,19 @@ a change of password, the user has to login again.`},
 			String: "Share User", Stored: true, Help: "External user with limited access, created only for the purpose of sharing data."},
 		"CompaniesCount": models.IntegerField{String: "Number of Companies",
 			Compute: h.User().Methods().ComputeCompaniesCount(), GoType: new(int)},
-		"Company": models.Many2OneField{RelationModel: h.Company(), Required: true, Default: func(env models.Environment) interface{} {
-			return h.Company().NewSet(env).CompanyDefaultGet()
-		}, Help: "The company this user is currently working for.", Constraint: h.User().Methods().CheckCompany()},
 		"Companies": models.Many2ManyField{RelationModel: h.Company(), JSON: "company_ids", Required: true,
 			Default: func(env models.Environment) interface{} {
 				return h.Company().NewSet(env).CompanyDefaultGet()
 			}, Constraint: h.User().Methods().CheckCompany()},
 	})
+
+	userModel.Fields().Company().
+		SetRequired(true).
+		SetDefault(func(env models.Environment) interface{} {
+			return h.Company().NewSet(env).CompanyDefaultGet()
+		}).
+		SetHelp("The company this user is currently working for.").
+		SetConstraint(h.User().Methods().CheckCompany())
 
 	userModel.Methods().SelfReadableFields().DeclareMethod(
 		`SelfReadableFields returns the list of its own fields that a user can read.`,
