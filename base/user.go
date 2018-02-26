@@ -90,19 +90,13 @@ a change of password, the user has to login again.`},
 			String: "Share User", Stored: true, Help: "External user with limited access, created only for the purpose of sharing data."},
 		"CompaniesCount": models.IntegerField{String: "Number of Companies",
 			Compute: h.User().Methods().ComputeCompaniesCount(), GoType: new(int)},
-		"Companies": models.Many2ManyField{RelationModel: h.Company(), JSON: "company_ids", Required: true,
+		"Company": models.Many2OneField{RelationModel: h.Company(), Required: true, Default: func(env models.Environment) interface{} {
+			return h.Company().NewSet(env).CompanyDefaultGet()
+		}, Help: "The company this user is currently working for.", Constraint: h.User().Methods().CheckCompany()}, "Companies": models.Many2ManyField{RelationModel: h.Company(), JSON: "company_ids", Required: true,
 			Default: func(env models.Environment) interface{} {
 				return h.Company().NewSet(env).CompanyDefaultGet()
 			}, Constraint: h.User().Methods().CheckCompany()},
 	})
-
-	userModel.Fields().Company().
-		SetRequired(true).
-		SetDefault(func(env models.Environment) interface{} {
-			return h.Company().NewSet(env).CompanyDefaultGet()
-		}).
-		SetHelp("The company this user is currently working for.").
-		SetConstraint(h.User().Methods().CheckCompany())
 
 	userModel.Methods().SelfReadableFields().DeclareMethod(
 		`SelfReadableFields returns the list of its own fields that a user can read.`,
