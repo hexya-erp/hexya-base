@@ -74,20 +74,20 @@ func init() {
 
 	h.BankAccount().Methods().ComputeAccountType().DeclareMethod(
 		`ComputeAccountType computes the type of account from the account number`,
-		func(rs h.BankAccountSet) (*h.BankAccountData, []models.FieldNamer) {
+		func(rs h.BankAccountSet) *h.BankAccountData {
 			return &h.BankAccountData{
 				AccountType: "bank",
-			}, []models.FieldNamer{h.BankAccount().AccountType()}
+			}
 		})
 
 	h.BankAccount().Methods().ComputeSanitizedAccountNumber().DeclareMethod(
 		`ComputeSanitizedAccountNumber removes all spaces and invalid characters from account number`,
-		func(rs h.BankAccountSet) (*h.BankAccountData, []models.FieldNamer) {
+		func(rs h.BankAccountSet) *h.BankAccountData {
 			rg, _ := regexp.Compile("\\W+")
 			san := rg.ReplaceAllString(rs.Name(), "")
 			return &h.BankAccountData{
 				SanitizedAccountNumber: san,
-			}, []models.FieldNamer{h.BankAccount().SanitizedAccountNumber()}
+			}
 		})
 
 }

@@ -26,10 +26,10 @@ func init() {
 
 	h.SequenceDateRange().Methods().ComputeNumberNextActual().DeclareMethod(
 		`ComputeNumberNextActual returns the real next number for the sequence depending on the implementation`,
-		func(rs h.SequenceDateRangeSet) (*h.SequenceDateRangeData, []models.FieldNamer) {
+		func(rs h.SequenceDateRangeSet) *h.SequenceDateRangeData {
 			var res h.SequenceDateRangeData
 			res.NumberNextActual = rs.NumberNext()
-			return &res, []models.FieldNamer{h.Sequence().NumberNextActual()}
+			return &res
 		})
 
 	h.Sequence().DeclareModel()
@@ -65,10 +65,10 @@ gap in the sequence (while they are possible in the former).`},
 
 	h.Sequence().Methods().ComputeNumberNextActual().DeclareMethod(
 		`ComputeNumberNextActual returns the real next number for the sequence depending on the implementation`,
-		func(rs h.SequenceSet) (*h.SequenceData, []models.FieldNamer) {
+		func(rs h.SequenceSet) *h.SequenceData {
 			var res h.SequenceData
 			res.NumberNextActual = rs.NumberNext()
-			return &res, []models.FieldNamer{h.Sequence().NumberNextActual()}
+			return &res
 		})
 
 	h.Sequence().Methods().NextByID().DeclareMethod(

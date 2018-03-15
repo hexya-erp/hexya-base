@@ -210,7 +210,7 @@ Use this field anywhere a small image is required.`},
 		"Contacts require a name.")
 
 	partnerModel.Methods().ComputeDisplayName().Extend("",
-		func(rs h.PartnerSet) (models.FieldMap, []models.FieldNamer) {
+		func(rs h.PartnerSet) models.FieldMap {
 			rSet := rs.
 				WithContext("show_address", false).
 				WithContext("show_address_only", false).
@@ -220,16 +220,16 @@ Use this field anywhere a small image is required.`},
 
 	partnerModel.Methods().ComputeTZOffset().DeclareMethod(
 		`ComputeTZOffset computes the timezone offset`,
-		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) *h.PartnerData {
 			// TODO Implement TZOffset
 			return &h.PartnerData{
 				TZOffset: "",
-			}, []models.FieldNamer{h.Partner().TZOffset()}
+			}
 		})
 
 	partnerModel.Methods().ComputePartnerShare().DeclareMethod(
 		`ComputePartnerShare computes the PartnerShare field`,
-		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) *h.PartnerData {
 			var partnerShare bool
 			if rs.Users().IsEmpty() {
 				partnerShare = true
@@ -242,40 +242,40 @@ Use this field anywhere a small image is required.`},
 			}
 			return &h.PartnerData{
 				PartnerShare: partnerShare,
-			}, []models.FieldNamer{h.Partner().PartnerShare()}
+			}
 		})
 
 	partnerModel.Methods().ComputeContactAddress().DeclareMethod(
 		`ComputeContactAddress computes the contact's address according to the contact's country standards`,
-		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) *h.PartnerData {
 			return &h.PartnerData{
 				ContactAddress: rs.DisplayAddress(false),
-			}, []models.FieldNamer{h.Partner().ContactAddress()}
+			}
 		})
 
 	partnerModel.Methods().ComputeCommercialPartner().DeclareMethod(
 		`ComputeCommercialPartner computes the commercial partner, which is the first company ancestor or the top
 		ancestor if none are companies`,
-		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) *h.PartnerData {
 			commercialPartner := rs
 			if !rs.IsCompany() && !rs.Parent().IsEmpty() {
 				commercialPartner = rs.Parent().CommercialPartner()
 			}
 			return &h.PartnerData{
 				CommercialPartner: commercialPartner,
-			}, []models.FieldNamer{h.Partner().CommercialPartner()}
+			}
 		})
 
 	partnerModel.Methods().ComputeCommercialCompanyName().DeclareMethod(
 		`ComputeCommercialCompanyName returns the name of the commercial partner company`,
-		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) *h.PartnerData {
 			commPartnerName := rs.CommercialPartner().Name()
 			if !rs.CommercialPartner().IsCompany() {
 				commPartnerName = rs.CompanyName()
 			}
 			return &h.PartnerData{
 				CommercialCompanyName: commPartnerName,
-			}, []models.FieldNamer{h.Partner().CommercialCompanyName()}
+			}
 		})
 
 	partnerModel.Methods().GetDefaultImage().DeclareMethod(
@@ -375,23 +375,23 @@ Use this field anywhere a small image is required.`},
 
 	partnerModel.Methods().ComputeEmailFormatted().DeclareMethod(
 		`ComputeEmailFormatted returns a 'Name <email@domain>' formatted string`,
-		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) *h.PartnerData {
 			addr := mail.Address{Name: rs.Name(), Address: rs.Email()}
 			return &h.PartnerData{
 				EmailFormatted: addr.String(),
-			}, []models.FieldNamer{h.Partner().EmailFormatted()}
+			}
 		})
 
 	partnerModel.Methods().ComputeCompanyType().DeclareMethod(
 		`ComputeIsCompany computes the IsCompany field from the selected CompanyType`,
-		func(rs h.PartnerSet) (*h.PartnerData, []models.FieldNamer) {
+		func(rs h.PartnerSet) *h.PartnerData {
 			companyType := "person"
 			if rs.IsCompany() {
 				companyType = "company"
 			}
 			return &h.PartnerData{
 				CompanyType: companyType,
-			}, []models.FieldNamer{h.Partner().CompanyType()}
+			}
 		})
 
 	partnerModel.Methods().InverseCompanyType().DeclareMethod(

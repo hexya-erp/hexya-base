@@ -52,7 +52,7 @@ func init() {
 		`ComputeCurrentRate returns the current rate of this currency.
 		 If a 'date' key (type DateTime) is given in the context, then it is used to compute the rate,
 		 otherwise now is used.`,
-		func(rs h.CurrencySet) (*h.CurrencyData, []models.FieldNamer) {
+		func(rs h.CurrencySet) *h.CurrencyData {
 			date := dates.Now()
 			if rs.Env().Context().HasKey("date") {
 				date = rs.Env().Context().GetDateTime("date")
@@ -73,27 +73,27 @@ func init() {
 			if res == 0 {
 				res = 1.0
 			}
-			return &h.CurrencyData{Rate: res}, []models.FieldNamer{h.Currency().Rate()}
+			return &h.CurrencyData{Rate: res}
 		})
 
 	currencyModel.Methods().ComputeDecimalPlaces().DeclareMethod(
 		`ComputeDecimalPlaces returns the decimal place from the currency's rounding`,
-		func(rs h.CurrencySet) (*h.CurrencyData, []models.FieldNamer) {
+		func(rs h.CurrencySet) *h.CurrencyData {
 			var dp int
 			if rs.Rounding() > 0 && rs.Rounding() < 1 {
 				dp = int(math.Ceil(math.Log10(1 / rs.Rounding())))
 			}
-			return &h.CurrencyData{DecimalPlaces: dp}, []models.FieldNamer{h.Currency().DecimalPlaces()}
+			return &h.CurrencyData{DecimalPlaces: dp}
 		})
 
 	currencyModel.Methods().ComputeDate().DeclareMethod(
 		`ComputeDate returns the date of the last rate of this currency`,
-		func(rs h.CurrencySet) (*h.CurrencyData, []models.FieldNamer) {
+		func(rs h.CurrencySet) *h.CurrencyData {
 			var lastDate dates.Date
 			if rateLength := len(rs.Rates().Records()); rateLength > 0 {
 				lastDate = rs.Rates().Records()[rateLength-1].Name().ToDate()
 			}
-			return &h.CurrencyData{Date: lastDate}, []models.FieldNamer{h.Currency().Date()}
+			return &h.CurrencyData{Date: lastDate}
 		})
 
 	currencyModel.Methods().Round().DeclareMethod(

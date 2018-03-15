@@ -119,8 +119,8 @@ a change of password, the user has to login again.`},
 
 	userModel.Methods().ComputePassword().DeclareMethod(
 		`ComputePassword is a technical function for the new password mechanism. It always returns an empty string`,
-		func(rs h.UserSet) (*h.UserData, []models.FieldNamer) {
-			return &h.UserData{NewPassword: ""}, []models.FieldNamer{h.User().NewPassword()}
+		func(rs h.UserSet) *h.UserData {
+			return &h.UserData{NewPassword: ""}
 		})
 
 	userModel.Methods().InversePassword().DeclareMethod(
@@ -137,18 +137,18 @@ a change of password, the user has to login again.`},
 
 	userModel.Methods().ComputeShare().DeclareMethod(
 		`ComputeShare checks if this is a shared user`,
-		func(rs h.UserSet) (*h.UserData, []models.FieldNamer) {
+		func(rs h.UserSet) *h.UserData {
 			return &h.UserData{
 				Share: !rs.HasGroup(GroupUser.ID),
-			}, []models.FieldNamer{h.User().Share()}
+			}
 		})
 
 	userModel.Methods().ComputeCompaniesCount().DeclareMethod(
 		`ComputeCompaniesCount retrieves the number of companies in the system`,
-		func(rs h.UserSet) (*h.UserData, []models.FieldNamer) {
+		func(rs h.UserSet) *h.UserData {
 			return &h.UserData{
 				CompaniesCount: h.Company().NewSet(rs.Env()).Sudo().SearchCount(),
-			}, []models.FieldNamer{h.User().CompaniesCount()}
+			}
 		})
 
 	userModel.Methods().OnchangeLogin().DeclareMethod(
