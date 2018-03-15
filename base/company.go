@@ -70,11 +70,11 @@ func init() {
 
 	companyModel.Methods().ComputeLogoWeb().DeclareMethod(
 		`ComputeLogoWeb returns a resized version of the company logo`,
-		func(rs h.CompanySet) (*h.CompanyData, []models.FieldNamer) {
+		func(rs h.CompanySet) *h.CompanyData {
 			res := h.CompanyData{
 				LogoWeb: rs.Logo(),
 			}
-			return &res, []models.FieldNamer{rs.Model().LogoWeb()}
+			return &res
 		})
 
 	companyModel.Methods().OnChangeState().DeclareMethod(

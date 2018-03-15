@@ -56,13 +56,13 @@ func init() {
 
 	attachmentModel.Methods().ComputeResName().DeclareMethod(
 		`ComputeResName computes the display name of the ressource this document is attached to.`,
-		func(rs h.AttachmentSet) (*h.AttachmentData, []models.FieldNamer) {
+		func(rs h.AttachmentSet) *h.AttachmentData {
 			var res h.AttachmentData
 			if rs.ResModel() != "" && rs.ResID() != 0 {
 				record := rs.Env().Pool(rs.ResModel()).Search(models.Registry.MustGet(rs.ResModel()).Field("ID").Equals(rs.ResID()))
 				res.ResName = record.Get("DisplayName").(string)
 			}
-			return &res, []models.FieldNamer{h.Attachment().ResName()}
+			return &res
 		})
 
 	attachmentModel.Methods().Storage().DeclareMethod(
@@ -235,7 +235,7 @@ func init() {
 
 	attachmentModel.Methods().ComputeDatas().DeclareMethod(
 		`ComputeDatas returns the data of the attachment, reading either from file or database`,
-		func(rs h.AttachmentSet) (*h.AttachmentData, []models.FieldNamer) {
+		func(rs h.AttachmentSet) *h.AttachmentData {
 			var datas string
 			binSize := rs.Env().Context().GetBool("bin_size")
 			if rs.StoreFname() != "" {
@@ -245,7 +245,7 @@ func init() {
 			}
 			return &h.AttachmentData{
 				Datas: datas,
-			}, []models.FieldNamer{h.Attachment().Datas()}
+			}
 		})
 
 	attachmentModel.Methods().InverseDatas().DeclareMethod(
