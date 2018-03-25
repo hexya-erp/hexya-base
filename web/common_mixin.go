@@ -301,7 +301,7 @@ func init() {
 				Model:       rs.ModelName(),
 				ActViewType: actions.ActionViewTypeForm,
 				ViewMode:    "form",
-				Views:       []views.ViewTuple{{ID: viewID, Type: views.VIEW_TYPE_FORM}},
+				Views:       []views.ViewTuple{{ID: viewID, Type: views.ViewTypeForm}},
 				Target:      "current",
 				ResID:       rs.ID(),
 				Context:     rs.Env().Context(),
@@ -358,11 +358,11 @@ func init() {
 			res.FieldsViews = make(map[views.ViewType]*webdata.FieldsViewData)
 			for _, viewTuple := range args.Views {
 				vType := viewTuple.Type
-				if vType == views.VIEW_TYPE_LIST {
-					vType = views.VIEW_TYPE_TREE
+				if vType == views.viewTypeList {
+					vType = views.viewTypeTree
 				}
 				toolbar := args.Options.Toolbar
-				if vType == views.VIEW_TYPE_SEARCH {
+				if vType == views.ViewTypeSearch {
 					toolbar = false
 				}
 				res.FieldsViews[viewTuple.Type] = rs.FieldsViewGet(webdata.FieldsViewGetParams{
