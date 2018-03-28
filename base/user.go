@@ -199,10 +199,8 @@ a change of password, the user has to login again.`},
 
 	userModel.Methods().Search().Extend("",
 		func(rs h.UserSet, cond q.UserCondition) h.UserSet {
-			for _, field := range cond.Fields() {
-				if h.User().JSONizeFieldName(field) == "password" {
-					log.Panic(rs.T("Invalid search criterion: password"))
-				}
+			if cond.HasField(h.User().Fields().Password()) {
+				log.Panic(rs.T("Invalid search criterion: password"))
 			}
 			return rs.Super().Search(cond)
 		})

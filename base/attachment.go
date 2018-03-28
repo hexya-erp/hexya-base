@@ -397,13 +397,7 @@ func init() {
 	attachmentModel.Methods().Search().Extend("",
 		func(rs h.AttachmentSet, cond q.AttachmentCondition) h.AttachmentSet {
 			// add res_field=False in domain if not present
-			var hasResField bool
-			for _, c := range cond.Fields() {
-				if rs.Model().JSONizeFieldName(c) == rs.Model().JSONizeFieldName(h.Attachment().ResField().String()) {
-					hasResField = true
-					break
-				}
-			}
+			hasResField := cond.HasField(h.Attachment().Fields().ResField())
 			if !hasResField {
 				cond = cond.And().ResField().IsNull()
 			}
