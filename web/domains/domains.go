@@ -183,19 +183,19 @@ func addTerm(cond *models.Condition, term DomainTerm, op DomainPrefixOperator) *
 	fieldName := term[0].(string)
 	optr := operator.Operator(term[1].(string))
 	value := term[2]
-	meth := getConditionMethod(cond, op)
-	cond = meth().Field(fieldName).AddOperator(optr, value)
+	newCond := models.Condition{}.And().Field(fieldName).AddOperator(optr, value)
+	cond = getConditionMethod(newCond, op)(cond)
 	return cond
 }
 
 // getConditionMethod returns the condition method to use on the given condition
 // for the given prefix operator and negation condition.
-func getConditionMethod(cond *models.Condition, op DomainPrefixOperator) func() *models.ConditionStart {
+func getConditionMethod(cond *models.Condition, op DomainPrefixOperator) func(*models.Condition) *models.Condition {
 	switch op {
 	case PREFIX_AND:
-		return cond.And
+		return cond.AndCond
 	case PREFIX_OR:
-		return cond.Or
+		return cond.OrCond
 	default:
 		log.Panic("Unknown prefix operator", "operator", op)
 	}

@@ -15,6 +15,7 @@
 package domains
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/hexya-erp/hexya/hexya/models"
@@ -79,7 +80,9 @@ func TestDomains(t *testing.T) {
 					0: []interface{}{"Name", "like", "Smith"},
 					1: []interface{}{"Age", "=", 24},
 				}
-				dom1Users := env.Pool("User").Search(ParseDomain(dom1))
+				cond := ParseDomain(dom1)
+				So(fmt.Sprintf("%v", cond.Serialize()), ShouldEqual, "[& [Age = 24] [Name like Smith]]")
+				dom1Users := env.Pool("User").Search(cond)
 				So(dom1Users.Len(), ShouldEqual, 1)
 				So(dom1Users.Get("Name"), ShouldEqual, "Jane Smith")
 			})
@@ -89,7 +92,9 @@ func TestDomains(t *testing.T) {
 					1: []interface{}{"Name", "like", "Will"},
 					2: []interface{}{"Email", "ilike", "Jane.Smith"},
 				}
-				dom2Users := env.Pool("User").Search(ParseDomain(dom2)).OrderBy("Name")
+				cond := ParseDomain(dom2)
+				So(fmt.Sprintf("%v", cond.Serialize()), ShouldEqual, fmt.Sprintf("%v", dom2))
+				dom2Users := env.Pool("User").Search(cond).OrderBy("Name")
 				So(dom2Users.Len(), ShouldEqual, 2)
 				userRecs := dom2Users.Records()
 				So(userRecs[0].Get("Name"), ShouldEqual, "Jane Smith")
@@ -104,9 +109,24 @@ func TestDomains(t *testing.T) {
 					4: []interface{}{"Age", "<", 25},
 					5: []interface{}{"Email", "not like", "will.smith"},
 				}
-				dom3Users := env.Pool("User").Search(ParseDomain(dom3)).OrderBy("Name")
+				cond := ParseDomain(dom3)
+				So(fmt.Sprintf("%v", cond.Serialize()), ShouldEqual, "[& | & [Age < 25] [Age > 0] [Name like Will] [Email not like will.smith]]")
+				dom3Users := env.Pool("User").Search(cond).OrderBy("Name")
 				So(dom3Users.Len(), ShouldEqual, 1)
 				So(dom3Users.Get("Name"), ShouldEqual, "Jane Smith")
+			})
+			Convey("Testing ['|', '|', (A), (B), (C)] domain", func() {
+				dom4 := []interface{}{
+					0: "|",
+					1: "|",
+					2: []interface{}{"Name", "ilike", "john"},
+					3: []interface{}{"Name", "ilike", "jane"},
+					4: []interface{}{"Name", "ilike", "will"},
+				}
+				cond := ParseDomain(dom4)
+				So(fmt.Sprintf("%v", cond.Serialize()), ShouldEqual, fmt.Sprintf("%v", dom4))
+				dom1Users := env.Pool("User").Search(cond)
+				So(dom1Users.Len(), ShouldEqual, 3)
 			})
 		})
 	})

@@ -52,6 +52,7 @@ func init() {
 						Name:      "Your Company",
 						IsCompany: true,
 						Customer:  false,
+						Active:    true,
 					})
 					env.Cr().Execute("SELECT nextval('partner_id_seq')")
 				}

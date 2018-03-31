@@ -570,6 +570,8 @@ func init() {
 			rSet := rc
 			if searchCond := domains.ParseDomain(domain); !searchCond.IsEmpty() {
 				rSet = rSet.Call("Search", searchCond).(models.RecordSet).Collection()
+			} else {
+				rSet = rSet.Call("SearchAll").(models.RecordSet).Collection()
 			}
 			// Limit
 			rSet = rSet.Limit(limit)
