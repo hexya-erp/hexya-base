@@ -5,8 +5,8 @@ package odooproxy
 
 import "strings"
 
-//ConvertModelName converts an Odoo dotted style model name (e.g. res.partner) into
-//a Hexya Pascal cased style (e.g. Partner).
+// ConvertModelName converts an Odoo dotted style model name (e.g. res.partner) into
+// a Hexya Pascal cased style (e.g. Partner).
 func ConvertModelName(val string) string {
 	var res string
 	switch val {

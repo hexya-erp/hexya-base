@@ -5,7 +5,6 @@ package web
 
 import (
 	"encoding/json"
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -301,7 +300,7 @@ func init() {
 				Model:       rs.ModelName(),
 				ActViewType: actions.ActionViewTypeForm,
 				ViewMode:    "form",
-				Views:       []views.ViewTuple{{ID: viewID, Type: views.VIEW_TYPE_FORM}},
+				Views:       []views.ViewTuple{{ID: viewID, Type: views.ViewTypeForm}},
 				Target:      "current",
 				ResID:       rs.ID(),
 				Context:     rs.Env().Context(),
@@ -320,7 +319,7 @@ func init() {
 			}
 			cols := make([]models.FieldName, len(view.Fields))
 			for i, f := range view.Fields {
-				cols[i] = models.FieldName(rs.Model().JSONizeFieldName(string(f)))
+				cols[i] = models.FieldName(f.String())
 			}
 			fInfos := rs.FieldsGet(models.FieldsGetArgs{Fields: cols})
 			arch := rs.ProcessView(view.Arch(lang), fInfos)
@@ -334,6 +333,7 @@ func init() {
 				Toolbar: toolbar,
 				Fields:  fInfos,
 			}
+			// Sub views
 			for field, sViews := range view.SubViews {
 				fJSON := rs.Model().JSONizeFieldName(field)
 				relRS := rs.Env().Pool(fInfos[fJSON].Relation)
@@ -341,7 +341,11 @@ func init() {
 					res.Fields[fJSON].Views = make(map[string]interface{})
 				}
 				for svType, sv := range sViews {
-					svFields := relRS.Call("FieldsGet", models.FieldsGetArgs{Fields: sv.Fields}).(map[string]*models.FieldInfo)
+					sCols := make([]models.FieldName, len(sv.Fields))
+					for i, f := range sv.Fields {
+						sCols[i] = models.FieldName(f.String())
+					}
+					svFields := relRS.Call("FieldsGet", models.FieldsGetArgs{Fields: sCols}).(map[string]*models.FieldInfo)
 					res.Fields[fJSON].Views[string(svType)] = &webdata.SubViewData{
 						Fields: svFields,
 						Arch:   relRS.Call("ProcessView", sv.Arch(lang), svFields).(string),
@@ -358,11 +362,11 @@ func init() {
 			res.FieldsViews = make(map[views.ViewType]*webdata.FieldsViewData)
 			for _, viewTuple := range args.Views {
 				vType := viewTuple.Type
-				if vType == views.VIEW_TYPE_LIST {
-					vType = views.VIEW_TYPE_TREE
+				if vType == views.ViewTypeList {
+					vType = views.ViewTypeTree
 				}
 				toolbar := args.Options.Toolbar
-				if vType == views.VIEW_TYPE_SEARCH {
+				if vType == views.ViewTypeSearch {
 					toolbar = false
 				}
 				res.FieldsViews[viewTuple.Type] = rs.FieldsViewGet(webdata.FieldsViewGetParams{
@@ -396,17 +400,14 @@ func init() {
 	commonMixin.Methods().ProcessView().DeclareMethod(
 		`ProcessView makes all the necessary modifications to the view
 		arch and returns the new xml string.`,
-		func(rs h.CommonMixinSet, arch string, fieldInfos map[string]*models.FieldInfo) string {
-			// Load arch as etree
+		func(rs h.CommonMixinSet, arch *etree.Element, fieldInfos map[string]*models.FieldInfo) string {
+			// Copy arch into a new document
 			doc := etree.NewDocument()
-			if err := doc.ReadFromString(arch); err != nil {
-				log.Panic("Unable to parse view arch", "arch", arch, "error", err)
-			}
+			activeArch := arch.Copy()
+			doc.SetRoot(activeArch)
 			// Apply changes
-			rs.UpdateFieldNames(doc, &fieldInfos)
-			rs.SanitizeSearchView(doc)
+			rs.ManageGroupsOnFields(doc, fieldInfos)
 			rs.AddModifiers(doc, fieldInfos)
-			rs.AddOnchanges(doc, fieldInfos)
 			// Dump xml to string and return
 			res, err := doc.WriteToString()
 			if err != nil {
@@ -415,34 +416,29 @@ func init() {
 			return res
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.Methods().AddOnchanges().DeclareMethod(
-		`AddOnchanges adds onchange=1 for each field in the view which has an OnChange
-		 method defined`,
+	commonMixin.Methods().ManageGroupsOnFields().DeclareMethod(
+		`ManageGroupsOnFields adds the invisible attribute to fields nodes if the current
+		user does not belong to one of the groups of the 'groups' attribute`,
 		func(rs h.CommonMixinSet, doc *etree.Document, fieldInfos map[string]*models.FieldInfo) {
-			for fieldName, fInfo := range fieldInfos {
-				if !fInfo.OnChange {
+			for _, fieldTag := range doc.FindElements("//field") {
+				groupsString := fieldTag.SelectAttrValue("groups", "")
+				if groupsString == "" {
 					continue
 				}
-				for _, elt := range doc.FindElements(fmt.Sprintf("//field[@name='%s']", fieldName)) {
-					if elt.SelectAttr("on_change") == nil {
-						elt.CreateAttr("on_change", "1")
+				groups := strings.Split(groupsString, ",")
+				var hasGroup bool
+				for _, g := range groups {
+					group := security.Registry.GetGroup(g)
+					if security.Registry.HasMembership(rs.Env().Uid(), group) {
+						hasGroup = true
+						break
 					}
+				}
+				if !hasGroup {
+					fieldTag.CreateAttr("invisible", "1")
 				}
 			}
 		})
-
-	commonMixin.Methods().SanitizeSearchView().DeclareMethod(
-		`SanitizeSearchView adds the missing domain attribute if it does not exist`,
-		func(rs h.CommonMixinSet, doc *etree.Document) {
-			if doc.Root().Tag != "search" {
-				return
-			}
-			for _, fieldTag := range doc.FindElements("//field") {
-				if fieldTag.SelectAttrValue("domain", "") == "" {
-					fieldTag.CreateAttr("domain", "[]")
-				}
-			}
-		}).AllowGroup(security.GroupEveryone)
 
 	commonMixin.Methods().AddModifiers().DeclareMethod(
 		`AddModifiers adds the modifiers attribute nodes to given xml doc.`,
@@ -558,28 +554,6 @@ func init() {
 			return modifiers
 		}).AllowGroup(security.GroupEveryone)
 
-	commonMixin.Methods().UpdateFieldNames().DeclareMethod(
-		`UpdateFieldNames changes the field names in the view to the column names.
-		If a field name is already column names then it does nothing.
-		This method also modifies the fields in the given fieldInfo to match the new name.`,
-		func(rc *models.RecordCollection, doc *etree.Document, fieldInfos *map[string]*models.FieldInfo) {
-			for _, fieldTag := range doc.FindElements("//field") {
-				fieldName := fieldTag.SelectAttr("name").Value
-				fieldJSON := rc.Model().JSONizeFieldName(fieldName)
-				fieldTag.RemoveAttr("name")
-				fieldTag.CreateAttr("name", fieldJSON)
-			}
-			for _, labelTag := range doc.FindElements("//label") {
-				if labelTag.SelectAttr("for") == nil {
-					continue
-				}
-				fieldName := labelTag.SelectAttr("for").Value
-				fieldJSON := rc.Model().JSONizeFieldName(fieldName)
-				labelTag.RemoveAttr("for")
-				labelTag.CreateAttr("for", fieldJSON)
-			}
-		}).AllowGroup(security.GroupEveryone)
-
 	commonMixin.Methods().SearchRead().DeclareMethod(
 		`SearchRead retrieves database records according to the filters defined in params.`,
 		func(rs h.CommonMixinSet, params webdata.SearchParams) []models.FieldMap {
@@ -596,6 +570,8 @@ func init() {
 			rSet := rc
 			if searchCond := domains.ParseDomain(domain); !searchCond.IsEmpty() {
 				rSet = rSet.Call("Search", searchCond).(models.RecordSet).Collection()
+			} else {
+				rSet = rSet.Call("SearchAll").(models.RecordSet).Collection()
 			}
 			// Limit
 			rSet = rSet.Limit(limit)

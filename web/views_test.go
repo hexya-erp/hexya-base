@@ -8,6 +8,7 @@ import (
 
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/security"
+	"github.com/hexya-erp/hexya/hexya/tools/xmlutils"
 	"github.com/hexya-erp/hexya/pool/h"
 	. "github.com/smartystreets/goconvey/convey"
 )
@@ -16,8 +17,8 @@ var viewDef1 = `
 <view id="my_id" name="My View" model="ResUSers">
 	<form>
 		<group>
-			<field name="Name" required="1" readonly="1"/>
-			<field name="TZ" invisible="1"/>
+			<field name="name" required="1" readonly="1"/>
+			<field name="tz" invisible="1"/>
 		</group>
 	</form>
 </view>
@@ -32,8 +33,8 @@ var viewDef2 = `
 <view id="my_id" name="My View" model="ResUSers">
 	<form>
 		<group>
-			<field name="Name" attrs='{"readonly": [["Function", "ilike", "manager"]], "required": [["ID", "!=", false]]}'/>
-			<field name="TZ" invisible="1" attrs='{"invisble": [["Login", "!=", "john"]]}'/>
+			<field name="name" attrs='{"readonly": [["Function", "ilike", "manager"]], "required": [["ID", "!=", false]]}'/>
+			<field name="tz" invisible="1" attrs='{"invisble": [["Login", "!=", "john"]]}'/>
 		</group>
 	</form>
 </view>
@@ -48,43 +49,37 @@ func TestViewModifiers(t *testing.T) {
 	Convey("Testing correct modifiers injection in views", t, func() {
 		models.SimulateInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 			Convey("'invisible', 'required' and 'readonly' field attributes should be set in modifiers", func() {
-				view := h.User().NewSet(env).ProcessView(viewDef1, viewFieldInfos1)
-				So(view, ShouldEqual, `
-<view id="my_id" name="My View" model="ResUSers">
+				view := h.User().NewSet(env).ProcessView(xmlutils.XMLToElement(viewDef1), viewFieldInfos1)
+				So(view, ShouldEqual, `<view id="my_id" name="My View" model="ResUSers">
 	<form>
 		<group>
-			<field required="1" readonly="1" name="name" modifiers="{&quot;readonly&quot;:true}"/>
-			<field invisible="1" name="tz" modifiers="{&quot;invisible&quot;:true}"/>
+			<field name="name" required="1" readonly="1" modifiers="{&quot;readonly&quot;:true}"/>
+			<field name="tz" invisible="1" modifiers="{&quot;invisible&quot;:true}"/>
 		</group>
 	</form>
-</view>
-`)
+</view>`)
 			})
 			Convey("attrs should be set in modifiers", func() {
-				view := h.User().NewSet(env).ProcessView(viewDef2, viewFieldInfos1)
-				So(view, ShouldEqual, `
-<view id="my_id" name="My View" model="ResUSers">
+				view := h.User().NewSet(env).ProcessView(xmlutils.XMLToElement(viewDef2), viewFieldInfos1)
+				So(view, ShouldEqual, `<view id="my_id" name="My View" model="ResUSers">
 	<form>
 		<group>
-			<field attrs="{&quot;readonly&quot;: [[&quot;Function&quot;, &quot;ilike&quot;, &quot;manager&quot;]], &quot;required&quot;: [[&quot;ID&quot;, &quot;!=&quot;, false]]}" name="name" modifiers="{&quot;readonly&quot;:[[&quot;Function&quot;,&quot;ilike&quot;,&quot;manager&quot;]],&quot;required&quot;:[[&quot;ID&quot;,&quot;!=&quot;,false]]}"/>
-			<field invisible="1" attrs="{&quot;invisble&quot;: [[&quot;Login&quot;, &quot;!=&quot;, &quot;john&quot;]]}" name="tz" modifiers="{&quot;invisible&quot;:true}"/>
+			<field name="name" attrs="{&quot;readonly&quot;: [[&quot;Function&quot;, &quot;ilike&quot;, &quot;manager&quot;]], &quot;required&quot;: [[&quot;ID&quot;, &quot;!=&quot;, false]]}" modifiers="{&quot;readonly&quot;:[[&quot;Function&quot;,&quot;ilike&quot;,&quot;manager&quot;]],&quot;required&quot;:[[&quot;ID&quot;,&quot;!=&quot;,false]]}"/>
+			<field name="tz" invisible="1" attrs="{&quot;invisble&quot;: [[&quot;Login&quot;, &quot;!=&quot;, &quot;john&quot;]]}" modifiers="{&quot;invisible&quot;:true}"/>
 		</group>
 	</form>
-</view>
-`)
+</view>`)
 			})
 			Convey("'Readonly' and 'Required' field data should be taken into account", func() {
-				view := h.User().NewSet(env).ProcessView(viewDef2, viewFieldInfos2)
-				So(view, ShouldEqual, `
-<view id="my_id" name="My View" model="ResUSers">
+				view := h.User().NewSet(env).ProcessView(xmlutils.XMLToElement(viewDef2), viewFieldInfos2)
+				So(view, ShouldEqual, `<view id="my_id" name="My View" model="ResUSers">
 	<form>
 		<group>
-			<field attrs="{&quot;readonly&quot;: [[&quot;Function&quot;, &quot;ilike&quot;, &quot;manager&quot;]], &quot;required&quot;: [[&quot;ID&quot;, &quot;!=&quot;, false]]}" name="name" modifiers="{&quot;readonly&quot;:[[&quot;Function&quot;,&quot;ilike&quot;,&quot;manager&quot;]],&quot;required&quot;:true}"/>
-			<field invisible="1" attrs="{&quot;invisble&quot;: [[&quot;Login&quot;, &quot;!=&quot;, &quot;john&quot;]]}" name="tz" modifiers="{&quot;invisible&quot;:true,&quot;readonly&quot;:true}"/>
+			<field name="name" attrs="{&quot;readonly&quot;: [[&quot;Function&quot;, &quot;ilike&quot;, &quot;manager&quot;]], &quot;required&quot;: [[&quot;ID&quot;, &quot;!=&quot;, false]]}" modifiers="{&quot;readonly&quot;:[[&quot;Function&quot;,&quot;ilike&quot;,&quot;manager&quot;]],&quot;required&quot;:true}"/>
+			<field name="tz" invisible="1" attrs="{&quot;invisble&quot;: [[&quot;Login&quot;, &quot;!=&quot;, &quot;john&quot;]]}" modifiers="{&quot;invisible&quot;:true,&quot;readonly&quot;:true}"/>
 		</group>
 	</form>
-</view>
-`)
+</view>`)
 			})
 		})
 	})

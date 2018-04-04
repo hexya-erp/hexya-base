@@ -42,7 +42,7 @@ func init() {
 			Help: `Two sequence object implementations are offered: Standard and 'No gap'.
 The latter is slower than the former but forbids any
 gap in the sequence (while they are possible in the former).`},
-		"Action": models.BooleanField{Default: models.DefaultValue(true)},
+		"Active": models.BooleanField{Default: models.DefaultValue(true)},
 		"Prefix": models.CharField{Help: "Prefix value of the record for the sequence"},
 		"Suffix": models.CharField{Help: "Suffix value of the record for the sequence"},
 		"NumberNext": models.IntegerField{String: "Next Number", Required: true,

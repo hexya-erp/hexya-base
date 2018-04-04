@@ -12,9 +12,13 @@ import (
 	"github.com/spf13/viper"
 )
 
-var defaultParameters = map[string](func(env models.Environment) (string, h.GroupSet)){
+var defaultParameters = map[string]func(env models.Environment) (string, h.GroupSet){
 	"web.base.url": func(env models.Environment) (string, h.GroupSet) {
-		return fmt.Sprintf("http://localhost:%s", viper.GetString("Server.Port")), h.Group().NewSet(env)
+		prefix := "http"
+		if viper.GetString("Server.Certificate") != "" || viper.GetString("Server.Domain") != "" {
+			prefix = "https"
+		}
+		return fmt.Sprintf("%s://localhost:%s", prefix, viper.GetString("Server.Port")), h.Group().NewSet(env)
 	},
 }
 
