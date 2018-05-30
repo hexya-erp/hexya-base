@@ -16,7 +16,7 @@ import (
 func init() {
 	filterModel := h.Filter().DeclareModel()
 	filterModel.AddFields(map[string]models.FieldDefinition{
-		"Name": models.CharField{String: "Filter Name", Required: true, Translate: true},
+		"Name": models.CharField{String: "Filter Name", Required: true},
 		"User": models.Many2OneField{RelationModel: h.User(), OnDelete: models.Cascade,
 			Default: func(env models.Environment) interface{} {
 				return h.User().Search(env, q.User().ID().Equals(env.Uid()))

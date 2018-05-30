@@ -310,7 +310,7 @@ Use this field anywhere a small image is required.`},
 					imgFileName = "avatar.png"
 					colorize = true
 				}
-				path := filepath.Join(generate.HexyaDir, "hexya", "server", "static", "base", "img", imgFileName)
+				path := filepath.Join(generate.HexyaDir, "hexya", "server", "static", "base", "src", "img", imgFileName)
 				content, err := ioutil.ReadFile(path)
 				if err != nil {
 					log.Warn("Missing ressource", "image", path)
