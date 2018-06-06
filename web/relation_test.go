@@ -18,7 +18,7 @@ import (
 
 func Test2ManyRelations(t *testing.T) {
 	Convey("Testing 2many relations modification with client triplets", t, func() {
-		models.SimulateInNewEnvironment(security.SuperUserID, func(env models.Environment) {
+		models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 			Convey("Testing many2many '6' triplet", func() {
 				adminGroup := h.Group().Search(env, q.Group().GroupID().Equals(security.GroupAdminID))
 				jsonGroupsData := fmt.Sprintf("[[6, 0, [%d]]]", adminGroup.ID())
@@ -34,6 +34,7 @@ func Test2ManyRelations(t *testing.T) {
 					},
 				})
 				user := h.User().Search(env, q.User().Login().Equals("test_user"))
+				So(user.Len(), ShouldEqual, 1)
 				So(user.Groups().Len(), ShouldEqual, 1)
 				So(user.Groups().ID(), ShouldEqual, adminGroup.ID())
 			})

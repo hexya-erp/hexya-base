@@ -92,7 +92,8 @@ a change of password, the user has to login again.`},
 			Compute: h.User().Methods().ComputeCompaniesCount(), GoType: new(int)},
 		"Company": models.Many2OneField{RelationModel: h.Company(), Required: true, Default: func(env models.Environment) interface{} {
 			return h.Company().NewSet(env).CompanyDefaultGet()
-		}, Help: "The company this user is currently working for.", Constraint: h.User().Methods().CheckCompany()}, "Companies": models.Many2ManyField{RelationModel: h.Company(), JSON: "company_ids", Required: true,
+		}, Help: "The company this user is currently working for.", Constraint: h.User().Methods().CheckCompany()},
+		"Companies": models.Many2ManyField{RelationModel: h.Company(), JSON: "company_ids", Required: true,
 			Default: func(env models.Environment) interface{} {
 				return h.Company().NewSet(env).CompanyDefaultGet()
 			}, Constraint: h.User().Methods().CheckCompany()},

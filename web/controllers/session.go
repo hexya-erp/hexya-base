@@ -15,6 +15,7 @@ import (
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/pool/h"
 	"github.com/hexya-erp/hexya/pool/q"
+	"github.com/spf13/viper"
 )
 
 // SessionInfo returns a map with information about the given session
@@ -22,20 +23,23 @@ func SessionInfo(sess sessions.Session) gin.H {
 	var (
 		userContext *types.Context
 		companyID   int64
+		userName    string
 	)
 	if sess.Get("uid") != nil {
 		models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 			user := h.User().Search(env, q.User().ID().Equals(sess.Get("uid").(int64)))
 			userContext = user.ContextGet()
 			companyID = user.Company().ID()
+			userName = user.Name()
 		})
 		return gin.H{
 			"session_id":   sess.Get("ID"),
 			"uid":          sess.Get("uid"),
 			"user_context": userContext.ToMap(),
-			"db":           "default",
+			"db":           viper.GetString("DB.Name"),
 			"username":     sess.Get("login"),
 			"company_id":   companyID,
+			"name":         userName,
 		}
 	}
 	return gin.H{}
