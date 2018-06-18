@@ -273,7 +273,7 @@ func init() {
 			// take current location in filestore to possibly garbage-collect it
 			fName := rs.StoreFname()
 			// write as superuser, as user probably does not have write access
-			rs.Sudo().Super().Write(vals,
+			rs.Sudo().WithContext("attachment_set_datas", true).Write(vals,
 				h.Attachment().FileSize(),
 				h.Attachment().CheckSum(),
 				h.Attachment().IndexContent(),
@@ -341,22 +341,19 @@ func init() {
 			var requireEmployee bool
 			modelIds := make(map[string][]int64)
 			if !rs.IsEmpty() {
-				rs.Load(
-					h.Attachment().ResModel().String(),
-					h.Attachment().ResID().String(),
-					h.Attachment().CreateUID().String(),
-					h.Attachment().Public().String())
-				for _, attach := range rs.Records() {
-					if attach.Public() && mode == "read" {
+				var attachs []h.AttachmentData
+				rs.Env().Cr().Select(&attachs, "SELECT res_model, res_id, create_uid, public FROM attachment WHERE id IN (?)", rs.Ids())
+				for _, attach := range attachs {
+					if attach.Public && mode == "read" {
 						continue
 					}
-					if attach.ResModel() == "" || attach.ResID() == 0 {
-						if attach.CreateUID() != attach.Env().Uid() {
+					if attach.ResModel == "" || attach.ResID == 0 {
+						if attach.CreateUID != rs.Env().Uid() {
 							requireEmployee = true
 						}
 						continue
 					}
-					modelIds[attach.ResModel()] = append(modelIds[attach.ResModel()], attach.ResID())
+					modelIds[attach.ResModel] = append(modelIds[attach.ResModel], attach.ResID)
 				}
 			}
 			if values != nil && values.ResModel != "" && values.ResID != 0 {
@@ -448,6 +445,9 @@ func init() {
 
 	attachmentModel.Methods().Write().Extend("",
 		func(rs h.AttachmentSet, vals *h.AttachmentData, fieldsToReset ...models.FieldNamer) bool {
+			if rs.Env().Context().GetBool("attachment_set_datas") {
+				return rs.Super().Write(vals)
+			}
 			rs.Check("write", vals)
 			_, mtExists := vals.Get(h.Attachment().MimeType(), fieldsToReset...)
 			_, dtExists := vals.Get(h.Attachment().Datas(), fieldsToReset...)
