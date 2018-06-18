@@ -48,6 +48,7 @@ The Message has to be written in the next field.`
 
 func init() {
 	partnerTitle := h.PartnerTitle().DeclareModel()
+	partnerTitle.SetDefaultOrder("Name")
 	partnerTitle.AddFields(map[string]models.FieldDefinition{
 		"Name":     models.CharField{String: "Title", Required: true, Translate: true, Unique: true},
 		"Shortcut": models.CharField{String: "Abbreviation", Translate: true},
@@ -61,7 +62,7 @@ func init() {
 			String: "Parent Tag", Index: true, OnDelete: models.Cascade},
 		"Children": models.One2ManyField{RelationModel: h.PartnerCategory(),
 			ReverseFK: "Parent", String: "Children Tags"},
-		"Active": models.BooleanField{Default: models.DefaultValue(true),
+		"Active": models.BooleanField{Default: models.DefaultValue(true), Required: true,
 			Help: "The active field allows you to hide the category without removing it."},
 		"Partners": models.Many2ManyField{RelationModel: h.Partner()},
 	})
@@ -488,7 +489,12 @@ Use this field anywhere a small image is required.`},
 		`CommercialSyncToChildren handle sync of commercial fields to descendants`,
 		func(rs h.PartnerSet) bool {
 			partnerData, fieldsToUnset := rs.CommercialPartner().UpdateFieldValues(rs.CommercialFields()...)
-			syncChildren := rs.Children().Search(q.Partner().IsCompany().NotEquals(true))
+			syncChildren := rs.Children().Filtered(func(rs h.PartnerSet) bool {
+				return !rs.IsCompany()
+			})
+			if syncChildren.IsEmpty() {
+				return false
+			}
 			for _, child := range syncChildren.Records() {
 				child.CommercialSyncToChildren()
 			}
@@ -519,13 +525,16 @@ Use this field anywhere a small image is required.`},
 			// 2a. Commercial Fields: sync if commercial entity
 			if rs.Equals(rs.CommercialPartner()) {
 				for _, commField := range rs.CommercialFields() {
-					if !typesutils.IsZero(rs.Parent().Get(commField.String())) {
+					if !typesutils.IsZero(rs.Get(commField.String())) {
 						rs.CommercialSyncToChildren()
 						break
 					}
 				}
 			}
-			for _, child := range rs.Children().Search(q.Partner().IsCompany().NotEquals(true)).Records() {
+			personChildren := rs.Children().Filtered(func(rs h.PartnerSet) bool {
+				return !rs.IsCompany()
+			})
+			for _, child := range personChildren.Records() {
 				if !child.CommercialPartner().Equals(rs.CommercialPartner()) {
 					rs.CommercialSyncToChildren()
 					break
@@ -747,10 +756,34 @@ Use this field anywhere a small image is required.`},
             - otherwise: default, everything is set as the name (email is returned empty)`,
 		func(rs h.PartnerSet, email string) (string, string) {
 			addr, err := mail.ParseAddress(email)
-			if err != nil || addr.Name == "" {
+			if err != nil {
 				return email, ""
 			}
 			return addr.Name, addr.Address
+		})
+
+	partnerModel.Methods().NameCreate().DeclareMethod(
+		`NameCreate creates a partner from a single string which may be a name and/or an email.
+
+        If only an email address is received and that the regex cannot find
+        a name, the name will have the email value.
+        If 'force_email' key in context: must find the email address.`,
+		func(rs h.PartnerSet, name string) h.PartnerSet {
+			name, email := rs.ParsePartnerName(name)
+			if email == "" && rs.Env().Context().GetBool("force_email") {
+				panic(rs.T("Couldn't create contact without email address!"))
+			}
+			if name == "" && email != "" {
+				name = email
+			}
+			if email == "" {
+				email = rs.Env().Context().GetString("default_email")
+			}
+			partner := h.Partner().Create(rs.Env(), &h.PartnerData{
+				Name:  name,
+				Email: email,
+			})
+			return partner
 		})
 
 	partnerModel.Methods().FindOrCreate().DeclareMethod(
@@ -758,13 +791,12 @@ Use this field anywhere a small image is required.`},
 		The given string should contain at least one email,
                 e.g. "Raoul Grosbedon <r.g@grosbedon.fr>"`,
 		func(rs h.PartnerSet, email string) h.PartnerSet {
-			name, emailParsed := rs.ParsePartnerName(email)
-			partners := h.Partner().Search(rs.Env(), q.Partner().Email().ILike(emailParsed)).Limit(1)
+			if _, emailParsed := rs.ParsePartnerName(email); emailParsed != "" {
+				email = emailParsed
+			}
+			partners := h.Partner().Search(rs.Env(), q.Partner().Email().ILike(email)).Limit(1)
 			if partners.IsEmpty() {
-				rs.Create(&h.PartnerData{
-					Name:  name,
-					Email: emailParsed,
-				})
+				partners = rs.NameCreate(email)
 			}
 			return partners
 		})
@@ -802,16 +834,8 @@ Use this field anywhere a small image is required.`},
 			for _, at := range addrTypes {
 				atMap[at] = true
 			}
-			if _, exists := atMap["contact"]; !exists {
-				atMap["contact"] = true
-			}
-			result := map[string]h.PartnerSet{
-				"contact":  rs,
-				"delivery": rs,
-				"invoice":  rs,
-				"other":    rs,
-				"default":  rs,
-			}
+			atMap["contact"] = true
+			result := make(map[string]h.PartnerSet)
 			visited := make(map[int64]bool)
 			for _, partner := range rs.Records() {
 				currentPartner := partner
@@ -836,9 +860,18 @@ Use this field anywhere a small image is required.`},
 					// Continue scanning at ancestor if current_partner is not a commercial entity
 					if currentPartner.IsCompany() || currentPartner.Parent().IsEmpty() {
 						break
-
 					}
 					currentPartner = currentPartner.Parent()
+				}
+			}
+			// default to type 'contact' or the partner itself
+			def := rs
+			if ct, ok := result["contact"]; ok {
+				def = ct
+			}
+			for _, addrType := range addrTypes {
+				if _, ok := result[addrType]; !ok {
+					result[addrType] = def
 				}
 			}
 			return result
