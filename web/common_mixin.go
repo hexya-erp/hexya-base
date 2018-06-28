@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/beevik/etree"
+	"github.com/hexya-erp/hexya-base/web/controllers"
 	"github.com/hexya-erp/hexya-base/web/domains"
 	"github.com/hexya-erp/hexya-base/web/webdata"
 	"github.com/hexya-erp/hexya/hexya/actions"
@@ -376,7 +377,9 @@ func init() {
 				})
 			}
 			if args.Options.LoadFilters {
-				res.Filters = h.Filter().NewSet(rs.Env()).GetFilters(rs.ModelName(), args.Options.ActionID)
+				res.Filters = controllers.MethodAdapters["GetFilters"](h.Filter().NewSet(rs.Env()).Collection(),
+					"GetFilters",
+					[]interface{}{rs.ModelName(), args.Options.ActionID}).([]models.FieldMap)
 			}
 			if args.Options.LoadFields {
 				res.Fields = rs.FieldsGet(models.FieldsGetArgs{})
@@ -597,7 +600,7 @@ func init() {
 			res := make([]models.FieldMap, len(aggregates))
 			fInfos := rSet.FieldsGet(models.FieldsGetArgs{})
 			for i, ag := range aggregates {
-				line := rs.AddNamesToRelations(ag.Values, fInfos)
+				line := rs.AddNamesToRelations(ag.Values.FieldMap(), fInfos)
 				line["__count"] = ag.Count
 				line["__domain"] = ag.Condition.Serialize()
 				res[i] = line

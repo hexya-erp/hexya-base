@@ -29,21 +29,21 @@ func init() {
 		"Action": models.CharField{
 			Help: `The menu action this filter applies to. When left empty the filter applies to all menus for this model.`,
 			JSON: "action_id"},
-		"Active": models.BooleanField{Default: models.DefaultValue(true)},
+		"Active": models.BooleanField{Default: models.DefaultValue(true), Required: true},
 	})
 
 	filterModel.AddSQLConstraint("name_model_uid_unique", "unique (name, model_id, user_id, action_id)", "Filter names must be unique")
 
 	filterModel.Methods().GetFilters().DeclareMethod(
 		`GetFilters returns the filters for the given model and actionID for the current user`,
-		func(rs h.FilterSet, modelName, actionID string) []models.FieldMap {
-			condition := q.Filter().ResModel().Equals(modelName).
-				And().Action().Equals(actionID).
+		func(rs h.FilterSet, modelName, actionID string) []*h.FilterData {
+			actionCondition := rs.GetActionCondition(actionID)
+			filters := h.Filter().Search(rs.Env(), q.Filter().ResModel().Equals(modelName).
+				AndCond(actionCondition).
 				AndCond(q.Filter().UserFilteredOn(q.User().ID().Equals(rs.Env().Uid())).
-					Or().User().IsNull())
+					Or().User().IsNull()))
 			userContext := h.User().Browse(rs.Env(), []int64{rs.Env().Uid()}).ContextGet()
-			filterRS := h.Filter().NewSet(rs.Env())
-			res := filterRS.WithNewContext(userContext).Search(condition).Read([]string{"Name", "IsDefault", "Domain", "Context", "User", "Sort"})
+			res := filters.WithNewContext(userContext).All()
 			return res
 		})
 
@@ -58,17 +58,20 @@ func init() {
 	filterModel.Methods().CreateOrReplace().DeclareMethod(
 		`CreateOrReplace creates or updates the filter with the given parameters.
 		Filter is considered the same if it has the same name (case insensitive) and the same user (if it has one).`,
-		func(rs h.FilterSet, vals *h.FilterData) h.FilterSet {
+		func(rs h.FilterSet, vals models.FieldMapper) h.FilterSet {
 			fMap := vals.FieldMap()
-			fMap["domain"] = strutils.MarshalToJSONString(fMap["domain"])
-			fMap["domain"] = strings.Replace(fMap["domain"].(string), "false", "False", -1)
-			fMap["domain"] = strings.Replace(fMap["domain"].(string), "true", "True", -1)
-			fMap["context"] = strutils.MarshalToJSONString(fMap["context"])
+			if fDomain, exists := fMap["domain"]; exists {
+				fMap["domain"] = strutils.MarshalToJSONString(fDomain)
+				fMap["domain"] = strings.Replace(fDomain.(string), "false", "False", -1)
+				fMap["domain"] = strings.Replace(fDomain.(string), "true", "True", -1)
+			}
+			if fContext, exists := fMap["context"]; exists {
+				fMap["context"] = strutils.MarshalToJSONString(fContext)
+			}
 			values, _ := rs.DataStruct(fMap)
 			currentFilters := rs.GetFilters(values.ResModel, values.Action)
 			var matchingFilters []*h.FilterData
-			for _, f := range currentFilters {
-				filter, _ := rs.DataStruct(f)
+			for _, filter := range currentFilters {
 				if strings.ToLower(filter.Name) != strings.ToLower(values.Name) {
 					continue
 				}
@@ -91,7 +94,7 @@ func init() {
 						defaults.SetIsDefault(false)
 					}
 				} else {
-					rs.CheckGlobalDefault(vals, matchingFilters)
+					rs.CheckGlobalDefault(values, matchingFilters)
 				}
 			}
 			if len(matchingFilters) > 0 {

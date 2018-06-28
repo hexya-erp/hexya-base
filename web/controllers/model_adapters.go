@@ -21,6 +21,7 @@ var MethodAdapters = map[string]methodAdapter{
 	"SearchRead": searchReadAdapter,
 	"FieldsGet":  fieldsGetAdapter,
 	"NameGet":    nameGetAdapter,
+	"GetFilters": getFiltersAdapter,
 }
 
 // A methodAdapter can modify calls made by the odoo client
@@ -144,6 +145,22 @@ func nameGetAdapter(rc *models.RecordCollection, method string, args []interface
 			rec.Ids()[0],
 			rec.Call("NameGet").(string),
 		})
+	}
+	return res
+}
+
+// getFiltersAdapter returns the result as a slice of FieldMap.
+func getFiltersAdapter(rc *models.RecordCollection, method string, args []interface{}) interface{} {
+	checkMethod(method, "GetFilters", args, 2)
+	// We make the slice to be sure not to have nil returned
+	res := make([]models.FieldMap, 0)
+	for _, rec := range rc.Records() {
+		fd := rec.Call("GetFilters").(models.FieldMapper).FieldMap()
+		fm := make(models.FieldMap)
+		for _, fn := range []string{"Name", "IsDefault", "Domain", "Context", "User", "Sort"} {
+			fm[fn] = fd[fn]
+		}
+		res = append(res, fm)
 	}
 	return res
 }

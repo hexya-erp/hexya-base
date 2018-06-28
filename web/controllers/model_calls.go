@@ -29,7 +29,7 @@ import (
 
 var (
 	log               *logging.Logger
-	typeSubstitutions map[reflect.Type]reflect.Type = map[reflect.Type]reflect.Type{
+	typeSubstitutions = map[reflect.Type]reflect.Type{
 		reflect.TypeOf((*models.FieldMapper)(nil)).Elem(): reflect.TypeOf(models.FieldMap{}),
 	}
 )
@@ -131,6 +131,7 @@ func putParamsValuesInStruct(structValue *reflect.Value, parms []json.RawMessage
 			// We deliberately continue here to have default value if there is an error
 			// This is to manage cases where the given data type is inconsistent (such
 			// false instead of [] or object{}).
+			log.Debug("Unable to unmarshal argument", "error", err)
 			continue
 		}
 		argStructValue.Field(i).Set(fieldPtrValue.Elem())
@@ -148,6 +149,7 @@ func putKWValuesInStruct(structValue *reflect.Value, kwArgs map[string]json.RawM
 				// We deliberately continue here to have default value if there is an error
 				// This is to manage cases where the given data type is inconsistent (such
 				// false instead of [] or object{}).
+				log.Debug("Unable to unmarshal argument", "error", err)
 				continue
 			}
 		}
