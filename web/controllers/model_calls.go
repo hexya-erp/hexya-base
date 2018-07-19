@@ -264,7 +264,7 @@ func searchRead(uid int64, params searchReadParams) (res *webdata.SearchReadResu
 	checkUser(uid)
 	rError = models.ExecuteInNewEnvironment(uid, func(env models.Environment) {
 		model := odooproxy.ConvertModelName(params.Model)
-		rs := env.Pool(model)
+		rs := env.Pool(model).WithNewContext(&params.Context)
 		srp := webdata.SearchParams{
 			Domain: params.Domain,
 			Fields: params.Fields,

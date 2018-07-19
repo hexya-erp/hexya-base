@@ -22,6 +22,8 @@ func ConvertModelName(val string) string {
 		res = "Filter"
 	case "ir.attachment":
 		res = "Attachment"
+	case "ir.translation":
+		res = "Translation"
 	case "res.currency":
 		res = "Currency"
 	case "res.currency.rate":

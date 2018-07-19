@@ -26,12 +26,15 @@ func CallButton(c *server.Context) {
 	var params CallParams
 	c.BindRPCParams(&params)
 	res, err := Execute(uid, params)
-	_, isAction := res.(actions.Action)
-	_, isActionPtr := res.(*actions.Action)
-	if !isAction && !isActionPtr {
-		res = false
+	switch act := res.(type) {
+	case actions.Action:
+		log.Panic("Call button functions should return a pointer to action", "params", params, "received", "action")
+	case *actions.Action:
+		act.Sanitize()
+		c.RPC(http.StatusOK, act, err)
+	default:
+		c.RPC(http.StatusOK, false, err)
 	}
-	c.RPC(http.StatusOK, res, err)
 }
 
 // SearchRead returns Records from the database
