@@ -28,7 +28,7 @@ import (
 )
 
 var (
-	log               *logging.Logger
+	log               logging.Logger
 	typeSubstitutions = map[reflect.Type]reflect.Type{
 		reflect.TypeOf((*models.FieldMapper)(nil)).Elem(): reflect.TypeOf(models.FieldMap{}),
 	}

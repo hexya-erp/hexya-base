@@ -29,7 +29,7 @@ const (
 	MODULE_NAME = "web"
 )
 
-var log *logging.Logger
+var log logging.Logger
 
 func init() {
 	log = logging.GetLogger("web")
