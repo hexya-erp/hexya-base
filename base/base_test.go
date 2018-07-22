@@ -301,6 +301,45 @@ func TestPartners(t *testing.T) {
 	})
 }
 
+func BenchmarkPartnersDBLookup(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		models.SimulateInNewEnvironment(security.SuperUserID, func(env models.Environment) {
+			partners := h.Partner().NewSet(env).SearchAll().Limit(1)
+			partners.Name()
+		})
+	}
+}
+
+func BenchmarkPartnersCacheLookup(b *testing.B) {
+	models.SimulateInNewEnvironment(security.SuperUserID, func(env models.Environment) {
+		partners := h.Partner().NewSet(env).SearchAll().Limit(1)
+		b.ResetTimer()
+		for i := 0; i < b.N; i++ {
+			partners.Name()
+		}
+	})
+}
+
+func BenchmarkPartnersSimpleMethodCall(b *testing.B) {
+	models.SimulateInNewEnvironment(security.SuperUserID, func(env models.Environment) {
+		partners := h.Partner().NewSet(env).SearchAll().Limit(1)
+		b.ResetTimer()
+		for i := 0; i < b.N; i++ {
+			partners.ParsePartnerName("toto@hexya.io")
+		}
+	})
+}
+
+func BenchmarkPartnersNameGetMethodCall(b *testing.B) {
+	models.SimulateInNewEnvironment(security.SuperUserID, func(env models.Environment) {
+		partners := h.Partner().NewSet(env).SearchAll().Limit(1)
+		b.ResetTimer()
+		for i := 0; i < b.N; i++ {
+			partners.NameGet()
+		}
+	})
+}
+
 func TestAggregateRead(t *testing.T) {
 	Convey("Aggregate Read", t, func() {
 		So(models.SimulateInNewEnvironment(security.SuperUserID, func(env models.Environment) {
