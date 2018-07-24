@@ -31,7 +31,6 @@ function format_value (value, descriptor, value_if_empty) {
             if (descriptor.type === 'char' || descriptor.type === 'text') {
                 return '';
             }
-            console.warn('Field', descriptor, 'had an empty string as value, treating as false...');
             return value_if_empty === undefined ?  '' : value_if_empty;
         case false:
         case undefined:
