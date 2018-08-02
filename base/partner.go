@@ -60,7 +60,7 @@ func init() {
 		"Color": models.IntegerField{String: "Color Index"},
 		"Parent": models.Many2OneField{RelationModel: h.PartnerCategory(),
 			String: "Parent Tag", Index: true, OnDelete: models.Cascade},
-		"Children": models.One2ManyField{RelationModel: h.PartnerCategory(),
+		"Children": models.One2ManyField{RelationModel: h.PartnerCategory(), Copy: true,
 			ReverseFK: "Parent", String: "Children Tags"},
 		"Active": models.BooleanField{Default: models.DefaultValue(true), Required: true,
 			Help: "The active field allows you to hide the category without removing it."},
