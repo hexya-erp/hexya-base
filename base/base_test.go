@@ -10,10 +10,15 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models/operator"
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types/dates"
+	"github.com/hexya-erp/hexya/hexya/tests"
 	"github.com/hexya-erp/hexya/pool/h"
 	"github.com/hexya-erp/hexya/pool/q"
 	. "github.com/smartystreets/goconvey/convey"
 )
+
+func TestMain(m *testing.M) {
+	tests.RunTests(m, "base")
+}
 
 var samples = [][3]string{
 	{`"Raoul Grosbedon" <raoul@chirurgiens-dentistes.fr> `, `Raoul Grosbedon`, `raoul@chirurgiens-dentistes.fr`},

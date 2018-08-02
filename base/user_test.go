@@ -8,14 +8,9 @@ import (
 
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/security"
-	"github.com/hexya-erp/hexya/hexya/tests"
 	"github.com/hexya-erp/hexya/pool/h"
 	. "github.com/smartystreets/goconvey/convey"
 )
-
-func TestMain(m *testing.M) {
-	tests.RunTests(m, "base")
-}
 
 func TestUserAuthentication(t *testing.T) {
 	Convey("Testing User Authentication", t, func() {
