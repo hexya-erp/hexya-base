@@ -112,7 +112,7 @@ func init() {
 		})
 
 	companyModel.Methods().Create().Extend("",
-		func(rs h.CompanySet, data *h.CompanyData) h.CompanySet {
+		func(rs h.CompanySet, data *h.CompanyData, fieldsToReset ...models.FieldNamer) h.CompanySet {
 			if !data.Partner.IsEmpty() {
 				return rs.Super().Create(data)
 			}

@@ -470,7 +470,7 @@ func init() {
 		})
 
 	attachmentModel.Methods().Create().Extend("",
-		func(rs h.AttachmentSet, vals *h.AttachmentData) h.AttachmentSet {
+		func(rs h.AttachmentSet, vals *h.AttachmentData, fieldsToReset ...models.FieldNamer) h.AttachmentSet {
 			vals = rs.CheckContents(vals)
 			rs.Check("write", vals)
 			return rs.Super().Create(vals)

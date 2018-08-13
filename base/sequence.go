@@ -87,7 +87,7 @@ gap in the sequence (while they are possible in the former).`},
 		})
 
 	h.Sequence().Methods().Create().Extend("",
-		func(rs h.SequenceSet, vals *h.SequenceData) h.SequenceSet {
+		func(rs h.SequenceSet, vals *h.SequenceData, fieldsToReset ...models.FieldNamer) h.SequenceSet {
 			seq := rs.Super().Create(vals)
 			if vals.Implementation == "standard" || vals.Implementation == "" {
 				numberIncrement := vals.NumberIncrement
@@ -361,7 +361,7 @@ gap in the sequence (while they are possible in the former).`},
 		})
 
 	h.SequenceDateRange().Methods().Create().Extend("",
-		func(rs h.SequenceDateRangeSet, data *h.SequenceDateRangeData) h.SequenceDateRangeSet {
+		func(rs h.SequenceDateRangeSet, data *h.SequenceDateRangeData, fieldsToReset ...models.FieldNamer) h.SequenceDateRangeSet {
 			seq := rs.Super().Create(data)
 			mainSeq := seq.Sequence()
 			if mainSeq.Implementation() == "standard" {

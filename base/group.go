@@ -18,7 +18,7 @@ func init() {
 	})
 
 	groupModel.Methods().Create().Extend("",
-		func(rs h.GroupSet, data *h.GroupData) h.GroupSet {
+		func(rs h.GroupSet, data *h.GroupData, fieldsToReset ...models.FieldNamer) h.GroupSet {
 			if rs.Env().Context().HasKey("GroupForceCreate") {
 				return rs.Super().Create(data)
 			}

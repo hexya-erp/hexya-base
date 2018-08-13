@@ -207,7 +207,7 @@ a change of password, the user has to login again.`},
 		})
 
 	userModel.Methods().Create().Extend("",
-		func(rs h.UserSet, vals *h.UserData) h.UserSet {
+		func(rs h.UserSet, vals *h.UserData, fieldsToReset ...models.FieldNamer) h.UserSet {
 			user := rs.Super().Create(vals)
 			user.Partner().SetActive(user.Active())
 			if !user.Partner().Company().IsEmpty() {

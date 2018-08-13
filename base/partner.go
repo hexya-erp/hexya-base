@@ -635,7 +635,7 @@ Use this field anywhere a small image is required.`},
 		})
 
 	partnerModel.Methods().Create().Extend("",
-		func(rs h.PartnerSet, vals *h.PartnerData) h.PartnerSet {
+		func(rs h.PartnerSet, vals *h.PartnerData, fieldsToReset ...models.FieldNamer) h.PartnerSet {
 			if vals.Website != "" {
 				vals.Website = rs.CleanWebsite(vals.Website)
 			}
