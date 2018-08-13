@@ -6,6 +6,7 @@ package base
 import (
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/operator"
+	"github.com/hexya-erp/hexya/hexya/tools/b64image"
 	"github.com/hexya-erp/hexya/pool/h"
 	"github.com/hexya-erp/hexya/pool/q"
 )
@@ -72,7 +73,7 @@ func init() {
 		`ComputeLogoWeb returns a resized version of the company logo`,
 		func(rs h.CompanySet) *h.CompanyData {
 			res := h.CompanyData{
-				LogoWeb: rs.Logo(),
+				LogoWeb: b64image.Resize(rs.Logo(), 180, 0, true),
 			}
 			return &res
 		})

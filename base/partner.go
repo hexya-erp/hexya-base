@@ -619,8 +619,7 @@ Use this field anywhere a small image is required.`},
 					}
 				}
 			}
-			// TODO Resize images
-			// tools.image_resize_images(vals)
+			vals = rs.ResizeImageData(vals)
 			res := rs.Super().Write(values, fieldsToUnset...)
 			for _, partner := range rs.Records() {
 				for _, user := range partner.Users().Records() {
@@ -634,6 +633,26 @@ Use this field anywhere a small image is required.`},
 			return res
 		})
 
+	partnerModel.Methods().ResizeImageData().DeclareMethod(
+		`ResizeImageData returns the given data struct with images set for the different sizes.`,
+		func(set h.PartnerSet, data *h.PartnerData) *h.PartnerData {
+			switch {
+			case data.Image != "":
+				data.Image = b64image.Resize(data.Image, 1024, 1024, true)
+				data.ImageMedium = b64image.Resize(data.Image, 128, 128, false)
+				data.ImageSmall = b64image.Resize(data.Image, 64, 64, false)
+			case data.ImageMedium != "":
+				data.Image = b64image.Resize(data.ImageMedium, 1024, 1024, true)
+				data.ImageMedium = b64image.Resize(data.ImageMedium, 128, 128, true)
+				data.ImageSmall = b64image.Resize(data.ImageMedium, 64, 64, false)
+			case data.ImageSmall != "":
+				data.Image = b64image.Resize(data.ImageSmall, 1024, 1024, true)
+				data.ImageMedium = b64image.Resize(data.ImageSmall, 128, 128, true)
+				data.ImageSmall = b64image.Resize(data.ImageSmall, 64, 64, true)
+			}
+			return data
+		})
+
 	partnerModel.Methods().Create().Extend("",
 		func(rs h.PartnerSet, vals *h.PartnerData, fieldsToReset ...models.FieldNamer) h.PartnerSet {
 			if vals.Website != "" {
@@ -645,8 +664,7 @@ Use this field anywhere a small image is required.`},
 			if vals.Image == "" {
 				vals.Image = rs.GetDefaultImage(vals.Type, vals.IsCompany, vals.Parent)
 			}
-			// TODO Resize images
-			// tools.image_resize_images(vals)
+			vals = rs.ResizeImageData(vals)
 			partner := rs.Super().Create(vals)
 			partner.FieldsSync(vals)
 			partner.HandleFirsrtContactCreation()
