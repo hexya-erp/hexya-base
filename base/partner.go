@@ -598,7 +598,7 @@ Use this field anywhere a small image is required.`},
 			if rs.Env().Context().HasKey("goto_super") {
 				return rs.Super().Write(vals, fieldsToUnset...)
 			}
-			values, fieldsToUnset := rs.DataStruct(vals.FieldMap(fieldsToUnset...))
+			values := rs.ResizeImageData(vals)
 			if values.Website != "" {
 				values.Website = rs.CleanWebsite(values.Website)
 			}
@@ -619,7 +619,6 @@ Use this field anywhere a small image is required.`},
 					}
 				}
 			}
-			vals = rs.ResizeImageData(vals)
 			res := rs.Super().Write(values, fieldsToUnset...)
 			for _, partner := range rs.Records() {
 				for _, user := range partner.Users().Records() {
