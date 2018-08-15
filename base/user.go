@@ -311,10 +311,11 @@ a change of password, the user has to login again.`},
 		This method must be called on a singleton.`,
 		func(rs h.UserSet) *types.Context {
 			rs.EnsureOne()
-			res := types.NewContext()
-			res = res.WithKey("lang", rs.Lang())
-			res = res.WithKey("tz", rs.TZ())
-			res = res.WithKey("uid", rs.ID())
+			res := types.NewContext().
+				WithKey("lang", rs.Lang()).
+				WithKey("tz", rs.TZ()).
+				WithKey("uid", rs.ID()).
+				WithKey("company_id", rs.Company().ID())
 			return res
 		})
 

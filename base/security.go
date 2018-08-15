@@ -66,4 +66,6 @@ func init() {
 
 	h.Bank().Methods().Load().AllowGroup(GroupUser)
 	h.Bank().Methods().AllowAllToGroup(GroupPartnerManager)
+
+	h.Company().Methods().Load().AllowGroup(security.GroupEveryone, h.User().Methods().ContextGet())
 }

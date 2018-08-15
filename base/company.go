@@ -4,12 +4,30 @@
 package base
 
 import (
+	"fmt"
+
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/operator"
 	"github.com/hexya-erp/hexya/hexya/tools/b64image"
 	"github.com/hexya-erp/hexya/pool/h"
 	"github.com/hexya-erp/hexya/pool/q"
 )
+
+// CompanyDependent is a context to add to make a field depend on the user's current company.
+// If a company ID is passed in the context under the key "force_company", then this company
+// is used instead.
+var CompanyDependent = models.FieldContexts{
+	"company": func(rs models.RecordSet) string {
+		companyID := rs.Env().Context().GetInteger("force_company")
+		if companyID == 0 {
+			companyID = rs.Env().Context().GetInteger("company_id")
+		}
+		if companyID == 0 {
+			return ""
+		}
+		return fmt.Sprintf("%d", companyID)
+	},
+}
 
 // CompanyGetUserCurrency returns the currency of the current user's company if it exists
 // or the default currency otherwise
