@@ -23,7 +23,6 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/fieldtype"
 	"github.com/hexya-erp/hexya/hexya/models/operator"
-	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types"
 	"github.com/hexya-erp/hexya/hexya/tools/b64image"
 	"github.com/hexya-erp/hexya/hexya/tools/generate"
@@ -104,7 +103,7 @@ func init() {
 		"Title": models.Many2OneField{RelationModel: h.PartnerTitle()},
 		"Parent": models.Many2OneField{RelationModel: h.Partner(), Index: true,
 			Constraint: h.Partner().Methods().CheckParent(), OnChange: h.Partner().Methods().OnchangeParent()},
-		"ParentName": models.CharField{Related: "Parent.Name"},
+		"ParentName": models.CharField{Related: "Parent.Name", ReadOnly: true},
 
 		"Children": models.One2ManyField{RelationModel: h.Partner(),
 			ReverseFK: "Parent", Filter: q.Partner().Active().Equals(true)},
@@ -206,7 +205,6 @@ resized as a 64x64px image, with aspect ratio preserved.
 Use this field anywhere a small image is required.`},
 	})
 
-	partnerModel.Fields().ParentName().RevokeAccess(security.GroupEveryone, security.Write)
 	partnerModel.Fields().DisplayName().SetDepends([]string{"IsCompany", "Name", "Parent.Name", "Type", "CompanyName"})
 
 	partnerModel.AddSQLConstraint("check_name",

@@ -449,7 +449,7 @@ func init() {
 			allModifiers := make(map[*etree.Element]map[string]interface{})
 			// Process attrs on all nodes
 			for _, attrsTag := range doc.FindElements("[@attrs]") {
-				allModifiers[attrsTag] = rs.ProcessElementAttrs(attrsTag)
+				allModifiers[attrsTag] = rs.ProcessElementAttrs(attrsTag, fieldInfos)
 			}
 			// Process field nodes
 			for _, fieldTag := range doc.FindElements("//field") {
@@ -531,7 +531,8 @@ func init() {
 	commonMixin.Methods().ProcessElementAttrs().DeclareMethod(
 		`ProcessElementAttrs returns a modifiers map according to the domain
 		in attrs of the given element`,
-		func(rc *models.RecordCollection, element *etree.Element) map[string]interface{} {
+		func(rc *models.RecordCollection, element *etree.Element, fieldInfos map[string]*models.FieldInfo) map[string]interface{} {
+			fieldName := element.SelectAttr("name").Value
 			modifiers := map[string]interface{}{"readonly": false, "required": false, "invisible": false}
 			attrStr := element.SelectAttrValue("attrs", "")
 			if attrStr == "" {
@@ -554,6 +555,29 @@ func init() {
 				}
 				modifiers[modifier] = attrs[modifier]
 			}
+			// Force modifiers if defined in the model
+			if fieldInfos[fieldName].ReadOnlyFunc != nil {
+				req, cond := fieldInfos[fieldName].ReadOnlyFunc(rc.Env())
+				modifiers["readonly"] = req
+				if cond != nil {
+					modifiers["readonly"] = domains.Domain(cond.Underlying().Serialize()).String()
+				}
+			}
+			if fieldInfos[fieldName].RequiredFunc != nil {
+				req, cond := fieldInfos[fieldName].RequiredFunc(rc.Env())
+				modifiers["required"] = req
+				if cond != nil {
+					modifiers["required"] = domains.Domain(cond.Underlying().Serialize()).String()
+				}
+			}
+			if fieldInfos[fieldName].InvisibleFunc != nil {
+				req, cond := fieldInfos[fieldName].InvisibleFunc(rc.Env())
+				modifiers["invisible"] = req
+				if cond != nil {
+					modifiers["invisible"] = domains.Domain(cond.Underlying().Serialize()).String()
+				}
+			}
+
 			return modifiers
 		})
 
