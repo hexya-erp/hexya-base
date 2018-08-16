@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/beevik/etree"
+	"github.com/hexya-erp/hexya-base/web/controllers"
 	"github.com/hexya-erp/hexya-base/web/domains"
 	"github.com/hexya-erp/hexya-base/web/webdata"
 	"github.com/hexya-erp/hexya/hexya/actions"
@@ -65,7 +66,7 @@ func init() {
 				fMap[fName] = value
 			}
 			return fMap
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().NameSearch().DeclareMethod(
 		`NameSearch searches for records that have a display name matching the given
@@ -89,7 +90,7 @@ func init() {
 				res[i].Name = rec.Get("display_name").(string)
 			}
 			return res
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().ProcessWriteValues().DeclareMethod(
 		`ProcessWriteValues updates the given data values for Write method to be
@@ -122,7 +123,7 @@ func init() {
 				}
 			}
 			return fMap
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().ProcessCreateValues().DeclareMethod(
 		`ProcessCreateValues updates the given data values for Create method to be
@@ -161,7 +162,7 @@ func init() {
 				}
 			}
 			return createMap, deferredMap
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().PostProcessCreateValues().DeclareMethod(`
 		PostProcessCreateValues updates FK of related records created at the same time.
@@ -186,7 +187,7 @@ func init() {
 				}
 			}
 			rs.Call("Write", fMap)
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().ExecuteO2MActions().DeclareMethod(
 		`ExecuteO2MActions executes the actions on one2many fields given by
@@ -245,7 +246,7 @@ func init() {
 				return recs.Ids()
 			}
 			return value
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().NormalizeM2MData().DeclareMethod(
 		`NormalizeM2MData converts the list of triplets received from the client into the final list of ids
@@ -279,7 +280,7 @@ func init() {
 				}
 			}
 			return value
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().GetFormviewId().DeclareMethod(
 		`GetFormviewID returns an view id to open the document with.
@@ -287,7 +288,7 @@ func init() {
  		to give specific view ids for example.`,
 		func(rs h.CommonMixinSet) string {
 			return ""
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().GetFormviewAction().DeclareMethod(
 		`GetFormviewAction returns an action to open the document.
@@ -305,7 +306,7 @@ func init() {
 				ResID:       rs.ID(),
 				Context:     rs.Env().Context(),
 			}
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().FieldsViewGet().DeclareMethod(
 		`FieldsViewGet is the base implementation of the 'FieldsViewGet' method which
@@ -353,7 +354,7 @@ func init() {
 				}
 			}
 			return &res
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().LoadViews().DeclareMethod(
 		`LoadViews returns the data for all the views and filters required in the parameters.`,
@@ -376,7 +377,9 @@ func init() {
 				})
 			}
 			if args.Options.LoadFilters {
-				res.Filters = h.Filter().NewSet(rs.Env()).GetFilters(rs.ModelName(), args.Options.ActionID)
+				res.Filters = controllers.MethodAdapters["GetFilters"](h.Filter().NewSet(rs.Env()).Collection(),
+					"GetFilters",
+					[]interface{}{rs.ModelName(), args.Options.ActionID}).([]models.FieldMap)
 			}
 			if args.Options.LoadFields {
 				res.Fields = rs.FieldsGet(models.FieldsGetArgs{})
@@ -395,7 +398,7 @@ func init() {
 				}
 			}
 			return res
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().ProcessView().DeclareMethod(
 		`ProcessView makes all the necessary modifications to the view
@@ -414,7 +417,7 @@ func init() {
 				log.Panic("Unable to render XML", "error", err)
 			}
 			return res
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().ManageGroupsOnFields().DeclareMethod(
 		`ManageGroupsOnFields adds the invisible attribute to fields nodes if the current
@@ -446,7 +449,7 @@ func init() {
 			allModifiers := make(map[*etree.Element]map[string]interface{})
 			// Process attrs on all nodes
 			for _, attrsTag := range doc.FindElements("[@attrs]") {
-				allModifiers[attrsTag] = rs.ProcessElementAttrs(attrsTag)
+				allModifiers[attrsTag] = rs.ProcessElementAttrs(attrsTag, fieldInfos)
 			}
 			// Process field nodes
 			for _, fieldTag := range doc.FindElements("//field") {
@@ -485,7 +488,7 @@ func init() {
 				modJSON, _ := json.Marshal(modifiers)
 				element.CreateAttr("modifiers", string(modJSON))
 			}
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().ProcessFieldElementModifiers().DeclareMethod(
 		`ProcessFieldElementModifiers modifies the given modifiers map by taking into account:
@@ -523,12 +526,13 @@ func init() {
 				modifiers["required"] = true
 			}
 			return modifiers
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().ProcessElementAttrs().DeclareMethod(
 		`ProcessElementAttrs returns a modifiers map according to the domain
 		in attrs of the given element`,
-		func(rc *models.RecordCollection, element *etree.Element) map[string]interface{} {
+		func(rc *models.RecordCollection, element *etree.Element, fieldInfos map[string]*models.FieldInfo) map[string]interface{} {
+			fieldName := element.SelectAttr("name").Value
 			modifiers := map[string]interface{}{"readonly": false, "required": false, "invisible": false}
 			attrStr := element.SelectAttrValue("attrs", "")
 			if attrStr == "" {
@@ -551,8 +555,31 @@ func init() {
 				}
 				modifiers[modifier] = attrs[modifier]
 			}
+			// Force modifiers if defined in the model
+			if fieldInfos[fieldName].ReadOnlyFunc != nil {
+				req, cond := fieldInfos[fieldName].ReadOnlyFunc(rc.Env())
+				modifiers["readonly"] = req
+				if cond != nil {
+					modifiers["readonly"] = domains.Domain(cond.Underlying().Serialize()).String()
+				}
+			}
+			if fieldInfos[fieldName].RequiredFunc != nil {
+				req, cond := fieldInfos[fieldName].RequiredFunc(rc.Env())
+				modifiers["required"] = req
+				if cond != nil {
+					modifiers["required"] = domains.Domain(cond.Underlying().Serialize()).String()
+				}
+			}
+			if fieldInfos[fieldName].InvisibleFunc != nil {
+				req, cond := fieldInfos[fieldName].InvisibleFunc(rc.Env())
+				modifiers["invisible"] = req
+				if cond != nil {
+					modifiers["invisible"] = domains.Domain(cond.Underlying().Serialize()).String()
+				}
+			}
+
 			return modifiers
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().SearchRead().DeclareMethod(
 		`SearchRead retrieves database records according to the filters defined in params.`,
@@ -561,7 +588,7 @@ func init() {
 
 			records := rSet.Read(params.Fields)
 			return records
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().AddDomainLimitOffset().DeclareMethod(
 		`AddDomainLimitOffsetOrder adds the given domain, limit, offset
@@ -586,7 +613,7 @@ func init() {
 				rSet = rSet.OrderBy(strings.Split(order, ",")...)
 			}
 			return rSet
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().ReadGroup().DeclareMethod(
 		`Get a list of record aggregates according to the given parameters.`,
@@ -597,13 +624,13 @@ func init() {
 			res := make([]models.FieldMap, len(aggregates))
 			fInfos := rSet.FieldsGet(models.FieldsGetArgs{})
 			for i, ag := range aggregates {
-				line := rs.AddNamesToRelations(ag.Values, fInfos)
+				line := rs.AddNamesToRelations(ag.Values.FieldMap(), fInfos)
 				line["__count"] = ag.Count
 				line["__domain"] = ag.Condition.Serialize()
 				res[i] = line
 			}
 			return res
-		}).AllowGroup(security.GroupEveryone)
+		})
 
 	commonMixin.Methods().SearchDomain().DeclareMethod(
 		`SearchDomain execute a search on the given domain.`,

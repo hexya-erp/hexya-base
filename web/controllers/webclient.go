@@ -34,7 +34,8 @@ func BootstrapTranslations(c *server.Context) {
 			ID:           1,
 			Grouping:     "[]",
 		},
-		"modules": gin.H{},
+		"modules":    gin.H{},
+		"multi_lang": true,
 	}
 	c.RPC(http.StatusOK, res)
 }

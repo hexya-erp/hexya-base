@@ -23,7 +23,6 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/fieldtype"
 	"github.com/hexya-erp/hexya/hexya/models/operator"
-	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types"
 	"github.com/hexya-erp/hexya/hexya/tools/b64image"
 	"github.com/hexya-erp/hexya/hexya/tools/generate"
@@ -48,6 +47,7 @@ The Message has to be written in the next field.`
 
 func init() {
 	partnerTitle := h.PartnerTitle().DeclareModel()
+	partnerTitle.SetDefaultOrder("Name")
 	partnerTitle.AddFields(map[string]models.FieldDefinition{
 		"Name":     models.CharField{String: "Title", Required: true, Translate: true, Unique: true},
 		"Shortcut": models.CharField{String: "Abbreviation", Translate: true},
@@ -59,9 +59,9 @@ func init() {
 		"Color": models.IntegerField{String: "Color Index"},
 		"Parent": models.Many2OneField{RelationModel: h.PartnerCategory(),
 			String: "Parent Tag", Index: true, OnDelete: models.Cascade},
-		"Children": models.One2ManyField{RelationModel: h.PartnerCategory(),
+		"Children": models.One2ManyField{RelationModel: h.PartnerCategory(), Copy: true,
 			ReverseFK: "Parent", String: "Children Tags"},
-		"Active": models.BooleanField{Default: models.DefaultValue(true),
+		"Active": models.BooleanField{Default: models.DefaultValue(true), Required: true,
 			Help: "The active field allows you to hide the category without removing it."},
 		"Partners": models.Many2ManyField{RelationModel: h.Partner()},
 	})
@@ -103,7 +103,7 @@ func init() {
 		"Title": models.Many2OneField{RelationModel: h.PartnerTitle()},
 		"Parent": models.Many2OneField{RelationModel: h.Partner(), Index: true,
 			Constraint: h.Partner().Methods().CheckParent(), OnChange: h.Partner().Methods().OnchangeParent()},
-		"ParentName": models.CharField{Related: "Parent.Name"},
+		"ParentName": models.CharField{Related: "Parent.Name", ReadOnly: true},
 
 		"Children": models.One2ManyField{RelationModel: h.Partner(),
 			ReverseFK: "Parent", Filter: q.Partner().Active().Equals(true)},
@@ -136,7 +136,7 @@ Used by the some of the legal statements.`},
 			}},
 		"CreditLimit": models.FloatField{},
 		"Barcode":     models.CharField{},
-		"Active":      models.BooleanField{Default: models.DefaultValue(true)},
+		"Active":      models.BooleanField{Required: true, Default: models.DefaultValue(true)},
 		"Customer": models.BooleanField{String: "Is a Customer", Default: models.DefaultValue(true),
 			Help: "Check this box if this contact is a customer."},
 		"Supplier": models.BooleanField{String: "Is a Vendor",
@@ -205,7 +205,6 @@ resized as a 64x64px image, with aspect ratio preserved.
 Use this field anywhere a small image is required.`},
 	})
 
-	partnerModel.Fields().ParentName().RevokeAccess(security.GroupEveryone, security.Write)
 	partnerModel.Fields().DisplayName().SetDepends([]string{"IsCompany", "Name", "Parent.Name", "Type", "CompanyName"})
 
 	partnerModel.AddSQLConstraint("check_name",
@@ -310,7 +309,7 @@ Use this field anywhere a small image is required.`},
 					imgFileName = "avatar.png"
 					colorize = true
 				}
-				path := filepath.Join(generate.HexyaDir, "hexya", "server", "static", "base", "img", imgFileName)
+				path := filepath.Join(generate.HexyaDir, "hexya", "server", "static", "base", "src", "img", imgFileName)
 				content, err := ioutil.ReadFile(path)
 				if err != nil {
 					log.Warn("Missing ressource", "image", path)
@@ -488,7 +487,12 @@ Use this field anywhere a small image is required.`},
 		`CommercialSyncToChildren handle sync of commercial fields to descendants`,
 		func(rs h.PartnerSet) bool {
 			partnerData, fieldsToUnset := rs.CommercialPartner().UpdateFieldValues(rs.CommercialFields()...)
-			syncChildren := rs.Children().Search(q.Partner().IsCompany().NotEquals(true))
+			syncChildren := rs.Children().Filtered(func(rs h.PartnerSet) bool {
+				return !rs.IsCompany()
+			})
+			if syncChildren.IsEmpty() {
+				return false
+			}
 			for _, child := range syncChildren.Records() {
 				child.CommercialSyncToChildren()
 			}
@@ -519,13 +523,16 @@ Use this field anywhere a small image is required.`},
 			// 2a. Commercial Fields: sync if commercial entity
 			if rs.Equals(rs.CommercialPartner()) {
 				for _, commField := range rs.CommercialFields() {
-					if !typesutils.IsZero(rs.Parent().Get(commField.String())) {
+					if !typesutils.IsZero(rs.Get(commField.String())) {
 						rs.CommercialSyncToChildren()
 						break
 					}
 				}
 			}
-			for _, child := range rs.Children().Search(q.Partner().IsCompany().NotEquals(true)).Records() {
+			personChildren := rs.Children().Filtered(func(rs h.PartnerSet) bool {
+				return !rs.IsCompany()
+			})
+			for _, child := range personChildren.Records() {
 				if !child.CommercialPartner().Equals(rs.CommercialPartner()) {
 					rs.CommercialSyncToChildren()
 					break
@@ -589,7 +596,7 @@ Use this field anywhere a small image is required.`},
 			if rs.Env().Context().HasKey("goto_super") {
 				return rs.Super().Write(vals, fieldsToUnset...)
 			}
-			values, fieldsToUnset := rs.DataStruct(vals.FieldMap(fieldsToUnset...))
+			values := rs.ResizeImageData(vals)
 			if values.Website != "" {
 				values.Website = rs.CleanWebsite(values.Website)
 			}
@@ -610,8 +617,6 @@ Use this field anywhere a small image is required.`},
 					}
 				}
 			}
-			// TODO Resize images
-			// tools.image_resize_images(vals)
 			res := rs.Super().Write(values, fieldsToUnset...)
 			for _, partner := range rs.Records() {
 				for _, user := range partner.Users().Records() {
@@ -625,8 +630,28 @@ Use this field anywhere a small image is required.`},
 			return res
 		})
 
+	partnerModel.Methods().ResizeImageData().DeclareMethod(
+		`ResizeImageData returns the given data struct with images set for the different sizes.`,
+		func(set h.PartnerSet, data *h.PartnerData) *h.PartnerData {
+			switch {
+			case data.Image != "":
+				data.Image = b64image.Resize(data.Image, 1024, 1024, true)
+				data.ImageMedium = b64image.Resize(data.Image, 128, 128, false)
+				data.ImageSmall = b64image.Resize(data.Image, 64, 64, false)
+			case data.ImageMedium != "":
+				data.Image = b64image.Resize(data.ImageMedium, 1024, 1024, true)
+				data.ImageMedium = b64image.Resize(data.ImageMedium, 128, 128, true)
+				data.ImageSmall = b64image.Resize(data.ImageMedium, 64, 64, false)
+			case data.ImageSmall != "":
+				data.Image = b64image.Resize(data.ImageSmall, 1024, 1024, true)
+				data.ImageMedium = b64image.Resize(data.ImageSmall, 128, 128, true)
+				data.ImageSmall = b64image.Resize(data.ImageSmall, 64, 64, true)
+			}
+			return data
+		})
+
 	partnerModel.Methods().Create().Extend("",
-		func(rs h.PartnerSet, vals *h.PartnerData) h.PartnerSet {
+		func(rs h.PartnerSet, vals *h.PartnerData, fieldsToReset ...models.FieldNamer) h.PartnerSet {
 			if vals.Website != "" {
 				vals.Website = rs.CleanWebsite(vals.Website)
 			}
@@ -636,8 +661,7 @@ Use this field anywhere a small image is required.`},
 			if vals.Image == "" {
 				vals.Image = rs.GetDefaultImage(vals.Type, vals.IsCompany, vals.Parent)
 			}
-			// TODO Resize images
-			// tools.image_resize_images(vals)
+			vals = rs.ResizeImageData(vals)
 			partner := rs.Super().Create(vals)
 			partner.FieldsSync(vals)
 			partner.HandleFirsrtContactCreation()
@@ -747,10 +771,34 @@ Use this field anywhere a small image is required.`},
             - otherwise: default, everything is set as the name (email is returned empty)`,
 		func(rs h.PartnerSet, email string) (string, string) {
 			addr, err := mail.ParseAddress(email)
-			if err != nil || addr.Name == "" {
+			if err != nil {
 				return email, ""
 			}
 			return addr.Name, addr.Address
+		})
+
+	partnerModel.Methods().NameCreate().DeclareMethod(
+		`NameCreate creates a partner from a single string which may be a name and/or an email.
+
+        If only an email address is received and that the regex cannot find
+        a name, the name will have the email value.
+        If 'force_email' key in context: must find the email address.`,
+		func(rs h.PartnerSet, name string) h.PartnerSet {
+			name, email := rs.ParsePartnerName(name)
+			if email == "" && rs.Env().Context().GetBool("force_email") {
+				panic(rs.T("Couldn't create contact without email address!"))
+			}
+			if name == "" && email != "" {
+				name = email
+			}
+			if email == "" {
+				email = rs.Env().Context().GetString("default_email")
+			}
+			partner := h.Partner().Create(rs.Env(), &h.PartnerData{
+				Name:  name,
+				Email: email,
+			})
+			return partner
 		})
 
 	partnerModel.Methods().FindOrCreate().DeclareMethod(
@@ -758,13 +806,12 @@ Use this field anywhere a small image is required.`},
 		The given string should contain at least one email,
                 e.g. "Raoul Grosbedon <r.g@grosbedon.fr>"`,
 		func(rs h.PartnerSet, email string) h.PartnerSet {
-			name, emailParsed := rs.ParsePartnerName(email)
-			partners := h.Partner().Search(rs.Env(), q.Partner().Email().ILike(emailParsed)).Limit(1)
+			if _, emailParsed := rs.ParsePartnerName(email); emailParsed != "" {
+				email = emailParsed
+			}
+			partners := h.Partner().Search(rs.Env(), q.Partner().Email().ILike(email)).Limit(1)
 			if partners.IsEmpty() {
-				rs.Create(&h.PartnerData{
-					Name:  name,
-					Email: emailParsed,
-				})
+				partners = rs.NameCreate(email)
 			}
 			return partners
 		})
@@ -802,16 +849,8 @@ Use this field anywhere a small image is required.`},
 			for _, at := range addrTypes {
 				atMap[at] = true
 			}
-			if _, exists := atMap["contact"]; !exists {
-				atMap["contact"] = true
-			}
-			result := map[string]h.PartnerSet{
-				"contact":  rs,
-				"delivery": rs,
-				"invoice":  rs,
-				"other":    rs,
-				"default":  rs,
-			}
+			atMap["contact"] = true
+			result := make(map[string]h.PartnerSet)
 			visited := make(map[int64]bool)
 			for _, partner := range rs.Records() {
 				currentPartner := partner
@@ -836,9 +875,18 @@ Use this field anywhere a small image is required.`},
 					// Continue scanning at ancestor if current_partner is not a commercial entity
 					if currentPartner.IsCompany() || currentPartner.Parent().IsEmpty() {
 						break
-
 					}
 					currentPartner = currentPartner.Parent()
+				}
+			}
+			// default to type 'contact' or the partner itself
+			def := rs
+			if ct, ok := result["contact"]; ok {
+				def = ct
+			}
+			for _, addrType := range addrTypes {
+				if _, ok := result[addrType]; !ok {
+					result[addrType] = def
 				}
 			}
 			return result

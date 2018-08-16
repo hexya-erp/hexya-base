@@ -6,12 +6,23 @@ package base
 import (
 	"fmt"
 	"regexp"
+	"strings"
 
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/operator"
 	"github.com/hexya-erp/hexya/pool/h"
 	"github.com/hexya-erp/hexya/pool/q"
 )
+
+func sanitizeAccountNumber(accNumber string) string {
+	if accNumber == "" {
+		return ""
+	}
+	rg, _ := regexp.Compile("\\W+")
+	san := rg.ReplaceAllString(accNumber, "")
+	san = strings.ToUpper(san)
+	return san
+}
 
 func init() {
 	h.Bank().DeclareModel()
@@ -83,11 +94,28 @@ func init() {
 	h.BankAccount().Methods().ComputeSanitizedAccountNumber().DeclareMethod(
 		`ComputeSanitizedAccountNumber removes all spaces and invalid characters from account number`,
 		func(rs h.BankAccountSet) *h.BankAccountData {
-			rg, _ := regexp.Compile("\\W+")
-			san := rg.ReplaceAllString(rs.Name(), "")
 			return &h.BankAccountData{
-				SanitizedAccountNumber: san,
+				SanitizedAccountNumber: sanitizeAccountNumber(rs.Name()),
 			}
+		})
+
+	h.BankAccount().Methods().Search().Extend("",
+		func(rs h.BankAccountSet, cond q.BankAccountCondition) h.BankAccountSet {
+			predicates := cond.PredicatesWithField(h.BankAccount().Fields().Name())
+			for i, pred := range predicates {
+				switch arg := pred.Argument().(type) {
+				case []string:
+					newArg := make([]string, len(arg))
+					for j, a := range arg {
+						newArg[j] = sanitizeAccountNumber(a)
+					}
+					predicates[i].AlterArgument(newArg)
+				case string:
+					predicates[i].AlterArgument(sanitizeAccountNumber(arg))
+				}
+				predicates[i].AlterField(h.BankAccount().SanitizedAccountNumber())
+			}
+			return rs.Super().Search(cond)
 		})
 
 }

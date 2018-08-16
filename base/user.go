@@ -92,7 +92,8 @@ a change of password, the user has to login again.`},
 			Compute: h.User().Methods().ComputeCompaniesCount(), GoType: new(int)},
 		"Company": models.Many2OneField{RelationModel: h.Company(), Required: true, Default: func(env models.Environment) interface{} {
 			return h.Company().NewSet(env).CompanyDefaultGet()
-		}, Help: "The company this user is currently working for.", Constraint: h.User().Methods().CheckCompany()}, "Companies": models.Many2ManyField{RelationModel: h.Company(), JSON: "company_ids", Required: true,
+		}, Help: "The company this user is currently working for.", Constraint: h.User().Methods().CheckCompany()},
+		"Companies": models.Many2ManyField{RelationModel: h.Company(), JSON: "company_ids", Required: true,
 			Default: func(env models.Environment) interface{} {
 				return h.Company().NewSet(env).CompanyDefaultGet()
 			}, Constraint: h.User().Methods().CheckCompany()},
@@ -206,7 +207,7 @@ a change of password, the user has to login again.`},
 		})
 
 	userModel.Methods().Create().Extend("",
-		func(rs h.UserSet, vals *h.UserData) h.UserSet {
+		func(rs h.UserSet, vals *h.UserData, fieldsToReset ...models.FieldNamer) h.UserSet {
 			user := rs.Super().Create(vals)
 			user.Partner().SetActive(user.Active())
 			if !user.Partner().Company().IsEmpty() {
@@ -310,10 +311,11 @@ a change of password, the user has to login again.`},
 		This method must be called on a singleton.`,
 		func(rs h.UserSet) *types.Context {
 			rs.EnsureOne()
-			res := types.NewContext()
-			res = res.WithKey("lang", rs.Lang())
-			res = res.WithKey("tz", rs.TZ())
-			res = res.WithKey("uid", rs.ID())
+			res := types.NewContext().
+				WithKey("lang", rs.Lang()).
+				WithKey("tz", rs.TZ()).
+				WithKey("uid", rs.ID()).
+				WithKey("company_id", rs.Company().ID())
 			return res
 		})
 

@@ -45,7 +45,7 @@
             <form string="Contact">
                 <field name="is_company" invisible="1"/>
                 <field name="type" invisible="1"/>
-                <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
+                <field name="image_medium" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
                 <div class="oe_title">
                     <field name="company_type" options="{'horizontal': true}" class="oe_edit_only" widget="radio"/>
                     <h1>
@@ -71,7 +71,7 @@
         <!-- Open partner address -->
         <view id="base_view_partner_address_form" model="Partner" priority="20">
             <form string="Partner">
-                <field name="image" widget='image' class="oe_avatar"
+                <field name="image_medium" widget='image' class="oe_avatar"
                        options='{"preview_image": "image_medium", "size": [90, 90]}' readonly="1"/>
                 <div class="oe_title">
                     <h1>
@@ -116,7 +116,7 @@
                                    options='{"terminology": "archive"}'/>
                         </button>
                     </div>
-                    <field name="image" widget='image' class="oe_avatar"
+                    <field name="image_medium" widget='image' class="oe_avatar"
                            options='{"preview_image": "image_medium", "size": [90, 90]}'/>
                     <div class="oe_title">
                         <field name="is_company" invisible="1"/>

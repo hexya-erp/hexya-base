@@ -70,9 +70,9 @@ Model.include({
             // Should not be necessary anymore. Integrate remote in this?
             domain_id: null,
             context_id: args.length - 1,
-            args: args.length >= 1 && args[0] || [],
+            args: args.length >= 1 && args.slice(0, args.length-1) || [],
             kwargs: {
-                context: args.length > 1 && args[1] || {}
+                context: args.length > 1 && args[args.length-1] || {}
             }
         });
     },

@@ -27,7 +27,7 @@ const (
 	MODULE_NAME = "base"
 )
 
-var log *logging.Logger
+var log logging.Logger
 
 func init() {
 	log = logging.GetLogger("base")

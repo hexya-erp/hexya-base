@@ -4,11 +4,30 @@
 package base
 
 import (
+	"fmt"
+
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/operator"
+	"github.com/hexya-erp/hexya/hexya/tools/b64image"
 	"github.com/hexya-erp/hexya/pool/h"
 	"github.com/hexya-erp/hexya/pool/q"
 )
+
+// CompanyDependent is a context to add to make a field depend on the user's current company.
+// If a company ID is passed in the context under the key "force_company", then this company
+// is used instead.
+var CompanyDependent = models.FieldContexts{
+	"company": func(rs models.RecordSet) string {
+		companyID := rs.Env().Context().GetInteger("force_company")
+		if companyID == 0 {
+			companyID = rs.Env().Context().GetInteger("company_id")
+		}
+		if companyID == 0 {
+			return ""
+		}
+		return fmt.Sprintf("%d", companyID)
+	},
+}
 
 // CompanyGetUserCurrency returns the currency of the current user's company if it exists
 // or the default currency otherwise
@@ -72,7 +91,7 @@ func init() {
 		`ComputeLogoWeb returns a resized version of the company logo`,
 		func(rs h.CompanySet) *h.CompanyData {
 			res := h.CompanyData{
-				LogoWeb: rs.Logo(),
+				LogoWeb: b64image.Resize(rs.Logo(), 180, 0, true),
 			}
 			return &res
 		})
@@ -112,7 +131,7 @@ func init() {
 		})
 
 	companyModel.Methods().Create().Extend("",
-		func(rs h.CompanySet, data *h.CompanyData) h.CompanySet {
+		func(rs h.CompanySet, data *h.CompanyData, fieldsToReset ...models.FieldNamer) h.CompanySet {
 			if !data.Partner.IsEmpty() {
 				return rs.Super().Create(data)
 			}

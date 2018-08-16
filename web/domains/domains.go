@@ -107,7 +107,7 @@ const (
 	PREFIX_NOT DomainPrefixOperator = "!"
 )
 
-var log *logging.Logger
+var log logging.Logger
 
 // ParseDomain gets Domain and parses it into a RecordSet query Condition.
 // Returns an empty condition if the domain is []
