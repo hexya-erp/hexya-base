@@ -52,7 +52,7 @@ func createAdapter(rc *models.RecordCollection, method string, args []interface{
 	dMap := pcv[1].(models.FieldMap)
 	res := rc.WithContext("skip_check_constraints", true).Call("Create", cMap).(models.RecordSet).Collection()
 	res.Call("PostProcessCreateValues", dMap)
-	res.CheckConstraints()
+	res.WithContext("skip_check_constraints", false).CheckConstraints()
 	return res
 }
 
