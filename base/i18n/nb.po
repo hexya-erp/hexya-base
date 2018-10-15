@@ -6,7 +6,7 @@ msgstr ""
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: fr\n"
+"Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,57 +16,57 @@ msgstr ""
 #. code:
 #. code:
 msgid "%s (copy)"
-msgstr "%s (copie)"
+msgstr "%s (kopi)"
 
 #. resource:base_view_partner_form
 msgid "(edit)"
-msgstr "(éditer)"
+msgstr "(rediger)"
 
 #. field:PartnerTitle.Shortcut
 msgid "Abbreviation"
-msgstr "Abréviation"
+msgstr "Forkortelse"
 
 #. field:Company.Users
 msgid "Accepted Users"
-msgstr "Utilisateurs acceptés"
+msgstr "Godkjente brukere"
 
 #. resource:base_view_users_form
 msgid "Access Rights"
-msgstr "Droits d'accès"
+msgstr "Tilgangsrettigheter"
 
 #. field:BankAccount.Partner
 msgid "Account Holder"
-msgstr "Titulaire de compte"
+msgstr ""
 
 #. field:BankAccount.Name
 msgid "Account Number"
-msgstr "Numéro de compte"
+msgstr "Kontonummer"
 
 #. field:BankAccount.AccountType
 msgid "Account Type"
-msgstr "Type de compte"
+msgstr "Kontotype"
 
 #. resource:base_view_company_form
 msgid "Accounting"
-msgstr "Comptabilité"
+msgstr "Regnskap"
 
 #. field:Lang.Active
 #. field:Partner.Active
 #. field:Bank.Active
+#. field:Sequence.Active
 #. field:Currency.Active
 #. field:PartnerCategory.Active
-#. field:Sequence.Active
 #. resource:base_view_currency_search
 #. resource:base_res_lang_search
 msgid "Active"
-msgstr "Actif"
+msgstr "Aktiv"
 
 #. resource:base_view_res_bank_form
 #. resource:base_view_res_bank_form
 #. resource:base_view_company_form
+#. resource:base_view_partner_form
+#. resource:base_view_partner_form
 #. resource:base_view_partner_address_form
-#. resource:base_view_partner_form
-#. resource:base_view_partner_form
 msgid "Address"
 msgstr "Adresse"
 
@@ -76,52 +76,52 @@ msgstr ""
 
 #. resource:base_view_country_form
 msgid "Address format..."
-msgstr "Format d'adresse..."
+msgstr "Adresseformat..."
 
 #. help:CountryState.Name
 msgid "Administrative divisions of a country. E.g. Fed. State, Departement, Canton"
-msgstr "Divisions administratives d'un pays. Par exemple État, Département, Canton"
+msgstr "Administrative inndelinger for landet. For eksempel stat, departement, fylke"
 
 #. selection:Currency.Position
 msgid "After Amount"
-msgstr "Montant après"
+msgstr "Etter beløp"
 
 #. resource:base_view_users_form
 msgid "Allowed Companies"
-msgstr "Sociétés autorisées"
+msgstr "Tillatte firma"
 
 #. resource:base_menu_translation_app
 msgid "Application Terms"
-msgstr "Termes de l'application"
+msgstr "Applikasjonsvilkår"
 
 #. resource:base_view_res_partner_filter
 msgid "Archived"
-msgstr "Archivé"
+msgstr "Arkivert"
 
 #. resource:base_view_attachment_form
 msgid "Attached To"
-msgstr "Attaché à"
+msgstr "Knyttet til"
 
 #. resource:base_view_attachment_search
 #. resource:base_action_attachment
 msgid "Attachment"
-msgstr "Pièce jointe"
+msgstr "Vedlegg"
 
 #. field:Attachment.Name
 msgid "Attachment Name"
-msgstr "Nom de la pièce jointe"
+msgstr "Navn på vedlegg"
 
 #. field:BankAccount.Bank
 #. resource:base_view_res_bank_form
 msgid "Bank"
-msgstr "Banque"
+msgstr "Bank"
 
 #. field:Partner.Banks
 #. resource:base_view_partner_bank_tree
 #. resource:base_view_partner_bank_search
 #. resource:base_action_res_partner_bank_account_form
 msgid "Bank Accounts"
-msgstr "Comptes bancaires"
+msgstr "Bankkonti"
 
 #. field:BankAccount.BankBIC
 msgid "Bank BIC"
@@ -134,34 +134,34 @@ msgstr ""
 #. field:BankAccount.BankName
 #. resource:base_view_partner_bank_search
 msgid "Bank Name"
-msgstr "Nom de la banque"
+msgstr "Bankens navn"
 
 #. resource:base_view_partner_bank_form
 msgid "Bank account"
-msgstr "Compte bancaire"
+msgstr "Bankkonto"
 
 #. resource:base_view_res_bank_tree
 #. resource:base_action_res_bank_form
 msgid "Banks"
-msgstr "Banques"
+msgstr "Banker"
 
 #. field:Partner.Barcode
 msgid "Barcode"
-msgstr "Code Barre"
+msgstr "Strekkode"
 
 #. selection:Currency.Position
 msgid "Before Amount"
-msgstr "Montant avant"
+msgstr ""
 
 #. selection:Attachment.Type
 #. resource:base_view_attachment_search
 msgid "Binary"
-msgstr "Binaire"
+msgstr "Binær"
 
 #. resource:base_view_users_form_simple_modif
 #. resource:base_change_password_wizard_view
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Avbryt"
 
 #. code:
 msgid "Cannot duplicate configuration"
@@ -169,30 +169,30 @@ msgstr ""
 
 #. resource:base_action_res_users_my
 msgid "Change My Preferences"
-msgstr "Changer mes préférences"
+msgstr "Endre mine preferanser"
 
+#. resource:base_change_password_wizard_view
+#. resource:base_change_password_wizard_view
 #. resource:base_view_users_form
-#. resource:base_change_password_wizard_view
-#. resource:base_change_password_wizard_view
 #. resource:base_change_password_wizard_action
 msgid "Change Password"
-msgstr "Modifier le mot de passe"
+msgstr "Endre passord"
 
 #. resource:base_view_users_form_simple_modif
 msgid "Change password"
-msgstr "Changer le mot de passe"
+msgstr "Endre passord"
 
 #. resource:base_view_users_form
 msgid "Change the user password."
-msgstr "Changer le mot de passe utilisateur."
+msgstr "Endre brukerens passord."
 
 #. help:Partner.IsCompany
 msgid "Check if the contact is a company, otherwise it is a person"
-msgstr "Cochez si ce contact est une société, sinon il s'agit d'un particulier"
+msgstr "Kontroller om kontakten er et firma, ellers er det en person"
 
 #. help:Partner.Customer
 msgid "Check this box if this contact is a customer."
-msgstr "Cochez cette case si le contact est un client."
+msgstr "Kryss av i denne boksen om kontakten er en kunde."
 
 #. help:Partner.Supplier
 msgid ""
@@ -202,19 +202,19 @@ msgstr ""
 
 #. help:Partner.Employee
 msgid "Check this box if this contact is an Employee."
-msgstr "Cochez cette case si ce contact est un employé."
+msgstr "Kryss av her hvis kontakten er en ansatt."
 
 #. field:Attachment.CheckSum
 msgid "Checksum/SHA1"
-msgstr "Somme de Contrôle/SHA1"
+msgstr "Sjekksum/SHA1"
 
 #. field:Company.Children
 msgid "Child Companies"
-msgstr "Filiales"
+msgstr "Datterselskap"
 
 #. field:Partner.Children
 msgid "Children"
-msgstr "Enfants"
+msgstr "Underordnede"
 
 #. field:PartnerCategory.Children
 msgid "Children Tags"
@@ -225,19 +225,19 @@ msgstr ""
 #. field:Company.City
 #. resource:base_view_res_bank_form
 #. resource:base_view_company_form
+#. resource:base_view_partner_form
+#. resource:base_view_partner_form
 #. resource:base_view_partner_address_form
-#. resource:base_view_partner_form
-#. resource:base_view_partner_form
 msgid "City"
-msgstr "Ville"
+msgstr "By"
 
 #. field:Partner.Color
 msgid "Color"
-msgstr "Couleur"
+msgstr "Farge"
 
 #. field:PartnerCategory.Color
 msgid "Color Index"
-msgstr "nuancier"
+msgstr "Fargeindeks"
 
 #. field:Partner.CommercialCompanyName
 msgid "Commercial Company Name"
@@ -245,11 +245,11 @@ msgstr ""
 
 #. field:Partner.CommercialPartner
 msgid "Commercial Entity"
-msgstr "Entité commerciale"
+msgstr "Kommersiell enhet"
 
 #. resource:base_view_res_bank_form
 msgid "Communication"
-msgstr "Libellé"
+msgstr "Kommunikasjon"
 
 #. field:User.Companies
 #. resource:base_view_company_tree
@@ -257,14 +257,14 @@ msgstr "Libellé"
 #. resource:base_action_res_company_form
 #. resource:base_view_res_partner_filter
 msgid "Companies"
-msgstr "Sociétés"
+msgstr "Firmaer"
 
-#. selection:Partner.CompanyType
 #. field:Partner.Company
-#. field:CurrencyRate.Company
+#. selection:Partner.CompanyType
 #. field:Sequence.Company
 #. field:Attachment.Company
 #. field:BankAccount.Company
+#. field:CurrencyRate.Company
 #. field:User.Company
 #. resource:base_view_attachment_search
 #. resource:base_view_company_form
@@ -273,12 +273,12 @@ msgstr "Sociétés"
 #. resource:base_view_res_partner_filter
 #. resource:base_view_users_search
 msgid "Company"
-msgstr "Société"
+msgstr "Firma"
 
 #. field:Partner.CompanyName
 #. field:Company.Name
 msgid "Company Name"
-msgstr "Nom de la société"
+msgstr "Firmanavn"
 
 #. field:Company.CompanyRegistry
 msgid "Company Registry"
@@ -286,58 +286,58 @@ msgstr ""
 
 #. field:Partner.CompanyType
 msgid "Company Type"
-msgstr "Type de société"
+msgstr "Firmatype"
 
 #. field:Partner.ContactAddress
 msgid "Complete Address"
-msgstr "Adresse complète"
+msgstr "Fullstendig adresse"
 
 #. resource:base_view_company_form
 #. resource:base_menu_reporting_config
 msgid "Configuration"
-msgstr "Configuration"
+msgstr "Konfigurasjon"
 
 #. selection:Partner.Type
 #. resource:base_view_partner_simple_form
 msgid "Contact"
-msgstr "Contact"
+msgstr "Kontakt"
 
 #. resource:base_view_partner_form
 msgid "Contact / Address"
-msgstr "Contact / Adresse"
+msgstr "Kontakt/adresse"
 
 #. resource:base_view_partner_form
 msgid "Contact Name"
-msgstr "Nom du contact"
+msgstr "Kontaktnavn"
 
 #. resource:base_view_partner_category_form
 msgid "Contact Tag"
-msgstr "Étiquette de contact"
+msgstr "Kontakt-tag"
 
 #. resource:base_view_partner_category_list
 msgid "Contact Tags"
-msgstr "Étiquettes de contact"
+msgstr "Kontakt-tagger"
 
 #. resource:base_action_partner_title_contact
 msgid "Contact Titles"
-msgstr "Civilités"
+msgstr "Kontakttitler"
 
 #. resource:base_view_partner_tree
 msgid "Contacts"
-msgstr "Contacts"
+msgstr "Kontakter"
 
 #. resource:base_view_partner_form
 msgid "Contacts & Addresses"
-msgstr "Contacts & Adresses"
+msgstr "Kontakter og adresser"
 
 #. code:
 msgid "Couldn't create contact without email address!"
-msgstr "Impossible de créer un contact sans adresse électronique !"
+msgstr "Kunne ikke skape kontakt uten epostadresse!"
 
 #. field:CountryGroup.Countries
 #. resource:base_action_country
 msgid "Countries"
-msgstr "Pays"
+msgstr "Land"
 
 #. field:Partner.Country
 #. field:Bank.Country
@@ -346,66 +346,66 @@ msgstr "Pays"
 #. resource:base_view_res_bank_form
 #. resource:base_view_company_form
 #. resource:base_view_country_tree
+#. resource:base_view_partner_form
+#. resource:base_view_partner_form
 #. resource:base_view_partner_address_form
-#. resource:base_view_partner_form
-#. resource:base_view_partner_form
 #. resource:base_view_res_partner_filter
 msgid "Country"
-msgstr "Pays"
+msgstr "Land"
 
 #. field:Country.PhoneCode
 msgid "Country Calling Code"
-msgstr "Code d'Appel Pays"
+msgstr "Landkode"
 
 #. field:Country.Code
 msgid "Country Code"
-msgstr "Code du pays"
+msgstr "Landskode"
 
 #. resource:base_view_country_group_tree
 #. resource:base_view_country_group_form
 msgid "Country Group"
-msgstr "Groupe de pays"
+msgstr "Land-gruppe"
 
 #. field:Country.CountryGroups
 #. resource:base_action_country_group
 msgid "Country Groups"
-msgstr "Groupes de pays"
+msgstr "Landgrupper"
 
 #. field:Country.Name
 msgid "Country Name"
-msgstr "Nom du pays"
+msgstr "Navn på land"
 
 #. resource:base_view_partner_form
 msgid "Create company"
-msgstr "Créer une société"
+msgstr "Opprett firma"
 
 #. resource:base_view_attachment_form
 msgid "Creation"
-msgstr "Création"
+msgstr "Opprettet"
 
 #. resource:base_view_attachment_search
 msgid "Creation Month"
-msgstr "Mois de création"
+msgstr "Laget måned"
 
 #. field:Partner.CreditLimit
 msgid "Credit Limit"
-msgstr "Limite de crédit"
+msgstr "Kredittgrense"
 
 #. resource:base_view_currency_search
 #. resource:base_view_currency_tree
 #. resource:base_action_currency_form
 msgid "Currencies"
-msgstr "Devises"
+msgstr "Valuta"
 
 #. field:Country.Currency
 #. field:Company.Currency
+#. field:BankAccount.Currency
 #. field:CurrencyRate.Currency
 #. field:Currency.Name
-#. field:BankAccount.Currency
 #. resource:base_view_currency_search
 #. resource:base_view_currency_form
 msgid "Currency"
-msgstr "Devise"
+msgstr "Valuta"
 
 #. help:Currency.Name
 msgid "Currency Code [ISO 4217]"
@@ -413,13 +413,13 @@ msgstr ""
 
 #. resource:base_view_currency_rate_form
 msgid "Currency Rate"
-msgstr "Taux de la devise"
+msgstr "Valutakurs"
 
 #. resource:base_view_currency_rate_search
 #. resource:base_view_currency_rate_tree
 #. resource:base_act_view_currency_rates
 msgid "Currency Rates"
-msgstr "Taux de Change"
+msgstr "Valutakurser"
 
 #. help:Currency.Symbol
 msgid "Currency sign, to be used when printing amounts"
@@ -427,65 +427,65 @@ msgstr ""
 
 #. resource:base_view_users_form
 msgid "Current Company"
-msgstr "Société Courante"
+msgstr "Dette firmaet"
 
 #. field:Currency.Rate
 msgid "Current Rate"
-msgstr "Taux actuel"
+msgstr "Gjeldende rate"
 
 #. resource:base_sequence_view
 msgid "Current Year with Century: %(year)s"
-msgstr "Année en cours avec le siècle : %(year)s"
+msgstr "Inneværende år med århundre: %(year)s"
 
 #. resource:base_sequence_view
 msgid "Current Year without Century: %(y)s"
-msgstr "Année en cours sans les siècles : %(y)s"
+msgstr "Inneværende år uten århundre: %(y)s"
 
 #. resource:base_menu_administration_shortcut
 msgid "Custom Shortcuts"
-msgstr "Raccourcis personnalisés"
+msgstr "Tilpassede snarveier"
 
 #. resource:base_view_res_partner_filter
 #. resource:base_action_partner_form
 #. resource:base_action_partner_customer_form
 msgid "Customers"
-msgstr "Clients"
+msgstr "Kunder"
 
 #. resource:base_menu_board_root
 #. resource:base_menu_reporting_dashboard
 msgid "Dashboards"
-msgstr "Tableaux de bord"
+msgstr "Dashbord"
 
 #. field:Attachment.DBDatas
 msgid "Database Data"
-msgstr "Données de la Base de données"
+msgstr "Databasedata"
 
 #. resource:base_menu_database_structure
 msgid "Database Structure"
-msgstr "Structure de la base de données"
+msgstr "Databasestruktur"
 
 #. field:Partner.Date
 #. field:CurrencyRate.Name
 #. field:Currency.Date
 #. resource:base_view_currency_rate_search
 msgid "Date"
-msgstr "Date "
+msgstr "Dato"
 
 #. field:Lang.DateFormat
 msgid "Date Format"
-msgstr "Format de date"
+msgstr "Datoformat"
 
 #. resource:base_sequence_view
 msgid "Day of the Week (0:Monday): %(weekday)s"
-msgstr "Jour de la semaine (0: lundi): %(weekday)s"
+msgstr "Dag i uka (0:mandag): %(weekday)s"
 
 #. resource:base_sequence_view
 msgid "Day of the Year: %(doy)s"
-msgstr "Jour de l'année: %(doy)s"
+msgstr "Dag i året: %(doy)s"
 
 #. resource:base_sequence_view
 msgid "Day: %(day)s"
-msgstr "Jour: %(day)s"
+msgstr "Dag: %(day)s"
 
 #. field:Currency.DecimalPlaces
 msgid "Decimal Places"
@@ -493,24 +493,24 @@ msgstr ""
 
 #. field:Lang.DecimalPoint
 msgid "Decimal Separator"
-msgstr "Séparateur décimal"
+msgstr "Desimalseparator"
 
 #. field:Attachment.Description
 #. resource:base_view_attachment_form
 msgid "Description"
-msgstr "Description"
+msgstr "Beskrivelse"
 
 #. help:Currency.Position
 msgid "Determines where the currency symbol should be placed after or before the amount."
-msgstr "Détermine où le symbole de la devise doit être placé (avant ou après le montant)."
+msgstr "Skal valutasymbolet vises før eller etter beløpet?"
 
 #. field:Lang.Direction
 msgid "Direction"
-msgstr "Direction"
+msgstr "Retning"
 
 #. resource:base_view_currency_form
 msgid "Display"
-msgstr "Afficher"
+msgstr "Display"
 
 #. help:Partner.PartnerShare
 msgid ""
@@ -522,11 +522,11 @@ msgstr ""
 #. field:Bank.Email
 #. field:Company.Email
 msgid "Email"
-msgstr "Courriel"
+msgstr "E-post"
 
 #. resource:base_view_users_form
 msgid "Email Address"
-msgstr "Adresse électronique"
+msgstr "Epostadresse"
 
 #. field:Partner.EmailFormatted
 msgid "Email Formatted"
@@ -534,27 +534,27 @@ msgstr ""
 
 #. resource:base_view_users_form_simple_modif
 msgid "Email Preferences"
-msgstr "Préférences de messagerie électronique"
+msgstr "E-post innstillinger"
 
 #. field:Partner.Employee
 msgid "Employee"
-msgstr "Employé"
+msgstr "Ansatt"
 
 #. resource:base_action_partner_employee_form
 msgid "Employees"
-msgstr "Employés"
+msgstr "Ansatte"
 
 #. code:
 msgid "Error ! You can not create recursive tags."
-msgstr "Erreur ! On ne peut pas créer d'étiquettes récursives."
+msgstr "Feil! Du kan ikke opprette rekursive tagger"
 
 #. resource:base_res_lang_form
 msgid "Examples"
-msgstr "Exemples"
+msgstr "Eksempler"
 
 #. help:User.Share
 msgid "External user with limited access, created only for the purpose of sharing data."
-msgstr "Utilisateur externe possédant un accès limité, créé uniquement dans le but de partager des données."
+msgstr ""
 
 #. field:Partner.Fax
 #. field:Bank.Fax
@@ -564,27 +564,27 @@ msgstr "Fax"
 
 #. field:Bank.State
 msgid "Fed. State"
-msgstr "État Fédéral"
+msgstr "Føderal stat"
 
 #. resource:base_action_country_state
 msgid "Fed. States"
-msgstr "États Fédéraux"
+msgstr ""
 
 #. field:Attachment.Datas
 msgid "File Content"
-msgstr "Contenu de Fichier"
+msgstr "Filinnhold"
 
 #. field:Attachment.DatasFname
 msgid "File Name"
-msgstr "Nom du fichier"
+msgstr "Filnavn"
 
 #. field:Attachment.FileSize
 msgid "File Size"
-msgstr "Taille de Fichier"
+msgstr "Filstørrelse"
 
 #. resource:base_view_attachment_search
 msgid "Filter on my documents"
-msgstr "Filtrer sur mes documents"
+msgstr "Filtrere på mine dokumenter."
 
 #. help:Partner.EmailFormatted
 msgid "Formatted email address 'Name <email@domain>'"
@@ -592,20 +592,20 @@ msgstr ""
 
 #. field:SequenceDateRange.DateFrom
 msgid "From"
-msgstr "De"
+msgstr "Fra"
 
 #. resource:base_view_company_form
 msgid "General Information"
-msgstr "Information Générale"
+msgstr "Generell informasjon"
 
 #. resource:base_view_groups_search
 msgid "Group"
-msgstr "Groupe"
+msgstr "Gruppe"
 
 #. resource:base_view_attachment_search
 #. resource:base_view_res_partner_filter
 msgid "Group By"
-msgstr "Grouper par"
+msgstr "Grupper etter"
 
 #. field:Group.GroupID
 msgid "Group ID"
@@ -613,7 +613,7 @@ msgstr ""
 
 #. resource:base_view_country_group_form
 msgid "Group name"
-msgstr "Nom de groupe"
+msgstr "Gruppenavn"
 
 #. field:ConfigParameter.Groups
 #. field:User.Groups
@@ -622,7 +622,7 @@ msgstr "Nom de groupe"
 #. resource:base_menu_action_groups
 #. resource:base_action_res_groups
 msgid "Groups"
-msgstr "Groupes"
+msgstr "Grupper"
 
 #. help:Sequence.Padding
 msgid "Hexya will automatically adds some '0' on the left of the 'Next Number' to get the required padding size."
@@ -630,42 +630,42 @@ msgstr ""
 
 #. resource:base_view_attachment_form
 msgid "History"
-msgstr "Historique"
+msgstr "Historikk"
 
 #. field:User.ActionID
 msgid "Home Action"
-msgstr "Action page d'accueil"
+msgstr "Hjemmehandling"
 
 #. resource:base_sequence_view
 msgid "Hour 00->12: %(h12)s"
-msgstr "Heure 00->12: %(h12)s"
+msgstr "Time 00->12: %(h12)s"
 
 #. resource:base_sequence_view
 msgid "Hour 00->24: %(h24)s"
-msgstr "Heure 00->24: %(h24)s"
+msgstr "Timer 00->24: %(h24)s"
 
 #. field:Lang.ID
 #. field:ModelMixin.ID
 #. field:PartnerTitle.ID
-#. field:SequenceDateRange.ID
-#. field:UserLog.ID
 #. field:ConfigParameter.ID
 #. field:CountryGroup.ID
 #. field:Country.ID
 #. field:Partner.ID
-#. field:UserChangePasswordWizardLine.ID
+#. field:SequenceDateRange.ID
+#. field:UserLog.ID
 #. field:Bank.ID
 #. field:Company.ID
 #. field:Group.ID
 #. field:UserChangePasswordWizard.ID
-#. field:CurrencyRate.ID
-#. field:Currency.ID
-#. field:PartnerCategory.ID
+#. field:UserChangePasswordWizardLine.ID
 #. field:Sequence.ID
 #. field:Attachment.ID
 #. field:BankAccount.ID
 #. field:ConfigSettings.ID
 #. field:CountryState.ID
+#. field:CurrencyRate.ID
+#. field:Currency.ID
+#. field:PartnerCategory.ID
 #. field:Translation.ID
 #. field:User.ID
 msgid "ID"
@@ -673,11 +673,11 @@ msgstr "ID"
 
 #. field:Lang.ISOCode
 msgid "ISO Code"
-msgstr "Code ISO"
+msgstr "ISO kode"
 
 #. help:User.ActionID
 msgid "If specified, this action will be opened at log on for this user, in addition to the standard menu."
-msgstr "Si spécifié, cette action sera ouverte à la connexion de cet utilisateur, en plus du menu standard."
+msgstr ""
 
 #. help:Partner.Lang
 msgid ""
@@ -688,7 +688,7 @@ msgstr ""
 #. field:Country.Image
 #. field:Partner.Image
 msgid "Image"
-msgstr "Image"
+msgstr "Bilde"
 
 #. field:Partner.ImageMedium
 msgid "Image Medium"
@@ -700,36 +700,36 @@ msgstr ""
 
 #. field:Sequence.Implementation
 msgid "Implementation"
-msgstr "Implémentation"
+msgstr "Implementasjon"
 
 #. resource:base_menu_translation_export
 msgid "Import / Export"
-msgstr "Import / Export"
+msgstr "Import / Eksport"
 
 #. resource:base_view_currency_search
 msgid "Inactive"
-msgstr "Inactive"
+msgstr "Inaktiv"
 
 #. field:Attachment.IndexContent
 #. resource:base_view_attachment_form
 msgid "Indexed Content"
-msgstr "Contenu Indexé"
+msgstr "Indeksert innhold."
 
 #. selection:Partner.CompanyType
 msgid "Individual"
-msgstr "Particulier"
+msgstr "Individuell"
 
 #. resource:base_view_partner_form
 msgid "Internal Notes"
-msgstr "Notes internes"
+msgstr "Interne notater"
 
 #. field:Partner.Ref
 msgid "Internal Reference"
-msgstr "Référence interne"
+msgstr "Intern Referanse"
 
 #. resource:base_view_partner_form
 msgid "Internal note..."
-msgstr "Note interne..."
+msgstr "Internt notat.."
 
 #. code:
 msgid "Invalid search criterion: password"
@@ -737,19 +737,19 @@ msgstr ""
 
 #. selection:Partner.Type
 msgid "Invoice Address"
-msgstr "Adresse de facturation"
+msgstr "Fakturaadresse"
 
 #. field:Partner.IsCompany
 msgid "Is Company"
-msgstr "Est une société"
+msgstr "Er et firma"
 
 #. field:Partner.Customer
 msgid "Is a Customer"
-msgstr "Est un Client"
+msgstr "Er en kunde"
 
 #. field:Partner.Supplier
 msgid "Is a Vendor"
-msgstr "Est un Fournisseur"
+msgstr "Er en leverandør"
 
 #. field:Attachment.Public
 msgid "Is a public document"
@@ -757,55 +757,55 @@ msgstr ""
 
 #. field:Partner.Function
 msgid "Job Position"
-msgstr "Poste Occupé"
+msgstr "Stilling"
 
 #. help:User.Password
 msgid "Keep empty if you don't want the user to be able to connect on the system."
-msgstr "Laissez vide si vous ne souhaitez pas que l'utilisateur puisse se connecter au système"
+msgstr ""
 
 #. field:ConfigParameter.Key
 msgid "Key"
-msgstr "Clé"
+msgstr "Nøkkel"
 
 #. field:Partner.Lang
 #. resource:base_res_lang_search
 msgid "Language"
-msgstr "Langue"
+msgstr "Språk"
 
 #. resource:base_res_lang_tree
 #. resource:base_res_lang_form
 #. resource:base_res_lang_search
 #. resource:base_res_lang_act_window
 msgid "Languages"
-msgstr "Langues"
+msgstr "Språk"
 
 #. field:User.LoginDate
 msgid "Latest Connection"
-msgstr "Dernière connexion"
+msgstr ""
 
 #. selection:Lang.Direction
 msgid "Left-to-Right"
-msgstr "De gauche à droite"
+msgstr "Venstre-til-høyre"
 
 #. resource:base_sequence_view
 msgid "Legend (for prefix, suffix)"
-msgstr "Légende (pour le préfixe, suffixe)"
+msgstr "Kartnøkkel (for prefix, suffix)"
 
 #. resource:base_res_lang_form
 msgid "Legends for supported Date and Time Formats"
-msgstr "Légendes pour les formats de date et heure supportés"
+msgstr ""
 
 #. field:Lang.Code
 msgid "Locale Code"
-msgstr "Code local"
+msgstr "Lokaliseringskode"
 
 #. resource:base_view_users_form
 msgid "Localization"
-msgstr "Localisation"
+msgstr "Lokalisering"
 
 #. field:User.Login
 msgid "Login"
-msgstr "Identifiant"
+msgstr "Logg inn"
 
 #. field:Company.Logo
 msgid "Logo"
@@ -817,7 +817,7 @@ msgstr ""
 
 #. field:SequenceDateRange.Sequence
 msgid "Main Sequence"
-msgstr "Séquence principale"
+msgstr "Hovedsekvens"
 
 #. help:Partner.ImageMedium
 msgid ""
@@ -828,43 +828,43 @@ msgstr ""
 
 #. resource:base_view_users_form
 msgid "Menus Customization"
-msgstr "Personnalisation des Menus"
+msgstr "Tilpassing av menyer"
 
 #. resource:base_view_users_form
 msgid "Messaging and Social"
-msgstr "Messagerie et Réseaux Sociaux"
+msgstr ""
 
 #. field:Attachment.MimeType
 msgid "Mime Type"
-msgstr "Type Mime"
+msgstr "Mime-type"
 
 #. resource:base_sequence_view
 msgid "Minute: %(min)s"
-msgstr "Minute : %(min)s"
+msgstr "Minutt: %(min)s"
 
 #. resource:base_view_partner_form
 msgid "Misc"
-msgstr "Divers"
+msgstr "Div."
 
 #. field:Partner.Mobile
 msgid "Mobile"
-msgstr "Mobile"
+msgstr "Mobil"
 
 #. resource:base_sequence_view
 msgid "Month: %(month)s"
-msgstr "Mois : %(month)s"
+msgstr "Måned: %(month)s"
 
 #. resource:base_view_users_form
 msgid "Multi Companies"
-msgstr "Multi Sociétés"
+msgstr "Flerfirma"
 
 #. resource:base_view_attachment_search
 msgid "My Document(s)"
-msgstr "Mes Documents"
+msgstr "Mine dokumenter."
 
 #. resource:base_view_res_partner_filter
 msgid "My Partners"
-msgstr "Mes Partenaires"
+msgstr "Mine partnere"
 
 #. field:Lang.Name
 #. field:CountryGroup.Name
@@ -876,28 +876,28 @@ msgstr "Mes Partenaires"
 #. resource:base_view_partner_simple_form
 #. resource:base_view_partner_form
 msgid "Name"
-msgstr "Nom"
+msgstr "Navn"
 
 #. field:UserChangePasswordWizardLine.NewPassword
 msgid "New Password"
-msgstr "Nouveau mot de passe"
+msgstr "Nytt passord"
 
 #. field:SequenceDateRange.NumberNextActual
 #. field:SequenceDateRange.NumberNext
 #. field:Sequence.NumberNextActual
 #. field:Sequence.NumberNext
 msgid "Next Number"
-msgstr "Nombre Suivant"
+msgstr "Neste nummer"
 
 #. help:SequenceDateRange.NumberNext
 #. help:Sequence.NumberNext
 msgid "Next number of this sequence"
-msgstr "Prochain numéro de cette séquence"
+msgstr "Neste nummer på denne sekvensen"
 
 #. help:SequenceDateRange.NumberNextActual
 #. help:Sequence.NumberNextActual
 msgid "Next number that will be used. This number can be incremented frequently so the displayed value might already be obsolete"
-msgstr "Numéro suivant à utiliser. Ce numéro peut augmenter fréquemment, donc la valeur indiquée ici est peut-être déjà obsolète."
+msgstr "Neste nummer som vil bli brukt. Dette nummeret kan inkrementeres, så nummeret som vises kan allerede være i bruk"
 
 #. selection:Sequence.Implementation
 msgid "No Gap"
@@ -905,11 +905,11 @@ msgstr ""
 
 #. field:Partner.Comment
 msgid "Notes"
-msgstr "Notes"
+msgstr "Notater"
 
 #. field:User.CompaniesCount
 msgid "Number of Companies"
-msgstr "Nombe de sociétés"
+msgstr "Antall firma"
 
 #. code:
 msgid "One2Many fields cannot be synchronized as part of 'commercial_fields' or 'address fields'"
@@ -917,11 +917,11 @@ msgstr ""
 
 #. code:
 msgid "Only administrators can change the settings"
-msgstr "Seuls les administrateurs peuvent modifier les paramètres"
+msgstr "Bare administratorer kan endre innstillingene"
 
 #. code:
 msgid "Only administrators can execute this action."
-msgstr "Seuls les administrateurs peuvent exécuter cette action."
+msgstr "Bare administratorer kan utføre denne handlingen."
 
 #. selection:Partner.Type
 msgid "Other Address"
@@ -929,19 +929,19 @@ msgstr ""
 
 #. resource:base_action_partner_other_form
 msgid "Other Partners"
-msgstr "Autres partenaires"
+msgstr "Andre partnere"
 
 #. resource:base_view_attachment_search
 msgid "Owner"
-msgstr "Propriétaire"
+msgstr "Eier"
 
 #. field:Partner.Parent
 msgid "Parent"
-msgstr "Parent"
+msgstr "Overordnet"
 
 #. field:Company.Parent
 msgid "Parent Company"
-msgstr "Société mère"
+msgstr "Morselskap"
 
 #. field:Partner.ParentName
 msgid "Parent Name"
@@ -954,71 +954,71 @@ msgstr ""
 #. field:Company.Partner
 #. resource:base_view_partner_address_form
 msgid "Partner"
-msgstr "Partenaire"
+msgstr "Partner"
 
 #. resource:base_view_partner_title_tree
 #. resource:base_view_partner_title_form
 msgid "Partner Titles"
-msgstr "Titres du Partenaire"
+msgstr "Partnertitler"
 
 #. help:User.Partner
 msgid "Partner-related data of the user"
-msgstr "Données du partenaire lié à l'utilisateur"
+msgstr "Partnerrelatert brukerdata"
 
 #. field:PartnerCategory.Partners
 #. resource:base_view_partner_form
 msgid "Partners"
-msgstr "Partenaires"
+msgstr "Partnere"
 
 #. field:User.Password
 msgid "Password"
-msgstr "Mot de passe"
+msgstr "Passord"
 
 #. resource:base_view_res_partner_filter
 msgid "Persons"
-msgstr "Personnes"
+msgstr "Personer"
 
 #. field:Partner.Phone
 #. field:Bank.Phone
 #. field:Company.Phone
 msgid "Phone"
-msgstr "Téléphone"
+msgstr "Telefon"
 
 #. code:
 msgid "Please use the change password wizard (in User Preferences or User menu) to change your own password."
-msgstr "Utilisez l'assistant de changement de mot de passe (dans les préférences utilisateur ou le menu \"Utilisateurs\") pour changer votre propre mot de passe."
+msgstr "Vennligst bruk endre passord veiviseren (i brukerinnstillinger eller i brukermenyen) for å endre ditt eget passord."
 
 #. resource:base_view_users_form
 msgid "Preferences"
-msgstr "Préférences"
+msgstr "Preferanser"
 
 #. field:Sequence.Prefix
 msgid "Prefix"
-msgstr "Préfixe"
+msgstr "Prefiks"
 
 #. help:Sequence.Prefix
 msgid "Prefix value of the record for the sequence"
-msgstr "Valeur du préfixe de l'enregistrement pour la séquence"
+msgstr "Prefiks verdi av posten for sekvensen"
 
 #. resource:base_view_currency_form
 msgid "Price Accuracy"
-msgstr "Précision des prix"
+msgstr "Prisnøyaktighet"
 
 #. resource:base_view_partner_form
 msgid "Purchase"
-msgstr "Achats"
+msgstr "Innkjøp"
 
 #. field:CurrencyRate.Rate
 msgid "Rate"
-msgstr "Taux"
+msgstr "Sats"
 
 #. field:Currency.Rates
 msgid "Rates"
-msgstr "Taux"
+msgstr "Satser"
 
 #. field:User.Partner
 msgid "Related Partner"
-msgstr "Partenaire associé"
+msgstr "Relatert partner"
 
 #. resource:base_menu_action_reload_groups
 #. resource:base_action_server_reload_groups
@@ -1027,23 +1027,23 @@ msgstr ""
 
 #. resource:base_view_company_form
 msgid "Report Configuration"
-msgstr "Configuration de rapport"
+msgstr "Rapportinstillinger"
 
 #. field:Attachment.ResField
 msgid "Resource Field"
-msgstr "Champ ressource"
+msgstr "Ressursfelt"
 
 #. field:Attachment.ResID
 msgid "Resource ID"
-msgstr "ID de la ressource"
+msgstr "Ressurs ID"
 
 #. field:Attachment.ResModel
 msgid "Resource Model"
-msgstr "Modèle de la ressource"
+msgstr "Ressursmodell"
 
 #. field:Attachment.ResName
 msgid "Resource Name"
-msgstr "Nom de Ressource"
+msgstr "Ressursnavn"
 
 #. selection:Lang.Direction
 msgid "Right-to-left"
@@ -1051,98 +1051,98 @@ msgstr ""
 
 #. field:Currency.Rounding
 msgid "Rounding Factor"
-msgstr "Facteur d'arrondi"
+msgstr "Avrundingsfaktor"
 
 #. resource:base_view_partner_form
 msgid "Sale"
-msgstr "Vente"
+msgstr "Salg"
 
 #. resource:base_view_partner_form
 msgid "Sales & Purchases"
-msgstr "Ventes & Achats"
+msgstr "Salg & Innkjøp"
 
 #. field:Partner.User
 #. resource:base_view_res_partner_filter
 msgid "Salesperson"
-msgstr "Vendeur"
+msgstr "Selger"
 
 #. field:BankAccount.SanitizedAccountNumber
 msgid "Sanitized Account Number"
-msgstr "Numéro de compte désinfecté"
+msgstr ""
 
 #. resource:base_view_users_form_simple_modif
 msgid "Save"
-msgstr "Sauvegarder"
+msgstr "Lagre"
 
 #. resource:base_view_res_partner_filter
 msgid "Search Partner"
-msgstr "Rechercher un partenaire"
+msgstr "Søk partner."
 
 #. resource:base_sequence_view
 msgid "Second: %(sec)s"
-msgstr "Seconde : %(sec)s"
+msgstr "Sekund: %(sec)s"
 
 #. field:Lang.Grouping
 msgid "Separator Format"
-msgstr "Format du séparateur"
+msgstr "Separatorformat"
 
 #. field:BankAccount.Sequence
-#. resource:base_view_sequence_search
 #. resource:base_sequence_view
+#. resource:base_view_sequence_search
 msgid "Sequence"
-msgstr "Séquence"
+msgstr "Sekvens"
 
 #. field:Sequence.Code
 msgid "Sequence Code"
-msgstr "Codes de séquencement"
+msgstr "Sekvenskode"
 
 #. field:Sequence.Padding
 msgid "Sequence Size"
-msgstr "Taille de la séquence"
+msgstr "Sekvensstørrelse"
 
-#. resource:base_sequence_view_tree
-#. resource:base_view_sequence_search
 #. resource:base_sequence_date_range_tree
 #. resource:base_sequence_view
+#. resource:base_sequence_view_tree
+#. resource:base_view_sequence_search
 #. resource:base_ir_sequence_form
 msgid "Sequences"
-msgstr "Séquences"
+msgstr "Sekvenser"
 
 #. resource:base_menu_sequences_identifiers
 msgid "Sequences & Identifiers"
-msgstr "Séquences & identifiants"
+msgstr "Sekvenser og identifikatorer"
 
 #. field:User.NewPassword
 msgid "Set Password"
-msgstr "Définir le mot de passe"
+msgstr "Sett passord"
 
 #. resource:base_menu_administration
 msgid "Settings"
-msgstr "Configuration"
+msgstr "Innstillinger"
 
 #. field:Partner.PartnerShare
 msgid "Share Partner"
-msgstr "Share Partner"
+msgstr "Del partner"
 
 #. field:User.Share
 msgid "Share User"
-msgstr "Utilisateur de partage"
+msgstr "Del bruker"
 
 #. selection:Partner.Type
 msgid "Shipping Address"
-msgstr "Adresse de livraison"
+msgstr "Leveringsadresse"
 
 #. resource:base_view_currency_search
 msgid "Show active currencies"
-msgstr "Afficher les devises actives"
+msgstr "Vis aktive valutaer"
 
 #. resource:base_view_currency_search
 msgid "Show inactive currencies"
-msgstr "Afficher les devises inactives"
+msgstr "Vis inaktive valutaer"
 
 #. field:User.Signature
 msgid "Signature"
-msgstr "Signature"
+msgstr "Signatur"
 
 #. help:Partner.ImageSmall
 msgid ""
@@ -1153,11 +1153,11 @@ msgstr ""
 
 #. help:Bank.BIC
 msgid "Sometimes called BIC or Swift."
-msgstr "Parfois appelé BIC ou Swift."
+msgstr "Noen ganger kalt BIC eller Swift."
 
 #. code:
 msgid "Sorry, you are not allowed to access this document."
-msgstr "Désolé, vous n'êtes pas autorisé à accéder à ce document."
+msgstr "Beklager, du har ikke tilgang til dette dokumentet."
 
 #. help:User.NewPassword
 msgid ""
@@ -1176,91 +1176,91 @@ msgstr "Standard"
 #. resource:base_view_company_form
 #. resource:base_view_country_state_tree
 #. resource:base_view_country_state_form
+#. resource:base_view_partner_form
+#. resource:base_view_partner_form
 #. resource:base_view_partner_address_form
-#. resource:base_view_partner_form
-#. resource:base_view_partner_form
 msgid "State"
-msgstr "État"
+msgstr "Stat"
 
 #. field:CountryState.Code
 msgid "State Code"
-msgstr "Code de l'État"
+msgstr "Statskode"
 
 #. field:CountryState.Name
 msgid "State Name"
-msgstr "Nom de l'État"
+msgstr "Navn på stat"
 
 #. field:Country.States
 msgid "States"
-msgstr "États"
+msgstr "Bekrefter"
 
 #. field:Sequence.NumberIncrement
 msgid "Step"
-msgstr "Etape"
+msgstr "Steg"
 
 #. field:Attachment.StoreFname
 msgid "Stored Filename"
-msgstr "Nom du fichier enregistré"
+msgstr "Lagret filnavn"
 
 #. field:Partner.Street
 #. field:Bank.Street
 #. field:Company.Street
 msgid "Street"
-msgstr "Rue"
+msgstr "Gate"
 
 #. resource:base_view_res_bank_form
 #. resource:base_view_company_form
+#. resource:base_view_partner_form
+#. resource:base_view_partner_form
 #. resource:base_view_partner_address_form
-#. resource:base_view_partner_form
-#. resource:base_view_partner_form
 msgid "Street 2..."
-msgstr "Rue 2..."
+msgstr "Gate 2..."
 
 #. resource:base_view_res_bank_form
 #. resource:base_view_company_form
+#. resource:base_view_partner_form
+#. resource:base_view_partner_form
 #. resource:base_view_partner_address_form
-#. resource:base_view_partner_form
-#. resource:base_view_partner_form
 msgid "Street..."
-msgstr "Rue..."
+msgstr "Gate..."
 
 #. field:Partner.Street2
 #. field:Bank.Street2
 #. field:Company.Street2
 msgid "Street2"
-msgstr "Rue 2"
+msgstr "Gate2"
 
 #. field:Sequence.DateRanges
 msgid "Subsequences"
-msgstr "Conséquences"
+msgstr "Undersekvenser"
 
 #. field:Sequence.Suffix
 msgid "Suffix"
-msgstr "Suffixe"
+msgstr "Suffiks"
 
 #. help:Sequence.Suffix
 msgid "Suffix value of the record for the sequence"
-msgstr "Valeur du suffixe de l'enregistrement pour la séquence"
+msgstr "Suffiks verdi av posten for sekvensen"
 
 #. field:Currency.Symbol
 msgid "Symbol"
-msgstr "Symbole"
+msgstr "Symbol"
 
 #. field:Currency.Position
 msgid "Symbol Position"
-msgstr "Position du symbole"
+msgstr "Symbolposisjon"
 
 #. field:Partner.VAT
 msgid "TIN"
-msgstr "Numéro fiscal"
+msgstr "TIN"
 
 #. resource:base_view_res_partner_filter
 msgid "Tag"
-msgstr "Étiquette"
+msgstr "Tagg"
 
 #. field:PartnerCategory.Name
 msgid "Tag Name"
-msgstr "Nom de l'étiquette"
+msgstr "Tagnavn"
 
 #. field:Company.Tagline
 msgid "Tagline"
@@ -1268,11 +1268,11 @@ msgstr ""
 
 #. field:Partner.Categories
 msgid "Tags"
-msgstr "Étiquettes"
+msgstr "Tags"
 
 #. resource:base_view_partner_form
 msgid "Tags..."
-msgstr "Étiquettes..."
+msgstr "Tagger..."
 
 #. help:Partner.VAT
 msgid ""
@@ -1283,7 +1283,7 @@ msgstr ""
 
 #. resource:base_menu_custom
 msgid "Technical"
-msgstr "Technique"
+msgstr "Teknisk"
 
 #. help:Country.Code
 msgid "The ISO country code in two chars.\\nYou can use this field for quick search."
@@ -1299,15 +1299,15 @@ msgstr ""
 
 #. help:PartnerCategory.Active
 msgid "The active field allows you to hide the category without removing it."
-msgstr "Décochez le champ 'Actif' pour cacher la catégorie sans la supprimer."
+msgstr "Det aktive feltet gir deg mulighet til å skjule denne kategorien uten å fjerne det."
 
 #. code:
 msgid "The chosen company is not in the allowed companies for this user"
-msgstr "La société choisie n'est pas la société autorisée pour cet utilisateur"
+msgstr "Det valgte firmaet er ikke et tillatt firma for denne brukeren."
 
 #. help:User.Company
 msgid "The company this user is currently working for."
-msgstr "La société pour laquelle l'utilisateur travaille actuellement."
+msgstr "Firmaet denne brukeren jobber for."
 
 #. help:Attachment.ResModel
 msgid "The database object this attachment will be attached to"
@@ -1315,15 +1315,15 @@ msgstr ""
 
 #. help:Country.Name
 msgid "The full name of the country."
-msgstr "Le nom complet du pays."
+msgstr "Fullt navn på land."
 
 #. help:Partner.User
 msgid "The internal user that is in charge of communicating with this contact if any."
-msgstr "L'utilisateur interne qui est en charge de la communication avec ce contact, le cas échéant."
+msgstr "Intern bruker med ansvar for kommunikasjon med denne kontakten, hvis noen."
 
 #. help:Sequence.NumberIncrement
 msgid "The next number of the sequence will be incremented by this number"
-msgstr "Le prochain numéro de séquence sera incréménté par ce nombre"
+msgstr "Neste nummer av sekvensen vil bli inkrementert med dette nummeret"
 
 #. help:Partner.TZ
 msgid ""
@@ -1336,7 +1336,7 @@ msgstr ""
 #. help:CurrencyRate.Rate
 #. help:Currency.Rate
 msgid "The rate of the currency to the currency of rate 1"
-msgstr "Le taux de conversion de la devise vers la devise de taux 1"
+msgstr "Vekslingsraten til valutaen mot valutaen med vekslingsrate lik 1"
 
 #. help:Attachment.ResID
 msgid "The record id this is attached to"
@@ -1352,23 +1352,23 @@ msgstr ""
 
 #. help:Partner.Image
 msgid "This field holds the image used as avatar for this contact, limited to 1024x1024px"
-msgstr "Ce champ contient l'image utilisée comme photo d'identité pour ce contact, limitée à 1024x1024px."
+msgstr "Dette feltet inneholder bildet som brukes som avatar for denne kontakten, begrenset til 1024x1024 piksler"
 
 #. help:Lang.Code
 msgid "This field is used to set/get locales for user"
-msgstr "Ce champ est utilisé pour mettre/recupérer la locale de l'utilisateur"
+msgstr "Dette feltet brukes til å sette/hente språkinnstillinger for brukeren."
 
 #. field:Lang.ThousandsSep
 msgid "Thousands Separator"
-msgstr "Séparateur des milliers"
+msgstr "Tusenskilletegn"
 
 #. field:Lang.TimeFormat
 msgid "Time Format"
-msgstr "Format de l'heure"
+msgstr "Tidsformat"
 
 #. field:Partner.TZ
 msgid "Timezone"
-msgstr "Fuseau horaire"
+msgstr "Tidssone"
 
 #. field:Partner.TZOffset
 msgid "Timezone Offset"
@@ -1377,24 +1377,24 @@ msgstr ""
 #. field:PartnerTitle.Name
 #. field:Partner.Title
 msgid "Title"
-msgstr "Titre"
+msgstr "Tittel"
 
 #. field:SequenceDateRange.DateTo
 msgid "To"
-msgstr "A"
+msgstr "Til"
 
 #. field:Lang.Translatable
 #. resource:base_res_lang_search
 msgid "Translatable"
-msgstr "Traduisible"
+msgstr "Oversettbar"
 
 #. code:
 msgid "Translate"
-msgstr "Traduire"
+msgstr "Oversett"
 
 #. resource:base_menu_translation
 msgid "Translations"
-msgstr "Traductions"
+msgstr "Oversettelser"
 
 #. code:
 msgid "Trying to create a security group"
@@ -1425,11 +1425,11 @@ msgstr "URL"
 
 #. resource:base_res_lang_tree
 msgid "Update Language Terms"
-msgstr "Mettre à jour les traductions"
+msgstr "Oppdater språktermer"
 
 #. resource:base_res_lang_tree
 msgid "Update Terms"
-msgstr "Mise à jour des termes"
+msgstr "Oppdater betegnelser"
 
 #. field:Sequence.UseDateRange
 msgid "Use subsequences per Date Range"
@@ -1437,79 +1437,79 @@ msgstr ""
 
 #. help:User.Login
 msgid "Used to log into the system"
-msgstr "Utilisé pour se connecter au système"
+msgstr "Brukes for å logge seg på systemet"
 
 #. help:Partner.Type
 msgid "Used to select automatically the right address according to the context in sales and purchases documents."
-msgstr "Utilisé pour sélectionner automatiquement la bonne adresse selon le contexte des documents de vente et d'achats"
+msgstr "Brukes til å automatisk velge den rikitige adressen i kontekst av salgs- eller innkjøpsdokumenter."
 
 #. field:UserChangePasswordWizardLine.User
 #. resource:base_view_users_search
 msgid "User"
-msgstr "Utilisateur"
+msgstr "Bruker"
 
 #. resource:base_menu_user_interface
 msgid "User Interface"
-msgstr "Interface utilisateur"
+msgstr "Brukergrensesnitt"
 
 #. field:UserChangePasswordWizardLine.UserLogin
 msgid "User Login"
-msgstr "Identifiant"
+msgstr "Brukernavn"
 
 #. field:User.Logs
 msgid "User log entries"
-msgstr "Entrées du journal utilisateur"
+msgstr ""
 
 #. field:Partner.Users
 #. field:UserChangePasswordWizard.Users
 #. resource:base_menu_users
+#. resource:base_view_users_form_simple_modif
+#. resource:base_change_password_wizard_user_tree_view
 #. resource:base_view_users_tree
 #. resource:base_view_users_form
 #. resource:base_view_users_search
-#. resource:base_view_users_form_simple_modif
-#. resource:base_change_password_wizard_user_tree_view
 #. resource:base_menu_action_users
 #. resource:base_action_res_users
 msgid "Users"
-msgstr "Utilisateurs"
+msgstr "Brukere"
 
 #. field:Company.VAT
 msgid "VAT"
-msgstr "TVA"
+msgstr "MVA"
 
 #. field:ConfigParameter.Value
 msgid "Value"
-msgstr "Valeur"
+msgstr "Verdi"
 
 #. resource:base_view_res_partner_filter
 #. resource:base_action_partner_supplier_form
 msgid "Vendors"
-msgstr "Fournisseurs"
+msgstr "Leverandører"
 
 #. resource:base_view_currency_form
 msgid "View Rates"
-msgstr "Voir les taux"
+msgstr ""
 
 #. field:Partner.Website
 #. field:Company.Website
 msgid "Website"
-msgstr "Site Web"
+msgstr "Nettsted"
 
 #. help:Partner.Website
 msgid "Website of Partner or Company"
-msgstr "Site Web pour les Partenaires ou les Sociétés"
+msgstr "Nettsted til partner eller firma"
 
 #. resource:base_sequence_view
 msgid "Week of the Year: %(woy)s"
-msgstr "Semaine de l'année : %(woy)s"
+msgstr "Ukenummer: %(woy)s"
 
 #. field:UserChangePasswordWizardLine.Wizard
 msgid "Wizard"
-msgstr "Assistant"
+msgstr "Veiviser"
 
 #. help:Attachment.Type
 msgid "You can either upload a file from your computer or copy/paste an internet link to your file."
-msgstr "Vous pouvez envoyer un fichier depuis votre ordinateur ou copier/coller une adresse internet qui y renvoie"
+msgstr ""
 
 #. code:
 msgid "You can not change the company as the partner/user has multiple users linked with different companies."
@@ -1525,51 +1525,51 @@ msgstr ""
 
 #. code:
 msgid "You cannot create recursive Partner hierarchies."
-msgstr "Vous ne pouvez pas créer de hiérarchie de partenaires récursive."
+msgstr "Du kan ikke opprette rekursive partnerhierarkier"
 
 #. code:
 msgid "You cannot deactivate the admin user."
-msgstr "Vous ne pouvez pas désactiver l'utilisateur administrateur."
+msgstr "Du kan ikke deaktivere adminbrukeren"
 
 #. code:
 msgid "You cannot deactivate the user you're currently logged in as."
-msgstr "Vous ne pouvez pas désactiver l'utilisateur avec lequel vous êtes connecté."
+msgstr "Du kan ikke deaktivere brukeren du er logget inn med."
 
 #. resource:base_view_res_bank_form
 #. resource:base_view_company_form
+#. resource:base_view_partner_form
+#. resource:base_view_partner_form
 #. resource:base_view_partner_address_form
-#. resource:base_view_partner_form
-#. resource:base_view_partner_form
 msgid "ZIP"
-msgstr "Code postal"
+msgstr "ZIP"
 
 #. field:Partner.Zip
 #. field:Bank.Zip
 #. field:Company.Zip
 msgid "Zip"
-msgstr "Code postal"
+msgstr "Postnummer"
 
 #. resource:base_view_company_form
 msgid "e.g. Global Business Solutions"
-msgstr "Ex. : Global Business Solutions"
+msgstr "f.eks. Global Business Solutions"
 
 #. resource:base_view_partner_form
 msgid "e.g. Mr."
-msgstr "Ex. : M."
+msgstr "for eksempel Hr."
 
 #. resource:base_view_partner_simple_form
 #. resource:base_view_partner_form
 #. resource:base_view_partner_form
 msgid "e.g. Sales Director"
-msgstr "ex : Directeur Commercial"
+msgstr "f.eks Salgsleder"
 
 #. resource:base_view_company_form
-#. resource:base_view_partner_address_form
 #. resource:base_view_partner_form
+#. resource:base_view_partner_address_form
 msgid "e.g. www.hexya.io"
 msgstr ""
 
 #. resource:base_view_partner_form
 msgid "internal note..."
-msgstr "Actif"
+msgstr "internt notat..."
 

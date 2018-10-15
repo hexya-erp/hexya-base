@@ -1,0 +1,94 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. xml:./template/t/div/div/button
+#. xml:./template/t/div/button
+msgid "Add"
+msgstr "הוסף"
+
+#. xml:./template/t/div/div/span
+msgid "Add new Column"
+msgstr ""
+
+#. js:kanban_relational.js,52
+msgid "Add: "
+msgstr "הוסף: "
+
+#. xml:./template/t/div/div/span/ul/t/li/a
+msgid "Archive Records"
+msgstr ""
+
+#. js:kanban_column.js,222
+msgid "Are you sure that you want to remove this column ?"
+msgstr "האם אתה בטוח להסיר עמודה זו?"
+
+#. js:kanban_view.js,549
+msgid "Are you sure you want to delete this record ?"
+msgstr "האם אתה בטוח שברצונך למחוק רשומה זו?"
+
+#. js:kanban_column.js,216
+msgid "Cancel"
+msgstr "בטל"
+
+#. js:kanban_view.js,724
+msgid "Create"
+msgstr "צור"
+
+#. js:kanban_relational.js,26
+msgid "Create: "
+msgstr "צור: "
+
+#. xml:./template/t/div/div/span/ul/t/li/a
+msgid "Delete"
+msgstr "מחק"
+
+#. xml:./template/t/div/div/button
+#. xml:./template/t/div/button
+msgid "Discard"
+msgstr "בטל"
+
+#. js:kanban_column.js,232
+msgid "Edit Column"
+msgstr ""
+
+#. xml:./template/t/div/div/span/ul/t/li/a
+msgid "Edit Stage"
+msgstr ""
+
+#. xml:./template/t/div/div/span/ul/li/a
+msgid "Fold"
+msgstr ""
+
+#. xml:./template/t/a
+msgid "Load more... (<t t-esc=\"widget.remaining\"/> remaining)"
+msgstr ""
+
+#. js:kanban_column.js,211
+msgid "Ok"
+msgstr "אישור"
+
+#. js:kanban_relational.js,66
+msgid "Open: "
+msgstr "פתח: "
+
+#. xml:./template/t/div/div/span/ul/t/li/a
+msgid "Unarchive Records"
+msgstr ""
+
+#. js:kanban_view.js,239
+#. js:kanban_view.js,254
+#. js:kanban_view.js,261
+msgid "Undefined"
+msgstr "לא מוגדר"
+

@@ -1,0 +1,1146 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. js:form_common.js,874
+msgid " & Close"
+msgstr " & Закрыть"
+
+#. js:search_inputs.js,553
+#. js:search_view.js,205
+msgid " or "
+msgstr " или "
+
+#. js:view_manager.js,223
+msgid " view couldn't be loaded"
+msgstr " вид не может быть загружен"
+
+#. xml:./templates/t/t
+msgid "$(this).addClass('o_error');"
+msgstr ""
+
+#. js:debug_manager.js,134
+msgid "%d requests (%d ms) %d queries (%d ms)"
+msgstr "%d requests (%d ms) %d queries (%d ms)"
+
+#. js:formats.js,187
+msgid "'%s' is not a correct date"
+msgstr "'%s' некорректная дата"
+
+#. js:time.js,192
+msgid "'%s' is not a correct date, datetime nor time"
+msgstr "'%s' не является ни корректной датой, ни временем, ни тем и другим вместе взятым"
+
+#. js:formats.js,173
+msgid "'%s' is not a correct datetime"
+msgstr "'%s' некорректные дата и время"
+
+#. js:formats.js,144
+msgid "'%s' is not a correct float"
+msgstr "'%s' не является корректным числом с плавающей точкой"
+
+#. js:formats.js,132
+msgid "'%s' is not a correct integer"
+msgstr "'%s' не является корректным целым числом"
+
+#. js:formats.js,192
+msgid "'%s' is not a correct time"
+msgstr "'%s' не является корректным временем"
+
+#. js:time.js,204
+msgid "'%s' is not convertible to date, datetime nor time"
+msgstr "'%s' не является конвертируемым в дату, время или дату и время"
+
+#. js:formats.js,75
+msgid "(%d records)"
+msgstr "(%d записей)"
+
+#. xml:./templates/t/t/div/t/t
+msgid "(no string)"
+msgstr "(нет строки)"
+
+#. xml:./templates/t/div/t
+msgid "(nolabel)"
+msgstr "(без метки)"
+
+#. xml:./templates/t/ul/li/ul/li/t
+msgid "-"
+msgstr ""
+
+#. xml:./templates/div/t/div/span/span
+msgid "...Upload in progress..."
+msgstr "...Выгрузка в процессе..."
+
+#. xml:./templates/t/t/div/ul/li/t/t
+#. xml:./templates/div/div/t/t
+msgid "/web/binary/upload_attachment"
+msgstr ""
+
+#. xml:./templates/t/div/t
+msgid "99+"
+msgstr ""
+
+#. xml:./templates/t/t/div/t/t
+msgid ":"
+msgstr ""
+
+#. xml:./templates/t/label/span
+#. xml:./templates/t/label/span
+#. xml:./templates/t/label/span
+msgid "?"
+msgstr ""
+
+#. field:Filter.Action
+msgid "Action"
+msgstr "Действие"
+
+#. js:form_relational_widgets.js,1122
+msgid "Action Button"
+msgstr "Кнопка действия"
+
+#. xml:./templates/t/t/li/span
+msgid "Action ID:"
+msgstr "ID действия:"
+
+#. js:form_widgets.js,637
+msgid "Activate"
+msgstr "Активный"
+
+#. xml:./templates/t/li/a
+msgid "Activate Assets Debugging"
+msgstr "Включение средство отладки"
+
+#. field:Filter.Active
+#. js:form_widgets.js,634
+#. js:form_widgets.js,640
+msgid "Active"
+msgstr "Активно"
+
+#. js:form_relational_widgets.js,1378
+#. xml:./templates/div/div/div/button
+msgid "Add"
+msgstr "Добавить"
+
+#. xml:./templates/div/ul/li/a
+msgid "Add Custom Filter"
+msgstr "Добавить пользовательский фильтр"
+
+#. js:form_relational_widgets.js,1018
+msgid "Add an item"
+msgstr "Добавить"
+
+#. xml:./templates/div/ul/li/a
+msgid "Add custom group"
+msgstr "Добавить произвольную групу"
+
+#. xml:./templates/t/t/div/ul/li/t/span
+msgid "Add..."
+msgstr "Добавить..."
+
+#. js:form_relational_widgets.js,1305
+msgid "Add: "
+msgstr "Добавить: "
+
+#. js:dialog.js,168
+msgid "Alert"
+msgstr "Предупреждение"
+
+#. xml:./templates/form/table/tr/td/label
+msgid "All users"
+msgstr "Все пользователи"
+
+#. xml:./templates/div/ul/li/button
+#. xml:./templates/t/li/button
+msgid "Apply"
+msgstr "Применить"
+
+#. js:form_widgets.js,641
+#. js:list_view.js,288
+msgid "Archive"
+msgstr "Архивировать"
+
+#. js:form_widgets.js,642
+msgid "Archived"
+msgstr "Архивировано"
+
+#. js:search_menus.js,252
+msgid "Are you sure that you want to remove this filter?"
+msgstr "Вы действительно хотите удалить этот фильтр?"
+
+#. xml:./templates/t/t/div/ul/li/t/t/b
+msgid "Attachment :"
+msgstr "Вложение:"
+
+#. xml:./templates/div/div/div/h4
+msgid "Available fields"
+msgstr "Доступные поля"
+
+#. xml:./templates/t/t/div/t
+msgid ""
+"Button\n"
+"                <t t-if=\"widget.string\">: </t>\n"
+"                <t t-if=\"!widget.string\"> (no string)</t>"
+msgstr ""
+
+#. xml:./templates/t/t/li/span
+msgid "Button Type:"
+msgstr "Тип кнопки:"
+
+#. js:utils.js,284
+msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
+msgstr "Байты,Кб,Мб,Гб,Тб,Пб,Eb,Zb,Yb"
+
+#. js:list_common.js,133
+msgid "Can't convert value %s to context"
+msgstr "Невозможно конвертировать значение %s в контекст"
+
+#. js:crash_manager.js,170
+#. js:dialog.js,182
+#. js:form_common.js,1046
+#. js:form_upgrade_widgets.js,40
+#. xml:./templates/form/div/button
+msgid "Cancel"
+msgstr "Отмена"
+
+#. js:change_password.js,14
+#. xml:./templates/form/div/button
+msgid "Change Password"
+msgstr "Изменить пароль"
+
+#. xml:./templates/t/ul/li/span
+msgid "Change default:"
+msgstr "Изменить по умолчанию:"
+
+#. xml:./templates/t/t/li/a
+msgid "Clear Events"
+msgstr "Очистить события"
+
+#. js:abstract_web_client.js,124
+#. js:crash_manager.js,123
+msgid "Client Error"
+msgstr "Ошибка клиента"
+
+#. js:form_common.js,868
+#. js:form_view.js,1127
+#. js:data_export.js,202
+msgid "Close"
+msgstr "Закрыть"
+
+#. xml:./templates/form/table/tr/td/label
+msgid "Condition:"
+msgstr "Условие:"
+
+#. xml:./templates/form/div/table/tr/td/label
+msgid "Confirm New Password"
+msgstr "Подтвердите Новый Пароль"
+
+#. js:dialog.js,193
+msgid "Confirmation"
+msgstr "Подтверждение"
+
+#. field:Filter.Context
+msgid "Context"
+msgstr ""
+
+#. xml:./templates/t/ul/li/span
+msgid "Context:"
+msgstr "Контекст:"
+
+#. js:form_widgets.js,1251
+msgid "Could not display the selected image."
+msgstr "Не удалось вывести выбранное изображение."
+
+#. js:list_view.js,1024
+msgid "Could not find id in dataset"
+msgstr "Невозможно найти id в наборе данных"
+
+#. js:utils.js,179
+msgid "Could not serialize XML"
+msgstr "Невозможно сериализовать XML"
+
+#. js:graph_view.js,86
+#. js:graph_widget.js,21
+#. js:pivot_view.js,182
+#. xml:./templates/t/div/ul/li/a
+#. xml:./templates/t/div/ul/li/a
+msgid "Count"
+msgstr "Посчитать"
+
+#. js:form_common.js,1049
+#. xml:./templates/t/div/button
+msgid "Create"
+msgstr "Создать"
+
+#. js:form_relational_widgets.js,25
+msgid "Create a %s"
+msgstr "Создать %s"
+
+#. js:form_common.js,236
+msgid "Create and Edit..."
+msgstr "Создать и изменить..."
+
+#. js:form_common.js,281
+#. js:form_relational_widgets.js,1080
+msgid "Create: "
+msgstr "Создать: "
+
+#. xml:./templates/t/t/div/ul/li/t/t/b
+msgid "Created by :"
+msgstr "Создал:"
+
+#. xml:./templates/t/table/tr/th
+msgid "Creation Date:"
+msgstr "Дата создания:"
+
+#. xml:./templates/t/table/tr/th
+msgid "Creation User:"
+msgstr "Создатель:"
+
+#. js:form_common.js,1096
+#. js:search_menus.js,177
+msgid "Custom Filter"
+msgstr "Настраиваемый фильтр"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Day"
+msgstr "День"
+
+#. js:form_widgets.js,635
+msgid "Deactivate"
+msgstr "Отключить"
+
+#. field:Filter.IsDefault
+msgid "Default filter"
+msgstr ""
+
+#. xml:./templates/form/table/tr/td/label
+msgid "Default:"
+msgstr "По умолчанию:"
+
+#. xml:./templates/t/button
+msgid "Delete"
+msgstr "Удалить"
+
+#. xml:./templates/t/li/a/t
+msgid "Disable Technical Features"
+msgstr "Отключить тех. характеристики"
+
+#. js:form_common.js,868
+#. xml:./templates/t/t/div/button
+#. xml:./templates/t/div/button
+msgid "Discard"
+msgstr "Отказаться"
+
+#. js:sidebar.js,217
+msgid "Do you really want to delete this attachment ?"
+msgstr "Вы действительно хотите удалить это вложение?"
+
+#. js:form_view.js,733
+msgid "Do you really want to delete this record?"
+msgstr "Вы действительно хотите удалить эту запись?"
+
+#. js:list_view.js,543
+msgid "Do you really want to remove these records?"
+msgstr "Вы действительно хотите удалить эти записи?"
+
+#. field:Filter.Domain
+msgid "Domain"
+msgstr ""
+
+#. xml:./templates/t/ul/li/span
+msgid "Domain:"
+msgstr "Домен:"
+
+#. js:misc.js,15
+msgid "Don't leave yet,<br />it's still loading..."
+msgstr "Не уходите,<br />загрузка продолжается ..."
+
+#. js:list_view.js,1847
+msgid "Download"
+msgstr "Скачать"
+
+#. js:list_view.js,1863
+msgid "Download \\\"%s\\\""
+msgstr ""
+
+#. xml:./templates/t/div/button
+msgid "Edit"
+msgstr "Редактировать"
+
+#. xml:./templates/t/li/a/t
+msgid "Enable Technical Features"
+msgstr "Включить тех. характеристики"
+
+#. js:view_manager.js,223
+#. js:search_menus.js,84
+#. js:search_menus.js,91
+msgid "Error"
+msgstr "Ошибка"
+
+#. js:pyeval.js,1023
+msgid "Evaluation Error"
+msgstr "Ошибка оценки"
+
+#. js:list_view.js,287
+msgid "Export"
+msgstr "Экспорт"
+
+#. js:data_export.js,199
+msgid "Export Data"
+msgstr "Экспорт данных"
+
+#. xml:./templates/div/div/div/label
+msgid "Export Formats :"
+msgstr "Форматы Экспорта:"
+
+#. js:data_export.js,201
+msgid "Export To File"
+msgstr "Экспорт в файл"
+
+#. xml:./templates/div/div/div/label
+msgid "Export Type :"
+msgstr "Тип Экспорта:"
+
+#. xml:./templates/div/div/div/div/div/label
+msgid "Export all Data"
+msgstr "Экспортировать все данные"
+
+#. js:view_manager.js,437
+msgid "Failed to evaluate search criterions"
+msgstr "Не удалось обработать критерии поиска"
+
+#. js:form_view.js,1300
+msgid "Field '%s' specified in view could not be found."
+msgstr "Поле '%s' указанное в виде не может быть найдено."
+
+#. xml:./templates/t/ul/li/span
+msgid "Field:"
+msgstr "Поле:"
+
+#. js:debug_manager.js,339
+#. xml:./templates/t/t/li/a
+msgid "Fields View Get"
+msgstr "Получить поля вида"
+
+#. js:debug_manager.js,241
+msgid "Fields of %s"
+msgstr "Поля %s"
+
+#. js:form_widgets.js,1114
+msgid "File Upload"
+msgstr "Загрузка файла"
+
+#. js:form_widgets.js,1094
+msgid "File upload"
+msgstr "Выгрузка файла"
+
+#. js:search_inputs.js,551
+msgid "Filter"
+msgstr "Фильтр"
+
+#. field:Filter.Name
+#. resource:base_ir_filters_view_search
+msgid "Filter Name"
+msgstr ""
+
+#. js:search_menus.js,84
+msgid "Filter name is required."
+msgstr "Требуется название фильтра."
+
+#. js:search_menus.js,91
+msgid "Filter with same name already exists."
+msgstr "Фильтр с таким именем уже существует."
+
+#. resource:base_actions_ir_filters_view
+msgid "Filters"
+msgstr "Фильтры"
+
+#. resource:base_ir_filters_view_search
+msgid "Filters created by myself"
+msgstr ""
+
+#. resource:base_ir_filters_view_search
+msgid "Filters shared with all users"
+msgstr ""
+
+#. resource:base_ir_filters_view_search
+msgid "Filters visible only for one user"
+msgstr ""
+
+#. js:pivot_view.js,831
+msgid "For Excel compatibility, data cannot be exported if there are more than 256 columns.\\n\\nTip: try to flip axis, filter further or reduce the number of measures."
+msgstr ""
+
+#. js:form_view.js,301
+msgid "Form"
+msgstr "Форма"
+
+#. resource:base_ir_filters_view_search
+#. js:search_inputs.js,698
+msgid "Group By"
+msgstr "Группировать"
+
+#. js:form_upgrade_widgets.js,51
+msgid "Hexya Enterprise"
+msgstr ""
+
+#. js:priority.js,49
+msgid "High"
+msgstr "Высокий"
+
+#. field:Filter.ID
+#. field:CommonMixin.ID
+msgid "ID"
+msgstr "ID"
+
+#. xml:./templates/t/table/tr/th
+msgid "ID:"
+msgstr "ID:"
+
+#. js:form_widgets.js,1251
+msgid "Image"
+msgstr "Изображение"
+
+#. xml:./templates/div/div/div/div/div/label
+msgid "Import-Compatible Export"
+msgstr "Экспорт, совместимый с импортом"
+
+#. js:form_widgets.js,636
+msgid "Inactive"
+msgstr "Не активно"
+
+#. js:graph_widget.js,208
+#. js:graph_widget.js,216
+msgid "Invalid data"
+msgstr "Неверные данные"
+
+#. js:debug_manager.js,183
+msgid "JS Tests"
+msgstr "Тесты JS"
+
+#. xml:./templates/t/table/tr/th
+msgid "Latest Modification Date:"
+msgstr "Дата изменения:"
+
+#. xml:./templates/t/table/tr/th
+msgid "Latest Modification by:"
+msgstr "Изменялся:"
+
+#. xml:./templates/t/li/a
+msgid "Leave the Developer Tools"
+msgstr "Закрыть Инструменты Разработчика"
+
+#. js:loading.js,46
+msgid "Loading"
+msgstr "Загрузка"
+
+#. js:loading.js,44
+msgid "Loading (%d)"
+msgstr "Загрузка (%d)"
+
+#. js:misc.js,12
+msgid "Loading..."
+msgstr "Загрузка..."
+
+#. js:pyeval.js,1027
+msgid "Local evaluation failure\\n%s\\n\\n%s"
+msgstr ""
+
+#. xml:./templates/t/li/ul/li/a
+msgid "Log out"
+msgstr "Выход"
+
+#. js:priority.js,48
+msgid "Low"
+msgstr "Низкий"
+
+#. js:search_inputs.js,451
+msgid "M2O search fields do not currently handle multiple default values"
+msgstr "Поля поиска M2O в настоящее время не работают с несколькими значениями по умолчанию"
+
+#. xml:./templates/t/t/t/li/a
+msgid "Manage Filters"
+msgstr "Управление фильтрами"
+
+#. js:misc.js,18
+msgid "Maybe you should consider reloading the application by pressing F5..."
+msgstr "Может быть, вам следует рассмотреть возможность перезагрузки приложения, нажав F5 ..."
+
+#. xml:./templates/t/div/button
+#. xml:./templates/t/div/button
+msgid "Measures <span class=\"caret\"/>"
+msgstr ""
+
+#. js:debug_manager.js,326
+msgid "Metadata (%s)"
+msgstr "Метаданные (%s)"
+
+#. xml:./templates/t/t/li/span
+msgid "Method:"
+msgstr "Метод:"
+
+#. field:Filter.ResModel
+#. resource:base_ir_filters_view_search
+msgid "Model"
+msgstr ""
+
+#. xml:./templates/t/t/div/ul/li/t/t/b
+msgid "Modified by :"
+msgstr "Изменено:"
+
+#. xml:./templates/t/ul/li/span
+msgid "Modifiers:"
+msgstr "Модификаторы:"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Month"
+msgstr "Месяц"
+
+#. xml:./templates/t/t/li/span
+msgid "More"
+msgstr "Еще"
+
+#. xml:./templates/div/div/div/button
+msgid "Move Down"
+msgstr "Вниз"
+
+#. xml:./templates/div/div/div/button
+msgid "Move Up"
+msgstr "Вверх"
+
+#. resource:base_ir_filters_view_search
+msgid "My filters"
+msgstr ""
+
+#. js:form_view.js,315
+msgid "New"
+msgstr "Создать"
+
+#. xml:./templates/form/div/table/tr/td/label
+msgid "New Password"
+msgstr "Новый Пароль"
+
+#. js:search_inputs.js,331
+msgid "No"
+msgstr "Нет"
+
+#. xml:./templates/t/table/tr/th
+msgid "No Update:"
+msgstr "Нет обновлений:"
+
+#. xml:./templates/div/p
+msgid ""
+"No data available for this pivot table.  Try to add some records, or make sure\n"
+"        that there is at least one measure and no active filter in the search bar."
+msgstr ""
+"Нет доступных для этой сводной таблицы данных. Попробуйте добавить несколько записей, или убедитесь\n"
+"что есть по крайней мере одна мера и фильтр в строке поиска не активен."
+
+#. js:graph_widget.js,94
+msgid "No data to display"
+msgstr "Нет данных для отображения"
+
+#. xml:./templates/div/p/strong
+msgid "No data to display."
+msgstr "Нет данных для отображения."
+
+#. js:debug_manager.js,321
+msgid "No metadata available"
+msgstr "Метаданные не доступны"
+
+#. js:form_common.js,245
+msgid "No results to show..."
+msgstr "Нет результатов для отображения ..."
+
+#. js:form_relational_widgets.js,327
+msgid "No value found for the field %s for value %s"
+msgstr "Не найдено значение для поля %s значение %s"
+
+#. js:utils.js,143
+msgid "Node [%s] is not a JSONified XML node"
+msgstr ""
+
+#. js:priority.js,47
+msgid "Normal"
+msgstr "Нормальный"
+
+#. js:graph_widget.js,252
+msgid "Not enough data points"
+msgstr "Не хватает точек данных"
+
+#. xml:./templates/t/ul/li
+msgid "Not shown in kanban"
+msgstr "Не показывать в Канбан"
+
+#. xml:./templates/t/ul/li/span
+msgid "Object:"
+msgstr "Объект:"
+
+#. js:dialog.js,40
+#. js:dialog.js,158
+#. js:dialog.js,176
+#. xml:./templates/t/button
+msgid "Ok"
+msgstr "OK"
+
+#. xml:./templates/form/div/table/tr/td/label
+msgid "Old Password"
+msgstr "Старый Пароль"
+
+#. xml:./templates/t/ul/li/span
+msgid "On change:"
+msgstr "При изменении:"
+
+#. js:progress_bar.js,78
+msgid "Only Integer Value should be valid."
+msgstr "Только целое значение должно быть действительным."
+
+#. xml:./templates/form/table/tr/td/label
+msgid "Only you"
+msgstr "Только Вы"
+
+#. js:form_relational_widgets.js,153
+#. js:form_relational_widgets.js,921
+#. js:form_relational_widgets.js,1104
+#. js:form_relational_widgets.js,1321
+msgid "Open: "
+msgstr "Открыть: "
+
+#. js:data_export.js,167
+msgid "Please enter save field list name"
+msgstr "Введите имя списка полей для сохранения"
+
+#. xml:./templates/p/strong
+msgid "Please note that only the selected ids will be exported."
+msgstr "Обратите внимание, что только выбранные идентификаторы будут экспортированы."
+
+#. xml:./templates/p/strong
+msgid "Please pay attention that all records matching your search filter will be exported. Not only the selected ids."
+msgstr "Обратите внимание, что будут экспортироваться все записи, соответствующие вашему фильтру поиска. Не только выбранные идентификаторы."
+
+#. js:data_export.js,435
+msgid "Please select fields to export..."
+msgstr "Пожалуйста, выберите поля для экспорта..."
+
+#. js:data_export.js,421
+msgid "Please select fields to save export list..."
+msgstr "Выберите поля для сохранения в списке экспорта..."
+
+#. xml:./templates/t/li/ul/li/a
+msgid "Preferences"
+msgstr "Параметры"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Quarter"
+msgstr "Квартал"
+
+#. xml:./templates/t/ul/li/span
+msgid "Relation:"
+msgstr "Связь:"
+
+#. xml:./templates/div/div/div/button
+msgid "Remove"
+msgstr "Удалить"
+
+#. xml:./templates/div/div/div/button
+msgid "Remove All"
+msgstr "Удалить все"
+
+#. js:form_relational_widgets.js,326
+msgid "Render"
+msgstr "Представить"
+
+#. xml:./templates/t/li/a
+msgid "Run JS Tests"
+msgstr "Выполнение JS тестов"
+
+#. js:form_common.js,874
+#. xml:./templates/t/t/div/button
+#. xml:./templates/t/div/button
+#. xml:./templates/div/ul/li/button
+msgid "Save"
+msgstr "Сохранить"
+
+#. js:form_common.js,889
+msgid "Save & New"
+msgstr "Сохранить и создать"
+
+#. js:form_widgets.js,1131
+msgid "Save As..."
+msgstr "Сохранить как..."
+
+#. xml:./templates/t/label
+msgid "Save as:"
+msgstr "Сохранить как:"
+
+#. xml:./templates/div/ul/li/a
+msgid "Save current search"
+msgstr "Сохранить текущий поиск"
+
+#. js:form_view.js,1128
+msgid "Save default"
+msgstr "Сохранить значения по умолчанию"
+
+#. xml:./templates/div/div/div/h4/a
+msgid "Save fields list"
+msgstr "Сохранить список полей"
+
+#. xml:./templates/t/label
+msgid "Saved exports:"
+msgstr "Сохраненые экспорты:"
+
+#. js:search_inputs.js,360
+msgid "Search %(field)s at: %(value)s"
+msgstr "Искать %(field)s в: %(value)s"
+
+#. js:search_inputs.js,192
+#. js:search_inputs.js,211
+#. js:search_inputs.js,402
+msgid "Search %(field)s for: %(value)s"
+msgstr "Искать %(field)s для: %(value)s"
+
+#. js:form_common.js,211
+msgid "Search More..."
+msgstr "Искать еще ..."
+
+#. js:form_common.js,281
+msgid "Search: "
+msgstr "Найти: "
+
+#. js:form_common.js,1054
+msgid "Select"
+msgstr "Выбрать"
+
+#. js:form_common.js,1103
+msgid "Selected domain"
+msgstr "Выбраный домен"
+
+#. xml:./templates/t/ul/li/span
+msgid "Selection:"
+msgstr "Выбор:"
+
+#. js:form_view.js,1125
+msgid "Set Default"
+msgstr "Установить по умолчанию"
+
+#. xml:./templates/t/t/t/li/a
+msgid "Set Defaults"
+msgstr "Установить значения по умолчанию"
+
+#. js:list_view.js,931
+msgid "Setting 'id' attribute on existing record %s"
+msgstr "Настройка аттрибута 'id' на существующую запись %s"
+
+#. resource:base_ir_filters_view_search
+msgid "Shared"
+msgstr ""
+
+#. xml:./templates/t/ul/li/span
+msgid "Size:"
+msgstr "Размер:"
+
+#. field:Filter.Sort
+msgid "Sort"
+msgstr ""
+
+#. xml:./templates/t/t/li/span
+msgid "Special:"
+msgstr "Специальное:"
+
+#. js:misc.js,13
+msgid "Still loading..."
+msgstr "Идет загрузка ..."
+
+#. js:misc.js,14
+msgid "Still loading...<br />Please be patient."
+msgstr "Идет загрузка ...<br />Пожалуйста, подождите."
+
+#. js:misc.js,17
+msgid "Take a minute to get a coffee,<br />because it's loading..."
+msgstr "Остановитесь на минутку , возьмите кофе,<br />потому что идет загрузка ..."
+
+#. xml:./templates/t/t/t/li/a
+msgid "Technical Translation"
+msgstr "Технический перевод"
+
+#. js:form_widgets.js,1131
+msgid "The field is empty, there's nothing to save !"
+msgstr "Поле пусто, нечего сохранять !"
+
+#. js:form_view.js,887
+msgid "The following fields are invalid:"
+msgstr "Следующие поля заполнены неверно:"
+
+#. js:list_view_editable.js,122
+msgid "The line has been modified, your changes will be discarded. Are you sure you want to discard the changes ?"
+msgstr "Строка была изменена и Ваши изменения будут отменены. Вы уверены, что хотите отменить изменения?"
+
+#. help:Filter.Action
+msgid "The menu action this filter applies to. When left empty the filter applies to all menus for this model."
+msgstr ""
+
+#. js:form_relational_widgets.js,1123
+msgid "The o2m record must be saved before an action can be used"
+msgstr "Запись o2m должна быть сохранена перед использованием"
+
+#. js:form_view.js,301
+msgid "The record could not be found in the database."
+msgstr "Невозможно найти запись в базе данных."
+
+#. js:form_view.js,756
+msgid "The record has been modified, your changes will be discarded. Are you sure you want to leave this page ?"
+msgstr "Запись была изменена, ваши изменения будут потеряны. Вы уверены, что хотите покинуть страницу?"
+
+#. js:form_widgets.js,1093
+msgid "The selected file exceed the maximum file size of %s."
+msgstr "Выбранный файл превышает максимальный размер файла %s."
+
+#. js:form_relational_widgets.js,1595
+msgid "The type of the field '%s' must be a many2many field with a relation to 'ir.attachment' model."
+msgstr "Тип поля '%s' должен быть many2many и иметь связь с моделью 'ir.attachment'."
+
+#. help:Filter.User
+msgid "The user this filter is private to. When left empty the filter is public and available to all users."
+msgstr ""
+
+#. js:form_widgets.js,1114
+msgid "There was a problem while uploading your file"
+msgstr "Возникла проблема при загрузке файла"
+
+#. js:search_menus.js,251
+msgid "This filter is global and will be removed for everybody if you continue."
+msgstr "Это глобальный фильтр, который будет удалён для всех пользователей, если Вы продолжите."
+
+#. xml:./templates/div/p
+msgid ""
+"This wizard will export all data that matches the current search criteria to a CSV file.\n"
+"        You can export all data or only the fields that can be reimported after modification."
+msgstr ""
+"Этот мастер экспортирует все найденные данные в CSV-файл.\n"
+"Вы можете экспортировать все данные, либо только те поля которые должны быть в последствии импортированы после изменений."
+
+#. js:form_widgets.js,862
+msgid "Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Hexya is displayed according to your field timezone."
+msgstr ""
+
+#. xml:./templates/t/t/li/a
+msgid "Toggle Timelines"
+msgstr "Переключить Временные шкалы"
+
+#. js:pivot_view.js,526
+#. js:pivot_view.js,555
+msgid "Total"
+msgstr "Итого"
+
+#. xml:./templates/t/ul/li/span
+msgid "Type:"
+msgstr "Тип:"
+
+#. js:form_widgets.js,643
+#. js:list_view.js,289
+msgid "Unarchive"
+msgstr "Разархивировать"
+
+#. js:graph_widget.js,79
+#. js:list_view.js,1379
+#. js:list_view.js,1385
+#. js:pivot_view.js,508
+msgid "Undefined"
+msgstr "Не определено"
+
+#. xml:./templates/t
+msgid ""
+"Unhandled widget\n"
+"    <t t-js=\"dict\">console.warn('Unhandled widget', dict.widget);</t>"
+msgstr ""
+
+#. js:data.js,1083
+msgid "Unknown field %s in domain %s"
+msgstr "Неизвестное поле %s в домене %s"
+
+#. js:list_view.js,1086
+msgid "Unknown m2m command %s"
+msgstr "Неизвестная m2m команда %s"
+
+#. js:pyeval.js,991
+msgid "Unknown nonliteral type "
+msgstr "Неизвестный нелитерный тип "
+
+#. js:data.js,1075
+msgid "Unknown operator %s in domain %s"
+msgstr "Неизвестный оператор %s в домене %s"
+
+#. js:data.js,1138
+msgid "Unnamed"
+msgstr "Без имени"
+
+#. js:data.js,1121
+msgid "Unsupported operator %s in domain %s"
+msgstr "Неподдерживаемый оператор %s в домене %s"
+
+#. xml:./templates/t/t/div/a
+msgid "Update translations"
+msgstr "Обновление перевода"
+
+#. js:form_upgrade_widgets.js,34
+msgid "Upgrade now"
+msgstr "Обновить"
+
+#. xml:./templates/t/div/button
+msgid "Upload your file"
+msgstr "Загрузить файл"
+
+#. xml:./templates/t/div/t/div/span
+#. xml:./templates/t/div/span
+msgid "Uploading..."
+msgstr "Загрузка..."
+
+#. field:Filter.User
+#. resource:base_ir_filters_view_search
+#. resource:base_ir_filters_view_search
+msgid "User"
+msgstr ""
+
+#. resource:base_menu_ir_filters
+msgid "User-defined Filters"
+msgstr ""
+
+#. js:priority.js,50
+msgid "Very High"
+msgstr "Очень высокий"
+
+#. xml:./templates/t/t/t/li/a
+msgid "View Fields"
+msgstr "Просмотр полей"
+
+#. xml:./templates/t/t/t/t/li/a
+msgid "View Metadata"
+msgstr "Просмотр метаданных"
+
+#. js:form_relational_widgets.js,740
+msgid "View type '%s' is not supported in X2Many."
+msgstr "Тип вида '%s' не поддерживается в X2Many."
+
+#. js:crash_manager.js,107
+#. js:form_view.js,761
+#. js:list_view.js,676
+#. js:sidebar.js,131
+msgid "Warning"
+msgstr "Внимание"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Week"
+msgstr "Неделя"
+
+#. xml:./templates/t/div/div
+msgid "Whoops, you shouldn't have come up to here..."
+msgstr ""
+
+#. js:form_view.js,1304
+msgid "Widget type '%s' is not implemented"
+msgstr "Тип виджета '%s' не реализован"
+
+#. xml:./templates/t/ul/li/span
+msgid "Widget:"
+msgstr "Виджет:"
+
+#. js:progress_bar.js,78
+msgid "Wrong value entered!"
+msgstr "Введена неправильная величина!"
+
+#. xml:./templates/t/table/tr/th
+msgid "XML ID:"
+msgstr "XML ID:"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Year"
+msgstr "Год"
+
+#. js:search_inputs.js,330
+msgid "Yes"
+msgstr "Да"
+
+#. js:form_relational_widgets.js,47
+msgid "You are creating a new %s, are you sure it does not exist yet?"
+msgstr "Вы создаете новый  %s, вы уверены, что он не существует?"
+
+#. xml:./templates/t/t/div
+msgid ""
+"You have updated <strong><t t-esc=\"field.string\"/></strong> (<t t-esc=\"lang\"/>).\n"
+"            <a class=\"oe_field_translate\" t-att-name=\"field.name\" href=\"#\">Update translations</a>"
+msgstr ""
+
+#. js:misc.js,16
+msgid "You may not believe it,<br />but the application is actually loading..."
+msgstr "Вы можете не верить,<br />но приложение на самом деле загружается ..."
+
+#. js:sidebar.js,131
+msgid "You must choose at least one record."
+msgstr "Вы должны выбрать хотя бы одну запись."
+
+#. js:list_view.js,676
+msgid "You must select at least one record."
+msgstr "Вы должны выбрать хотя бы одну запись ."
+
+#. js:crash_manager.js,57
+msgid "Your Hexya session expired. Please refresh the current web page."
+msgstr ""
+
+#. xml:./templates/t/ul/li/ul/li
+msgid ""
+"[<t t-esc=\"option[0]\"/>]\n"
+"                    <t t-if=\"option[1]\"> - </t>\n"
+"                    <t t-esc=\"option[1]\"/>"
+msgstr ""
+
+#. xml:./templates/t/t
+msgid "console.warn('Unhandled widget', dict.widget);"
+msgstr ""
+
+#. js:utils.js,302
+msgid "kMGTPE"
+msgstr "kMGTPE"
+
+#. js:search_inputs.js,230
+msgid "not a valid integer"
+msgstr "не является целым числом"
+
+#. js:search_inputs.js,245
+msgid "not a valid number"
+msgstr "не является числом"
+
+#. xml:./templates/t/li/span
+msgid "or"
+msgstr "или"
+
+#. xml:./templates/t/div/t/t
+msgid "overflow-x: hidden"
+msgstr ""
+
+#. xml:./templates/t/t
+msgid ""
+"var $div = $(document.createElement('div')).attr('t-if', this.attr('t-if')).addClass('o_form_field_monetary');\n"
+"        this.clone(true).appendTo($div);\n"
+"        this.replaceWith($div);"
+msgstr ""
+
+#. xml:./templates/t/div/t
+msgid ""
+"var message = (d.message !== undefined) ? d.message : d.error.data.message;\n"
+"            d.html_error = context.engine.tools.html_escape(message).replace(/\\n/g, '<br/>');"
+msgstr ""
+
+#. xml:./templates/div/div/div/div/button
+msgid "×"
+msgstr ""
+

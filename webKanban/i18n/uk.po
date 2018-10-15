@@ -1,0 +1,94 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. xml:./template/t/div/div/button
+#. xml:./template/t/div/button
+msgid "Add"
+msgstr "Додати"
+
+#. xml:./template/t/div/div/span
+msgid "Add new Column"
+msgstr "Додати нову колонку"
+
+#. js:kanban_relational.js,52
+msgid "Add: "
+msgstr "Додати:"
+
+#. xml:./template/t/div/div/span/ul/t/li/a
+msgid "Archive Records"
+msgstr "Архівувати записи"
+
+#. js:kanban_column.js,222
+msgid "Are you sure that you want to remove this column ?"
+msgstr "Ви впевнені, що хочете вилучити цю колонку?"
+
+#. js:kanban_view.js,549
+msgid "Are you sure you want to delete this record ?"
+msgstr "Ви впевнені, що хочете видалити цей запис?"
+
+#. js:kanban_column.js,216
+msgid "Cancel"
+msgstr "Скасувати"
+
+#. js:kanban_view.js,724
+msgid "Create"
+msgstr "Створити"
+
+#. js:kanban_relational.js,26
+msgid "Create: "
+msgstr "Створити:"
+
+#. xml:./template/t/div/div/span/ul/t/li/a
+msgid "Delete"
+msgstr "Видалити"
+
+#. xml:./template/t/div/div/button
+#. xml:./template/t/div/button
+msgid "Discard"
+msgstr "Відмінити"
+
+#. js:kanban_column.js,232
+msgid "Edit Column"
+msgstr "Редагувати колонку"
+
+#. xml:./template/t/div/div/span/ul/t/li/a
+msgid "Edit Stage"
+msgstr "Редагувати етап"
+
+#. xml:./template/t/div/div/span/ul/li/a
+msgid "Fold"
+msgstr "Згорнути"
+
+#. xml:./template/t/a
+msgid "Load more... (<t t-esc=\"widget.remaining\"/> remaining)"
+msgstr ""
+
+#. js:kanban_column.js,211
+msgid "Ok"
+msgstr "Гаразд"
+
+#. js:kanban_relational.js,66
+msgid "Open: "
+msgstr "Відкрито:"
+
+#. xml:./template/t/div/div/span/ul/t/li/a
+msgid "Unarchive Records"
+msgstr "Розархівувати записи"
+
+#. js:kanban_view.js,239
+#. js:kanban_view.js,254
+#. js:kanban_view.js,261
+msgid "Undefined"
+msgstr "Невизначений"
+

@@ -1,0 +1,1146 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. js:form_common.js,874
+msgid " & Close"
+msgstr "& luk"
+
+#. js:search_inputs.js,553
+#. js:search_view.js,205
+msgid " or "
+msgstr "eller"
+
+#. js:view_manager.js,223
+msgid " view couldn't be loaded"
+msgstr "visning kunne ikke indlæses"
+
+#. xml:./templates/t/t
+msgid "$(this).addClass('o_error');"
+msgstr ""
+
+#. js:debug_manager.js,134
+msgid "%d requests (%d ms) %d queries (%d ms)"
+msgstr "%d anmodninger (%d ms) %d forespørgsler (%d ms)"
+
+#. js:formats.js,187
+msgid "'%s' is not a correct date"
+msgstr "'%s' ikke en gyldig dato"
+
+#. js:time.js,192
+msgid "'%s' is not a correct date, datetime nor time"
+msgstr "'%s' er ikke korrekt datoformat"
+
+#. js:formats.js,173
+msgid "'%s' is not a correct datetime"
+msgstr "'%s' er ikke en valid dato/klokkeslæt"
+
+#. js:formats.js,144
+msgid "'%s' is not a correct float"
+msgstr "'%s' er ikke korrekt kommatal"
+
+#. js:formats.js,132
+msgid "'%s' is not a correct integer"
+msgstr "'%s' er ikke et valid heltal"
+
+#. js:formats.js,192
+msgid "'%s' is not a correct time"
+msgstr "'%s' er ikke et korrekt klokkeslæt"
+
+#. js:time.js,204
+msgid "'%s' is not convertible to date, datetime nor time"
+msgstr "'%s' kan ikke konverteres til dato, datotid eller tid"
+
+#. js:formats.js,75
+msgid "(%d records)"
+msgstr "(%d records)"
+
+#. xml:./templates/t/t/div/t/t
+msgid "(no string)"
+msgstr "(ingen streng)"
+
+#. xml:./templates/t/div/t
+msgid "(nolabel)"
+msgstr "(nolabel)"
+
+#. xml:./templates/t/ul/li/ul/li/t
+msgid "-"
+msgstr ""
+
+#. xml:./templates/div/t/div/span/span
+msgid "...Upload in progress..."
+msgstr "...Upload er igang..."
+
+#. xml:./templates/t/t/div/ul/li/t/t
+#. xml:./templates/div/div/t/t
+msgid "/web/binary/upload_attachment"
+msgstr ""
+
+#. xml:./templates/t/div/t
+msgid "99+"
+msgstr ""
+
+#. xml:./templates/t/t/div/t/t
+msgid ":"
+msgstr ""
+
+#. xml:./templates/t/label/span
+#. xml:./templates/t/label/span
+#. xml:./templates/t/label/span
+msgid "?"
+msgstr ""
+
+#. field:Filter.Action
+msgid "Action"
+msgstr "Aktion"
+
+#. js:form_relational_widgets.js,1122
+msgid "Action Button"
+msgstr "Handling knap"
+
+#. xml:./templates/t/t/li/span
+msgid "Action ID:"
+msgstr "Aktion ID:"
+
+#. js:form_widgets.js,637
+msgid "Activate"
+msgstr "Aktivér"
+
+#. xml:./templates/t/li/a
+msgid "Activate Assets Debugging"
+msgstr "Aktivér aktiv fejlfinding"
+
+#. field:Filter.Active
+#. js:form_widgets.js,634
+#. js:form_widgets.js,640
+msgid "Active"
+msgstr "Aktiv"
+
+#. js:form_relational_widgets.js,1378
+#. xml:./templates/div/div/div/button
+msgid "Add"
+msgstr "Tilføj"
+
+#. xml:./templates/div/ul/li/a
+msgid "Add Custom Filter"
+msgstr "Tilføj tilpasset filter"
+
+#. js:form_relational_widgets.js,1018
+msgid "Add an item"
+msgstr "Tilføj et element"
+
+#. xml:./templates/div/ul/li/a
+msgid "Add custom group"
+msgstr "Tilføj tilpasset gruppe"
+
+#. xml:./templates/t/t/div/ul/li/t/span
+msgid "Add..."
+msgstr "Tilføj..."
+
+#. js:form_relational_widgets.js,1305
+msgid "Add: "
+msgstr "Tilføj: "
+
+#. js:dialog.js,168
+msgid "Alert"
+msgstr "Advarsel"
+
+#. xml:./templates/form/table/tr/td/label
+msgid "All users"
+msgstr "Alle brugere"
+
+#. xml:./templates/div/ul/li/button
+#. xml:./templates/t/li/button
+msgid "Apply"
+msgstr "Anvend"
+
+#. js:form_widgets.js,641
+#. js:list_view.js,288
+msgid "Archive"
+msgstr "Arkiv"
+
+#. js:form_widgets.js,642
+msgid "Archived"
+msgstr "Arkiveret"
+
+#. js:search_menus.js,252
+msgid "Are you sure that you want to remove this filter?"
+msgstr "Er du sikker på du vil fjerne dette filter?"
+
+#. xml:./templates/t/t/div/ul/li/t/t/b
+msgid "Attachment :"
+msgstr "Vedhæftning"
+
+#. xml:./templates/div/div/div/h4
+msgid "Available fields"
+msgstr "Tilgængelige felter"
+
+#. xml:./templates/t/t/div/t
+msgid ""
+"Button\n"
+"                <t t-if=\"widget.string\">: </t>\n"
+"                <t t-if=\"!widget.string\"> (no string)</t>"
+msgstr ""
+
+#. xml:./templates/t/t/li/span
+msgid "Button Type:"
+msgstr "Knap-type:"
+
+#. js:utils.js,284
+msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
+msgstr "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
+
+#. js:list_common.js,133
+msgid "Can't convert value %s to context"
+msgstr "Kan ikke konvertere værdien %s til kontekst"
+
+#. js:crash_manager.js,170
+#. js:dialog.js,182
+#. js:form_common.js,1046
+#. js:form_upgrade_widgets.js,40
+#. xml:./templates/form/div/button
+msgid "Cancel"
+msgstr "Annuller"
+
+#. js:change_password.js,14
+#. xml:./templates/form/div/button
+msgid "Change Password"
+msgstr "Skift adgangskode"
+
+#. xml:./templates/t/ul/li/span
+msgid "Change default:"
+msgstr "Ret standard:"
+
+#. xml:./templates/t/t/li/a
+msgid "Clear Events"
+msgstr "Ryd arrangementer"
+
+#. js:abstract_web_client.js,124
+#. js:crash_manager.js,123
+msgid "Client Error"
+msgstr "Klientfejl"
+
+#. js:form_common.js,868
+#. js:form_view.js,1127
+#. js:data_export.js,202
+msgid "Close"
+msgstr "Luk"
+
+#. xml:./templates/form/table/tr/td/label
+msgid "Condition:"
+msgstr "Betingelse:"
+
+#. xml:./templates/form/div/table/tr/td/label
+msgid "Confirm New Password"
+msgstr "Bekræft ny adgangskode"
+
+#. js:dialog.js,193
+msgid "Confirmation"
+msgstr "Bekræftelse"
+
+#. field:Filter.Context
+msgid "Context"
+msgstr ""
+
+#. xml:./templates/t/ul/li/span
+msgid "Context:"
+msgstr "Sammenhæng:"
+
+#. js:form_widgets.js,1251
+msgid "Could not display the selected image."
+msgstr "Kan ikke vise det valgte billede."
+
+#. js:list_view.js,1024
+msgid "Could not find id in dataset"
+msgstr "Id i dataset ikke fundet"
+
+#. js:utils.js,179
+msgid "Could not serialize XML"
+msgstr "Kunne ikke signere XML"
+
+#. js:graph_view.js,86
+#. js:graph_widget.js,21
+#. js:pivot_view.js,182
+#. xml:./templates/t/div/ul/li/a
+#. xml:./templates/t/div/ul/li/a
+msgid "Count"
+msgstr "Antal"
+
+#. js:form_common.js,1049
+#. xml:./templates/t/div/button
+msgid "Create"
+msgstr "Opret"
+
+#. js:form_relational_widgets.js,25
+msgid "Create a %s"
+msgstr "Opret en %s"
+
+#. js:form_common.js,236
+msgid "Create and Edit..."
+msgstr "Opret og rediger"
+
+#. js:form_common.js,281
+#. js:form_relational_widgets.js,1080
+msgid "Create: "
+msgstr "Opret: "
+
+#. xml:./templates/t/t/div/ul/li/t/t/b
+msgid "Created by :"
+msgstr "Oprettet af:"
+
+#. xml:./templates/t/table/tr/th
+msgid "Creation Date:"
+msgstr "Oprettelse dato:"
+
+#. xml:./templates/t/table/tr/th
+msgid "Creation User:"
+msgstr "Ejer:"
+
+#. js:form_common.js,1096
+#. js:search_menus.js,177
+msgid "Custom Filter"
+msgstr "Tilpasset filter"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Day"
+msgstr "Dag"
+
+#. js:form_widgets.js,635
+msgid "Deactivate"
+msgstr "Deaktiver"
+
+#. field:Filter.IsDefault
+msgid "Default filter"
+msgstr ""
+
+#. xml:./templates/form/table/tr/td/label
+msgid "Default:"
+msgstr "Standard:"
+
+#. xml:./templates/t/button
+msgid "Delete"
+msgstr "Slet"
+
+#. xml:./templates/t/li/a/t
+msgid "Disable Technical Features"
+msgstr "Slå tekniske funktioner fra"
+
+#. js:form_common.js,868
+#. xml:./templates/t/t/div/button
+#. xml:./templates/t/div/button
+msgid "Discard"
+msgstr "Kassér"
+
+#. js:sidebar.js,217
+msgid "Do you really want to delete this attachment ?"
+msgstr "Er du sikker på at du vil slette vedhæftede"
+
+#. js:form_view.js,733
+msgid "Do you really want to delete this record?"
+msgstr "Vil du virkelig slette denne post?"
+
+#. js:list_view.js,543
+msgid "Do you really want to remove these records?"
+msgstr "Vil du virkelig fjerne disse poster?"
+
+#. field:Filter.Domain
+msgid "Domain"
+msgstr ""
+
+#. xml:./templates/t/ul/li/span
+msgid "Domain:"
+msgstr "Domæne:"
+
+#. js:misc.js,15
+msgid "Don't leave yet,<br />it's still loading..."
+msgstr "Forlad ikke,<br />indlæser stadigt..."
+
+#. js:list_view.js,1847
+msgid "Download"
+msgstr "Download"
+
+#. js:list_view.js,1863
+msgid "Download \\\"%s\\\""
+msgstr ""
+
+#. xml:./templates/t/div/button
+msgid "Edit"
+msgstr "Rediger"
+
+#. xml:./templates/t/li/a/t
+msgid "Enable Technical Features"
+msgstr "Slå tekniske funktioner til"
+
+#. js:view_manager.js,223
+#. js:search_menus.js,84
+#. js:search_menus.js,91
+msgid "Error"
+msgstr "Fejl!"
+
+#. js:pyeval.js,1023
+msgid "Evaluation Error"
+msgstr "Validerings fejl"
+
+#. js:list_view.js,287
+msgid "Export"
+msgstr "Eksporter"
+
+#. js:data_export.js,199
+msgid "Export Data"
+msgstr "Eksporter data"
+
+#. xml:./templates/div/div/div/label
+msgid "Export Formats :"
+msgstr "Eksport formater :"
+
+#. js:data_export.js,201
+msgid "Export To File"
+msgstr "Eksporter Til Fil"
+
+#. xml:./templates/div/div/div/label
+msgid "Export Type :"
+msgstr "Eksport type :"
+
+#. xml:./templates/div/div/div/div/div/label
+msgid "Export all Data"
+msgstr "Eksporter alle Data"
+
+#. js:view_manager.js,437
+msgid "Failed to evaluate search criterions"
+msgstr "Det lykkedes ikke at finde noget ud fra søgekriterierne"
+
+#. js:form_view.js,1300
+msgid "Field '%s' specified in view could not be found."
+msgstr "Felt '%s' defineret i view findes ikke."
+
+#. xml:./templates/t/ul/li/span
+msgid "Field:"
+msgstr "Felt:"
+
+#. js:debug_manager.js,339
+#. xml:./templates/t/t/li/a
+msgid "Fields View Get"
+msgstr "Hent felt visning"
+
+#. js:debug_manager.js,241
+msgid "Fields of %s"
+msgstr "områder med %s"
+
+#. js:form_widgets.js,1114
+msgid "File Upload"
+msgstr "Fil sendt"
+
+#. js:form_widgets.js,1094
+msgid "File upload"
+msgstr "Fil upload"
+
+#. js:search_inputs.js,551
+msgid "Filter"
+msgstr "Filter"
+
+#. field:Filter.Name
+#. resource:base_ir_filters_view_search
+msgid "Filter Name"
+msgstr ""
+
+#. js:search_menus.js,84
+msgid "Filter name is required."
+msgstr "Filternavn er påkrævet"
+
+#. js:search_menus.js,91
+msgid "Filter with same name already exists."
+msgstr "Der eksisterer allerede et filter med samme navn."
+
+#. resource:base_actions_ir_filters_view
+msgid "Filters"
+msgstr "Filtre"
+
+#. resource:base_ir_filters_view_search
+msgid "Filters created by myself"
+msgstr ""
+
+#. resource:base_ir_filters_view_search
+msgid "Filters shared with all users"
+msgstr ""
+
+#. resource:base_ir_filters_view_search
+msgid "Filters visible only for one user"
+msgstr ""
+
+#. js:pivot_view.js,831
+msgid "For Excel compatibility, data cannot be exported if there are more than 256 columns.\\n\\nTip: try to flip axis, filter further or reduce the number of measures."
+msgstr ""
+
+#. js:form_view.js,301
+msgid "Form"
+msgstr "Formular"
+
+#. resource:base_ir_filters_view_search
+#. js:search_inputs.js,698
+msgid "Group By"
+msgstr "Sortér efter"
+
+#. js:form_upgrade_widgets.js,51
+msgid "Hexya Enterprise"
+msgstr ""
+
+#. js:priority.js,49
+msgid "High"
+msgstr "Høj"
+
+#. field:Filter.ID
+#. field:CommonMixin.ID
+msgid "ID"
+msgstr "ID"
+
+#. xml:./templates/t/table/tr/th
+msgid "ID:"
+msgstr "ID:"
+
+#. js:form_widgets.js,1251
+msgid "Image"
+msgstr "Billede"
+
+#. xml:./templates/div/div/div/div/div/label
+msgid "Import-Compatible Export"
+msgstr "Importer - kompatibel eksport"
+
+#. js:form_widgets.js,636
+msgid "Inactive"
+msgstr "Inaktiv"
+
+#. js:graph_widget.js,208
+#. js:graph_widget.js,216
+msgid "Invalid data"
+msgstr "Ugyldige data"
+
+#. js:debug_manager.js,183
+msgid "JS Tests"
+msgstr "JS Tests"
+
+#. xml:./templates/t/table/tr/th
+msgid "Latest Modification Date:"
+msgstr "Seneste ændringsdato:"
+
+#. xml:./templates/t/table/tr/th
+msgid "Latest Modification by:"
+msgstr "Seneste ændring af:"
+
+#. xml:./templates/t/li/a
+msgid "Leave the Developer Tools"
+msgstr "Forlad udviklerværktøj"
+
+#. js:loading.js,46
+msgid "Loading"
+msgstr "Indlæser"
+
+#. js:loading.js,44
+msgid "Loading (%d)"
+msgstr "Indlæser (%d)"
+
+#. js:misc.js,12
+msgid "Loading..."
+msgstr "Indlæser..."
+
+#. js:pyeval.js,1027
+msgid "Local evaluation failure\\n%s\\n\\n%s"
+msgstr ""
+
+#. xml:./templates/t/li/ul/li/a
+msgid "Log out"
+msgstr "Log af"
+
+#. js:priority.js,48
+msgid "Low"
+msgstr "Lav"
+
+#. js:search_inputs.js,451
+msgid "M2O search fields do not currently handle multiple default values"
+msgstr "M2O søgefelt understøtter ikke flere standardværdier"
+
+#. xml:./templates/t/t/t/li/a
+msgid "Manage Filters"
+msgstr "Håndtér filtre"
+
+#. js:misc.js,18
+msgid "Maybe you should consider reloading the application by pressing F5..."
+msgstr "Du bør overveje at genindlæse programmet med tasten F5..."
+
+#. xml:./templates/t/div/button
+#. xml:./templates/t/div/button
+msgid "Measures <span class=\"caret\"/>"
+msgstr ""
+
+#. js:debug_manager.js,326
+msgid "Metadata (%s)"
+msgstr "Metadata (%s)"
+
+#. xml:./templates/t/t/li/span
+msgid "Method:"
+msgstr "Metode:"
+
+#. field:Filter.ResModel
+#. resource:base_ir_filters_view_search
+msgid "Model"
+msgstr ""
+
+#. xml:./templates/t/t/div/ul/li/t/t/b
+msgid "Modified by :"
+msgstr "Ændret af:"
+
+#. xml:./templates/t/ul/li/span
+msgid "Modifiers:"
+msgstr "Modifikationer:"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Month"
+msgstr "Måned"
+
+#. xml:./templates/t/t/li/span
+msgid "More"
+msgstr "Flere"
+
+#. xml:./templates/div/div/div/button
+msgid "Move Down"
+msgstr "Gå nedad"
+
+#. xml:./templates/div/div/div/button
+msgid "Move Up"
+msgstr "Gå op"
+
+#. resource:base_ir_filters_view_search
+msgid "My filters"
+msgstr ""
+
+#. js:form_view.js,315
+msgid "New"
+msgstr "Ny"
+
+#. xml:./templates/form/div/table/tr/td/label
+msgid "New Password"
+msgstr "Ny adgangskode"
+
+#. js:search_inputs.js,331
+msgid "No"
+msgstr "Nej"
+
+#. xml:./templates/t/table/tr/th
+msgid "No Update:"
+msgstr "Ingen opdatering:"
+
+#. xml:./templates/div/p
+msgid ""
+"No data available for this pivot table.  Try to add some records, or make sure\n"
+"        that there is at least one measure and no active filter in the search bar."
+msgstr ""
+"Ingen data til rådighed for denne pivottabel. Prøv at tilføje nogle poster, eller sørg for\n"
+"        at der er mindst en måling og intet aktivt filter i søgelinjen."
+
+#. js:graph_widget.js,94
+msgid "No data to display"
+msgstr "Ingen data at vise"
+
+#. xml:./templates/div/p/strong
+msgid "No data to display."
+msgstr "Ingen data at vise."
+
+#. js:debug_manager.js,321
+msgid "No metadata available"
+msgstr "Ingen metadata tilgængelig"
+
+#. js:form_common.js,245
+msgid "No results to show..."
+msgstr "Ingen resultater fundet"
+
+#. js:form_relational_widgets.js,327
+msgid "No value found for the field %s for value %s"
+msgstr "Ingen værdi fundet for feltet %s for værdi %s"
+
+#. js:utils.js,143
+msgid "Node [%s] is not a JSONified XML node"
+msgstr ""
+
+#. js:priority.js,47
+msgid "Normal"
+msgstr "Normal"
+
+#. js:graph_widget.js,252
+msgid "Not enough data points"
+msgstr "Ikke nok datapunkter"
+
+#. xml:./templates/t/ul/li
+msgid "Not shown in kanban"
+msgstr "Ikke vist i kanban"
+
+#. xml:./templates/t/ul/li/span
+msgid "Object:"
+msgstr "Objekt:"
+
+#. js:dialog.js,40
+#. js:dialog.js,158
+#. js:dialog.js,176
+#. xml:./templates/t/button
+msgid "Ok"
+msgstr "OK"
+
+#. xml:./templates/form/div/table/tr/td/label
+msgid "Old Password"
+msgstr "Gammel adgangskode"
+
+#. xml:./templates/t/ul/li/span
+msgid "On change:"
+msgstr "Ved ændring:"
+
+#. js:progress_bar.js,78
+msgid "Only Integer Value should be valid."
+msgstr "Kun hele tal skal være gyldige."
+
+#. xml:./templates/form/table/tr/td/label
+msgid "Only you"
+msgstr "Kun dig"
+
+#. js:form_relational_widgets.js,153
+#. js:form_relational_widgets.js,921
+#. js:form_relational_widgets.js,1104
+#. js:form_relational_widgets.js,1321
+msgid "Open: "
+msgstr "Åbn: "
+
+#. js:data_export.js,167
+msgid "Please enter save field list name"
+msgstr "Indtast gemt feltlistenavn"
+
+#. xml:./templates/p/strong
+msgid "Please note that only the selected ids will be exported."
+msgstr "Bemærk venligst, at kun de valgte ids vil blive eksporteret."
+
+#. xml:./templates/p/strong
+msgid "Please pay attention that all records matching your search filter will be exported. Not only the selected ids."
+msgstr "Vær opmærksom på, at alle poster, der matcher dit søgefilter, eksporteres. Ikke kun de valgte ids."
+
+#. js:data_export.js,435
+msgid "Please select fields to export..."
+msgstr "Vælg venligst mulighed for at eksportere"
+
+#. js:data_export.js,421
+msgid "Please select fields to save export list..."
+msgstr "Vælg felter for at gemme eksport liste..."
+
+#. xml:./templates/t/li/ul/li/a
+msgid "Preferences"
+msgstr "Egenskaber"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Quarter"
+msgstr "Kvartal"
+
+#. xml:./templates/t/ul/li/span
+msgid "Relation:"
+msgstr "Relation:"
+
+#. xml:./templates/div/div/div/button
+msgid "Remove"
+msgstr "Fjern"
+
+#. xml:./templates/div/div/div/button
+msgid "Remove All"
+msgstr "Fjern alle"
+
+#. js:form_relational_widgets.js,326
+msgid "Render"
+msgstr "Render"
+
+#. xml:./templates/t/li/a
+msgid "Run JS Tests"
+msgstr "Kør JS tests"
+
+#. js:form_common.js,874
+#. xml:./templates/t/t/div/button
+#. xml:./templates/t/div/button
+#. xml:./templates/div/ul/li/button
+msgid "Save"
+msgstr "Gem"
+
+#. js:form_common.js,889
+msgid "Save & New"
+msgstr "Gem & Ny"
+
+#. js:form_widgets.js,1131
+msgid "Save As..."
+msgstr "Gem som..."
+
+#. xml:./templates/t/label
+msgid "Save as:"
+msgstr "Gem som:"
+
+#. xml:./templates/div/ul/li/a
+msgid "Save current search"
+msgstr "Gem nuværende søgning"
+
+#. js:form_view.js,1128
+msgid "Save default"
+msgstr "Gem som standard"
+
+#. xml:./templates/div/div/div/h4/a
+msgid "Save fields list"
+msgstr "Gem listen med felter"
+
+#. xml:./templates/t/label
+msgid "Saved exports:"
+msgstr "Gem eksporteringer"
+
+#. js:search_inputs.js,360
+msgid "Search %(field)s at: %(value)s"
+msgstr "Søg  %(field)s i: %(value)s"
+
+#. js:search_inputs.js,192
+#. js:search_inputs.js,211
+#. js:search_inputs.js,402
+msgid "Search %(field)s for: %(value)s"
+msgstr "Søg %(field)s efter: %(value)s"
+
+#. js:form_common.js,211
+msgid "Search More..."
+msgstr "Søg flere..."
+
+#. js:form_common.js,281
+msgid "Search: "
+msgstr "Søg: "
+
+#. js:form_common.js,1054
+msgid "Select"
+msgstr "Markér"
+
+#. js:form_common.js,1103
+msgid "Selected domain"
+msgstr "Valgt domæne"
+
+#. xml:./templates/t/ul/li/span
+msgid "Selection:"
+msgstr "Markering:"
+
+#. js:form_view.js,1125
+msgid "Set Default"
+msgstr "Indstil som standard"
+
+#. xml:./templates/t/t/t/li/a
+msgid "Set Defaults"
+msgstr "Det standard"
+
+#. js:list_view.js,931
+msgid "Setting 'id' attribute on existing record %s"
+msgstr "Opdaterer 'id' attribute på eksisterende poster %s"
+
+#. resource:base_ir_filters_view_search
+msgid "Shared"
+msgstr ""
+
+#. xml:./templates/t/ul/li/span
+msgid "Size:"
+msgstr "Størrelse:"
+
+#. field:Filter.Sort
+msgid "Sort"
+msgstr ""
+
+#. xml:./templates/t/t/li/span
+msgid "Special:"
+msgstr "Speciel:"
+
+#. js:misc.js,13
+msgid "Still loading..."
+msgstr "Indlæser stadigt..."
+
+#. js:misc.js,14
+msgid "Still loading...<br />Please be patient."
+msgstr "Indlæser stadig... <br />Vent Venligst."
+
+#. js:misc.js,17
+msgid "Take a minute to get a coffee,<br />because it's loading..."
+msgstr "Hent en kop kaffe,<br /> der indlæses"
+
+#. xml:./templates/t/t/t/li/a
+msgid "Technical Translation"
+msgstr "Teknisk oversættelse"
+
+#. js:form_widgets.js,1131
+msgid "The field is empty, there's nothing to save !"
+msgstr "Feltet er tomt, der er intet at gemme !"
+
+#. js:form_view.js,887
+msgid "The following fields are invalid:"
+msgstr "Disse felter er ugyldige"
+
+#. js:list_view_editable.js,122
+msgid "The line has been modified, your changes will be discarded. Are you sure you want to discard the changes ?"
+msgstr "Denne post er ændret, dine ændringer vil blive kasseret. Er du sikker på du vil kassere ændringerne?"
+
+#. help:Filter.Action
+msgid "The menu action this filter applies to. When left empty the filter applies to all menus for this model."
+msgstr ""
+
+#. js:form_relational_widgets.js,1123
+msgid "The o2m record must be saved before an action can be used"
+msgstr "q2m posten skal gemmes før aktion kan vælges"
+
+#. js:form_view.js,301
+msgid "The record could not be found in the database."
+msgstr "Posten findes ikke i databasen."
+
+#. js:form_view.js,756
+msgid "The record has been modified, your changes will be discarded. Are you sure you want to leave this page ?"
+msgstr "Journalen er blevet ændret, dine ændringer vil blive kasseret. Er du sikker på du vil forlade denne side?"
+
+#. js:form_widgets.js,1093
+msgid "The selected file exceed the maximum file size of %s."
+msgstr "Den valgte fil er større end maksimal fil størrelse %s."
+
+#. js:form_relational_widgets.js,1595
+msgid "The type of the field '%s' must be a many2many field with a relation to 'ir.attachment' model."
+msgstr "Typen på feltet '%s' skal være et mange til mange felt med relation til 'ir.attachment' model."
+
+#. help:Filter.User
+msgid "The user this filter is private to. When left empty the filter is public and available to all users."
+msgstr ""
+
+#. js:form_widgets.js,1114
+msgid "There was a problem while uploading your file"
+msgstr "Fejl ved upload af din fil"
+
+#. js:search_menus.js,251
+msgid "This filter is global and will be removed for everybody if you continue."
+msgstr "Dette filter er globalt og vil blive slettet for alle hvis du fortsætter."
+
+#. xml:./templates/div/p
+msgid ""
+"This wizard will export all data that matches the current search criteria to a CSV file.\n"
+"        You can export all data or only the fields that can be reimported after modification."
+msgstr ""
+"Denne guide eksporterer alle data, der matcher de aktuelle søgekriterier til en CSV-fil.\n"
+"       Du kan eksportere alle data eller kun de felter, der kan genimporteres efter ændring."
+
+#. js:form_widgets.js,862
+msgid "Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Hexya is displayed according to your field timezone."
+msgstr ""
+
+#. xml:./templates/t/t/li/a
+msgid "Toggle Timelines"
+msgstr "Skift tidslinjer"
+
+#. js:pivot_view.js,526
+#. js:pivot_view.js,555
+msgid "Total"
+msgstr "I alt"
+
+#. xml:./templates/t/ul/li/span
+msgid "Type:"
+msgstr "Type:"
+
+#. js:form_widgets.js,643
+#. js:list_view.js,289
+msgid "Unarchive"
+msgstr "Fjern fra arkivet"
+
+#. js:graph_widget.js,79
+#. js:list_view.js,1379
+#. js:list_view.js,1385
+#. js:pivot_view.js,508
+msgid "Undefined"
+msgstr "Udefineret"
+
+#. xml:./templates/t
+msgid ""
+"Unhandled widget\n"
+"    <t t-js=\"dict\">console.warn('Unhandled widget', dict.widget);</t>"
+msgstr ""
+
+#. js:data.js,1083
+msgid "Unknown field %s in domain %s"
+msgstr "Ukendt felt %s i domænet %s"
+
+#. js:list_view.js,1086
+msgid "Unknown m2m command %s"
+msgstr "Ukendt m2m kommando %s"
+
+#. js:pyeval.js,991
+msgid "Unknown nonliteral type "
+msgstr "Ukendt karakter type "
+
+#. js:data.js,1075
+msgid "Unknown operator %s in domain %s"
+msgstr "Ukendt operator %s i domænet %s"
+
+#. js:data.js,1138
+msgid "Unnamed"
+msgstr "Ikke navngivet"
+
+#. js:data.js,1121
+msgid "Unsupported operator %s in domain %s"
+msgstr "Ikke-understøttet operator %s i domænet %s"
+
+#. xml:./templates/t/t/div/a
+msgid "Update translations"
+msgstr "Opdater oversættelser"
+
+#. js:form_upgrade_widgets.js,34
+msgid "Upgrade now"
+msgstr "Opgrader nu"
+
+#. xml:./templates/t/div/button
+msgid "Upload your file"
+msgstr "Upload din fil"
+
+#. xml:./templates/t/div/t/div/span
+#. xml:./templates/t/div/span
+msgid "Uploading..."
+msgstr "Uploader..."
+
+#. field:Filter.User
+#. resource:base_ir_filters_view_search
+#. resource:base_ir_filters_view_search
+msgid "User"
+msgstr ""
+
+#. resource:base_menu_ir_filters
+msgid "User-defined Filters"
+msgstr ""
+
+#. js:priority.js,50
+msgid "Very High"
+msgstr "Meget høj"
+
+#. xml:./templates/t/t/t/li/a
+msgid "View Fields"
+msgstr "Vis felter"
+
+#. xml:./templates/t/t/t/t/li/a
+msgid "View Metadata"
+msgstr "Vis metadata"
+
+#. js:form_relational_widgets.js,740
+msgid "View type '%s' is not supported in X2Many."
+msgstr "Se type '%s' understøttes ikke i X2Many"
+
+#. js:crash_manager.js,107
+#. js:form_view.js,761
+#. js:list_view.js,676
+#. js:sidebar.js,131
+msgid "Warning"
+msgstr "Advarsel!"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Week"
+msgstr "Uge"
+
+#. xml:./templates/t/div/div
+msgid "Whoops, you shouldn't have come up to here..."
+msgstr ""
+
+#. js:form_view.js,1304
+msgid "Widget type '%s' is not implemented"
+msgstr "Kontrol typen '%s' er ikke implementeret"
+
+#. xml:./templates/t/ul/li/span
+msgid "Widget:"
+msgstr "Kontrol:"
+
+#. js:progress_bar.js,78
+msgid "Wrong value entered!"
+msgstr "Forkert værdi indtastet"
+
+#. xml:./templates/t/table/tr/th
+msgid "XML ID:"
+msgstr "XML ID:"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Year"
+msgstr "År"
+
+#. js:search_inputs.js,330
+msgid "Yes"
+msgstr "Ja"
+
+#. js:form_relational_widgets.js,47
+msgid "You are creating a new %s, are you sure it does not exist yet?"
+msgstr "Du er ved at oprette en ny %s, er du sikker på den ikke allerede eksisterer?"
+
+#. xml:./templates/t/t/div
+msgid ""
+"You have updated <strong><t t-esc=\"field.string\"/></strong> (<t t-esc=\"lang\"/>).\n"
+"            <a class=\"oe_field_translate\" t-att-name=\"field.name\" href=\"#\">Update translations</a>"
+msgstr ""
+
+#. js:misc.js,16
+msgid "You may not believe it,<br />but the application is actually loading..."
+msgstr "Du tror det ikke,<br />men programmet er igang med at indlæse..."
+
+#. js:sidebar.js,131
+msgid "You must choose at least one record."
+msgstr "Du skal vælge mindst en post."
+
+#. js:list_view.js,676
+msgid "You must select at least one record."
+msgstr "Du skal vælge mindst en post"
+
+#. js:crash_manager.js,57
+msgid "Your Hexya session expired. Please refresh the current web page."
+msgstr ""
+
+#. xml:./templates/t/ul/li/ul/li
+msgid ""
+"[<t t-esc=\"option[0]\"/>]\n"
+"                    <t t-if=\"option[1]\"> - </t>\n"
+"                    <t t-esc=\"option[1]\"/>"
+msgstr ""
+
+#. xml:./templates/t/t
+msgid "console.warn('Unhandled widget', dict.widget);"
+msgstr ""
+
+#. js:utils.js,302
+msgid "kMGTPE"
+msgstr "kMGTPE"
+
+#. js:search_inputs.js,230
+msgid "not a valid integer"
+msgstr "ikke et gyldigt heltal"
+
+#. js:search_inputs.js,245
+msgid "not a valid number"
+msgstr "ikke et gyldigt tal"
+
+#. xml:./templates/t/li/span
+msgid "or"
+msgstr "eller"
+
+#. xml:./templates/t/div/t/t
+msgid "overflow-x: hidden"
+msgstr ""
+
+#. xml:./templates/t/t
+msgid ""
+"var $div = $(document.createElement('div')).attr('t-if', this.attr('t-if')).addClass('o_form_field_monetary');\n"
+"        this.clone(true).appendTo($div);\n"
+"        this.replaceWith($div);"
+msgstr ""
+
+#. xml:./templates/t/div/t
+msgid ""
+"var message = (d.message !== undefined) ? d.message : d.error.data.message;\n"
+"            d.html_error = context.engine.tools.html_escape(message).replace(/\\n/g, '<br/>');"
+msgstr ""
+
+#. xml:./templates/div/div/div/div/button
+msgid "×"
+msgstr ""
+
