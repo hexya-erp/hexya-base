@@ -8,16 +8,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/gin-gonic/gin"
 	"github.com/hexya-erp/hexya/hexya/controllers"
-	"github.com/hexya-erp/hexya/hexya/menus"
-	"github.com/hexya-erp/hexya/hexya/models"
-	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools/generate"
+	"github.com/hexya-erp/hexya/hexya/tools/hweb"
 	"github.com/hexya-erp/hexya/hexya/tools/logging"
-	"github.com/hexya-erp/hexya/pool/h"
-	"github.com/hexya-erp/hexya/pool/q"
 )
 
 const (
@@ -30,130 +25,14 @@ var (
 	// CommonLess is the list of Less assets to import by the web client
 	// that are common to the frontend and the backend. All less assets are
 	// cat'ed together in the given order before being compiled.
-	CommonLess []string
+	CommonLess = []string{
+		"/static/web/src/less/fonts.less",
+		"/static/web/src/less/navbar.less",
+		"/static/web/src/less/mimetypes.less",
+		"/static/web/src/less/animation.less",
+	}
 	// CommonCSS is the list of CSS files to include without compilation both
 	// for the frontend and the backend.
-	CommonCSS []string
-	// CommonJS is the list of JavaScript assets to import by the web client
-	// that are common to the frontend and the backend
-	CommonJS []string
-	// BackendLess is the list of Less assets to import by the web client
-	// that are specific to the backend. All less assets are
-	// cat'ed together in the given order before being compiled.
-	BackendLess []string
-	// BackendCSS is the list of CSS files to include without compilation for
-	// the backend.
-	BackendCSS []string
-	// BackendJS is the list of JavaScript assets to import by the web client
-	// that are specific to the backend.
-	BackendJS []string
-	// FrontendLess is the list of Less assets to import by the web client
-	// that are specific to the frontend. All less assets are
-	// cat'ed together in the given order before being compiled.
-	FrontendLess []string
-	// FrontendCSS is the list of CSS files to include without compilation for
-	// the frontend.
-	FrontendCSS []string
-	// FrontendJS is the list of JavaScript assets to import by the web client
-	// that are specific to the frontend.
-	FrontendJS []string
-	// LessHelpers are less files that must be imported for compiling any assets
-	LessHelpers []string
-)
-
-type templateData struct {
-	Menu               []Menu
-	CommonCSS          []string
-	BackendCSS         []string
-	CommonCompiledCSS  string
-	BackendCompiledCSS string
-	BackendJS          []string
-	CommonJS           []string
-	Modules            []string
-	SessionInfo        gin.H
-}
-
-// A Menu is the representation of a single menu item
-type Menu struct {
-	ID          string
-	Name        string
-	Children    []Menu
-	ActionID    string
-	ActionModel string
-	HasChildren bool
-	HasAction   bool
-}
-
-// getMenuTree returns a slice of Menu objects with all their descendants
-// from a given slice of menus.Menu objects.
-func getMenuTree(menus []*menus.Menu, lang string) []Menu {
-	res := make([]Menu, len(menus))
-	for i, m := range menus {
-		var children []Menu
-		if m.HasChildren {
-			children = getMenuTree(m.Children.Menus, lang)
-		}
-		var model string
-		if m.HasAction {
-			model = m.Action.Model
-		}
-		name := m.Name
-		if lang != "" {
-			name = m.TranslatedName(lang)
-		}
-		res[i] = Menu{
-			ID:          m.ID,
-			Name:        name,
-			ActionID:    m.ActionID,
-			ActionModel: model,
-			Children:    children,
-			HasAction:   m.HasAction,
-			HasChildren: m.HasChildren,
-		}
-	}
-	return res
-}
-
-// WebClient is the controller for the application main page
-func WebClient(c *server.Context) {
-	var lang string
-	if c.Session().Get("uid") != nil {
-		models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
-			user := h.User().Search(env, q.User().ID().Equals(c.Session().Get("uid").(int64)))
-			lang = user.ContextGet().GetString("lang")
-		})
-	}
-	data := templateData{
-		Menu:               getMenuTree(menus.Registry.Menus, lang),
-		Modules:            server.Modules.Names(),
-		CommonCompiledCSS:  commonCSSRoute,
-		BackendCompiledCSS: backendCSSRoute,
-		CommonCSS:          CommonCSS,
-		BackendCSS:         BackendCSS,
-		CommonJS:           CommonJS,
-		BackendJS:          BackendJS,
-		SessionInfo:        SessionInfo(c.Session()),
-	}
-	c.HTML(http.StatusOK, "web.webclient_bootstrap", data)
-}
-
-func init() {
-	log = logging.GetLogger("web/controllers")
-	initStaticPaths()
-	initRoutes()
-	os.Remove(getAssetTempFile(commonCSSRoute))
-	os.Remove(getAssetTempFile(backendCSSRoute))
-	os.Remove(getAssetTempFile(frontendCSSRoute))
-}
-
-func initStaticPaths() {
-	LessHelpers = []string{
-		"/static/web/lib/bootstrap/less/variables.less",
-		"/static/web/lib/bootstrap/less/mixins/vendor-prefixes.less",
-		"/static/web/lib/bootstrap/less/mixins/buttons.less",
-		"/static/web/src/less/variables.less",
-		"/static/web/src/less/utils.less",
-	}
 	CommonCSS = []string{
 		"/static/web/lib/jquery.ui/jquery-ui.css",
 		"/static/web/lib/fontawesome/css/font-awesome.css",
@@ -161,12 +40,8 @@ func initStaticPaths() {
 		"/static/web/lib/select2/select2.css",
 		"/static/web/lib/select2-bootstrap-css/select2-bootstrap.css",
 	}
-	CommonLess = []string{
-		"/static/web/src/less/fonts.less",
-		"/static/web/src/less/navbar.less",
-		"/static/web/src/less/mimetypes.less",
-		"/static/web/src/less/animation.less",
-	}
+	// CommonJS is the list of JavaScript assets to import by the web client
+	// that are common to the frontend and the backend
 	CommonJS = []string{
 		"/static/web/lib/es5-shim/es5-shim.min.js",
 		"/static/web/lib/underscore/underscore.js",
@@ -215,9 +90,9 @@ func initStaticPaths() {
 		"/static/web/lib/bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js",
 		"/static/web/lib/select2/select2.js",
 	}
-	BackendCSS = []string{
-		"/static/web/lib/nvd3/nv.d3.css",
-	}
+	// BackendLess is the list of Less assets to import by the web client
+	// that are specific to the backend. All less assets are
+	// cat'ed together in the given order before being compiled.
 	BackendLess = []string{
 		"/static/web/src/less/import_bootstrap.less",
 		"/static/web/src/less/bootstrap_overridden.less",
@@ -249,6 +124,13 @@ func initStaticPaths() {
 		"/static/web/src/less/search_view_extra.less",
 		"/static/web/src/less/bootswatch.less",
 	}
+	// BackendCSS is the list of CSS files to include without compilation for
+	// the backend.
+	BackendCSS = []string{
+		"/static/web/lib/nvd3/nv.d3.css",
+	}
+	// BackendJS is the list of JavaScript assets to import by the web client
+	// that are specific to the backend.
 	BackendJS = []string{
 		"/static/web/lib/jquery.scrollTo/jquery.scrollTo.js",
 		"/static/web/lib/nvd3/d3.v3.js",
@@ -307,18 +189,48 @@ func initStaticPaths() {
 		"/static/web/src/js/views/tree_view.js",
 		"/static/web/src/js/apps.js",
 	}
+	// FrontendLess is the list of Less assets to import by the web client
+	// that are specific to the frontend. All less assets are
+	// cat'ed together in the given order before being compiled.
 	FrontendLess = []string{
 		"/static/web/src/less/import_bootstrap.less",
 		"/static/web/src/less/bootstrap_overridden.less",
 		"/static/web/src/less/bootswatch.less",
 	}
-	FrontendCSS = []string{}
+	// FrontendCSS is the list of CSS files to include without compilation for
+	// the frontend.
+	FrontendCSS []string
+	// FrontendJS is the list of JavaScript assets to import by the web client
+	// that are specific to the frontend.
 	FrontendJS = []string{
 		"/static/web/src/js/services/session.js",
 	}
-}
+	// LessHelpers are less files that must be imported for compiling any assets
+	LessHelpers = []string{
+		"/static/web/lib/bootstrap/less/variables.less",
+		"/static/web/lib/bootstrap/less/mixins/vendor-prefixes.less",
+		"/static/web/lib/bootstrap/less/mixins/buttons.less",
+		"/static/web/src/less/variables.less",
+		"/static/web/src/less/utils.less",
+	}
+	// FrontendContext is the base context to update when rendering
+	// a frontend HTML template.
+	FrontendContext = hweb.Context{
+		"commonCSS":           CommonCSS,
+		"commonCompiledCSS":   commonCSSRoute,
+		"commonJS":            CommonJS,
+		"frontendCSS":         FrontendCSS,
+		"frontendCompiledCSS": frontendCSSRoute,
+		"frontendJS":          FrontendJS,
+	}
+)
 
-func initRoutes() {
+func init() {
+	log = logging.GetLogger("web/controllers")
+	os.Remove(getAssetTempFile(commonCSSRoute))
+	os.Remove(getAssetTempFile(backendCSSRoute))
+	os.Remove(getAssetTempFile(frontendCSSRoute))
+
 	root := controllers.Registry
 	root.AddController(http.MethodGet, "/", func(c *server.Context) {
 		c.Redirect(http.StatusSeeOther, "/web")
