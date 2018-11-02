@@ -127,6 +127,11 @@ var (
 		"/static/web/src/less/app_drawer.less",
 		"/static/web/src/less/responsive_form_view.less",
 		"/static/web/src/less/responsive_variables.less",
+		"/static/web/src/less/drawer.less",
+		"/static/web/src/less/backend_variables.less",
+		"/static/web/src/less/bootswatch.less",
+		"/static/web/src/less/style.less",
+		"/static/web/src/less/sidebar.less",
 	}
 	// BackendCSS is the list of CSS files to include without compilation for
 	// the backend.
@@ -198,6 +203,8 @@ var (
 		"/static/web/lib/iscroll/iscroll-probe.5.2.0.js",
 		"/static/web/lib/jquery.drawer/js/drawer.3.2.2.js",
 		"/static/web/src/js/web_responsive.js",
+		"/static/web/src/js/sidebar.js",
+		"/static/web/src/js/sidebar-toggle.js",
 	}
 	// FrontendLess is the list of Less assets to import by the web client
 	// that are specific to the frontend. All less assets are
