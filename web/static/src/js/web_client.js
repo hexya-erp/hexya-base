@@ -68,7 +68,7 @@ return AbstractWebClient.extend({
         var self = this;
         ev.preventDefault();
         self.alive(new Model("res.users").call("read", [[session.uid], ["company_id"]])).then(function(data) {
-            self.rpc("/web/action/load", { action_id: "base.action_res_company_form" }).done(function(result) {
+            self.rpc("/web/action/load", { action_id: "base_action_res_company_form" }).done(function(result) {
                 result.res_id = data[0].company_id[0];
                 result.target = "new";
                 result.views = [[false, 'form']];

@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"strconv"
 
+	"github.com/hexya-erp/hexya/hexya/menus"
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools/generate"
 )
@@ -28,7 +29,7 @@ func Image(c *server.Context) {
 	uid := c.Session().Get("uid").(int64)
 	img, gErr := getFieldValue(uid, id, model, field)
 	if gErr != nil {
-		c.Error(fmt.Errorf("Unable to fetch image: %s", gErr))
+		c.Error(fmt.Errorf("unable to fetch image: %s", gErr))
 		return
 	}
 	if img.(string) == "" {
@@ -37,8 +38,20 @@ func Image(c *server.Context) {
 	}
 	res, err := base64.StdEncoding.DecodeString(img.(string))
 	if err != nil {
-		c.Error(fmt.Errorf("Unable to convert image: %s", err))
+		c.Error(fmt.Errorf("unable to convert image: %s", err))
 		return
 	}
 	c.Data(http.StatusOK, "image/png", res)
+}
+
+// MenuImage serves the image for the given menu
+func MenuImage(c *server.Context) {
+	menuID := c.Param("menu_id")
+	menu := menus.Registry.GetByID(menuID)
+	if menu != nil && menu.WebIcon != "" {
+		fp := filepath.Join(generate.HexyaDir, "hexya", "server", menu.WebIcon)
+		c.File(fp)
+		return
+	}
+	c.File(filepath.Join(generate.HexyaDir, "hexya", "server", "static", "web", "src", "img", "placeholder.png"))
 }

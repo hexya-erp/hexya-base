@@ -122,12 +122,17 @@ var (
 		"/static/web/src/less/form_view_extra.less",
 		"/static/web/src/less/form_view_layout_extra.less",
 		"/static/web/src/less/search_view_extra.less",
-		"/static/web/src/less/bootswatch.less",
+		"/static/web/src/less/main.less",
+		"/static/web/src/less/responsive_navbar.less",
+		"/static/web/src/less/app_drawer.less",
+		"/static/web/src/less/responsive_form_view.less",
+		"/static/web/src/less/responsive_variables.less",
 	}
 	// BackendCSS is the list of CSS files to include without compilation for
 	// the backend.
 	BackendCSS = []string{
 		"/static/web/lib/nvd3/nv.d3.css",
+		"/static/web/lib/jquery.drawer/css/drawer.3.2.2.css",
 	}
 	// BackendJS is the list of JavaScript assets to import by the web client
 	// that are specific to the backend.
@@ -188,6 +193,11 @@ var (
 		"/static/web/src/js/views/search_menus.js",
 		"/static/web/src/js/views/tree_view.js",
 		"/static/web/src/js/apps.js",
+		"/static/web/lib/bililite-range/bililiteRange.2.6.js",
+		"/static/web/lib/jquery.sendkeys/jquery.sendkeys.4.js",
+		"/static/web/lib/iscroll/iscroll-probe.5.2.0.js",
+		"/static/web/lib/jquery.drawer/js/drawer.3.2.2.js",
+		"/static/web/src/js/web_responsive.js",
 	}
 	// FrontendLess is the list of Less assets to import by the web client
 	// that are specific to the frontend. All less assets are
@@ -195,7 +205,6 @@ var (
 	FrontendLess = []string{
 		"/static/web/src/less/import_bootstrap.less",
 		"/static/web/src/less/bootstrap_overridden.less",
-		"/static/web/src/less/bootswatch.less",
 	}
 	// FrontendCSS is the list of CSS files to include without compilation for
 	// the frontend.
@@ -246,11 +255,13 @@ func init() {
 	}
 
 	root.AddStatic("/static", filepath.Join(generate.HexyaDir, "hexya", "server", "static"))
+	root.AddController(http.MethodGet, "/dashboard", Dashboard)
 	web := root.AddGroup("/web")
 	{
 		web.AddMiddleWare(LoginRequired)
 		web.AddController(http.MethodGet, "/", WebClient)
 		web.AddController(http.MethodGet, "/image", Image)
+		web.AddController(http.MethodGet, "/menu/:menu_id", MenuImage)
 
 		sess := web.AddGroup("/session")
 		{
