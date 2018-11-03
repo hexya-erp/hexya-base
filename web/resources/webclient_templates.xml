@@ -231,7 +231,7 @@
         </template>
 
         <template id="web.menu_secondary">
-            <a class="o_sub_menu_logo" t-attf-href="/web/{% if debug %}/?debug{% endif %}">
+            <a class="o_sub_menu_logo" t-attf-href="/web/{% if debug %}?debug={% endif %}">
                 <span class="oe_logo_edit">Edit Company data</span>
                 <img src='/web/binary/company_logo'/>
             </a>
@@ -296,10 +296,7 @@
         </template>
 
         <template id="web.menu_link">
-            <t t-if="debug">
-                <t t-set="debug_param" t-value="'?&amp;debug='"/>
-            </t>
-            <a t-attf-href="/web/{% if debug %}?&amp;debug={% endif %}#menu_id={{ menu.ID }}{% if menu.HasAction %}&amp;action={{ menu.ActionID}}{% endif %}"
+            <a t-attf-href="/web/{% if debug %}?debug={% endif %}#menu_id={{ menu.ID }}{% if menu.HasAction %}&amp;action={{ menu.ActionID}}{% endif %}"
                t-attf-class="{% if menu.HasChildren %}oe_menu_toggler{% else %}oe_menu_leaf{% endif %}"
                t-att-data-menu="menu.ID"
                t-att-data-menu-xmlid="menu.ID"
@@ -457,7 +454,7 @@
                         <div class="app-sidebar navbar-collapse collapse">
                             <ul id="sidebar" class="app-sidebar-menu">
                                 <li class="nav-item" t-as="menu" t-foreach="menu_data.Children" >
-                                    <a t-attf-href="/web/{% if debug %}?&amp;debug={% endif %}#menu_id={{ menu.ID }}&amp;action={% if menu.HasAction %}{{ menu.ActionID}}{% endif %}"
+                                    <a t-attf-href="/web/{% if debug %}?debug={% endif %}#menu_id={{ menu.ID }}&amp;action={% if menu.HasAction %}{{ menu.ActionID}}{% endif %}"
                                        t-attf-class="nav-link{% if menu.HasChildren %} nav-toggle{% endif %}"
                                        t-att-data-menu="menu.ID"
                                        t-att-data-menu-xmlid="menu.ID"
