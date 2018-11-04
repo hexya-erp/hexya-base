@@ -30,6 +30,7 @@ var (
 		"/static/web/src/less/navbar.less",
 		"/static/web/src/less/mimetypes.less",
 		"/static/web/src/less/animation.less",
+		"/static/web/src/less/backend_variables.less",
 	}
 	// CommonCSS is the list of CSS files to include without compilation both
 	// for the frontend and the backend.
@@ -211,7 +212,6 @@ var (
 	// cat'ed together in the given order before being compiled.
 	FrontendLess = []string{
 		"/static/web/src/less/import_bootstrap.less",
-		"/static/web/src/less/bootstrap_overridden.less",
 	}
 	// FrontendCSS is the list of CSS files to include without compilation for
 	// the frontend.
@@ -272,7 +272,6 @@ func init() {
 
 		sess := web.AddGroup("/session")
 		{
-			sess.AddController(http.MethodPost, "/get_session_info", GetSessionInfo)
 			sess.AddController(http.MethodPost, "/modules", Modules)
 			sess.AddController(http.MethodGet, "/logout", Logout)
 			sess.AddController(http.MethodPost, "/change_password", ChangePassword)

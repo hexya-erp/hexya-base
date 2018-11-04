@@ -15,13 +15,36 @@
     }
 }
 
-//.app-sidebar-panel:hover {
-//    .o-flex(0, 0, @hexya-sidebar-width);
-//}
-
 .app-sidebar {
     white-space: nowrap;
     padding: 0;
+
+    .o_sub_menu_logo {
+        display: block;
+        .o-flex(0, 0, auto);
+        text-align: center;
+        position: relative;
+
+        > img {
+            margin: 14px 0;
+            background-color: white;
+        }
+
+        .oe_logo_edit {
+            position: absolute;
+            top: 1px;
+            width: 100%;
+            padding: 4px;
+            margin: 14px 0;
+            display: none;
+            color: #eee;
+            background: rgba(37,37,37,0.9);
+        }
+        &:hover .oe_logo_edit_admin {
+            display: block;
+        }
+    }
+
     .app-sidebar-menu {
 	list-style: none;
 	margin: 0;

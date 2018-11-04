@@ -11,13 +11,35 @@ import (
 	"strconv"
 
 	"github.com/hexya-erp/hexya/hexya/menus"
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools/generate"
+	"github.com/hexya-erp/hexya/pool/h"
 )
 
 // CompanyLogo serves the logo of the company
 func CompanyLogo(c *server.Context) {
-	c.File(filepath.Join(generate.HexyaDir, "hexya", "server", "static", "web", "src", "img", "logo.png"))
+	info := GetSessionInfo(c.Session())
+	var img string
+	switch {
+	case info == nil:
+		// Not connected. Get image of administrator company
+		models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
+			img = h.User().NewSet(env).Browse([]int64{security.SuperUserID}).Company().LogoWeb()
+		})
+	default:
+		// Connected. Get image of session's company
+		models.ExecuteInNewEnvironment(info.UID, func(env models.Environment) {
+			img = h.Company().NewSet(env).Browse([]int64{info.CompanyID}).LogoWeb()
+		})
+	}
+	res, err := base64.StdEncoding.DecodeString(img)
+	if err != nil || img == "" {
+		c.File(filepath.Join(generate.HexyaDir, "hexya", "server", "static", "web", "src", "img", "nologo.png"))
+		return
+	}
+	c.Data(http.StatusOK, "image/png", res)
 }
 
 // Image serves the image stored in the database (base64 encoded)

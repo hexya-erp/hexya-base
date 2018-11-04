@@ -38,6 +38,8 @@ func LoginPost(c *server.Context) {
 	sess := c.Session()
 	sess.Set("uid", uid)
 	sess.Set("login", login)
+	// TODO Manage session_id
+	sess.Set("ID", int64(1))
 	sess.Save()
 	redirect := c.DefaultPostForm("redirect", "/web")
 	c.Redirect(http.StatusSeeOther, redirect)

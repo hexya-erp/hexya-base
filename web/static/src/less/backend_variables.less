@@ -14,23 +14,13 @@
 @gray-light:             #AEA79F;   // #999
 @gray-lighter:           lighten(@gray-base, 93.5%); // #eee
 
-@brand-primary:			#337AB7;
+@brand-primary:			@hexya-brand-primary;
 @brand-success:         #38B44A;
-@brand-info:            #337AB7; // same color als primary
+@brand-info:            @hexya-brand-primary; // same color als primary
 @brand-warning:         #EFB73E;
 @brand-danger:          #DF382C;
 
-@hexya-brand-primary: @brand-primary;
-@hexya-brand-optional: @brand-primary;
-@hexya-brand-secondary: #f0eeee;
-@hexya-brand-lightsecondary: #e2e2e0;
-
-@hexya-color-pink: @brand-primary;
-@hexya-main-color-muted: #a8a8a8;
-@hexya-main-text-color: #4c4c4c;
-
-@hexya-view-background-color: white;
-@hexya-shadow-color: #303030;
+@hexya-form-required: lighten(@hexya-color-primary-dark, 65%);
 
 //== Scaffolding
 //
@@ -215,7 +205,7 @@
 @input-border-radius-small:      @border-radius-small;
 
 //** Border color for inputs on focus
-@input-border-focus:             #66afe9;
+@input-border-focus:             @hexya-color-primary-medium;
 
 //** Placeholder text color
 @input-color-placeholder:        @gray-light;

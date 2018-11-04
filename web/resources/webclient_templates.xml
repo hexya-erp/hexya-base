@@ -72,7 +72,6 @@
 
         <template id="web.login_layout" name="Login Layout">
             <t t-call="web.layout">
-                <t t-set="html_data" t-value="{&quot;style&quot;: &quot;height: 100%;&quot;}"/>
                 <t t-set="head">
                     <t t-call="web.assets_common_css"/>
                     <t t-call="web.assets_frontend_css"/>
@@ -84,7 +83,7 @@
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3 o_database_list">
                         <div class="text-center">
-                            <img t-attf-src="/web/binary/company_logo{% if db %}?dbname={{ db }}{% endif %}"/>
+                            <img t-attf-src="/web/binary/company_logo"/>
                         </div>
                         <t t-raw="0"/>
                         <p class="text-center">
@@ -452,6 +451,10 @@
                 <div class="o_main">
                     <div id="app-sidebar" class="app-sidebar-panel">
                         <div class="app-sidebar navbar-collapse collapse">
+                            <a class="o_sub_menu_logo" t-attf-href="/web/{% if debug %}?debug={% endif %}">
+                                <span class="oe_logo_edit">Edit Company data</span>
+                                <img src='/web/binary/company_logo'/>
+                            </a>
                             <ul id="sidebar" class="app-sidebar-menu">
                                 <li class="nav-item" t-as="menu" t-foreach="menu_data.Children" >
                                     <a t-attf-href="/web/{% if debug %}?debug={% endif %}#menu_id={{ menu.ID }}&amp;action={% if menu.HasAction %}{{ menu.ActionID}}{% endif %}"

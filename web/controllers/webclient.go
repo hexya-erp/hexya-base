@@ -150,7 +150,7 @@ func WebClient(c *server.Context) {
 		HasChildren: true,
 	}
 
-	siBytes, err := json.Marshal(SessionInfo(c.Session()))
+	siBytes, err := json.Marshal(GetSessionInfo(c.Session()))
 	if err != nil {
 		c.Error(err)
 		return
