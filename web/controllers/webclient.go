@@ -4,12 +4,11 @@
 package controllers
 
 import (
-	"net/http"
-	"strings"
-
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"os"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/hexya-erp/hexya/hexya/i18n"

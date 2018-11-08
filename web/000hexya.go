@@ -18,10 +18,9 @@ import (
 	// Loading dependencies as blank imports
 	_ "github.com/hexya-erp/hexya-base/base"
 	// Loading controllers package
-
 	_ "github.com/hexya-erp/hexya-base/web/controllers"
 	"github.com/hexya-erp/hexya-base/web/scripts"
-	"github.com/hexya-erp/hexya/cmd"
+	"github.com/hexya-erp/hexya/hexya/i18n/i18nUpdate"
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools/logging"
 )
@@ -41,12 +40,12 @@ func init() {
 		PostInit: func() {},
 	})
 
-	cmd.RegisterPoUpdateRuleSet(MODULE_NAME, &cmd.RuleSet{
+	i18nUpdate.RegisterPoUpdateRuleSet(MODULE_NAME, &i18nUpdate.RuleSet{
 		Ruleset: [][]string{
 			{`/static/src/.*\.js`},
 			{`/static/src/.*\.xml`},
 		},
 	})
 
-	cmd.RegisterPoUpdateFunc(MODULE_NAME, scripts.UpdateFunc)
+	i18nUpdate.RegisterPoUpdateFunc(MODULE_NAME, scripts.UpdateFunc)
 }
