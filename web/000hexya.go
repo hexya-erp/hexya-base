@@ -40,12 +40,12 @@ func init() {
 		PostInit: func() {},
 	})
 
-	i18nUpdate.RegisterPoUpdateRuleSet(MODULE_NAME, &i18nUpdate.RuleSet{
+	translation.Register().RuleSet(MODULE_NAME, &translation.RuleSet{
 		Ruleset: [][]string{
 			{`/static/src/.*\.js`},
 			{`/static/src/.*\.xml`},
 		},
 	})
 
-	i18nUpdate.RegisterPoUpdateFunc(MODULE_NAME, scripts.UpdateFunc)
+	translation.Register().Func(MODULE_NAME, scripts.UpdateFunc)
 }
