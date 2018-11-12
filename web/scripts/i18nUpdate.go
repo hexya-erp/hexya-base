@@ -14,19 +14,19 @@ import (
 	"github.com/hexya-erp/hexya/hexya/tools/strutils"
 )
 
-func addToTranslationMap(messages i18nUpdate.MessageMap, lang, moduleName, value, extractedCmt string) i18nUpdate.MessageMap {
+func addToTranslationMap(messages translation.MessageMap, lang, moduleName, value, extractedCmt string) translation.MessageMap {
 	translated := i18n.TranslateCustom(lang, value, moduleName)
 	if translated == value {
 		translated = ""
 	}
-	msgRef := i18nUpdate.MessageRef{MsgId: value}
-	msg := i18nUpdate.GetOrCreateMessage(messages, msgRef, translated)
+	msgRef := translation.MessageRef{MsgId: value}
+	msg := translation.GetOrCreateMessage(messages, msgRef, translated)
 	msg.ExtractedComment += extractedCmt //fmt.Sprintf("xml:%s\n", path+"/"+n.XMLName.Local)
 	messages[msgRef] = msg
 	return messages
 }
 
-func updateFuncJS(messages i18nUpdate.MessageMap, lang, path, moduleName string) i18nUpdate.MessageMap {
+func updateFuncJS(messages translation.MessageMap, lang, path, moduleName string) translation.MessageMap {
 	content, err := ioutil.ReadFile(path)
 	if err != nil {
 		return messages
@@ -71,7 +71,7 @@ func walk(nodes []Node, f func(Node, string) (bool, string), str string) {
 	}
 }
 
-func updateFuncXML(messages i18nUpdate.MessageMap, lang, path, moduleName string) i18nUpdate.MessageMap {
+func updateFuncXML(messages translation.MessageMap, lang, path, moduleName string) translation.MessageMap {
 	data, err := ioutil.ReadFile(path)
 	buf := bytes.NewBuffer(data)
 	dec := xml.NewDecoder(buf)
@@ -95,7 +95,7 @@ func updateFuncXML(messages i18nUpdate.MessageMap, lang, path, moduleName string
 	return messages
 }
 
-func UpdateFunc(messages i18nUpdate.MessageMap, lang, path, moduleName string) i18nUpdate.MessageMap {
+func UpdateFunc(messages translation.MessageMap, lang, path, moduleName string) translation.MessageMap {
 	if filepath.Ext(path) == ".js" {
 		return updateFuncJS(messages, lang, path, moduleName)
 	}
