@@ -17,10 +17,11 @@ package web
 import (
 	// Loading dependencies as blank imports
 	_ "github.com/hexya-erp/hexya-base/base"
+	"github.com/hexya-erp/hexya/hexya/i18n/translations"
+
 	// Loading controllers package
 	_ "github.com/hexya-erp/hexya-base/web/controllers"
 	"github.com/hexya-erp/hexya-base/web/scripts"
-	"github.com/hexya-erp/hexya/hexya/i18n/i18nUpdate"
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools/logging"
 )
@@ -40,12 +41,12 @@ func init() {
 		PostInit: func() {},
 	})
 
-	translation.Register().RuleSet(MODULE_NAME, &translation.RuleSet{
-		Ruleset: [][]string{
+	translations.RegisterRuleSet(MODULE_NAME, &translations.RuleSet{
+		Rules: [][]string{
 			{`/static/src/.*\.js`},
 			{`/static/src/.*\.xml`},
 		},
 	})
 
-	translation.Register().Func(MODULE_NAME, scripts.UpdateFunc)
+	translations.RegisterFunc(MODULE_NAME, scripts.UpdateFunc)
 }

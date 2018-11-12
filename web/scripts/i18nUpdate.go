@@ -5,28 +5,29 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io/ioutil"
+	"path"
 	"path/filepath"
 	"regexp"
 	"strings"
 
 	"github.com/hexya-erp/hexya/hexya/i18n"
-	"github.com/hexya-erp/hexya/hexya/i18n/i18nUpdate"
+	"github.com/hexya-erp/hexya/hexya/i18n/translations"
 	"github.com/hexya-erp/hexya/hexya/tools/strutils"
 )
 
-func addToTranslationMap(messages translation.MessageMap, lang, moduleName, value, extractedCmt string) translation.MessageMap {
+func addToTranslationMap(messages translations.MessageMap, lang, moduleName, value, extractedCmt string) translations.MessageMap {
 	translated := i18n.TranslateCustom(lang, value, moduleName)
 	if translated == value {
 		translated = ""
 	}
-	msgRef := translation.MessageRef{MsgId: value}
-	msg := translation.GetOrCreateMessage(messages, msgRef, translated)
-	msg.ExtractedComment += extractedCmt //fmt.Sprintf("xml:%s\n", path+"/"+n.XMLName.Local)
+	msgRef := translations.MessageRef{MsgId: value}
+	msg := translations.GetOrCreateMessage(messages, msgRef, translated)
+	msg.ExtractedComment += extractedCmt
 	messages[msgRef] = msg
 	return messages
 }
 
-func updateFuncJS(messages translation.MessageMap, lang, path, moduleName string) translation.MessageMap {
+func updateFuncJS(messages translations.MessageMap, lang, path, moduleName string) translations.MessageMap {
 	content, err := ioutil.ReadFile(path)
 	if err != nil {
 		return messages
@@ -56,6 +57,7 @@ func updateFuncJS(messages translation.MessageMap, lang, path, moduleName string
 	return messages
 }
 
+// A Node is an XML Node used for walking down the tree.
 type Node struct {
 	XMLName xml.Name
 	Content []byte     `xml:",innerxml"`
@@ -71,31 +73,32 @@ func walk(nodes []Node, f func(Node, string) (bool, string), str string) {
 	}
 }
 
-func updateFuncXML(messages translation.MessageMap, lang, path, moduleName string) translation.MessageMap {
-	data, err := ioutil.ReadFile(path)
+func updateFuncXML(messages translations.MessageMap, lang, xmlPath, moduleName string) translations.MessageMap {
+	data, err := ioutil.ReadFile(xmlPath)
 	buf := bytes.NewBuffer(data)
 	dec := xml.NewDecoder(buf)
 	var n Node
 	err = dec.Decode(&n)
 	if err != nil {
-		panic(err)
+		panic(fmt.Errorf("unable to read file %s: %s", xmlPath, err))
 	}
-	walk([]Node{n}, func(n Node, path string) (bool, string) {
+	walk([]Node{n}, func(n Node, xmlPath string) (bool, string) {
 		content := strings.TrimSpace(string(n.Content))
 		for _, attr := range n.Attrs {
 			if strutils.IsInStringSlice(attr.Name.Local, []string{`title`, `alt`, `label`, `placeholder`}) && len(attr.Value) > 0 {
-				addToTranslationMap(messages, lang, moduleName, attr.Name.Local, fmt.Sprintf("xml:%s\n", path+"/"+n.XMLName.Local))
+				addToTranslationMap(messages, lang, moduleName, attr.Value, fmt.Sprintf("xml:%s\n", path.Join(xmlPath, n.XMLName.Local)))
 			}
 		}
 		if len(content) > 0 && !strings.HasPrefix(content, "<") {
-			addToTranslationMap(messages, lang, moduleName, content, fmt.Sprintf("xml:%s\n", path+"/"+n.XMLName.Local))
+			addToTranslationMap(messages, lang, moduleName, content, fmt.Sprintf("xml:%s\n", path.Join(xmlPath, n.XMLName.Local)))
 		}
-		return true, path + "/" + n.XMLName.Local
+		return true, path.Join(xmlPath, n.XMLName.Local)
 	}, ".")
 	return messages
 }
 
-func UpdateFunc(messages translation.MessageMap, lang, path, moduleName string) translation.MessageMap {
+// UpdateFunc is the function that extracts strings to translate from XML and JS files.
+func UpdateFunc(messages translations.MessageMap, lang, path, moduleName string) translations.MessageMap {
 	if filepath.Ext(path) == ".js" {
 		return updateFuncJS(messages, lang, path, moduleName)
 	}
