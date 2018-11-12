@@ -18,8 +18,19 @@ import (
 	"github.com/spf13/viper"
 )
 
-// SessionInfo returns a map with information about the given session
-func SessionInfo(sess sessions.Session) gin.H {
+// SessionInfo gathers all information about the current session
+type SessionInfo struct {
+	SessionID   int64                  `json:"session_id"`
+	UID         int64                  `json:"uid"`
+	UserContext map[string]interface{} `json:"user_context"`
+	DB          string                 `json:"db"`
+	UserName    string                 `json:"username"`
+	CompanyID   int64                  `json:"company_id"`
+	Name        string                 `json:"name"`
+}
+
+// GetSessionInfo returns a map with information about the given session
+func GetSessionInfo(sess sessions.Session) *SessionInfo {
 	var (
 		userContext *types.Context
 		companyID   int64
@@ -32,23 +43,17 @@ func SessionInfo(sess sessions.Session) gin.H {
 			companyID = user.Company().ID()
 			userName = user.Name()
 		})
-		return gin.H{
-			"session_id":   sess.Get("ID"),
-			"uid":          sess.Get("uid"),
-			"user_context": userContext.ToMap(),
-			"db":           viper.GetString("DB.Name"),
-			"username":     sess.Get("login"),
-			"company_id":   companyID,
-			"name":         userName,
+		return &SessionInfo{
+			SessionID:   sess.Get("ID").(int64),
+			UID:         sess.Get("uid").(int64),
+			UserContext: userContext.ToMap(),
+			DB:          viper.GetString("DB.Name"),
+			UserName:    sess.Get("login").(string),
+			CompanyID:   companyID,
+			Name:        userName,
 		}
 	}
-	return gin.H{}
-}
-
-// GetSessionInfo returns the information fo the current session
-// to the client
-func GetSessionInfo(c *server.Context) {
-	c.RPC(http.StatusOK, SessionInfo(c.Session()))
+	return nil
 }
 
 // Modules returns the list of installed modules to the client

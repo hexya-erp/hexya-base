@@ -17,6 +17,7 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models/fieldtype"
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/tools/nbutils"
+	"github.com/hexya-erp/hexya/hexya/tools/strutils"
 	"github.com/hexya-erp/hexya/hexya/views"
 	"github.com/hexya-erp/hexya/pool/h"
 	"github.com/hexya-erp/hexya/pool/q"
@@ -519,12 +520,36 @@ func init() {
 				modifiers[modifier] = false
 			}
 			// Force modifiers if defined in the model
+			if fieldInfos[fieldName].ReadOnlyFunc != nil {
+				req, cond := fieldInfos[fieldName].ReadOnlyFunc(rs.Env())
+				modifiers["readonly"] = req
+				if cond != nil {
+					modifiers["readonly"] = domains.Domain(cond.Underlying().Serialize()).String()
+				}
+			}
 			if fieldInfos[fieldName].ReadOnly {
 				modifiers["readonly"] = true
+			}
+
+			if fieldInfos[fieldName].RequiredFunc != nil {
+				req, cond := fieldInfos[fieldName].RequiredFunc(rs.Env())
+				modifiers["required"] = req
+				if cond != nil {
+					modifiers["required"] = domains.Domain(cond.Underlying().Serialize()).String()
+				}
 			}
 			if fieldInfos[fieldName].Required {
 				modifiers["required"] = true
 			}
+
+			if fieldInfos[fieldName].InvisibleFunc != nil {
+				req, cond := fieldInfos[fieldName].InvisibleFunc(rs.Env())
+				modifiers["invisible"] = req
+				if cond != nil {
+					modifiers["invisible"] = domains.Domain(cond.Underlying().Serialize()).String()
+				}
+			}
+
 			return modifiers
 		})
 
@@ -532,18 +557,13 @@ func init() {
 		`ProcessElementAttrs returns a modifiers map according to the domain
 		in attrs of the given element`,
 		func(rc *models.RecordCollection, element *etree.Element, fieldInfos map[string]*models.FieldInfo) map[string]interface{} {
-			fieldName := element.SelectAttr("name").Value
 			modifiers := map[string]interface{}{"readonly": false, "required": false, "invisible": false}
 			attrStr := element.SelectAttrValue("attrs", "")
 			if attrStr == "" {
 				return modifiers
 			}
 			var attrs map[string]domains.Domain
-			attrStr = strings.Replace(attrStr, "(", "[", -1)
-			attrStr = strings.Replace(attrStr, ")", "]", -1)
-			attrStr = strings.Replace(attrStr, "'", "\"", -1)
-			attrStr = strings.Replace(attrStr, "True", "true", -1)
-			attrStr = strings.Replace(attrStr, "False", "false", -1)
+			attrStr = strutils.DictToJSON(attrStr)
 			err := json.Unmarshal([]byte(attrStr), &attrs)
 			if err != nil {
 				log.Panic("Invalid attrs definition", "model", rc.ModelName(), "error", err, "attrs", attrStr)
@@ -554,28 +574,6 @@ func init() {
 					continue
 				}
 				modifiers[modifier] = attrs[modifier]
-			}
-			// Force modifiers if defined in the model
-			if fieldInfos[fieldName].ReadOnlyFunc != nil {
-				req, cond := fieldInfos[fieldName].ReadOnlyFunc(rc.Env())
-				modifiers["readonly"] = req
-				if cond != nil {
-					modifiers["readonly"] = domains.Domain(cond.Underlying().Serialize()).String()
-				}
-			}
-			if fieldInfos[fieldName].RequiredFunc != nil {
-				req, cond := fieldInfos[fieldName].RequiredFunc(rc.Env())
-				modifiers["required"] = req
-				if cond != nil {
-					modifiers["required"] = domains.Domain(cond.Underlying().Serialize()).String()
-				}
-			}
-			if fieldInfos[fieldName].InvisibleFunc != nil {
-				req, cond := fieldInfos[fieldName].InvisibleFunc(rc.Env())
-				modifiers["invisible"] = req
-				if cond != nil {
-					modifiers["invisible"] = domains.Domain(cond.Underlying().Serialize()).String()
-				}
 			}
 
 			return modifiers
@@ -620,11 +618,12 @@ func init() {
 		func(rs h.CommonMixinSet, params webdata.ReadGroupParams) []models.FieldMap {
 			rSet := rs.AddDomainLimitOffset(params.Domain, models.ConvertLimitToInt(params.Limit), params.Offset, params.Order)
 			rSet = rSet.GroupBy(models.ConvertToFieldNameSlice(params.GroupBy)...)
-			aggregates := rSet.Aggregates(models.ConvertToFieldNameSlice(params.Fields)...)
+			// We don't want aggregates as CommonMixin Aggregate, so we switch to RecordCollection
+			aggregates := rSet.Call("Aggregates", models.ConvertToFieldNameSlice(params.Fields)).([]models.GroupAggregateRow)
 			res := make([]models.FieldMap, len(aggregates))
 			fInfos := rSet.FieldsGet(models.FieldsGetArgs{})
 			for i, ag := range aggregates {
-				line := rs.AddNamesToRelations(ag.Values.FieldMap(), fInfos)
+				line := rs.AddNamesToRelations(ag.Values, fInfos)
 				line["__count"] = ag.Count
 				line["__domain"] = ag.Condition.Serialize()
 				res[i] = line

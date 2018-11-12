@@ -13,9 +13,9 @@ div.o_checkbox {
 // Inputs and selects
 // ------------------------------------------------------------------
 .o-input() {
-    border: 0;
+    border: 1px solid @hexya-form-lightsecondary;
     border-radius: @border-radius-base;
-    padding: 0;
+    padding: 2px 4px;
     color: #1f1f1f;
 }
 input[type="text"], input[type="password"], input[type="number"], textarea, select {
@@ -48,7 +48,7 @@ select {
 // ------------------------------------------------------------------
 // Planner
 // ------------------------------------------------------------------
-// Because the `web_planner` module has to work with Hexya community and enterprise without
+// Because the `web_planner` module has to work with Odoo community and enterprise without
 // code duplication, fine-tune the display of it in the community webclient here
 #PlannerDialog {
     top: 35px;
