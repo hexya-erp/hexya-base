@@ -20,6 +20,7 @@ import (
 
 	"github.com/hexya-erp/hexya-base/base/basetypes"
 	"github.com/hexya-erp/hexya/hexya/actions"
+	"github.com/hexya-erp/hexya/hexya/i18n"
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/fieldtype"
 	"github.com/hexya-erp/hexya/hexya/models/operator"
@@ -108,29 +109,52 @@ func init() {
 		"Children": models.One2ManyField{RelationModel: h.Partner(),
 			ReverseFK: "Parent", Filter: q.Partner().Active().Equals(true)},
 		"Ref": models.CharField{String: "Internal Reference", Index: true},
-		"Lang": models.CharField{String: "Language",
+		//"Lang": models.CharField{String: "Language",
+		//	Default: func(env models.Environment) interface{} {
+		//		return env.Context().GetString("lang")
+		//	}, Help: `If the selected language is loaded in the system, all documents related to
+		//this contact will be printed in this language. If not, it will be English.`},
+		"Lang": models.SelectionField{
+			String: "Language",
 			Default: func(env models.Environment) interface{} {
 				return env.Context().GetString("lang")
-			}, Help: `If the selected language is loaded in the system, all documents related to
+			},
+			SelectionFunc: func() types.Selection {
+				out := make(types.Selection)
+				for _, lang := range i18n.Langs {
+					l := i18n.GetLangParameters(lang)
+					out[lang] = l.Name
+				}
+				return out
+			},
+			Help: `If the selected language is loaded in the system, all documents related to
 this contact will be printed in this language. If not, it will be English.`},
-		"TZ": models.CharField{String: "Timezone",
+		"TZ": models.CharField{
+			String: "Timezone",
 			Default: func(env models.Environment) interface{} {
 				return env.Context().GetString("tz")
-			}, Help: `"The partner's timezone, used to output proper date and time values
+			},
+			Help: `"The partner's timezone, used to output proper date and time values
 inside printed reports. It is important to set a value for this field.
 You should use the same timezone that is otherwise used to pick and
 render date and time values: your computer's timezone.`},
-		"TZOffset": models.CharField{Compute: h.Partner().Methods().ComputeTZOffset(),
-			String: "Timezone Offset", Depends: []string{"TZ"}},
-		"User": models.Many2OneField{RelationModel: h.User(),
-			String: "Salesperson", Help: "The internal user that is in charge of communicating with this contact if any."},
+		"TZOffset": models.CharField{
+			Compute: h.Partner().Methods().ComputeTZOffset(),
+			String:  "Timezone Offset", Depends: []string{"TZ"}},
+		"User": models.Many2OneField{
+			RelationModel: h.User(),
+			String:        "Salesperson", Help: "The internal user that is in charge of communicating with this contact if any."},
 		"VAT": models.CharField{String: "TIN", Help: `Tax Identification Number.
 Fill it if the company is subjected to taxes.
 Used by the some of the legal statements.`},
-		"Banks":   models.One2ManyField{String: "Bank Accounts", RelationModel: h.BankAccount(), ReverseFK: "Partner"},
-		"Website": models.CharField{Help: "Website of Partner or Company"},
-		"Comment": models.CharField{String: "Notes"},
-		"Categories": models.Many2ManyField{RelationModel: h.PartnerCategory(), String: "Tags",
+		"Banks": models.One2ManyField{
+			String: "Bank Accounts", RelationModel: h.BankAccount(), ReverseFK: "Partner"},
+		"Website": models.CharField{
+			Help: "Website of Partner or Company"},
+		"Comment": models.CharField{
+			String: "Notes"},
+		"Categories": models.Many2ManyField{
+			RelationModel: h.PartnerCategory(), String: "Tags",
 			Default: func(env models.Environment) interface{} {
 				return h.PartnerCategory().Browse(env, []int64{env.Context().GetInteger("category_id")})
 			}},
@@ -144,11 +168,12 @@ Used by the some of the legal statements.`},
 If it's not checked, purchase people will not see it when encoding a purchase order.`},
 		"Employee": models.BooleanField{Help: "Check this box if this contact is an Employee."},
 		"Function": models.CharField{String: "Job Position"},
-		"Type": models.SelectionField{Selection: types.Selection{
-			"contact":  "Contact",
-			"invoice":  "Invoice Address",
-			"delivery": "Shipping Address",
-			"other":    "Other Address"},
+		"Type": models.SelectionField{
+			Selection: types.Selection{
+				"contact":  "Contact",
+				"invoice":  "Invoice Address",
+				"delivery": "Shipping Address",
+				"other":    "Other Address"},
 			Default: models.DefaultValue("contact"), Required: true,
 			Help: "Used to select automatically the right address according to the context in sales and purchases documents.",
 		},
@@ -184,7 +209,6 @@ access or with a limited access created for sharing data.`},
 		"ContactAddress": models.CharField{Compute: h.Partner().Methods().ComputeContactAddress(),
 			String: "Complete Address", Depends: []string{"Street", "Street2", "Zip", "City", "State", "Country",
 				"Country.AddressFormat", "Country.Code", "Country.Name", "CompanyName", "State.Code", "State.Name"}},
-
 		"CommercialPartner": models.Many2OneField{RelationModel: h.Partner(),
 			Compute: h.Partner().Methods().ComputeCommercialPartner(), String: "Commercial Entity", Stored: true,
 			Index: true, Depends: []string{"IsCompany", "Parent", "Parent.CommercialPartner"}},

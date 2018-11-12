@@ -1,0 +1,1146 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. js:form_common.js,874
+msgid " & Close"
+msgstr "i zatvori"
+
+#. js:search_inputs.js,553
+#. js:search_view.js,205
+msgid " or "
+msgstr "ili"
+
+#. js:view_manager.js,223
+msgid " view couldn't be loaded"
+msgstr "pogled nije mogao biti učitan"
+
+#. xml:./templates/t/t
+msgid "$(this).addClass('o_error');"
+msgstr ""
+
+#. js:debug_manager.js,134
+msgid "%d requests (%d ms) %d queries (%d ms)"
+msgstr "%d zahtjeva (%d ms) %d upita (%d ms)"
+
+#. js:formats.js,187
+msgid "'%s' is not a correct date"
+msgstr "'%s' nije pravilan datum"
+
+#. js:time.js,192
+msgid "'%s' is not a correct date, datetime nor time"
+msgstr "'%s' nije pravilan datum, datum-vrijeme ili vrijeme"
+
+#. js:formats.js,173
+msgid "'%s' is not a correct datetime"
+msgstr "'%s' nije pravilno datum-vrijeme"
+
+#. js:formats.js,144
+msgid "'%s' is not a correct float"
+msgstr "'%s' nije pravilan decimalni broj"
+
+#. js:formats.js,132
+msgid "'%s' is not a correct integer"
+msgstr "'%s' nije pravilan cijeli broj"
+
+#. js:formats.js,192
+msgid "'%s' is not a correct time"
+msgstr "'%s' je ne pravilno vrijeme"
+
+#. js:time.js,204
+msgid "'%s' is not convertible to date, datetime nor time"
+msgstr "'%s' nije konvertibilno u datum, datum-vrijeme ili vrijeme"
+
+#. js:formats.js,75
+msgid "(%d records)"
+msgstr "(%d zapis(a))"
+
+#. xml:./templates/t/t/div/t/t
+msgid "(no string)"
+msgstr "(nema stringa)"
+
+#. xml:./templates/t/div/t
+msgid "(nolabel)"
+msgstr "(nema naziva)"
+
+#. xml:./templates/t/ul/li/ul/li/t
+msgid "-"
+msgstr ""
+
+#. xml:./templates/div/t/div/span/span
+msgid "...Upload in progress..."
+msgstr "...Učitavanje u toku..."
+
+#. xml:./templates/t/t/div/ul/li/t/t
+#. xml:./templates/div/div/t/t
+msgid "/web/binary/upload_attachment"
+msgstr ""
+
+#. xml:./templates/t/div/t
+msgid "99+"
+msgstr ""
+
+#. xml:./templates/t/t/div/t/t
+msgid ":"
+msgstr ""
+
+#. xml:./templates/t/label/span
+#. xml:./templates/t/label/span
+#. xml:./templates/t/label/span
+msgid "?"
+msgstr ""
+
+#. field:Filter.Action
+msgid "Action"
+msgstr "Akcija"
+
+#. js:form_relational_widgets.js,1122
+msgid "Action Button"
+msgstr "Dugme akcije"
+
+#. xml:./templates/t/t/li/span
+msgid "Action ID:"
+msgstr "ID Akcije:"
+
+#. js:form_widgets.js,637
+msgid "Activate"
+msgstr "Aktiviraj"
+
+#. xml:./templates/t/li/a
+msgid "Activate Assets Debugging"
+msgstr "Omogući razvojni mod imovine"
+
+#. field:Filter.Active
+#. js:form_widgets.js,634
+#. js:form_widgets.js,640
+msgid "Active"
+msgstr "Aktivan"
+
+#. js:form_relational_widgets.js,1378
+#. xml:./templates/div/div/div/button
+msgid "Add"
+msgstr "Dodaj"
+
+#. xml:./templates/div/ul/li/a
+msgid "Add Custom Filter"
+msgstr "Dodaj prilagođeni filter"
+
+#. js:form_relational_widgets.js,1018
+msgid "Add an item"
+msgstr "Dodaj stavku"
+
+#. xml:./templates/div/ul/li/a
+msgid "Add custom group"
+msgstr "Dodaj prilagođenu grupu"
+
+#. xml:./templates/t/t/div/ul/li/t/span
+msgid "Add..."
+msgstr "Dodaj..."
+
+#. js:form_relational_widgets.js,1305
+msgid "Add: "
+msgstr "Dodaj: "
+
+#. js:dialog.js,168
+msgid "Alert"
+msgstr "Upozorenje"
+
+#. xml:./templates/form/table/tr/td/label
+msgid "All users"
+msgstr "Svi korisnici"
+
+#. xml:./templates/div/ul/li/button
+#. xml:./templates/t/li/button
+msgid "Apply"
+msgstr "Primjeni"
+
+#. js:form_widgets.js,641
+#. js:list_view.js,288
+msgid "Archive"
+msgstr "Arhiviraj"
+
+#. js:form_widgets.js,642
+msgid "Archived"
+msgstr "Arhivirano"
+
+#. js:search_menus.js,252
+msgid "Are you sure that you want to remove this filter?"
+msgstr "Dali ste sigurni da želite ukloniti ovaj filter?"
+
+#. xml:./templates/t/t/div/ul/li/t/t/b
+msgid "Attachment :"
+msgstr "Zakačka:"
+
+#. xml:./templates/div/div/div/h4
+msgid "Available fields"
+msgstr "Dostupna polja"
+
+#. xml:./templates/t/t/div/t
+msgid ""
+"Button\n"
+"                <t t-if=\"widget.string\">: </t>\n"
+"                <t t-if=\"!widget.string\"> (no string)</t>"
+msgstr ""
+
+#. xml:./templates/t/t/li/span
+msgid "Button Type:"
+msgstr "Tip dugmeta:"
+
+#. js:utils.js,284
+msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
+msgstr "Bajtovi,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
+
+#. js:list_common.js,133
+msgid "Can't convert value %s to context"
+msgstr "Ne može se konvertovati vrijednost %s u kontekst"
+
+#. js:crash_manager.js,170
+#. js:dialog.js,182
+#. js:form_common.js,1046
+#. js:form_upgrade_widgets.js,40
+#. xml:./templates/form/div/button
+msgid "Cancel"
+msgstr "Otkaži"
+
+#. js:change_password.js,14
+#. xml:./templates/form/div/button
+msgid "Change Password"
+msgstr "Promjeni šifru"
+
+#. xml:./templates/t/ul/li/span
+msgid "Change default:"
+msgstr "Promjeni zadano:"
+
+#. xml:./templates/t/t/li/a
+msgid "Clear Events"
+msgstr "Očisti događaje"
+
+#. js:abstract_web_client.js,124
+#. js:crash_manager.js,123
+msgid "Client Error"
+msgstr "Greška klijenta"
+
+#. js:form_common.js,868
+#. js:form_view.js,1127
+#. js:data_export.js,202
+msgid "Close"
+msgstr "Zatvori"
+
+#. xml:./templates/form/table/tr/td/label
+msgid "Condition:"
+msgstr "Uslov:"
+
+#. xml:./templates/form/div/table/tr/td/label
+msgid "Confirm New Password"
+msgstr "Potvrdi novu šifru"
+
+#. js:dialog.js,193
+msgid "Confirmation"
+msgstr "Potvrda"
+
+#. field:Filter.Context
+msgid "Context"
+msgstr ""
+
+#. xml:./templates/t/ul/li/span
+msgid "Context:"
+msgstr "Kontekst:"
+
+#. js:form_widgets.js,1251
+msgid "Could not display the selected image."
+msgstr "Nije se mogla prikazati izabrana slika."
+
+#. js:list_view.js,1024
+msgid "Could not find id in dataset"
+msgstr "Nije moglo biti pronađeno u dataset-u"
+
+#. js:utils.js,179
+msgid "Could not serialize XML"
+msgstr "Nije se mogao serijalizovati XML"
+
+#. js:graph_view.js,86
+#. js:graph_widget.js,21
+#. js:pivot_view.js,182
+#. xml:./templates/t/div/ul/li/a
+#. xml:./templates/t/div/ul/li/a
+msgid "Count"
+msgstr "Broj"
+
+#. js:form_common.js,1049
+#. xml:./templates/t/div/button
+msgid "Create"
+msgstr "Kreiraj"
+
+#. js:form_relational_widgets.js,25
+msgid "Create a %s"
+msgstr "Kreiraj %s"
+
+#. js:form_common.js,236
+msgid "Create and Edit..."
+msgstr "Kreiraj i Uredi..."
+
+#. js:form_common.js,281
+#. js:form_relational_widgets.js,1080
+msgid "Create: "
+msgstr "Kreiraj: "
+
+#. xml:./templates/t/t/div/ul/li/t/t/b
+msgid "Created by :"
+msgstr "Kreirao:"
+
+#. xml:./templates/t/table/tr/th
+msgid "Creation Date:"
+msgstr "Datum kreiranja:"
+
+#. xml:./templates/t/table/tr/th
+msgid "Creation User:"
+msgstr "Korisnik kreiranja:"
+
+#. js:form_common.js,1096
+#. js:search_menus.js,177
+msgid "Custom Filter"
+msgstr "Prilagođeni filter"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Day"
+msgstr "Dan"
+
+#. js:form_widgets.js,635
+msgid "Deactivate"
+msgstr "Deaktiviraj"
+
+#. field:Filter.IsDefault
+msgid "Default filter"
+msgstr ""
+
+#. xml:./templates/form/table/tr/td/label
+msgid "Default:"
+msgstr "Zadano:"
+
+#. xml:./templates/t/button
+msgid "Delete"
+msgstr "Obriši"
+
+#. xml:./templates/t/li/a/t
+msgid "Disable Technical Features"
+msgstr "Onemogući tehničke mogućnosti"
+
+#. js:form_common.js,868
+#. xml:./templates/t/t/div/button
+#. xml:./templates/t/div/button
+msgid "Discard"
+msgstr "Odbaci"
+
+#. js:sidebar.js,217
+msgid "Do you really want to delete this attachment ?"
+msgstr "Da li stvarno želite obrisati ovu zakačku ?"
+
+#. js:form_view.js,733
+msgid "Do you really want to delete this record?"
+msgstr "Jeste li sigurni da želite izbrisati ovaj zapis?"
+
+#. js:list_view.js,543
+msgid "Do you really want to remove these records?"
+msgstr "Da li stvarno želite ukloniti ove zapise?"
+
+#. field:Filter.Domain
+msgid "Domain"
+msgstr ""
+
+#. xml:./templates/t/ul/li/span
+msgid "Domain:"
+msgstr "Domen:"
+
+#. js:misc.js,15
+msgid "Don't leave yet,<br />it's still loading..."
+msgstr "Ne odlazite još,<br />učitava se..."
+
+#. js:list_view.js,1847
+msgid "Download"
+msgstr "Preuzimanje"
+
+#. js:list_view.js,1863
+msgid "Download \\\"%s\\\""
+msgstr ""
+
+#. xml:./templates/t/div/button
+msgid "Edit"
+msgstr "Uredi"
+
+#. xml:./templates/t/li/a/t
+msgid "Enable Technical Features"
+msgstr "Omogući tehničke mogućnosti"
+
+#. js:view_manager.js,223
+#. js:search_menus.js,84
+#. js:search_menus.js,91
+msgid "Error"
+msgstr "Greška"
+
+#. js:pyeval.js,1023
+msgid "Evaluation Error"
+msgstr "Greška procjene"
+
+#. js:list_view.js,287
+msgid "Export"
+msgstr "Izvoz"
+
+#. js:data_export.js,199
+msgid "Export Data"
+msgstr "Izvezi podatke"
+
+#. xml:./templates/div/div/div/label
+msgid "Export Formats :"
+msgstr "Formati izvoza:"
+
+#. js:data_export.js,201
+msgid "Export To File"
+msgstr "Eksportuj do fajla"
+
+#. xml:./templates/div/div/div/label
+msgid "Export Type :"
+msgstr "Tip izvoza"
+
+#. xml:./templates/div/div/div/div/div/label
+msgid "Export all Data"
+msgstr "Izvezi sve podatke"
+
+#. js:view_manager.js,437
+msgid "Failed to evaluate search criterions"
+msgstr "Kriteriji pretraživanja nisu prepoznati"
+
+#. js:form_view.js,1300
+msgid "Field '%s' specified in view could not be found."
+msgstr "Polje '%s' specifirano u pogledu nije moglo biti pronađeno."
+
+#. xml:./templates/t/ul/li/span
+msgid "Field:"
+msgstr "Polje:"
+
+#. js:debug_manager.js,339
+#. xml:./templates/t/t/li/a
+msgid "Fields View Get"
+msgstr "Dohvati polja pogleda"
+
+#. js:debug_manager.js,241
+msgid "Fields of %s"
+msgstr "Polja %s"
+
+#. js:form_widgets.js,1114
+msgid "File Upload"
+msgstr "Učitavanje fajla"
+
+#. js:form_widgets.js,1094
+msgid "File upload"
+msgstr "Učitavanje fajla"
+
+#. js:search_inputs.js,551
+msgid "Filter"
+msgstr "Filter"
+
+#. field:Filter.Name
+#. resource:base_ir_filters_view_search
+msgid "Filter Name"
+msgstr ""
+
+#. js:search_menus.js,84
+msgid "Filter name is required."
+msgstr "Unos naziva filtera je obavezan."
+
+#. js:search_menus.js,91
+msgid "Filter with same name already exists."
+msgstr "Filter sa istim imenom već postoji"
+
+#. resource:base_actions_ir_filters_view
+msgid "Filters"
+msgstr "Filteri"
+
+#. resource:base_ir_filters_view_search
+msgid "Filters created by myself"
+msgstr ""
+
+#. resource:base_ir_filters_view_search
+msgid "Filters shared with all users"
+msgstr ""
+
+#. resource:base_ir_filters_view_search
+msgid "Filters visible only for one user"
+msgstr ""
+
+#. js:pivot_view.js,831
+msgid "For Excel compatibility, data cannot be exported if there are more than 256 columns.\\n\\nTip: try to flip axis, filter further or reduce the number of measures."
+msgstr ""
+
+#. js:form_view.js,301
+msgid "Form"
+msgstr "Obrazac"
+
+#. resource:base_ir_filters_view_search
+#. js:search_inputs.js,698
+msgid "Group By"
+msgstr "Grupiši po"
+
+#. js:form_upgrade_widgets.js,51
+msgid "Hexya Enterprise"
+msgstr ""
+
+#. js:priority.js,49
+msgid "High"
+msgstr "Visoki"
+
+#. field:CommonMixin.ID
+#. field:Filter.ID
+msgid "ID"
+msgstr "ID"
+
+#. xml:./templates/t/table/tr/th
+msgid "ID:"
+msgstr "ID:"
+
+#. js:form_widgets.js,1251
+msgid "Image"
+msgstr "Slika"
+
+#. xml:./templates/div/div/div/div/div/label
+msgid "Import-Compatible Export"
+msgstr "Izvoz kompatibilan sa uvozom"
+
+#. js:form_widgets.js,636
+msgid "Inactive"
+msgstr "Neaktivan"
+
+#. js:graph_widget.js,208
+#. js:graph_widget.js,216
+msgid "Invalid data"
+msgstr "Nepravilni podatci"
+
+#. js:debug_manager.js,183
+msgid "JS Tests"
+msgstr "JS Testovi"
+
+#. xml:./templates/t/table/tr/th
+msgid "Latest Modification Date:"
+msgstr "Zadnji datum modifikacije:"
+
+#. xml:./templates/t/table/tr/th
+msgid "Latest Modification by:"
+msgstr "Zadnji modificirao:"
+
+#. xml:./templates/t/li/a
+msgid "Leave the Developer Tools"
+msgstr "Napusti razvojni mod"
+
+#. js:loading.js,46
+msgid "Loading"
+msgstr "Učitavanje"
+
+#. js:loading.js,44
+msgid "Loading (%d)"
+msgstr "Punim (%d)"
+
+#. js:misc.js,12
+msgid "Loading..."
+msgstr "Učitavam..."
+
+#. js:pyeval.js,1027
+msgid "Local evaluation failure\\n%s\\n\\n%s"
+msgstr ""
+
+#. xml:./templates/t/li/ul/li/a
+msgid "Log out"
+msgstr "Odjavi se"
+
+#. js:priority.js,48
+msgid "Low"
+msgstr "Nizak"
+
+#. js:search_inputs.js,451
+msgid "M2O search fields do not currently handle multiple default values"
+msgstr "M2O polja pretraživanja trenutno ne mogu upravljati sa više zadanih vrijednosti"
+
+#. xml:./templates/t/t/t/li/a
+msgid "Manage Filters"
+msgstr "Uredi filtere"
+
+#. js:misc.js,18
+msgid "Maybe you should consider reloading the application by pressing F5..."
+msgstr "Možda bi ste trebali razmotriti da ponovno učitate aplikaciju pritiskom na F5..."
+
+#. xml:./templates/t/div/button
+#. xml:./templates/t/div/button
+msgid "Measures <span class=\"caret\"/>"
+msgstr ""
+
+#. js:debug_manager.js,326
+msgid "Metadata (%s)"
+msgstr "Metapodaci (%s)"
+
+#. xml:./templates/t/t/li/span
+msgid "Method:"
+msgstr "Metoda:"
+
+#. field:Filter.ResModel
+#. resource:base_ir_filters_view_search
+msgid "Model"
+msgstr ""
+
+#. xml:./templates/t/t/div/ul/li/t/t/b
+msgid "Modified by :"
+msgstr "Modificirao:"
+
+#. xml:./templates/t/ul/li/span
+msgid "Modifiers:"
+msgstr "Modifikatori:"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Month"
+msgstr "Mjesec"
+
+#. xml:./templates/t/t/li/span
+msgid "More"
+msgstr "Više"
+
+#. xml:./templates/div/div/div/button
+msgid "Move Down"
+msgstr "Pomjeri dolje"
+
+#. xml:./templates/div/div/div/button
+msgid "Move Up"
+msgstr "Pomjeri gore"
+
+#. resource:base_ir_filters_view_search
+msgid "My filters"
+msgstr ""
+
+#. js:form_view.js,315
+msgid "New"
+msgstr "Novi"
+
+#. xml:./templates/form/div/table/tr/td/label
+msgid "New Password"
+msgstr "Nova šifra"
+
+#. js:search_inputs.js,331
+msgid "No"
+msgstr "Ne"
+
+#. xml:./templates/t/table/tr/th
+msgid "No Update:"
+msgstr "Nema ažuriranja:"
+
+#. xml:./templates/div/p
+msgid ""
+"No data available for this pivot table.  Try to add some records, or make sure\n"
+"        that there is at least one measure and no active filter in the search bar."
+msgstr ""
+"Nema podataka za ovu pivot tabelu. Pokušajte da dodate neke zapise, ili osigurajte da\n"
+"imate makar jedno mjerenje i da nemate aktivnih filtera u pretrazi."
+
+#. js:graph_widget.js,94
+msgid "No data to display"
+msgstr "Nema podataka za prikaz"
+
+#. xml:./templates/div/p/strong
+msgid "No data to display."
+msgstr "Nema podataka za prikaz."
+
+#. js:debug_manager.js,321
+msgid "No metadata available"
+msgstr "Nema dostupnih metapodataka"
+
+#. js:form_common.js,245
+msgid "No results to show..."
+msgstr "Nema rezultata za prikaz..."
+
+#. js:form_relational_widgets.js,327
+msgid "No value found for the field %s for value %s"
+msgstr "Nije pronađena vrijednost za polje %s za vrijednost %s"
+
+#. js:utils.js,143
+msgid "Node [%s] is not a JSONified XML node"
+msgstr ""
+
+#. js:priority.js,47
+msgid "Normal"
+msgstr "Normalan"
+
+#. js:graph_widget.js,252
+msgid "Not enough data points"
+msgstr "Nema dovoljno tačaka podataka"
+
+#. xml:./templates/t/ul/li
+msgid "Not shown in kanban"
+msgstr "Nije prikazan u kanbanu"
+
+#. xml:./templates/t/ul/li/span
+msgid "Object:"
+msgstr "Objekat:"
+
+#. js:dialog.js,40
+#. js:dialog.js,158
+#. js:dialog.js,176
+#. xml:./templates/t/button
+msgid "Ok"
+msgstr "U redu"
+
+#. xml:./templates/form/div/table/tr/td/label
+msgid "Old Password"
+msgstr "Stara lozinka"
+
+#. xml:./templates/t/ul/li/span
+msgid "On change:"
+msgstr "Prilikom promjene:"
+
+#. js:progress_bar.js,78
+msgid "Only Integer Value should be valid."
+msgstr "Samo cijeli broj bi trebao biti valjan."
+
+#. xml:./templates/form/table/tr/td/label
+msgid "Only you"
+msgstr "Samo vi"
+
+#. js:form_relational_widgets.js,153
+#. js:form_relational_widgets.js,921
+#. js:form_relational_widgets.js,1104
+#. js:form_relational_widgets.js,1321
+msgid "Open: "
+msgstr "Otvori: "
+
+#. js:data_export.js,167
+msgid "Please enter save field list name"
+msgstr "Molimo unesite ime čuvanja liste polja"
+
+#. xml:./templates/p/strong
+msgid "Please note that only the selected ids will be exported."
+msgstr "Obratite pažnju da će biti izvezeni samo označeni zapisi."
+
+#. xml:./templates/p/strong
+msgid "Please pay attention that all records matching your search filter will be exported. Not only the selected ids."
+msgstr "Obratite pažnju da će svi zapisi koji odgovaraju filteru vašeg pretraživanja biti izvezeni, bez obzira na označene zapise."
+
+#. js:data_export.js,435
+msgid "Please select fields to export..."
+msgstr "Molimo odaberite mjesto za eksportovanje.."
+
+#. js:data_export.js,421
+msgid "Please select fields to save export list..."
+msgstr "Molimo da odaberete polja za čuvanje liste izvoza..."
+
+#. xml:./templates/t/li/ul/li/a
+msgid "Preferences"
+msgstr "Postavke"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Quarter"
+msgstr "Kvartal"
+
+#. xml:./templates/t/ul/li/span
+msgid "Relation:"
+msgstr "Relacija:"
+
+#. xml:./templates/div/div/div/button
+msgid "Remove"
+msgstr "Ukloni"
+
+#. xml:./templates/div/div/div/button
+msgid "Remove All"
+msgstr "Ukloni sve"
+
+#. js:form_relational_widgets.js,326
+msgid "Render"
+msgstr "Iscrtaj"
+
+#. xml:./templates/t/li/a
+msgid "Run JS Tests"
+msgstr "Pokreni JS testove"
+
+#. js:form_common.js,874
+#. xml:./templates/t/t/div/button
+#. xml:./templates/t/div/button
+#. xml:./templates/div/ul/li/button
+msgid "Save"
+msgstr "Sačuvaj"
+
+#. js:form_common.js,889
+msgid "Save & New"
+msgstr "Sačuvaj i Novi"
+
+#. js:form_widgets.js,1131
+msgid "Save As..."
+msgstr "Sačuvaj kao..."
+
+#. xml:./templates/t/label
+msgid "Save as:"
+msgstr "Sačuvaj kao:"
+
+#. xml:./templates/div/ul/li/a
+msgid "Save current search"
+msgstr "Sačuvaj trenutnu pretragu"
+
+#. js:form_view.js,1128
+msgid "Save default"
+msgstr "Snimi zadano"
+
+#. xml:./templates/div/div/div/h4/a
+msgid "Save fields list"
+msgstr "Sačuvaj listu polja"
+
+#. xml:./templates/t/label
+msgid "Saved exports:"
+msgstr "Sačuvani izvozi:"
+
+#. js:search_inputs.js,360
+msgid "Search %(field)s at: %(value)s"
+msgstr "Pretraži %(field)s sa: %(value)s"
+
+#. js:search_inputs.js,192
+#. js:search_inputs.js,211
+#. js:search_inputs.js,402
+msgid "Search %(field)s for: %(value)s"
+msgstr "Pretraži %(field)s za: %(value)s"
+
+#. js:form_common.js,211
+msgid "Search More..."
+msgstr "Pretraži više..."
+
+#. js:form_common.js,281
+msgid "Search: "
+msgstr "Pretraži: "
+
+#. js:form_common.js,1054
+msgid "Select"
+msgstr "Odaberi"
+
+#. js:form_common.js,1103
+msgid "Selected domain"
+msgstr "Odaberi domen"
+
+#. xml:./templates/t/ul/li/span
+msgid "Selection:"
+msgstr "Izbor:"
+
+#. js:form_view.js,1125
+msgid "Set Default"
+msgstr "Postavi zadano"
+
+#. xml:./templates/t/t/t/li/a
+msgid "Set Defaults"
+msgstr "Postavi zadane vrijednosti"
+
+#. js:list_view.js,931
+msgid "Setting 'id' attribute on existing record %s"
+msgstr "Postavljanje 'id' atributa na postojećem zapisu %s"
+
+#. resource:base_ir_filters_view_search
+msgid "Shared"
+msgstr ""
+
+#. xml:./templates/t/ul/li/span
+msgid "Size:"
+msgstr "Veličina:"
+
+#. field:Filter.Sort
+msgid "Sort"
+msgstr ""
+
+#. xml:./templates/t/t/li/span
+msgid "Special:"
+msgstr "Specijalno:"
+
+#. js:misc.js,13
+msgid "Still loading..."
+msgstr "Još se učitava..."
+
+#. js:misc.js,14
+msgid "Still loading...<br />Please be patient."
+msgstr "Još se učitava...<br />Molimo budite strpljivi."
+
+#. js:misc.js,17
+msgid "Take a minute to get a coffee,<br />because it's loading..."
+msgstr "Uzmite minutu da odete po kafu,<br />jer se učitava..."
+
+#. xml:./templates/t/t/t/li/a
+msgid "Technical Translation"
+msgstr "Tehnički prevod"
+
+#. js:form_widgets.js,1131
+msgid "The field is empty, there's nothing to save !"
+msgstr "Polje je prazno, nema se šta sačuvati !"
+
+#. js:form_view.js,887
+msgid "The following fields are invalid:"
+msgstr "Sljedeća polja nisu pravilna:"
+
+#. js:list_view_editable.js,122
+msgid "The line has been modified, your changes will be discarded. Are you sure you want to discard the changes ?"
+msgstr "Stavka je bila promjenjena, vaše promjene će biti odbačene. Sigurni ste da želite odbaciti promjene ?"
+
+#. help:Filter.Action
+msgid "The menu action this filter applies to. When left empty the filter applies to all menus for this model."
+msgstr ""
+
+#. js:form_relational_widgets.js,1123
+msgid "The o2m record must be saved before an action can be used"
+msgstr "o2m zapis mora biti sačuvan prije upotrebe neke akcije"
+
+#. js:form_view.js,301
+msgid "The record could not be found in the database."
+msgstr "Zapis nije mogao biti pronađen u bazi podataka."
+
+#. js:form_view.js,756
+msgid "The record has been modified, your changes will be discarded. Are you sure you want to leave this page ?"
+msgstr "Zapis je bio promjenjen, vaše promjene će biti odbačene. Sigurni ste da želite odbaciti promjene ?"
+
+#. js:form_widgets.js,1093
+msgid "The selected file exceed the maximum file size of %s."
+msgstr "Odabrani fajl je prešao maksimalnu veličinu od %s."
+
+#. js:form_relational_widgets.js,1595
+msgid "The type of the field '%s' must be a many2many field with a relation to 'ir.attachment' model."
+msgstr "Tip polja '%s' mora biti many2many polje sa relacijom na 'ir.attachment' model."
+
+#. help:Filter.User
+msgid "The user this filter is private to. When left empty the filter is public and available to all users."
+msgstr ""
+
+#. js:form_widgets.js,1114
+msgid "There was a problem while uploading your file"
+msgstr "Pojavio se problem prilikom učitavanja vašeg fajla"
+
+#. js:search_menus.js,251
+msgid "This filter is global and will be removed for everybody if you continue."
+msgstr "Ovaj filter je globalan i biti će uklonjen za sve ukoliko nastavite."
+
+#. xml:./templates/div/p
+msgid ""
+"This wizard will export all data that matches the current search criteria to a CSV file.\n"
+"        You can export all data or only the fields that can be reimported after modification."
+msgstr ""
+"Ovaj čarobnjak će izvesti sve podatke koji odgovaraju traženom kriterijumu u CSV datoteku.\n"
+"Možete izvesi sve podatke ili samo ona polja koja mogu naknadno biti ponovno uvezena nakon izvršenih izmjena."
+
+#. js:form_widgets.js,862
+msgid "Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Hexya is displayed according to your field timezone."
+msgstr ""
+
+#. xml:./templates/t/t/li/a
+msgid "Toggle Timelines"
+msgstr "Uklj./Isklj. vremenske linije"
+
+#. js:pivot_view.js,526
+#. js:pivot_view.js,555
+msgid "Total"
+msgstr "Ukupno"
+
+#. xml:./templates/t/ul/li/span
+msgid "Type:"
+msgstr "Tip:"
+
+#. js:form_widgets.js,643
+#. js:list_view.js,289
+msgid "Unarchive"
+msgstr "Dearhiviraj"
+
+#. js:graph_widget.js,79
+#. js:list_view.js,1379
+#. js:list_view.js,1385
+#. js:pivot_view.js,508
+msgid "Undefined"
+msgstr "Nedefinisano"
+
+#. xml:./templates/t
+msgid ""
+"Unhandled widget\n"
+"    <t t-js=\"dict\">console.warn('Unhandled widget', dict.widget);</t>"
+msgstr ""
+
+#. js:data.js,1083
+msgid "Unknown field %s in domain %s"
+msgstr "Ne poznato polje %s u domenu %s"
+
+#. js:list_view.js,1086
+msgid "Unknown m2m command %s"
+msgstr "Ne poznata m2m komanda %s"
+
+#. js:pyeval.js,991
+msgid "Unknown nonliteral type "
+msgstr "Ne poznat ne literalni tip "
+
+#. js:data.js,1075
+msgid "Unknown operator %s in domain %s"
+msgstr "Nepoznat operator %s na domeni %s"
+
+#. js:data.js,1138
+msgid "Unnamed"
+msgstr "Bez imena"
+
+#. js:data.js,1121
+msgid "Unsupported operator %s in domain %s"
+msgstr "Ne podržana operacija %s u domenu %s"
+
+#. xml:./templates/t/t/div/a
+msgid "Update translations"
+msgstr "Ažuriraj prevode"
+
+#. js:form_upgrade_widgets.js,34
+msgid "Upgrade now"
+msgstr "Nadogradi odmah"
+
+#. xml:./templates/t/div/button
+msgid "Upload your file"
+msgstr "Učitajte vašu datoteku"
+
+#. xml:./templates/t/div/t/div/span
+#. xml:./templates/t/div/span
+msgid "Uploading..."
+msgstr "Učitavanje..."
+
+#. field:Filter.User
+#. resource:base_ir_filters_view_search
+#. resource:base_ir_filters_view_search
+msgid "User"
+msgstr ""
+
+#. resource:base_menu_ir_filters
+msgid "User-defined Filters"
+msgstr ""
+
+#. js:priority.js,50
+msgid "Very High"
+msgstr "Veoma visoko"
+
+#. xml:./templates/t/t/t/li/a
+msgid "View Fields"
+msgstr "Pogledaj polja"
+
+#. xml:./templates/t/t/t/t/li/a
+msgid "View Metadata"
+msgstr "Pogledaj Metapodatke"
+
+#. js:form_relational_widgets.js,740
+msgid "View type '%s' is not supported in X2Many."
+msgstr "Tip pogleda '%s' nije podržan u X2Many."
+
+#. js:crash_manager.js,107
+#. js:form_view.js,761
+#. js:list_view.js,676
+#. js:sidebar.js,131
+msgid "Warning"
+msgstr "Upozorenje"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Week"
+msgstr "Sedmica"
+
+#. xml:./templates/t/div/div
+msgid "Whoops, you shouldn't have come up to here..."
+msgstr ""
+
+#. js:form_view.js,1304
+msgid "Widget type '%s' is not implemented"
+msgstr "Widget tipa '%s' nije implementiran"
+
+#. xml:./templates/t/ul/li/span
+msgid "Widget:"
+msgstr "Widget:"
+
+#. js:progress_bar.js,78
+msgid "Wrong value entered!"
+msgstr "Unesena je pogrešna vrijednost!"
+
+#. xml:./templates/t/table/tr/th
+msgid "XML ID:"
+msgstr "XML ID:"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Year"
+msgstr "Godina"
+
+#. js:search_inputs.js,330
+msgid "Yes"
+msgstr "Da"
+
+#. js:form_relational_widgets.js,47
+msgid "You are creating a new %s, are you sure it does not exist yet?"
+msgstr "Kreirate novu instancu %s, da li ste sigurni da ona već ne postoji?"
+
+#. xml:./templates/t/t/div
+msgid ""
+"You have updated <strong><t t-esc=\"field.string\"/></strong> (<t t-esc=\"lang\"/>).\n"
+"            <a class=\"oe_field_translate\" t-att-name=\"field.name\" href=\"#\">Update translations</a>"
+msgstr ""
+
+#. js:misc.js,16
+msgid "You may not believe it,<br />but the application is actually loading..."
+msgstr "Možda nećete vjerovati,<br />ali aplikacija se zapravo učitava..."
+
+#. js:sidebar.js,131
+msgid "You must choose at least one record."
+msgstr "Morate izabrati barem jedan zapis"
+
+#. js:list_view.js,676
+msgid "You must select at least one record."
+msgstr "Morate izabrati makar jedan zapis."
+
+#. js:crash_manager.js,57
+msgid "Your Hexya session expired. Please refresh the current web page."
+msgstr ""
+
+#. xml:./templates/t/ul/li/ul/li
+msgid ""
+"[<t t-esc=\"option[0]\"/>]\n"
+"                    <t t-if=\"option[1]\"> - </t>\n"
+"                    <t t-esc=\"option[1]\"/>"
+msgstr ""
+
+#. xml:./templates/t/t
+msgid "console.warn('Unhandled widget', dict.widget);"
+msgstr ""
+
+#. js:utils.js,302
+msgid "kMGTPE"
+msgstr ""
+
+#. js:search_inputs.js,230
+msgid "not a valid integer"
+msgstr "ne važeći integer"
+
+#. js:search_inputs.js,245
+msgid "not a valid number"
+msgstr "Ne važeći broj"
+
+#. xml:./templates/t/li/span
+msgid "or"
+msgstr "ili"
+
+#. xml:./templates/t/div/t/t
+msgid "overflow-x: hidden"
+msgstr ""
+
+#. xml:./templates/t/t
+msgid ""
+"var $div = $(document.createElement('div')).attr('t-if', this.attr('t-if')).addClass('o_form_field_monetary');\n"
+"        this.clone(true).appendTo($div);\n"
+"        this.replaceWith($div);"
+msgstr ""
+
+#. xml:./templates/t/div/t
+msgid ""
+"var message = (d.message !== undefined) ? d.message : d.error.data.message;\n"
+"            d.html_error = context.engine.tools.html_escape(message).replace(/\\n/g, '<br/>');"
+msgstr ""
+
+#. xml:./templates/div/div/div/div/button
+msgid "×"
+msgstr ""
+

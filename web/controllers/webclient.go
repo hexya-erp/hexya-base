@@ -4,13 +4,15 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
+	"os"
 	"path"
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/json"
 	"github.com/hexya-erp/hexya/hexya/i18n"
 	"github.com/hexya-erp/hexya/hexya/menus"
 	"github.com/hexya-erp/hexya/hexya/models"
@@ -36,18 +38,15 @@ func QWeb(c *server.Context) {
 
 // BootstrapTranslations returns data about the current language
 func BootstrapTranslations(c *server.Context) {
+	params := struct {
+		Lang    string   `json:"lang"`
+		Modules []string `json:"mods"`
+	}{}
+	c.BindRPCParams(&params)
 	res := gin.H{
-		"lang_parameters": i18n.LangParameters{
-			DateFormat:   "%m/%d/%Y",
-			Direction:    i18n.LangDirectionLTR,
-			ThousandsSep: ",",
-			TimeFormat:   "%H:%M:%S",
-			DecimalPoint: ".",
-			ID:           1,
-			Grouping:     "[]",
-		},
-		"modules":    gin.H{},
-		"multi_lang": true,
+		"lang_parameters": i18n.GetLangParameters(params.Lang),
+		"modules":         i18n.ListModuleTranslations(params.Lang),
+		"multi_lang":      true,
 	}
 	c.RPC(http.StatusOK, res)
 }
@@ -87,10 +86,25 @@ func VersionInfo(c *server.Context) {
 
 // LoadLocale returns the locale's JS file
 func LoadLocale(c *server.Context) {
-	// TODO Implement Loadlocale
-	//langFull := strings.ToLower(strings.Replace(lang, "_", "-", -1))
-	//langShort := strings.Split(lang, "_")[0]
-	c.String(http.StatusOK, "OK")
+	lang := c.Param("lang")
+	var outstr string
+	langFull := strings.ToLower(strings.Replace(lang, "_", "-", -1))
+	jsPath := fmt.Sprintf("%s/src/github.com/hexya-erp/hexya/hexya/server/static/web/lib/moment/locale/%s.js", os.Getenv("GOPATH"), langFull)
+	content, err := ioutil.ReadFile(jsPath)
+	var err2 error
+	if err != nil {
+		langShort := strings.Split(lang, "_")[0]
+		jsPath = fmt.Sprintf("%s/src/github.com/hexya-erp/hexya/hexya/server/static/web/lib/moment/locale/%s.js", os.Getenv("GOPATH"), langShort)
+		content, err2 = ioutil.ReadFile(jsPath)
+	}
+	if len(content) > 2 {
+		outstr = string(content)
+	} else {
+		outstr = fmt.Sprintf("LOCALE NOT FOUND FOR '%s'\n%s\n%s", lang, err, err2)
+	}
+	c.Header("Content-Type", "application/javascript")
+	c.String(http.StatusOK, outstr)
+
 }
 
 // A Menu is the representation of a single menu item

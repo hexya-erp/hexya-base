@@ -1,0 +1,1144 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. js:form_common.js,874
+msgid " & Close"
+msgstr "& Κλείσιμο"
+
+#. js:search_inputs.js,553
+#. js:search_view.js,205
+msgid " or "
+msgstr "ή"
+
+#. js:view_manager.js,223
+msgid " view couldn't be loaded"
+msgstr "δεν μπορεί να φωρτοθεί η προβολή"
+
+#. xml:./templates/t/t
+msgid "$(this).addClass('o_error');"
+msgstr ""
+
+#. js:debug_manager.js,134
+msgid "%d requests (%d ms) %d queries (%d ms)"
+msgstr "%d αιτήσεις (%d ms) %d ερωτήματα (%d ms)"
+
+#. js:formats.js,187
+msgid "'%s' is not a correct date"
+msgstr "'%s' δεν είναι σωστή ημερομηνία"
+
+#. js:time.js,192
+msgid "'%s' is not a correct date, datetime nor time"
+msgstr "'%s' δεν είναι έγκυρη ημερομηνία. ημερομηνία ή/και ώρα"
+
+#. js:formats.js,173
+msgid "'%s' is not a correct datetime"
+msgstr "'%s' δεν είναι μια σωστή ημερομηνία/ώρα"
+
+#. js:formats.js,144
+msgid "'%s' is not a correct float"
+msgstr "'%s' δεν είναι σωστός πραγματικός αριθμός"
+
+#. js:formats.js,132
+msgid "'%s' is not a correct integer"
+msgstr "'%s' δεν είναι σωστός ακέραιος αριθμός"
+
+#. js:formats.js,192
+msgid "'%s' is not a correct time"
+msgstr "'%s' δεν είναι σωστή ώρα"
+
+#. js:time.js,204
+msgid "'%s' is not convertible to date, datetime nor time"
+msgstr "'%s' δεν μπορεί να μετατραπεί σε ημερομηνία η ώρα"
+
+#. js:formats.js,75
+msgid "(%d records)"
+msgstr "(%d records)"
+
+#. xml:./templates/t/t/div/t/t
+msgid "(no string)"
+msgstr "(no string)"
+
+#. xml:./templates/t/div/t
+msgid "(nolabel)"
+msgstr "(χωρίς ετικέτα)"
+
+#. xml:./templates/t/ul/li/ul/li/t
+msgid "-"
+msgstr ""
+
+#. xml:./templates/div/t/div/span/span
+msgid "...Upload in progress..."
+msgstr "...Μεταφόρτωση είναι σε εξέλιξη..."
+
+#. xml:./templates/t/t/div/ul/li/t/t
+#. xml:./templates/div/div/t/t
+msgid "/web/binary/upload_attachment"
+msgstr ""
+
+#. xml:./templates/t/div/t
+msgid "99+"
+msgstr ""
+
+#. xml:./templates/t/t/div/t/t
+msgid ":"
+msgstr ""
+
+#. xml:./templates/t/label/span
+#. xml:./templates/t/label/span
+#. xml:./templates/t/label/span
+msgid "?"
+msgstr ""
+
+#. field:Filter.Action
+msgid "Action"
+msgstr "Ενέργεια"
+
+#. js:form_relational_widgets.js,1122
+msgid "Action Button"
+msgstr "Κουμπί Ενέργειας"
+
+#. xml:./templates/t/t/li/span
+msgid "Action ID:"
+msgstr "ID Ενέργειας:"
+
+#. js:form_widgets.js,637
+msgid "Activate"
+msgstr "Ενεργοποίηση"
+
+#. xml:./templates/t/li/a
+msgid "Activate Assets Debugging"
+msgstr "Ενεργοποίηση Εντοπισμού Σφαλμάτων Σταθερών Αρχείων"
+
+#. field:Filter.Active
+#. js:form_widgets.js,634
+#. js:form_widgets.js,640
+msgid "Active"
+msgstr "Ενεργή"
+
+#. js:form_relational_widgets.js,1378
+#. xml:./templates/div/div/div/button
+msgid "Add"
+msgstr "Προσθήκη"
+
+#. xml:./templates/div/ul/li/a
+msgid "Add Custom Filter"
+msgstr "Προσθήκη Προσαρμοσμένου Φίλτρου"
+
+#. js:form_relational_widgets.js,1018
+msgid "Add an item"
+msgstr "Προσθήκη ενός αντικειμένου"
+
+#. xml:./templates/div/ul/li/a
+msgid "Add custom group"
+msgstr "Προσθήκη Προσαρμοσμένης ομαδοποίησης"
+
+#. xml:./templates/t/t/div/ul/li/t/span
+msgid "Add..."
+msgstr "Προσθήκη..."
+
+#. js:form_relational_widgets.js,1305
+msgid "Add: "
+msgstr "Προσθήκη: "
+
+#. js:dialog.js,168
+msgid "Alert"
+msgstr "Προσοχή"
+
+#. xml:./templates/form/table/tr/td/label
+msgid "All users"
+msgstr "Όλοι οι χρήστες"
+
+#. xml:./templates/div/ul/li/button
+#. xml:./templates/t/li/button
+msgid "Apply"
+msgstr "Εφαρμογή"
+
+#. js:form_widgets.js,641
+#. js:list_view.js,288
+msgid "Archive"
+msgstr "Αρχειοθέτηση"
+
+#. js:form_widgets.js,642
+msgid "Archived"
+msgstr "Αρχειοθετημένα"
+
+#. js:search_menus.js,252
+msgid "Are you sure that you want to remove this filter?"
+msgstr "Είστε σίγουροι ότι θέλετε να αφαιρέστε αυτό το φίλτρο;"
+
+#. xml:./templates/t/t/div/ul/li/t/t/b
+msgid "Attachment :"
+msgstr "Συνημένο:"
+
+#. xml:./templates/div/div/div/h4
+msgid "Available fields"
+msgstr "Διαθέσιμα πεδία"
+
+#. xml:./templates/t/t/div/t
+msgid ""
+"Button\n"
+"                <t t-if=\"widget.string\">: </t>\n"
+"                <t t-if=\"!widget.string\"> (no string)</t>"
+msgstr ""
+
+#. xml:./templates/t/t/li/span
+msgid "Button Type:"
+msgstr "Τύπος Κουμπιού:"
+
+#. js:utils.js,284
+msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
+msgstr "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
+
+#. js:list_common.js,133
+msgid "Can't convert value %s to context"
+msgstr "Δεν είναι δυνατή η μετατροπή της τιμής %s σε Περιεχόμενο"
+
+#. js:crash_manager.js,170
+#. js:dialog.js,182
+#. js:form_common.js,1046
+#. js:form_upgrade_widgets.js,40
+#. xml:./templates/form/div/button
+msgid "Cancel"
+msgstr "Άκυρο"
+
+#. js:change_password.js,14
+#. xml:./templates/form/div/button
+msgid "Change Password"
+msgstr "Αλλαγή Κωδικού Πρόσβασης"
+
+#. xml:./templates/t/ul/li/span
+msgid "Change default:"
+msgstr "Αλλαγή προεπιλογής:"
+
+#. xml:./templates/t/t/li/a
+msgid "Clear Events"
+msgstr "Εκκαθάριση γεγονότων"
+
+#. js:abstract_web_client.js,124
+#. js:crash_manager.js,123
+msgid "Client Error"
+msgstr "Σφάλμα πελάτη"
+
+#. js:form_common.js,868
+#. js:form_view.js,1127
+#. js:data_export.js,202
+msgid "Close"
+msgstr "Κλείσιμο"
+
+#. xml:./templates/form/table/tr/td/label
+msgid "Condition:"
+msgstr "Κατάσταση:"
+
+#. xml:./templates/form/div/table/tr/td/label
+msgid "Confirm New Password"
+msgstr "Επιβεβαίωση νέου Κωδικού Πρόσβασης"
+
+#. js:dialog.js,193
+msgid "Confirmation"
+msgstr "Επιβεβαίωση"
+
+#. field:Filter.Context
+msgid "Context"
+msgstr ""
+
+#. xml:./templates/t/ul/li/span
+msgid "Context:"
+msgstr "Περιεχόμενο:"
+
+#. js:form_widgets.js,1251
+msgid "Could not display the selected image."
+msgstr "Δεν ήταν δυνατή η προβολή της συγκεκριμένης εικόνας."
+
+#. js:list_view.js,1024
+msgid "Could not find id in dataset"
+msgstr "Δεν ήταν δυνατή η εύρεση του αναγνωριστικού στο σύνολο δεδομένων"
+
+#. js:utils.js,179
+msgid "Could not serialize XML"
+msgstr "Δεν ήταν δυνατή η σειριοποίηση XML"
+
+#. js:graph_view.js,86
+#. js:graph_widget.js,21
+#. js:pivot_view.js,182
+#. xml:./templates/t/div/ul/li/a
+#. xml:./templates/t/div/ul/li/a
+msgid "Count"
+msgstr "Καταμέτρηση"
+
+#. js:form_common.js,1049
+#. xml:./templates/t/div/button
+msgid "Create"
+msgstr "Δημιουργία"
+
+#. js:form_relational_widgets.js,25
+msgid "Create a %s"
+msgstr "Δημιουργία ενός %s"
+
+#. js:form_common.js,236
+msgid "Create and Edit..."
+msgstr "Δημιουργία και Επεξεργασία"
+
+#. js:form_common.js,281
+#. js:form_relational_widgets.js,1080
+msgid "Create: "
+msgstr "Δημιουργία: "
+
+#. xml:./templates/t/t/div/ul/li/t/t/b
+msgid "Created by :"
+msgstr "Δημιουργήθηκε από:"
+
+#. xml:./templates/t/table/tr/th
+msgid "Creation Date:"
+msgstr "Ημερομηνία Δημιουργίας:"
+
+#. xml:./templates/t/table/tr/th
+msgid "Creation User:"
+msgstr "Χρήστης δημιουργίας"
+
+#. js:form_common.js,1096
+#. js:search_menus.js,177
+msgid "Custom Filter"
+msgstr "Προσαρμοσμένο Φίλτρο"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Day"
+msgstr "Ημέρα"
+
+#. js:form_widgets.js,635
+msgid "Deactivate"
+msgstr "Απενεργοποίηση"
+
+#. field:Filter.IsDefault
+msgid "Default filter"
+msgstr ""
+
+#. xml:./templates/form/table/tr/td/label
+msgid "Default:"
+msgstr "Προεπιλογή:"
+
+#. xml:./templates/t/button
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#. xml:./templates/t/li/a/t
+msgid "Disable Technical Features"
+msgstr "Απενεργοποίηση Τεχνικών Χαρακτηριστικών"
+
+#. js:form_common.js,868
+#. xml:./templates/t/t/div/button
+#. xml:./templates/t/div/button
+msgid "Discard"
+msgstr "Απόρριψη"
+
+#. js:sidebar.js,217
+msgid "Do you really want to delete this attachment ?"
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το συνημμένο ;"
+
+#. js:form_view.js,733
+msgid "Do you really want to delete this record?"
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτήν την εγγραφή;"
+
+#. js:list_view.js,543
+msgid "Do you really want to remove these records?"
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτές τις εγγραφές;"
+
+#. field:Filter.Domain
+msgid "Domain"
+msgstr ""
+
+#. xml:./templates/t/ul/li/span
+msgid "Domain:"
+msgstr "Τομέας:"
+
+#. js:misc.js,15
+msgid "Don't leave yet,<br />it's still loading..."
+msgstr "Μην φύγετε ακόμη,<br />φορτώνει..."
+
+#. js:list_view.js,1847
+msgid "Download"
+msgstr "Λήψη"
+
+#. js:list_view.js,1863
+msgid "Download \\\"%s\\\""
+msgstr ""
+
+#. xml:./templates/t/div/button
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#. xml:./templates/t/li/a/t
+msgid "Enable Technical Features"
+msgstr "Ενεργοποίηση Τεχνικών Χαρακτηριστικών"
+
+#. js:view_manager.js,223
+#. js:search_menus.js,84
+#. js:search_menus.js,91
+msgid "Error"
+msgstr "Σφάλμα"
+
+#. js:pyeval.js,1023
+msgid "Evaluation Error"
+msgstr "Σφάλμα εκτίμησης"
+
+#. js:list_view.js,287
+msgid "Export"
+msgstr "Εξαγωγή"
+
+#. js:data_export.js,199
+msgid "Export Data"
+msgstr "Εξαγωγή δεδομένων"
+
+#. xml:./templates/div/div/div/label
+msgid "Export Formats :"
+msgstr "Μορφές Εξαγωγής :"
+
+#. js:data_export.js,201
+msgid "Export To File"
+msgstr "Εξαγωγή σε αρχείο"
+
+#. xml:./templates/div/div/div/label
+msgid "Export Type :"
+msgstr "Είδος εξαγωγής :"
+
+#. xml:./templates/div/div/div/div/div/label
+msgid "Export all Data"
+msgstr "Εξαγωγή όλων των δεδομένων"
+
+#. js:view_manager.js,437
+msgid "Failed to evaluate search criterions"
+msgstr "Αποτυχία εκτίμησης των κριτηρίων αναζήτησης"
+
+#. js:form_view.js,1300
+msgid "Field '%s' specified in view could not be found."
+msgstr "Το πεδίο '%s' που ορίζεται στην προβολή δεν μπορεί να βρεθεί."
+
+#. xml:./templates/t/ul/li/span
+msgid "Field:"
+msgstr "Πεδίο:"
+
+#. js:debug_manager.js,339
+#. xml:./templates/t/t/li/a
+msgid "Fields View Get"
+msgstr "Ανάκτηση Πεδίων Προβολής"
+
+#. js:debug_manager.js,241
+msgid "Fields of %s"
+msgstr "Πεδία από %s"
+
+#. js:form_widgets.js,1114
+msgid "File Upload"
+msgstr "Μεταφόρτωση αρχείου"
+
+#. js:form_widgets.js,1094
+msgid "File upload"
+msgstr "Μεταφόρτωση αρχείου"
+
+#. js:search_inputs.js,551
+msgid "Filter"
+msgstr "Φίλτρο"
+
+#. field:Filter.Name
+#. resource:base_ir_filters_view_search
+msgid "Filter Name"
+msgstr ""
+
+#. js:search_menus.js,84
+msgid "Filter name is required."
+msgstr "Απαιτείται όνομα φίλτρου."
+
+#. js:search_menus.js,91
+msgid "Filter with same name already exists."
+msgstr "Υπάρχει ήδη φίλτρο με το όνομα αυτό."
+
+#. resource:base_actions_ir_filters_view
+msgid "Filters"
+msgstr "Φίλτρα"
+
+#. resource:base_ir_filters_view_search
+msgid "Filters created by myself"
+msgstr ""
+
+#. resource:base_ir_filters_view_search
+msgid "Filters shared with all users"
+msgstr ""
+
+#. resource:base_ir_filters_view_search
+msgid "Filters visible only for one user"
+msgstr ""
+
+#. js:pivot_view.js,831
+msgid "For Excel compatibility, data cannot be exported if there are more than 256 columns.\\n\\nTip: try to flip axis, filter further or reduce the number of measures."
+msgstr ""
+
+#. js:form_view.js,301
+msgid "Form"
+msgstr "Φόρμα"
+
+#. resource:base_ir_filters_view_search
+#. js:search_inputs.js,698
+msgid "Group By"
+msgstr "Ομαδοποίηση Κατά"
+
+#. js:form_upgrade_widgets.js,51
+msgid "Hexya Enterprise"
+msgstr ""
+
+#. js:priority.js,49
+msgid "High"
+msgstr "Υψηλή"
+
+#. field:CommonMixin.ID
+#. field:Filter.ID
+msgid "ID"
+msgstr "Κωδικός"
+
+#. xml:./templates/t/table/tr/th
+msgid "ID:"
+msgstr "Αναγνωριστικό:"
+
+#. js:form_widgets.js,1251
+msgid "Image"
+msgstr "Εικόνα"
+
+#. xml:./templates/div/div/div/div/div/label
+msgid "Import-Compatible Export"
+msgstr "Εξαγωγή συμβατή με εισαγωγή"
+
+#. js:form_widgets.js,636
+msgid "Inactive"
+msgstr "Ανενεργή"
+
+#. js:graph_widget.js,208
+#. js:graph_widget.js,216
+msgid "Invalid data"
+msgstr "Μη έγκυρα δεδομένα"
+
+#. js:debug_manager.js,183
+msgid "JS Tests"
+msgstr "JS Τεστ"
+
+#. xml:./templates/t/table/tr/th
+msgid "Latest Modification Date:"
+msgstr "Τελευταία Ημερομηνία Τροποποίησης:"
+
+#. xml:./templates/t/table/tr/th
+msgid "Latest Modification by:"
+msgstr "Τελευταία τροποποίηση από:"
+
+#. xml:./templates/t/li/a
+msgid "Leave the Developer Tools"
+msgstr "Έξοδος από τα Εργαλεία Προγραμματιστή"
+
+#. js:loading.js,46
+msgid "Loading"
+msgstr "Γίνεται φόρτωση"
+
+#. js:loading.js,44
+msgid "Loading (%d)"
+msgstr "Φόρτωση (%d)"
+
+#. js:misc.js,12
+msgid "Loading..."
+msgstr "Γίνεται φόρτωση..."
+
+#. js:pyeval.js,1027
+msgid "Local evaluation failure\\n%s\\n\\n%s"
+msgstr ""
+
+#. xml:./templates/t/li/ul/li/a
+msgid "Log out"
+msgstr "Αποσύνδεση"
+
+#. js:priority.js,48
+msgid "Low"
+msgstr "Χαμηλή"
+
+#. js:search_inputs.js,451
+msgid "M2O search fields do not currently handle multiple default values"
+msgstr "Τα πεδία αναζήτησης ΠολλάΠροςΈνα δεν μπορούν να χειριστούν πολλαπλές προεπιλεγμένες τιμές"
+
+#. xml:./templates/t/t/t/li/a
+msgid "Manage Filters"
+msgstr "Διαχείριση Φίλτρων"
+
+#. js:misc.js,18
+msgid "Maybe you should consider reloading the application by pressing F5..."
+msgstr "Ίσως θα πρέπει να εξετάσετε την επαναφόρτωση της εφαρμογής πατώντας F5 ..."
+
+#. xml:./templates/t/div/button
+#. xml:./templates/t/div/button
+msgid "Measures <span class=\"caret\"/>"
+msgstr ""
+
+#. js:debug_manager.js,326
+msgid "Metadata (%s)"
+msgstr "Μεταδομένα (%s)"
+
+#. xml:./templates/t/t/li/span
+msgid "Method:"
+msgstr "Μέθοδος:"
+
+#. field:Filter.ResModel
+#. resource:base_ir_filters_view_search
+msgid "Model"
+msgstr ""
+
+#. xml:./templates/t/t/div/ul/li/t/t/b
+msgid "Modified by :"
+msgstr "Τροποποιήθηκε από :"
+
+#. xml:./templates/t/ul/li/span
+msgid "Modifiers:"
+msgstr "Τροποποιητές:"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Month"
+msgstr "Μήνας"
+
+#. xml:./templates/t/t/li/span
+msgid "More"
+msgstr "Περισσότερα"
+
+#. xml:./templates/div/div/div/button
+msgid "Move Down"
+msgstr "Μετακίνηση Κάτω"
+
+#. xml:./templates/div/div/div/button
+msgid "Move Up"
+msgstr "Μετακίνηση Επάνω"
+
+#. resource:base_ir_filters_view_search
+msgid "My filters"
+msgstr ""
+
+#. js:form_view.js,315
+msgid "New"
+msgstr "Νέα"
+
+#. xml:./templates/form/div/table/tr/td/label
+msgid "New Password"
+msgstr "Νέος Κωδικός Πρόσβασης"
+
+#. js:search_inputs.js,331
+msgid "No"
+msgstr "Όχι"
+
+#. xml:./templates/t/table/tr/th
+msgid "No Update:"
+msgstr "Μη Ανανέωση:"
+
+#. xml:./templates/div/p
+msgid ""
+"No data available for this pivot table.  Try to add some records, or make sure\n"
+"        that there is at least one measure and no active filter in the search bar."
+msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα για αυτόν τον συγκεντρωτικό πίνακα. Δοκιμάστε να προσθέσετε κάποιες εγγραφές, ή βεβαιωθείτε ότι υπάρχει τουλάχιστον μία μέτρηση και κανένα ενεργό φίλτρο στη γραμμή αναζήτησης."
+
+#. js:graph_widget.js,94
+msgid "No data to display"
+msgstr "Δεν υπάρχουν δεδομένα προς εμφάνιση"
+
+#. xml:./templates/div/p/strong
+msgid "No data to display."
+msgstr "Δεν υπάρχουν δεδομένα προς εμφάνιση."
+
+#. js:debug_manager.js,321
+msgid "No metadata available"
+msgstr "Μη διαθέσιμα μεταδομένα"
+
+#. js:form_common.js,245
+msgid "No results to show..."
+msgstr "Δεν υπάρχουν αποτελέσματα για προβολή..."
+
+#. js:form_relational_widgets.js,327
+msgid "No value found for the field %s for value %s"
+msgstr "Δεν βρέθηκε τιμή για το πεδίο %s για την τιμή %s"
+
+#. js:utils.js,143
+msgid "Node [%s] is not a JSONified XML node"
+msgstr ""
+
+#. js:priority.js,47
+msgid "Normal"
+msgstr "Κανονική"
+
+#. js:graph_widget.js,252
+msgid "Not enough data points"
+msgstr "Όχι αρκετά σημεία δεδομένων"
+
+#. xml:./templates/t/ul/li
+msgid "Not shown in kanban"
+msgstr "Απόκρυψη σε kanban"
+
+#. xml:./templates/t/ul/li/span
+msgid "Object:"
+msgstr "Αντικείμενο:"
+
+#. js:dialog.js,40
+#. js:dialog.js,158
+#. js:dialog.js,176
+#. xml:./templates/t/button
+msgid "Ok"
+msgstr "Ok"
+
+#. xml:./templates/form/div/table/tr/td/label
+msgid "Old Password"
+msgstr "Παλιός Κωδικός Πρόσβασης"
+
+#. xml:./templates/t/ul/li/span
+msgid "On change:"
+msgstr "Σε αλλαγή:"
+
+#. js:progress_bar.js,78
+msgid "Only Integer Value should be valid."
+msgstr "Μόνο ακέραιη τιμή θα πρέπει να είναι έγκυρη."
+
+#. xml:./templates/form/table/tr/td/label
+msgid "Only you"
+msgstr "Μόνο εσείς"
+
+#. js:form_relational_widgets.js,153
+#. js:form_relational_widgets.js,921
+#. js:form_relational_widgets.js,1104
+#. js:form_relational_widgets.js,1321
+msgid "Open: "
+msgstr "Άνοιγμα: "
+
+#. js:data_export.js,167
+msgid "Please enter save field list name"
+msgstr "Παρακαλούμε εισάγετε τον όνομα της λίστας των πεδίων για αποθήκευση"
+
+#. xml:./templates/p/strong
+msgid "Please note that only the selected ids will be exported."
+msgstr "Παρακαλώ σημειώστε ότι μόνο τα επιλεγμένα ids θα εξαχθούν."
+
+#. xml:./templates/p/strong
+msgid "Please pay attention that all records matching your search filter will be exported. Not only the selected ids."
+msgstr "Παρακαλώ προσέξτε ότι όλες οι εγγραφές που αντιστοιχούν στην αναζήτησή σας θα εξαχθούν. Όχι μόνο τα επιλεγμένα τα αναγνωριστικά."
+
+#. js:data_export.js,435
+msgid "Please select fields to export..."
+msgstr "Παρακαλώ επιλέξτε πεδία για εξαγωγή..."
+
+#. js:data_export.js,421
+msgid "Please select fields to save export list..."
+msgstr "Παρακαλώ επιλέξτε πεδία για να αποθηκεύσετε τη λίστα εξαγωγής..."
+
+#. xml:./templates/t/li/ul/li/a
+msgid "Preferences"
+msgstr "Προτιμήσεις"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Quarter"
+msgstr "Τρίμηνο"
+
+#. xml:./templates/t/ul/li/span
+msgid "Relation:"
+msgstr "Σχέση:"
+
+#. xml:./templates/div/div/div/button
+msgid "Remove"
+msgstr "Αφαίρεση"
+
+#. xml:./templates/div/div/div/button
+msgid "Remove All"
+msgstr "Αφαίρεση όλων"
+
+#. js:form_relational_widgets.js,326
+msgid "Render"
+msgstr "Απόδοση"
+
+#. xml:./templates/t/li/a
+msgid "Run JS Tests"
+msgstr "Εκτέλεση JS Tests"
+
+#. js:form_common.js,874
+#. xml:./templates/t/t/div/button
+#. xml:./templates/t/div/button
+#. xml:./templates/div/ul/li/button
+msgid "Save"
+msgstr "Αποθήκευση"
+
+#. js:form_common.js,889
+msgid "Save & New"
+msgstr "Αποθήκευση  & Δημιουργία Νέου"
+
+#. js:form_widgets.js,1131
+msgid "Save As..."
+msgstr "Αποθήκευση ως…"
+
+#. xml:./templates/t/label
+msgid "Save as:"
+msgstr "Αποθήκευση ως:"
+
+#. xml:./templates/div/ul/li/a
+msgid "Save current search"
+msgstr "Αποθήκευση τρέχουσας αναζήτησης"
+
+#. js:form_view.js,1128
+msgid "Save default"
+msgstr "Αποθήκευση προεπιλογής"
+
+#. xml:./templates/div/div/div/h4/a
+msgid "Save fields list"
+msgstr "Αποθήκευση λίστας πεδίων"
+
+#. xml:./templates/t/label
+msgid "Saved exports:"
+msgstr "Αποθήκευση εξαγωγών:"
+
+#. js:search_inputs.js,360
+msgid "Search %(field)s at: %(value)s"
+msgstr "Αναζήτηση %(field)s στο: %(value)s"
+
+#. js:search_inputs.js,192
+#. js:search_inputs.js,211
+#. js:search_inputs.js,402
+msgid "Search %(field)s for: %(value)s"
+msgstr "Αναζήτηση σε %(field)s για: %(value)s"
+
+#. js:form_common.js,211
+msgid "Search More..."
+msgstr "Αναζήτηση περισσότερων..."
+
+#. js:form_common.js,281
+msgid "Search: "
+msgstr "Αναζήτηση: "
+
+#. js:form_common.js,1054
+msgid "Select"
+msgstr "Επιλογή"
+
+#. js:form_common.js,1103
+msgid "Selected domain"
+msgstr "Επιλεγμένος τομέας"
+
+#. xml:./templates/t/ul/li/span
+msgid "Selection:"
+msgstr "Επιλογή:"
+
+#. js:form_view.js,1125
+msgid "Set Default"
+msgstr "Ορισμός ως προεπιλογή"
+
+#. xml:./templates/t/t/t/li/a
+msgid "Set Defaults"
+msgstr "Ορισμός προεπιλογών"
+
+#. js:list_view.js,931
+msgid "Setting 'id' attribute on existing record %s"
+msgstr "Ορίστε το χαρακτηριστικό 'id' στην υπάρχουσα εγγραφή %s"
+
+#. resource:base_ir_filters_view_search
+msgid "Shared"
+msgstr ""
+
+#. xml:./templates/t/ul/li/span
+msgid "Size:"
+msgstr "Μέγεθος:"
+
+#. field:Filter.Sort
+msgid "Sort"
+msgstr ""
+
+#. xml:./templates/t/t/li/span
+msgid "Special:"
+msgstr "Ειδικά:"
+
+#. js:misc.js,13
+msgid "Still loading..."
+msgstr "Ακόμα φορτώνει..."
+
+#. js:misc.js,14
+msgid "Still loading...<br />Please be patient."
+msgstr "Ακόμη Φορτώνει...<br />Παρακαλώ Περιμένετε"
+
+#. js:misc.js,17
+msgid "Take a minute to get a coffee,<br />because it's loading..."
+msgstr "Κάνε ένα λεπτό διάλειμα,<br />γιατί ακόμη φορτώνει..."
+
+#. xml:./templates/t/t/t/li/a
+msgid "Technical Translation"
+msgstr "Τεχνική Μετάφραση"
+
+#. js:form_widgets.js,1131
+msgid "The field is empty, there's nothing to save !"
+msgstr "Το πεδίο είναι άδειο, δεν υπάρχει τίποτα για αποθήκευση!"
+
+#. js:form_view.js,887
+msgid "The following fields are invalid:"
+msgstr "Τα επόμενα πεδία είναι μη έγκυρα"
+
+#. js:list_view_editable.js,122
+msgid "The line has been modified, your changes will be discarded. Are you sure you want to discard the changes ?"
+msgstr "Αυτή η γραμμή έχει τροποποιηθεί, οι αλλαγές σας θα χαθούν. Είστε σίγουροι ότι θέλετε να απορρίψετε αυτές τις αλλαγές;"
+
+#. help:Filter.Action
+msgid "The menu action this filter applies to. When left empty the filter applies to all menus for this model."
+msgstr ""
+
+#. js:form_relational_widgets.js,1123
+msgid "The o2m record must be saved before an action can be used"
+msgstr "Η εγγραφή ΈναΠροςΠολλά πρέπει να αποθηκευτεί πριν χρησιμοποιηθεί σε μια ενέργεια"
+
+#. js:form_view.js,301
+msgid "The record could not be found in the database."
+msgstr "Η εγγραφή  δεν εντοπίστηκε στην βάση δεδομένων"
+
+#. js:form_view.js,756
+msgid "The record has been modified, your changes will be discarded. Are you sure you want to leave this page ?"
+msgstr "Αυτή η καταγραφή έχει τροποποιηθεί, οι αλλαγές σας θα χαθούν. Είστε σίγουροι ότι θέλετε να φύγετε από αυτή τη σελίδα;"
+
+#. js:form_widgets.js,1093
+msgid "The selected file exceed the maximum file size of %s."
+msgstr "Το συγκεκριμένο αρχείο ξεπερνάει το μέγιστο μέγεθως των %s."
+
+#. js:form_relational_widgets.js,1595
+msgid "The type of the field '%s' must be a many2many field with a relation to 'ir.attachment' model."
+msgstr "Ο τύπος του πεδίου '%s' πρέπει να έχει μία σχέση ΠολλάΠροςΠολλά με το μοντέλο 'ir.attachment'."
+
+#. help:Filter.User
+msgid "The user this filter is private to. When left empty the filter is public and available to all users."
+msgstr ""
+
+#. js:form_widgets.js,1114
+msgid "There was a problem while uploading your file"
+msgstr "Υπήρξε κάποιο πρόβλημα κατά το ανέβασμα του αρχείου σας"
+
+#. js:search_menus.js,251
+msgid "This filter is global and will be removed for everybody if you continue."
+msgstr "Το φίλτρο είναι καθολικό και θα αφαιρεθεί για όλους εάν συνεχίσετε."
+
+#. xml:./templates/div/p
+msgid ""
+"This wizard will export all data that matches the current search criteria to a CSV file.\n"
+"        You can export all data or only the fields that can be reimported after modification."
+msgstr ""
+"Αυτός ο οδηγός θα εξάγει όλα τα στοιχεία που ταιριάζουν με τα κριτήρια της αναζήτησής σε ένα αρχείο CSV.\n"
+"Μπορείτε να εξάγετε όλα τα δεδομένα ή μόνο τα πεδία που μπορούν να επανεισαχθούν μετά την τροποποίηση."
+
+#. js:form_widgets.js,862
+msgid "Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Hexya is displayed according to your field timezone."
+msgstr ""
+
+#. xml:./templates/t/t/li/a
+msgid "Toggle Timelines"
+msgstr "Εναλλαγή Χρονολογικών Σειρών"
+
+#. js:pivot_view.js,526
+#. js:pivot_view.js,555
+msgid "Total"
+msgstr "Σύνολο"
+
+#. xml:./templates/t/ul/li/span
+msgid "Type:"
+msgstr "Τύπος:"
+
+#. js:form_widgets.js,643
+#. js:list_view.js,289
+msgid "Unarchive"
+msgstr "Μη αρχειοθετημένο"
+
+#. js:graph_widget.js,79
+#. js:list_view.js,1379
+#. js:list_view.js,1385
+#. js:pivot_view.js,508
+msgid "Undefined"
+msgstr "Μη ορισμένο"
+
+#. xml:./templates/t
+msgid ""
+"Unhandled widget\n"
+"    <t t-js=\"dict\">console.warn('Unhandled widget', dict.widget);</t>"
+msgstr ""
+
+#. js:data.js,1083
+msgid "Unknown field %s in domain %s"
+msgstr "Άγνωστο πεδίο  %s στον τομέα %s"
+
+#. js:list_view.js,1086
+msgid "Unknown m2m command %s"
+msgstr "Άγνωστη εντολή ΠολλάΠροςΠολλά: %s"
+
+#. js:pyeval.js,991
+msgid "Unknown nonliteral type "
+msgstr "Άγνωστος μη γραμματικός τύπου"
+
+#. js:data.js,1075
+msgid "Unknown operator %s in domain %s"
+msgstr "Άγνωστος χειριστής %s στον τομέα %s"
+
+#. js:data.js,1138
+msgid "Unnamed"
+msgstr "Χωρίς όνομα"
+
+#. js:data.js,1121
+msgid "Unsupported operator %s in domain %s"
+msgstr "Μη υποστηριζόμενος χειριστής %s στο domain %s"
+
+#. xml:./templates/t/t/div/a
+msgid "Update translations"
+msgstr "Ενημέρωση μεταφράσεων"
+
+#. js:form_upgrade_widgets.js,34
+msgid "Upgrade now"
+msgstr "Αναβάθμιση τώρα"
+
+#. xml:./templates/t/div/button
+msgid "Upload your file"
+msgstr "Μεταφόρτωση του αρχείου σας"
+
+#. xml:./templates/t/div/t/div/span
+#. xml:./templates/t/div/span
+msgid "Uploading..."
+msgstr "Αποστολή..."
+
+#. field:Filter.User
+#. resource:base_ir_filters_view_search
+#. resource:base_ir_filters_view_search
+msgid "User"
+msgstr ""
+
+#. resource:base_menu_ir_filters
+msgid "User-defined Filters"
+msgstr ""
+
+#. js:priority.js,50
+msgid "Very High"
+msgstr "Πολύ υψηλή"
+
+#. xml:./templates/t/t/t/li/a
+msgid "View Fields"
+msgstr "Προβολή Πεδίων"
+
+#. xml:./templates/t/t/t/t/li/a
+msgid "View Metadata"
+msgstr "Προβολή Μεταδομένων"
+
+#. js:form_relational_widgets.js,740
+msgid "View type '%s' is not supported in X2Many."
+msgstr "Η προβολή τύπου '%s' δεν υποστηρίζεται σε XΠροςΠολλά."
+
+#. js:crash_manager.js,107
+#. js:form_view.js,761
+#. js:list_view.js,676
+#. js:sidebar.js,131
+msgid "Warning"
+msgstr "Προσοχή"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Week"
+msgstr "Εβδομάδα"
+
+#. xml:./templates/t/div/div
+msgid "Whoops, you shouldn't have come up to here..."
+msgstr ""
+
+#. js:form_view.js,1304
+msgid "Widget type '%s' is not implemented"
+msgstr "Το γραφικό στοιχείο τύπου '%s' δεν έχει υλοποιηθεί"
+
+#. xml:./templates/t/ul/li/span
+msgid "Widget:"
+msgstr "Γραφικό συστατικό:"
+
+#. js:progress_bar.js,78
+msgid "Wrong value entered!"
+msgstr "Έχει εισαχθεί λάθος τιμή!"
+
+#. xml:./templates/t/table/tr/th
+msgid "XML ID:"
+msgstr "XML ID:"
+
+#. xml:./templates/t/ul/t/t/li/ul/li/a
+msgid "Year"
+msgstr "Έτος"
+
+#. js:search_inputs.js,330
+msgid "Yes"
+msgstr "Ναι"
+
+#. js:form_relational_widgets.js,47
+msgid "You are creating a new %s, are you sure it does not exist yet?"
+msgstr "Θέλετε να δημιουργήσετε μία νέα %s, είσαστε σίγουροι ότι δεν υπάρχει ήδη;"
+
+#. xml:./templates/t/t/div
+msgid ""
+"You have updated <strong><t t-esc=\"field.string\"/></strong> (<t t-esc=\"lang\"/>).\n"
+"            <a class=\"oe_field_translate\" t-att-name=\"field.name\" href=\"#\">Update translations</a>"
+msgstr ""
+
+#. js:misc.js,16
+msgid "You may not believe it,<br />but the application is actually loading..."
+msgstr "Μπορεί να μην το πιστεύετε,<br/>αλλά η εφαρμογή φορτώνει..."
+
+#. js:sidebar.js,131
+msgid "You must choose at least one record."
+msgstr "Πρέπει να επιλέξετε τουλάχιστον μία εγγραφή"
+
+#. js:list_view.js,676
+msgid "You must select at least one record."
+msgstr "Πρέπει να επιλέξετε τουλάχιστον μία εγγραφή"
+
+#. js:crash_manager.js,57
+msgid "Your Hexya session expired. Please refresh the current web page."
+msgstr ""
+
+#. xml:./templates/t/ul/li/ul/li
+msgid ""
+"[<t t-esc=\"option[0]\"/>]\n"
+"                    <t t-if=\"option[1]\"> - </t>\n"
+"                    <t t-esc=\"option[1]\"/>"
+msgstr ""
+
+#. xml:./templates/t/t
+msgid "console.warn('Unhandled widget', dict.widget);"
+msgstr ""
+
+#. js:utils.js,302
+msgid "kMGTPE"
+msgstr "kMGTPE"
+
+#. js:search_inputs.js,230
+msgid "not a valid integer"
+msgstr "δεν είναι έγκυρος ακέραιος"
+
+#. js:search_inputs.js,245
+msgid "not a valid number"
+msgstr "μη έγκυρος αριθμός"
+
+#. xml:./templates/t/li/span
+msgid "or"
+msgstr "ή"
+
+#. xml:./templates/t/div/t/t
+msgid "overflow-x: hidden"
+msgstr ""
+
+#. xml:./templates/t/t
+msgid ""
+"var $div = $(document.createElement('div')).attr('t-if', this.attr('t-if')).addClass('o_form_field_monetary');\n"
+"        this.clone(true).appendTo($div);\n"
+"        this.replaceWith($div);"
+msgstr ""
+
+#. xml:./templates/t/div/t
+msgid ""
+"var message = (d.message !== undefined) ? d.message : d.error.data.message;\n"
+"            d.html_error = context.engine.tools.html_escape(message).replace(/\\n/g, '<br/>');"
+msgstr ""
+
+#. xml:./templates/div/div/div/div/button
+msgid "×"
+msgstr ""
+

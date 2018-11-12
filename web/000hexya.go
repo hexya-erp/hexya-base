@@ -19,6 +19,8 @@ import (
 	_ "github.com/hexya-erp/hexya-base/base"
 	// Loading controllers package
 	_ "github.com/hexya-erp/hexya-base/web/controllers"
+	"github.com/hexya-erp/hexya-base/web/scripts"
+	"github.com/hexya-erp/hexya/hexya/i18n/i18nUpdate"
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools/logging"
 )
@@ -37,4 +39,13 @@ func init() {
 		Name:     MODULE_NAME,
 		PostInit: func() {},
 	})
+
+	translation.Register().RuleSet(MODULE_NAME, &translation.RuleSet{
+		Ruleset: [][]string{
+			{`/static/src/.*\.js`},
+			{`/static/src/.*\.xml`},
+		},
+	})
+
+	translation.Register().Func(MODULE_NAME, scripts.UpdateFunc)
 }
