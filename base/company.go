@@ -91,7 +91,7 @@ func init() {
 		`ComputeLogoWeb returns a resized version of the company logo`,
 		func(rs h.CompanySet) *h.CompanyData {
 			res := h.CompanyData{
-				LogoWeb: b64image.Resize(rs.Logo(), 180, 0, true),
+				LogoWeb: b64image.Resize(rs.Logo(), 160, 0, true),
 			}
 			return &res
 		})

@@ -4,14 +4,20 @@
 package controllers
 
 import (
+	"encoding/base64"
 	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
 
+	"github.com/hexya-erp/hexya/hexya/models"
+	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools/assets"
 	"github.com/hexya-erp/hexya/hexya/tools/generate"
+	"github.com/hexya-erp/hexya/pool/h"
+	"github.com/hexya-erp/hexya/pool/q"
 )
 
 func getAssetTempFile(asset string) string {
@@ -68,4 +74,22 @@ func AssetsFrontendCSS(c *server.Context) {
 		createCSSAssets(append(LessHelpers, FrontendLess...), frontendCSSRoute, bootstrapDir)
 	}
 	c.File(fName)
+}
+
+// Dashboard returns the dashboard image of the company or the default one
+func Dashboard(c *server.Context) {
+	checkUser(c.Session().Get("uid").(int64))
+	var image []byte
+	models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
+		user := h.User().Search(env, q.User().ID().Equals(c.Session().Get("uid").(int64)))
+		if user.Company().DashboardBackground() == "" {
+			return
+		}
+		image, _ = base64.StdEncoding.DecodeString(user.Company().DashboardBackground())
+	})
+	if len(image) == 0 {
+		c.Redirect(http.StatusFound, "/static/web/src/img/material-background.jpg")
+		return
+	}
+	c.Data(http.StatusOK, "image", image)
 }

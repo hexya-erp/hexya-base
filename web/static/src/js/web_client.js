@@ -59,8 +59,7 @@ return AbstractWebClient.extend({
         this.$('tr:has(td.navbar),.oe_leftbar').toggle(value);
     },
     update_logo: function(reload) {
-        var company = session.company_id;
-        var img = session.url('/web/binary/company_logo' + '?db=' + session.db + (company ? '&company=' + company : ''));
+        var img = session.url('/web/binary/company_logo');
         this.$('.o_sub_menu_logo img').attr('src', '').attr('src', img + (reload ? "#" + Date.now() : ''));
         this.$('.oe_logo_edit').toggleClass('oe_logo_edit_admin', session.is_superuser);
     },
@@ -68,7 +67,7 @@ return AbstractWebClient.extend({
         var self = this;
         ev.preventDefault();
         self.alive(new Model("res.users").call("read", [[session.uid], ["company_id"]])).then(function(data) {
-            self.rpc("/web/action/load", { action_id: "base.action_res_company_form" }).done(function(result) {
+            self.rpc("/web/action/load", { action_id: "base_action_res_company_form" }).done(function(result) {
                 result.res_id = data[0].company_id[0];
                 result.target = "new";
                 result.views = [[false, 'form']];

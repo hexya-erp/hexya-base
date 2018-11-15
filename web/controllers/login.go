@@ -9,29 +9,8 @@ import (
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types"
 	"github.com/hexya-erp/hexya/hexya/server"
+	"github.com/hexya-erp/hexya/hexya/tools/hweb"
 )
-
-type loginData struct {
-	ErrorMsg            string
-	CommonCSS           []string
-	CommonCompiledCSS   string
-	CommonJS            []string
-	FrontendCSS         []string
-	FrontendCompiledCSS string
-	FrontendJS          []string
-}
-
-func newLoginData(errMsg string) loginData {
-	return loginData{
-		ErrorMsg:            errMsg,
-		CommonCSS:           CommonCSS,
-		CommonCompiledCSS:   commonCSSRoute,
-		CommonJS:            CommonJS,
-		FrontendCSS:         FrontendCSS,
-		FrontendCompiledCSS: frontendCSSRoute,
-		FrontendJS:          FrontendJS,
-	}
-}
 
 // LoginGet is called when the client calls the login page
 func LoginGet(c *server.Context) {
@@ -40,8 +19,7 @@ func LoginGet(c *server.Context) {
 		c.Redirect(http.StatusSeeOther, redirect)
 		return
 	}
-	data := newLoginData("")
-	c.HTML(http.StatusOK, "web.login", data)
+	c.HTML(http.StatusOK, "web.login", FrontendContext)
 }
 
 // LoginPost is called when the client sends credentials
@@ -51,14 +29,17 @@ func LoginPost(c *server.Context) {
 	secret := c.DefaultPostForm("password", "")
 	uid, err := security.AuthenticationRegistry.Authenticate(login, secret, new(types.Context))
 	if err != nil {
-		data := newLoginData("Wrong login or password")
-		c.HTML(http.StatusOK, "web.login", data)
+		c.HTML(http.StatusOK, "web.login", FrontendContext.Update(hweb.Context{
+			"error": "Wrong login or password",
+		}))
 		return
 	}
 
 	sess := c.Session()
 	sess.Set("uid", uid)
 	sess.Set("login", login)
+	// TODO Manage session_id
+	sess.Set("ID", int64(1))
 	sess.Save()
 	redirect := c.DefaultPostForm("redirect", "/web")
 	c.Redirect(http.StatusSeeOther, redirect)
