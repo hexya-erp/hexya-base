@@ -12,83 +12,98 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
-#. xml:./template/t/div/div/button
-#. xml:./template/t/div/button
-msgid "Add"
-msgstr "Adicionar"
-
-#. xml:./template/t/div/div/span
-msgid "Add new Column"
-msgstr "Adicionar coluna"
-
-#. js:kanban_relational.js,52
+#. custom: webKanban
+#: kanban_relational.js:52
 msgid "Add: "
 msgstr "Adicionar: "
 
-#. xml:./template/t/div/div/span/ul/t/li/a
-msgid "Archive Records"
-msgstr "Arquivar Registros"
-
-#. js:kanban_column.js,222
+#. custom: webKanban
+#: kanban_column.js:222
 msgid "Are you sure that you want to remove this column ?"
 msgstr "Você tem certeza que quer remover esta coluna ?"
 
-#. js:kanban_view.js,549
+#. custom: webKanban
+#: kanban_view.js:549
 msgid "Are you sure you want to delete this record ?"
 msgstr "Você tem certeza que quer excluir este registro?"
 
-#. js:kanban_column.js,216
-msgid "Cancel"
-msgstr "Cancelar"
+#. custom: webKanban
+#: kanban_column.js:211
+msgid "Ok"
+msgstr ""
 
-#. js:kanban_view.js,724
-msgid "Create"
-msgstr "Criar"
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Add new Column"
+msgstr "Adicionar coluna"
 
-#. js:kanban_relational.js,26
-msgid "Create: "
-msgstr "Criar: "
-
-#. xml:./template/t/div/div/span/ul/t/li/a
-msgid "Delete"
-msgstr "Excluir"
-
-#. xml:./template/t/div/div/button
-#. xml:./template/t/div/button
-msgid "Discard"
-msgstr "Descartar"
-
-#. js:kanban_column.js,232
-msgid "Edit Column"
-msgstr "Editar Coluna"
-
-#. xml:./template/t/div/div/span/ul/t/li/a
-msgid "Edit Stage"
-msgstr "Editar estágio"
-
-#. xml:./template/t/div/div/span/ul/li/a
+#. custom: webKanban
+#: web_kanban.xml:0
 msgid "Fold"
 msgstr "Dobrar"
 
-#. xml:./template/t/a
-msgid "Load more... (<t t-esc=\"widget.remaining\"/> remaining)"
-msgstr ""
+#. custom: webKanban
+#: web_kanban.xml:0 web_kanban.xml:0
+msgid "Add"
+msgstr "Adicionar"
 
-#. js:kanban_column.js,211
-msgid "Ok"
-msgstr "Ok"
+#. custom: webKanban
+#: kanban_column.js:216
+msgid "Cancel"
+msgstr "Cancelar"
 
-#. js:kanban_relational.js,66
+#. custom: webKanban
+#: kanban_column.js:232
+msgid "Edit Column"
+msgstr "Editar Coluna"
+
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Archive Records"
+msgstr "Arquivar Registros"
+
+#. custom: webKanban
+#: kanban_relational.js:26
+msgid "Create: "
+msgstr "Criar: "
+
+#. custom: webKanban
+#: kanban_relational.js:66
 msgid "Open: "
 msgstr "Aberto: "
 
-#. xml:./template/t/div/div/span/ul/t/li/a
+#. custom: webKanban
+#: kanban_view.js:724
+msgid "Create"
+msgstr "Criar"
+
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Delete"
+msgstr "Excluir"
+
+#. custom: webKanban
+#: web_kanban.xml:0 web_kanban.xml:0
+msgid "Discard"
+msgstr "Descartar"
+
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Edit Stage"
+msgstr "Editar estágio"
+
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Load more... (<t t-esc=\"widget.remaining\"/> remaining)"
+msgstr ""
+
+#. custom: webKanban
+#: web_kanban.xml:0
 msgid "Unarchive Records"
 msgstr "Desarquivar Registros"
 
-#. js:kanban_view.js,239
-#. js:kanban_view.js,254
-#. js:kanban_view.js,261
+#. custom: webKanban
+#: kanban_view.js:239 kanban_view.js:254 kanban_view.js:261
 msgid "Undefined"
 msgstr "Indefinido"
 

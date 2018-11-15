@@ -20,7 +20,7 @@ import (
 
 // CompanyLogo serves the logo of the company
 func CompanyLogo(c *server.Context) {
-	info := GetSessionInfo(c.Session())
+	info := GetSessionInfoStruct(c.Session())
 	var img string
 	switch {
 	case info == nil:

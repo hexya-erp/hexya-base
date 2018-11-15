@@ -12,454 +12,164 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
-#. js:form_common.js,874
-msgid " & Close"
-msgstr " & 关闭"
-
-#. js:search_inputs.js,553
-#. js:search_view.js,205
-msgid " or "
-msgstr "或"
-
-#. js:view_manager.js,223
-msgid " view couldn't be loaded"
-msgstr "视图无法加载"
-
-#. xml:./templates/t/t
-msgid "$(this).addClass('o_error');"
-msgstr ""
-
-#. js:debug_manager.js,134
-msgid "%d requests (%d ms) %d queries (%d ms)"
-msgstr "%d请求(%d ms)%d查询(%d ms)"
-
-#. js:formats.js,187
-msgid "'%s' is not a correct date"
-msgstr "'%s' 格式错，不是正确的日期"
-
-#. js:time.js,192
-msgid "'%s' is not a correct date, datetime nor time"
-msgstr "'%s'不是正确的日期，日期时间，时间"
-
-#. js:formats.js,173
-msgid "'%s' is not a correct datetime"
-msgstr "'%s' 不是正确的日期时间"
-
-#. js:formats.js,144
-msgid "'%s' is not a correct float"
-msgstr "'%s' 不是正确的浮点数"
-
-#. js:formats.js,132
-msgid "'%s' is not a correct integer"
-msgstr "'%s' 不是正确的整数"
-
-#. js:formats.js,192
-msgid "'%s' is not a correct time"
-msgstr "'%s' 不是正确的时间"
-
-#. js:time.js,204
-msgid "'%s' is not convertible to date, datetime nor time"
-msgstr "'%s' 无法转换为日期，日期时间 和 时间"
-
-#. js:formats.js,75
-msgid "(%d records)"
-msgstr "(%d 条记录)"
-
-#. xml:./templates/t/t/div/t/t
-msgid "(no string)"
-msgstr "(无字符串)"
-
-#. xml:./templates/t/div/t
-msgid "(nolabel)"
-msgstr "(无标签)"
-
-#. xml:./templates/t/ul/li/ul/li/t
-msgid "-"
-msgstr ""
-
-#. xml:./templates/div/t/div/span/span
-msgid "...Upload in progress..."
-msgstr "... 上传进行中"
-
-#. xml:./templates/t/t/div/ul/li/t/t
-#. xml:./templates/div/div/t/t
-msgid "/web/binary/upload_attachment"
-msgstr ""
-
-#. xml:./templates/t/div/t
-msgid "99+"
-msgstr ""
-
-#. xml:./templates/t/t/div/t/t
-msgid ":"
-msgstr ""
-
-#. xml:./templates/t/label/span
-#. xml:./templates/t/label/span
-#. xml:./templates/t/label/span
-msgid "?"
-msgstr ""
-
 #. field:Filter.Action
 msgid "Action"
 msgstr "动作"
 
-#. js:form_relational_widgets.js,1122
-msgid "Action Button"
-msgstr "动作按钮"
+#. custom: web
+#: base.xml:0
+msgid "$(this).addClass('o_error');"
+msgstr ""
 
-#. xml:./templates/t/t/li/span
-msgid "Action ID:"
-msgstr "动作ID:"
+#. custom: web
+#: base.xml:0
+msgid "...Upload in progress..."
+msgstr "... 上传进行中"
 
-#. js:form_widgets.js,637
-msgid "Activate"
-msgstr "激活"
+#. custom: web
+#: base.xml:0
+msgid "99+"
+msgstr ""
 
-#. xml:./templates/t/li/a
+#. custom: web
+#: base.xml:0
 msgid "Activate Assets Debugging"
 msgstr "激活资产调试"
 
-#. field:Filter.Active
-#. js:form_widgets.js,634
-#. js:form_widgets.js,640
-msgid "Active"
-msgstr "有效"
-
-#. js:form_relational_widgets.js,1378
-#. xml:./templates/div/div/div/button
-msgid "Add"
-msgstr "添加"
-
-#. xml:./templates/div/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Add Custom Filter"
 msgstr "添加自定义筛选"
 
-#. js:form_relational_widgets.js,1018
-msgid "Add an item"
-msgstr "添加项目"
-
-#. xml:./templates/div/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Add custom group"
 msgstr "添加自定义分组"
 
-#. xml:./templates/t/t/div/ul/li/t/span
+#. custom: web
+#: base.xml:0
 msgid "Add..."
 msgstr "添加..."
 
-#. js:form_relational_widgets.js,1305
-msgid "Add: "
-msgstr "添加： "
-
-#. js:dialog.js,168
-msgid "Alert"
-msgstr "警报"
-
-#. xml:./templates/form/table/tr/td/label
+#. custom: web
+#: base.xml:0
 msgid "All users"
 msgstr "所有用户"
 
-#. xml:./templates/div/ul/li/button
-#. xml:./templates/t/li/button
-msgid "Apply"
-msgstr "应用"
-
-#. js:form_widgets.js,641
-#. js:list_view.js,288
-msgid "Archive"
-msgstr "归档"
-
-#. js:form_widgets.js,642
-msgid "Archived"
-msgstr "归档"
-
-#. js:search_menus.js,252
-msgid "Are you sure that you want to remove this filter?"
-msgstr "你确定要移除此筛选吗？"
-
-#. xml:./templates/t/t/div/ul/li/t/t/b
+#. custom: web
+#: base.xml:0
 msgid "Attachment :"
 msgstr "附件:"
 
-#. xml:./templates/div/div/div/h4
+#. custom: web
+#: base.xml:0
 msgid "Available fields"
 msgstr "可用字段"
 
-#. xml:./templates/t/t/div/t
-msgid ""
-"Button\n"
-"                <t t-if=\"widget.string\">: </t>\n"
-"                <t t-if=\"!widget.string\"> (no string)</t>"
-msgstr ""
-
-#. xml:./templates/t/t/li/span
-msgid "Button Type:"
-msgstr "按钮类型："
-
-#. js:utils.js,284
-msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
-msgstr "字节,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
-
-#. js:list_common.js,133
-msgid "Can't convert value %s to context"
-msgstr "不能转换值 %s 到上下文context"
-
-#. js:crash_manager.js,170
-#. js:dialog.js,182
-#. js:form_common.js,1046
-#. js:form_upgrade_widgets.js,40
-#. xml:./templates/form/div/button
-msgid "Cancel"
-msgstr "取消"
-
-#. js:change_password.js,14
-#. xml:./templates/form/div/button
-msgid "Change Password"
-msgstr "更改密码"
-
-#. xml:./templates/t/ul/li/span
-msgid "Change default:"
-msgstr "更改默认值："
-
-#. xml:./templates/t/t/li/a
+#. custom: web
+#: base.xml:0
 msgid "Clear Events"
 msgstr "清除事件"
 
-#. js:abstract_web_client.js,124
-#. js:crash_manager.js,123
-msgid "Client Error"
-msgstr "客户端错误"
-
-#. js:form_common.js,868
-#. js:form_view.js,1127
-#. js:data_export.js,202
-msgid "Close"
-msgstr "关闭"
-
-#. xml:./templates/form/table/tr/td/label
+#. custom: web
+#: base.xml:0
 msgid "Condition:"
 msgstr "条件:"
-
-#. xml:./templates/form/div/table/tr/td/label
-msgid "Confirm New Password"
-msgstr "确认新密码"
-
-#. js:dialog.js,193
-msgid "Confirmation"
-msgstr "确认"
 
 #. field:Filter.Context
 msgid "Context"
 msgstr ""
 
-#. xml:./templates/t/ul/li/span
-msgid "Context:"
-msgstr "上下文:"
+#. custom: web
+#: form_common.js:874
+msgid " & Close"
+msgstr " & 关闭"
 
-#. js:form_widgets.js,1251
-msgid "Could not display the selected image."
-msgstr "不能显示选择的图像。"
+#. custom: web
+#: base.xml:0
+msgid "Confirm New Password"
+msgstr "确认新密码"
 
-#. js:list_view.js,1024
-msgid "Could not find id in dataset"
-msgstr "数据集中找不到此 ID"
-
-#. js:utils.js,179
-msgid "Could not serialize XML"
-msgstr "不能序列化 XML"
-
-#. js:graph_view.js,86
-#. js:graph_widget.js,21
-#. js:pivot_view.js,182
-#. xml:./templates/t/div/ul/li/a
-#. xml:./templates/t/div/ul/li/a
-msgid "Count"
-msgstr "个数"
-
-#. js:form_common.js,1049
-#. xml:./templates/t/div/button
-msgid "Create"
-msgstr "创建"
-
-#. js:form_relational_widgets.js,25
-msgid "Create a %s"
-msgstr "创建 %s"
-
-#. js:form_common.js,236
-msgid "Create and Edit..."
-msgstr "创建并编辑..."
-
-#. js:form_common.js,281
-#. js:form_relational_widgets.js,1080
-msgid "Create: "
-msgstr "创建： "
-
-#. xml:./templates/t/t/div/ul/li/t/t/b
+#. custom: web
+#: base.xml:0
 msgid "Created by :"
 msgstr "创建人："
 
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base.xml:0
 msgid "Creation Date:"
 msgstr "创建日期："
 
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base.xml:0
 msgid "Creation User:"
 msgstr "创建用户："
 
-#. js:form_common.js,1096
-#. js:search_menus.js,177
-msgid "Custom Filter"
-msgstr "自定义筛选"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
-msgid "Day"
-msgstr "日"
-
-#. js:form_widgets.js,635
-msgid "Deactivate"
-msgstr "取消激活"
+#. field:Company.DashboardBackground
+msgid "Dashboard Background"
+msgstr ""
 
 #. field:Filter.IsDefault
 msgid "Default filter"
 msgstr ""
 
-#. xml:./templates/form/table/tr/td/label
-msgid "Default:"
-msgstr "默认："
-
-#. xml:./templates/t/button
-msgid "Delete"
-msgstr "刪除"
-
-#. xml:./templates/t/li/a/t
-msgid "Disable Technical Features"
-msgstr "停用技术功能"
-
-#. js:form_common.js,868
-#. xml:./templates/t/t/div/button
-#. xml:./templates/t/div/button
-msgid "Discard"
-msgstr "丢弃"
-
-#. js:sidebar.js,217
-msgid "Do you really want to delete this attachment ?"
-msgstr "你真的要删除此附件？"
-
-#. js:form_view.js,733
-msgid "Do you really want to delete this record?"
-msgstr "你真的要删除此记录？"
-
-#. js:list_view.js,543
-msgid "Do you really want to remove these records?"
-msgstr "你真的要删除这些记录？"
+#. custom: web
+#: base.xml:0
+msgid "Day"
+msgstr "日"
 
 #. field:Filter.Domain
 msgid "Domain"
 msgstr ""
 
-#. xml:./templates/t/ul/li/span
-msgid "Domain:"
-msgstr "域:"
-
-#. js:misc.js,15
-msgid "Don't leave yet,<br />it's still loading..."
-msgstr "请不要离开，<br />它还在加载中..."
-
-#. js:list_view.js,1847
-msgid "Download"
-msgstr "下载"
-
-#. js:list_view.js,1863
-msgid "Download \\\"%s\\\""
+#. resource:base_ir_filters_view_search
+msgid "Filters visible only for one user"
 msgstr ""
 
-#. xml:./templates/t/div/button
+#. custom: web
+#: base.xml:0
+msgid "Default:"
+msgstr "默认："
+
+#. custom: web
+#: base.xml:0
+msgid "Delete"
+msgstr "刪除"
+
+#. custom: web
+#: base.xml:0
+msgid "Disable Technical Features"
+msgstr "停用技术功能"
+
+#. custom: web
+#: base.xml:0
 msgid "Edit"
 msgstr "编辑"
 
-#. xml:./templates/t/li/a/t
+#. custom: web
+#: base.xml:0
 msgid "Enable Technical Features"
 msgstr "启用技术功能"
 
-#. js:view_manager.js,223
-#. js:search_menus.js,84
-#. js:search_menus.js,91
-msgid "Error"
-msgstr "错误"
-
-#. js:pyeval.js,1023
-msgid "Evaluation Error"
-msgstr "评估错误"
-
-#. js:list_view.js,287
-msgid "Export"
-msgstr "导出"
-
-#. js:data_export.js,199
-msgid "Export Data"
-msgstr "导出数据"
-
-#. xml:./templates/div/div/div/label
+#. custom: web
+#: base.xml:0
 msgid "Export Formats :"
 msgstr "导出格式："
 
-#. js:data_export.js,201
-msgid "Export To File"
-msgstr "导出到文件"
-
-#. xml:./templates/div/div/div/label
+#. custom: web
+#: base.xml:0
 msgid "Export Type :"
 msgstr "导出类型："
 
-#. xml:./templates/div/div/div/div/div/label
+#. custom: web
+#: base.xml:0
 msgid "Export all Data"
 msgstr "导出全部数据"
-
-#. js:view_manager.js,437
-msgid "Failed to evaluate search criterions"
-msgstr "搜索条件评估失败"
-
-#. js:form_view.js,1300
-msgid "Field '%s' specified in view could not be found."
-msgstr "找不到视图中指定的字段'%s' 。"
-
-#. xml:./templates/t/ul/li/span
-msgid "Field:"
-msgstr "字段："
-
-#. js:debug_manager.js,339
-#. xml:./templates/t/t/li/a
-msgid "Fields View Get"
-msgstr "字段视图获取"
-
-#. js:debug_manager.js,241
-msgid "Fields of %s"
-msgstr " %s 的字段"
-
-#. js:form_widgets.js,1114
-msgid "File Upload"
-msgstr "文件上传"
-
-#. js:form_widgets.js,1094
-msgid "File upload"
-msgstr "文件上传"
-
-#. js:search_inputs.js,551
-msgid "Filter"
-msgstr "筛选"
 
 #. field:Filter.Name
 #. resource:base_ir_filters_view_search
 msgid "Filter Name"
 msgstr ""
-
-#. js:search_menus.js,84
-msgid "Filter name is required."
-msgstr "筛选名称是必须的。"
-
-#. js:search_menus.js,91
-msgid "Filter with same name already exists."
-msgstr "筛选已经存在。"
 
 #. resource:base_actions_ir_filters_view
 msgid "Filters"
@@ -473,148 +183,183 @@ msgstr ""
 msgid "Filters shared with all users"
 msgstr ""
 
-#. resource:base_ir_filters_view_search
-msgid "Filters visible only for one user"
-msgstr ""
-
-#. js:pivot_view.js,831
-msgid "For Excel compatibility, data cannot be exported if there are more than 256 columns.\\n\\nTip: try to flip axis, filter further or reduce the number of measures."
-msgstr ""
-
-#. js:form_view.js,301
-msgid "Form"
-msgstr "表单"
-
-#. resource:base_ir_filters_view_search
-#. js:search_inputs.js,698
-msgid "Group By"
-msgstr "分组"
-
-#. js:form_upgrade_widgets.js,51
-msgid "Hexya Enterprise"
-msgstr ""
-
-#. js:priority.js,49
-msgid "High"
-msgstr "高"
-
-#. field:CommonMixin.ID
+#. field:Company.ID
 #. field:Filter.ID
+#. field:User.ID
+#. field:CommonMixin.ID
 msgid "ID"
 msgstr "ID"
-
-#. xml:./templates/t/table/tr/th
-msgid "ID:"
-msgstr "ID："
-
-#. js:form_widgets.js,1251
-msgid "Image"
-msgstr "图像"
-
-#. xml:./templates/div/div/div/div/div/label
-msgid "Import-Compatible Export"
-msgstr "导入兼容"
-
-#. js:form_widgets.js,636
-msgid "Inactive"
-msgstr "无效"
-
-#. js:graph_widget.js,208
-#. js:graph_widget.js,216
-msgid "Invalid data"
-msgstr "无效的数据"
-
-#. js:debug_manager.js,183
-msgid "JS Tests"
-msgstr "JS 测试"
-
-#. xml:./templates/t/table/tr/th
-msgid "Latest Modification Date:"
-msgstr "最后修改日期："
-
-#. xml:./templates/t/table/tr/th
-msgid "Latest Modification by:"
-msgstr "最后修改者："
-
-#. xml:./templates/t/li/a
-msgid "Leave the Developer Tools"
-msgstr "离开开发者工具"
-
-#. js:loading.js,46
-msgid "Loading"
-msgstr "正在加载"
-
-#. js:loading.js,44
-msgid "Loading (%d)"
-msgstr "正在加载（%d）"
-
-#. js:misc.js,12
-msgid "Loading..."
-msgstr "加载..."
-
-#. js:pyeval.js,1027
-msgid "Local evaluation failure\\n%s\\n\\n%s"
-msgstr ""
-
-#. xml:./templates/t/li/ul/li/a
-msgid "Log out"
-msgstr "注销"
-
-#. js:priority.js,48
-msgid "Low"
-msgstr "低"
-
-#. js:search_inputs.js,451
-msgid "M2O search fields do not currently handle multiple default values"
-msgstr "M2O搜索字段目前不支持多个默认值"
-
-#. xml:./templates/t/t/t/li/a
-msgid "Manage Filters"
-msgstr "管理筛选"
-
-#. js:misc.js,18
-msgid "Maybe you should consider reloading the application by pressing F5..."
-msgstr "也许你应该考虑按 F5 键重新加载程序..."
-
-#. xml:./templates/t/div/button
-#. xml:./templates/t/div/button
-msgid "Measures <span class=\"caret\"/>"
-msgstr ""
-
-#. js:debug_manager.js,326
-msgid "Metadata (%s)"
-msgstr "元数据（%s）"
-
-#. xml:./templates/t/t/li/span
-msgid "Method:"
-msgstr "方法："
 
 #. field:Filter.ResModel
 #. resource:base_ir_filters_view_search
 msgid "Model"
 msgstr ""
 
-#. xml:./templates/t/t/div/ul/li/t/t/b
+#. custom: web
+#: base.xml:0
+msgid "ID:"
+msgstr "ID："
+
+#. custom: web
+#: base.xml:0
+msgid "Import-Compatible Export"
+msgstr "导入兼容"
+
+#. custom: web
+#: base.xml:0
+msgid "Latest Modification Date:"
+msgstr "最后修改日期："
+
+#. custom: web
+#: base.xml:0
+msgid "Latest Modification by:"
+msgstr "最后修改者："
+
+#. custom: web
+#: base.xml:0
+msgid "Leave the Developer Tools"
+msgstr "离开开发者工具"
+
+#. custom: web
+#: base.xml:0
+msgid "Log out"
+msgstr "注销"
+
+#. custom: web
+#: base.xml:0
+msgid "Manage Filters"
+msgstr "管理筛选"
+
+#. custom: web
+#: base.xml:0
 msgid "Modified by :"
 msgstr "修改者："
 
-#. xml:./templates/t/ul/li/span
-msgid "Modifiers:"
-msgstr "修饰器："
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Month"
 msgstr "月"
 
-#. xml:./templates/t/t/li/span
+#. custom: web
+#: base.xml:0
+msgid "No data to display."
+msgstr "无数据可供显示"
+
+#. custom: web
+#: debug_manager.js:134
+msgid "%d requests (%d ms) %d queries (%d ms)"
+msgstr "%d请求(%d ms)%d查询(%d ms)"
+
+#. custom: web
+#: base_common.xml:0
+msgid "(no string)"
+msgstr "(无字符串)"
+
+#. custom: web
+#: base_common.xml:0
+msgid "(nolabel)"
+msgstr "(无标签)"
+
+#. custom: web
+#: base_common.xml:0
+msgid "-"
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid ":"
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid "Action ID:"
+msgstr "动作ID:"
+
+#. custom: web
+#: base_common.xml:0
+msgid ""
+"Button\n"
+"                <t t-if=\"widget.string\">: </t>\n"
+"                <t t-if=\"!widget.string\"> (no string)</t>"
+msgstr ""
+
+#. custom: web
+#: dialog.js:168
+msgid "Alert"
+msgstr "警报"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Button Type:"
+msgstr "按钮类型："
+
+#. custom: web
+#: base_common.xml:0
+msgid "Change default:"
+msgstr "更改默认值："
+
+#. custom: web
+#: dialog.js:193
+msgid "Confirmation"
+msgstr "确认"
+
+#. custom: web
+#: form_relational_widgets.js:1122
+msgid "Action Button"
+msgstr "动作按钮"
+
+#. custom: web
+#: form_relational_widgets.js:1018
+msgid "Add an item"
+msgstr "添加项目"
+
+#. custom: web
+#: form_relational_widgets.js:1305
+msgid "Add: "
+msgstr "添加： "
+
+#. custom: web
+#: form_widgets.js:637
+msgid "Activate"
+msgstr "激活"
+
+#. custom: web
+#: form_widgets.js:642
+msgid "Archived"
+msgstr "归档"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Context:"
+msgstr "上下文:"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Domain:"
+msgstr "域:"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Field:"
+msgstr "字段："
+
+#. custom: web
+#: base_common.xml:0
+msgid "Method:"
+msgstr "方法："
+
+#. custom: web
+#: form_common.js:236
+msgid "Create and Edit..."
+msgstr "创建并编辑..."
+
+#. custom: web
+#: base.xml:0
 msgid "More"
 msgstr "更多"
 
-#. xml:./templates/div/div/div/button
-msgid "Move Down"
-msgstr "下移"
-
-#. xml:./templates/div/div/div/button
+#. custom: web
+#: base.xml:0
 msgid "Move Up"
 msgstr "上移"
 
@@ -622,387 +367,345 @@ msgstr "上移"
 msgid "My filters"
 msgstr ""
 
-#. js:form_view.js,315
-msgid "New"
-msgstr "新建"
-
-#. xml:./templates/form/div/table/tr/td/label
+#. custom: web
+#: base.xml:0
 msgid "New Password"
 msgstr "新密码"
 
-#. js:search_inputs.js,331
-msgid "No"
-msgstr "否"
-
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base.xml:0
 msgid "No Update:"
 msgstr "无更新:"
 
-#. xml:./templates/div/p
+#. custom: web
+#: data_export.js:199
+msgid "Export Data"
+msgstr "导出数据"
+
+#. custom: web
+#: base.xml:0
+msgid "Please note that only the selected ids will be exported."
+msgstr "请注意只有选中的 ID 会被导出"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Relation:"
+msgstr "关系："
+
+#. custom: web
+#: base.xml:0
+msgid "Remove All"
+msgstr "移除全部"
+
+#. custom: web
+#: data_export.js:201
+msgid "Export To File"
+msgstr "导出到文件"
+
+#. custom: web
+#: form_widgets.js:1094
+msgid "File upload"
+msgstr "文件上传"
+
+#. custom: web
+#: debug_manager.js:183
+msgid "JS Tests"
+msgstr "JS 测试"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Modifiers:"
+msgstr "修饰器："
+
+#. custom: web
+#: debug_manager.js:241
+msgid "Fields of %s"
+msgstr " %s 的字段"
+
+#. custom: web
+#: base.xml:0
+msgid "Move Down"
+msgstr "下移"
+
+#. custom: web
+#: base.xml:0
 msgid ""
 "No data available for this pivot table.  Try to add some records, or make sure\n"
 "        that there is at least one measure and no active filter in the search bar."
 msgstr "没有该数据透视表的数据。尝试添加一些记录，或确定至少一个度量，并在搜索栏没有筛选条件"
 
-#. js:graph_widget.js,94
-msgid "No data to display"
-msgstr "无数据可供显示"
+#. custom: web
+#: debug_manager.js:326
+msgid "Metadata (%s)"
+msgstr "元数据（%s）"
 
-#. xml:./templates/div/p/strong
-msgid "No data to display."
-msgstr "无数据可供显示"
-
-#. js:debug_manager.js,321
+#. custom: web
+#: debug_manager.js:321
 msgid "No metadata available"
 msgstr "无元数据可用"
 
-#. js:form_common.js,245
+#. custom: web
+#: form_common.js:245
 msgid "No results to show..."
 msgstr "无结果可供显示"
 
-#. js:form_relational_widgets.js,327
-msgid "No value found for the field %s for value %s"
-msgstr "找不到该字段%s的值 %s"
-
-#. js:utils.js,143
-msgid "Node [%s] is not a JSONified XML node"
-msgstr ""
-
-#. js:priority.js,47
-msgid "Normal"
-msgstr "一般"
-
-#. js:graph_widget.js,252
-msgid "Not enough data points"
-msgstr "没有足够的数据点"
-
-#. xml:./templates/t/ul/li
+#. custom: web
+#: base.xml:0
 msgid "Not shown in kanban"
 msgstr "在看板不显示"
 
-#. xml:./templates/t/ul/li/span
-msgid "Object:"
-msgstr "对象:"
-
-#. js:dialog.js,40
-#. js:dialog.js,158
-#. js:dialog.js,176
-#. xml:./templates/t/button
-msgid "Ok"
-msgstr "确定"
-
-#. xml:./templates/form/div/table/tr/td/label
+#. custom: web
+#: base.xml:0
 msgid "Old Password"
 msgstr "旧密码"
 
-#. xml:./templates/t/ul/li/span
-msgid "On change:"
-msgstr "变更时："
+#. custom: web
+#: form_widgets.js:635
+msgid "Deactivate"
+msgstr "取消激活"
 
-#. js:progress_bar.js,78
-msgid "Only Integer Value should be valid."
-msgstr "仅整型数值是合法的。"
-
-#. xml:./templates/form/table/tr/td/label
-msgid "Only you"
-msgstr "仅用于你个人"
-
-#. js:form_relational_widgets.js,153
-#. js:form_relational_widgets.js,921
-#. js:form_relational_widgets.js,1104
-#. js:form_relational_widgets.js,1321
-msgid "Open: "
-msgstr "打开： "
-
-#. js:data_export.js,167
-msgid "Please enter save field list name"
-msgstr "请输入字段列表的名称"
-
-#. xml:./templates/p/strong
-msgid "Please note that only the selected ids will be exported."
-msgstr "请注意只有选中的 ID 会被导出"
-
-#. xml:./templates/p/strong
+#. custom: web
+#: base.xml:0
 msgid "Please pay attention that all records matching your search filter will be exported. Not only the selected ids."
 msgstr "请注意将导出所有匹配搜索筛选的记录而不仅是选中的 ID。"
 
-#. js:data_export.js,435
-msgid "Please select fields to export..."
-msgstr "请选择要导出的字段..."
-
-#. js:data_export.js,421
-msgid "Please select fields to save export list..."
-msgstr "请选择要保存成导出列表的字段..."
-
-#. xml:./templates/t/li/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Preferences"
 msgstr "首选项"
 
-#. xml:./templates/t/ul/t/t/li/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Quarter"
 msgstr "季"
 
-#. xml:./templates/t/ul/li/span
-msgid "Relation:"
-msgstr "关系："
+#. custom: web
+#: base_common.xml:0
+msgid "On change:"
+msgstr "变更时："
 
-#. xml:./templates/div/div/div/button
+#. custom: web
+#: base.xml:0
 msgid "Remove"
 msgstr "移除"
 
-#. xml:./templates/div/div/div/button
-msgid "Remove All"
-msgstr "移除全部"
-
-#. js:form_relational_widgets.js,326
-msgid "Render"
-msgstr "渲染"
-
-#. xml:./templates/t/li/a
+#. custom: web
+#: base.xml:0
 msgid "Run JS Tests"
 msgstr "运行JS 测试"
 
-#. js:form_common.js,874
-#. xml:./templates/t/t/div/button
-#. xml:./templates/t/div/button
-#. xml:./templates/div/ul/li/button
-msgid "Save"
-msgstr "保存"
+#. custom: web
+#: data_export.js:167
+msgid "Please enter save field list name"
+msgstr "请输入字段列表的名称"
 
-#. js:form_common.js,889
+#. custom: web
+#: data_export.js:435
+msgid "Please select fields to export..."
+msgstr "请选择要导出的字段..."
+
+#. custom: web
+#: data_export.js:421
+msgid "Please select fields to save export list..."
+msgstr "请选择要保存成导出列表的字段..."
+
+#. custom: web
+#: form_relational_widgets.js:25
+msgid "Create a %s"
+msgstr "创建 %s"
+
+#. custom: web
+#: form_relational_widgets.js:326
+msgid "Render"
+msgstr "渲染"
+
+#. custom: web
+#: form_upgrade_widgets.js:51
+msgid "Hexya Enterprise"
+msgstr ""
+
+#. custom: web
+#: form_view.js:733
+msgid "Do you really want to delete this record?"
+msgstr "你真的要删除此记录？"
+
+#. custom: web
+#: form_view.js:1300
+msgid "Field '%s' specified in view could not be found."
+msgstr "找不到视图中指定的字段'%s' 。"
+
+#. custom: web
+#: form_view.js:301
+msgid "Form"
+msgstr "表单"
+
+#. custom: web
+#: priority.js:49
+msgid "High"
+msgstr "高"
+
+#. custom: web
+#: form_view.js:315
+msgid "New"
+msgstr "新建"
+
+#. custom: web
+#: base.xml:0
+msgid "overflow-x: hidden"
+msgstr ""
+
+#. custom: web
+#: form_common.js:889
 msgid "Save & New"
 msgstr "保存并新建"
 
-#. js:form_widgets.js,1131
-msgid "Save As..."
-msgstr "另存为..."
+#. custom: web
+#: form_widgets.js:1114
+msgid "File Upload"
+msgstr "文件上传"
 
-#. xml:./templates/t/label
-msgid "Save as:"
-msgstr "另存为："
+#. custom: web
+#: form_widgets.js:636
+msgid "Inactive"
+msgstr "无效"
 
-#. xml:./templates/div/ul/li/a
-msgid "Save current search"
-msgstr "保存当前搜索"
+#. custom: web
+#: base_common.xml:0
+msgid "Object:"
+msgstr "对象:"
 
-#. js:form_view.js,1128
-msgid "Save default"
-msgstr "保存默认"
+#. custom: web
+#: form_relational_widgets.js:327
+msgid "No value found for the field %s for value %s"
+msgstr "找不到该字段%s的值 %s"
 
-#. xml:./templates/div/div/div/h4/a
-msgid "Save fields list"
-msgstr "保存字段列表"
+#. custom: web
+#: base.xml:0
+msgid "Only you"
+msgstr "仅用于你个人"
 
-#. xml:./templates/t/label
-msgid "Saved exports:"
-msgstr "保存的导出："
-
-#. js:search_inputs.js,360
-msgid "Search %(field)s at: %(value)s"
-msgstr "搜索 %(field)s ： %(value)s"
-
-#. js:search_inputs.js,192
-#. js:search_inputs.js,211
-#. js:search_inputs.js,402
-msgid "Search %(field)s for: %(value)s"
-msgstr "搜索 %(field)s : %(value)s"
-
-#. js:form_common.js,211
-msgid "Search More..."
-msgstr "搜索更多..."
-
-#. js:form_common.js,281
-msgid "Search: "
-msgstr "搜索： "
-
-#. js:form_common.js,1054
-msgid "Select"
-msgstr "选择"
-
-#. js:form_common.js,1103
-msgid "Selected domain"
-msgstr "选择域"
-
-#. xml:./templates/t/ul/li/span
-msgid "Selection:"
-msgstr "选择:"
-
-#. js:form_view.js,1125
-msgid "Set Default"
-msgstr "设默认"
-
-#. xml:./templates/t/t/t/li/a
-msgid "Set Defaults"
-msgstr "设默认"
-
-#. js:list_view.js,931
-msgid "Setting 'id' attribute on existing record %s"
-msgstr "在已有的记录 %s上设置  'id' 属性"
-
-#. resource:base_ir_filters_view_search
-msgid "Shared"
-msgstr ""
-
-#. xml:./templates/t/ul/li/span
-msgid "Size:"
-msgstr "尺寸："
-
-#. field:Filter.Sort
-msgid "Sort"
-msgstr ""
-
-#. xml:./templates/t/t/li/span
-msgid "Special:"
-msgstr "特殊："
-
-#. js:misc.js,13
-msgid "Still loading..."
-msgstr "仍然在加载..."
-
-#. js:misc.js,14
-msgid "Still loading...<br />Please be patient."
-msgstr "仍然在加载中...<br />请稍候...."
-
-#. js:misc.js,17
-msgid "Take a minute to get a coffee,<br />because it's loading..."
-msgstr ""
-"稍安勿躁, <br />r\n"
-"\n"
-"大菜烹饪中 : )"
-
-#. xml:./templates/t/t/t/li/a
-msgid "Technical Translation"
-msgstr "技术性翻译"
-
-#. js:form_widgets.js,1131
-msgid "The field is empty, there's nothing to save !"
-msgstr "字段为空，没有需要保存的值！"
-
-#. js:form_view.js,887
-msgid "The following fields are invalid:"
-msgstr "下列字段无效："
-
-#. js:list_view_editable.js,122
-msgid "The line has been modified, your changes will be discarded. Are you sure you want to discard the changes ?"
-msgstr "明细已被修改，你的更改将被丢弃。你确定要放弃更改？"
-
-#. help:Filter.Action
-msgid "The menu action this filter applies to. When left empty the filter applies to all menus for this model."
-msgstr ""
-
-#. js:form_relational_widgets.js,1123
-msgid "The o2m record must be saved before an action can be used"
-msgstr "o2m记录必须先保存才能被一个动作使用"
-
-#. js:form_view.js,301
+#. custom: web
+#: form_view.js:301
 msgid "The record could not be found in the database."
 msgstr "无法在数据库中找到此字段"
 
-#. js:form_view.js,756
+#. custom: web
+#: form_widgets.js:1131
+msgid "Save As..."
+msgstr "另存为..."
+
+#. custom: web
+#: formats.js:144
+msgid "'%s' is not a correct float"
+msgstr "'%s' 不是正确的浮点数"
+
+#. custom: web
+#: base.xml:0
+msgid "Set Defaults"
+msgstr "设默认"
+
+#. custom: web
+#: formats.js:173
+msgid "'%s' is not a correct datetime"
+msgstr "'%s' 不是正确的日期时间"
+
+#. custom: web
+#: formats.js:132
+msgid "'%s' is not a correct integer"
+msgstr "'%s' 不是正确的整数"
+
+#. custom: web
+#: formats.js:187
+msgid "'%s' is not a correct date"
+msgstr "'%s' 格式错，不是正确的日期"
+
+#. custom: web
+#: time.js:192
+msgid "'%s' is not a correct date, datetime nor time"
+msgstr "'%s'不是正确的日期，日期时间，时间"
+
+#. custom: web
+#: formats.js:192
+msgid "'%s' is not a correct time"
+msgstr "'%s' 不是正确的时间"
+
+#. custom: web
+#: search_inputs.js:331
+msgid "No"
+msgstr "否"
+
+#. custom: web
+#: graph_widget.js:252
+msgid "Not enough data points"
+msgstr "没有足够的数据点"
+
+#. custom: web
+#: search_inputs.js:330
+msgid "Yes"
+msgstr "是"
+
+#. custom: web
+#: time.js:204
+msgid "'%s' is not convertible to date, datetime nor time"
+msgstr "'%s' 无法转换为日期，日期时间 和 时间"
+
+#. resource:base_menu_ir_filters
+msgid "User-defined Filters"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Week"
+msgstr "周"
+
+#. custom: web
+#: search_inputs.js:553 search_view.js:205
+msgid " or "
+msgstr "或"
+
+#. custom: web
+#: view_manager.js:223
+msgid " view couldn't be loaded"
+msgstr "视图无法加载"
+
+#. custom: web
+#: formats.js:75
+msgid "(%d records)"
+msgstr "(%d 条记录)"
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "/web/binary/upload_attachment"
+msgstr ""
+
+#. custom: web
+#: form_common.js:1103
+msgid "Selected domain"
+msgstr "选择域"
+
+#. custom: web
+#: form_view.js:756
 msgid "The record has been modified, your changes will be discarded. Are you sure you want to leave this page ?"
 msgstr "该记录已被修改，你的更改将被丢弃。你确定要离开这个页面？"
 
-#. js:form_widgets.js,1093
-msgid "The selected file exceed the maximum file size of %s."
-msgstr "所选文件超出了文件的最大值设定：%s"
-
-#. js:form_relational_widgets.js,1595
-msgid "The type of the field '%s' must be a many2many field with a relation to 'ir.attachment' model."
-msgstr "字段类型  '%s' 必须是一个关联到 'ir.attachment'模型的 many2many字段"
-
-#. help:Filter.User
-msgid "The user this filter is private to. When left empty the filter is public and available to all users."
-msgstr ""
-
-#. js:form_widgets.js,1114
-msgid "There was a problem while uploading your file"
-msgstr "上传文件时发生了问题"
-
-#. js:search_menus.js,251
-msgid "This filter is global and will be removed for everybody if you continue."
-msgstr "这是一个所有人都可以使用的全局筛选，如果继续，将会被移除。"
-
-#. xml:./templates/div/p
-msgid ""
-"This wizard will export all data that matches the current search criteria to a CSV file.\n"
-"        You can export all data or only the fields that can be reimported after modification."
-msgstr "该向导将导出所有符合当前的搜索条件为CSV文件。你可以导出所有数据或者只是修改后重新导入字段中的数据。"
-
-#. js:form_widgets.js,862
-msgid "Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Hexya is displayed according to your field timezone."
-msgstr ""
-
-#. xml:./templates/t/t/li/a
-msgid "Toggle Timelines"
-msgstr "切换时间表"
-
-#. js:pivot_view.js,526
-#. js:pivot_view.js,555
+#. custom: web
+#: pivot_view.js:526 pivot_view.js:555
 msgid "Total"
 msgstr "总计"
 
-#. xml:./templates/t/ul/li/span
-msgid "Type:"
-msgstr "类型："
-
-#. js:form_widgets.js,643
-#. js:list_view.js,289
-msgid "Unarchive"
-msgstr "取消归档"
-
-#. js:graph_widget.js,79
-#. js:list_view.js,1379
-#. js:list_view.js,1385
-#. js:pivot_view.js,508
-msgid "Undefined"
-msgstr "未定义的"
-
-#. xml:./templates/t
-msgid ""
-"Unhandled widget\n"
-"    <t t-js=\"dict\">console.warn('Unhandled widget', dict.widget);</t>"
+#. custom: web
+#: base.xml:0 base.xml:0 base.xml:0
+msgid "?"
 msgstr ""
 
-#. js:data.js,1083
-msgid "Unknown field %s in domain %s"
-msgstr "未知字段 %s 在域 %s 中 "
+#. custom: web
+#: form_widgets.js:634 form_widgets.js:640
+msgid "Active"
+msgstr "有效"
 
-#. js:list_view.js,1086
-msgid "Unknown m2m command %s"
-msgstr "未知的 m2m命令%s"
-
-#. js:pyeval.js,991
-msgid "Unknown nonliteral type "
-msgstr "未知的 nonliteral 类型 "
-
-#. js:data.js,1075
-msgid "Unknown operator %s in domain %s"
-msgstr "未知操作符 %s 在领域%s 中 "
-
-#. js:data.js,1138
-msgid "Unnamed"
-msgstr "未命名的"
-
-#. js:data.js,1121
-msgid "Unsupported operator %s in domain %s"
-msgstr "不支持的操作符 %s 在领域%s 中 "
-
-#. xml:./templates/t/t/div/a
-msgid "Update translations"
-msgstr "更新翻译"
-
-#. js:form_upgrade_widgets.js,34
-msgid "Upgrade now"
-msgstr "马上升级"
-
-#. xml:./templates/t/div/button
-msgid "Upload your file"
-msgstr "上传文件"
-
-#. xml:./templates/t/div/t/div/span
-#. xml:./templates/t/div/span
-msgid "Uploading..."
-msgstr "正在上传..."
+#. field:User.SidebarVisible
+msgid "Show App Sidebar"
+msgstr ""
 
 #. field:Filter.User
 #. resource:base_ir_filters_view_search
@@ -1010,136 +713,641 @@ msgstr "正在上传..."
 msgid "User"
 msgstr ""
 
-#. resource:base_menu_ir_filters
-msgid "User-defined Filters"
-msgstr ""
+#. custom: web
+#: search_menus.js:84
+msgid "Filter name is required."
+msgstr "筛选名称是必须的。"
 
-#. js:priority.js,50
-msgid "Very High"
-msgstr "非常高"
+#. custom: web
+#: loading.js:44
+msgid "Loading (%d)"
+msgstr "正在加载（%d）"
 
-#. xml:./templates/t/t/t/li/a
-msgid "View Fields"
-msgstr "视图字段"
+#. custom: web
+#: base.xml:0
+msgid "Save fields list"
+msgstr "保存字段列表"
 
-#. xml:./templates/t/t/t/t/li/a
+#. custom: web
+#: base.xml:0
+msgid "Technical Translation"
+msgstr "技术性翻译"
+
+#. custom: web
+#: base.xml:0
+msgid ""
+"This wizard will export all data that matches the current search criteria to a CSV file.\n"
+"        You can export all data or only the fields that can be reimported after modification."
+msgstr "该向导将导出所有符合当前的搜索条件为CSV文件。你可以导出所有数据或者只是修改后重新导入字段中的数据。"
+
+#. custom: web
+#: pyeval.js:991
+msgid "Unknown nonliteral type "
+msgstr "未知的 nonliteral 类型 "
+
+#. custom: web
+#: form_upgrade_widgets.js:34
+msgid "Upgrade now"
+msgstr "马上升级"
+
+#. custom: web
+#: base.xml:0
 msgid "View Metadata"
 msgstr "视图元数据"
 
-#. js:form_relational_widgets.js,740
-msgid "View type '%s' is not supported in X2Many."
-msgstr "视图类型‘%s’不支持X2Many。"
-
-#. js:crash_manager.js,107
-#. js:form_view.js,761
-#. js:list_view.js,676
-#. js:sidebar.js,131
-msgid "Warning"
-msgstr "警告"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
-msgid "Week"
-msgstr "周"
-
-#. xml:./templates/t/div/div
-msgid "Whoops, you shouldn't have come up to here..."
+#. custom: web
+#: pyeval.js:1027
+msgid "Local evaluation failure\\n%s\\n\\n%s"
 msgstr ""
 
-#. js:form_view.js,1304
-msgid "Widget type '%s' is not implemented"
-msgstr "挂件类型 '%s' 尚未实现"
+#. custom: web
+#: search_menus.js:252
+msgid "Are you sure that you want to remove this filter?"
+msgstr "你确定要移除此筛选吗？"
 
-#. xml:./templates/t/ul/li/span
-msgid "Widget:"
-msgstr "挂件:"
-
-#. js:progress_bar.js,78
-msgid "Wrong value entered!"
-msgstr "错误值输入!"
-
-#. xml:./templates/t/table/tr/th
-msgid "XML ID:"
-msgstr "XML ID："
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
-msgid "Year"
-msgstr "年"
-
-#. js:search_inputs.js,330
-msgid "Yes"
-msgstr "是"
-
-#. js:form_relational_widgets.js,47
-msgid "You are creating a new %s, are you sure it does not exist yet?"
-msgstr "正要创建新的 %s，确认它真的不存在吗？"
-
-#. xml:./templates/t/t/div
-msgid ""
-"You have updated <strong><t t-esc=\"field.string\"/></strong> (<t t-esc=\"lang\"/>).\n"
-"            <a class=\"oe_field_translate\" t-att-name=\"field.name\" href=\"#\">Update translations</a>"
-msgstr ""
-
-#. js:misc.js,16
-msgid "You may not believe it,<br />but the application is actually loading..."
-msgstr "也许你不相信，<br />但是这个应用真的还在加载...."
-
-#. js:sidebar.js,131
-msgid "You must choose at least one record."
-msgstr "你应至少选择一条记录。"
-
-#. js:list_view.js,676
-msgid "You must select at least one record."
-msgstr "请至少选择一条记录"
-
-#. js:crash_manager.js,57
-msgid "Your Hexya session expired. Please refresh the current web page."
-msgstr ""
-
-#. xml:./templates/t/ul/li/ul/li
-msgid ""
-"[<t t-esc=\"option[0]\"/>]\n"
-"                    <t t-if=\"option[1]\"> - </t>\n"
-"                    <t t-esc=\"option[1]\"/>"
-msgstr ""
-
-#. xml:./templates/t/t
-msgid "console.warn('Unhandled widget', dict.widget);"
-msgstr ""
-
-#. js:utils.js,302
-msgid "kMGTPE"
-msgstr "kMGTPE"
-
-#. js:search_inputs.js,230
+#. custom: web
+#: search_inputs.js:230
 msgid "not a valid integer"
 msgstr "不是一个有效的整数"
 
-#. js:search_inputs.js,245
-msgid "not a valid number"
-msgstr "不是一个有效的数字"
+#. custom: web
+#: utils.js:284
+msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
+msgstr "字节,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
 
-#. xml:./templates/t/li/span
-msgid "or"
-msgstr "或"
+#. custom: web
+#: base_common.xml:0
+msgid "Widget:"
+msgstr "挂件:"
 
-#. xml:./templates/t/div/t/t
-msgid "overflow-x: hidden"
+#. custom: web
+#: form_relational_widgets.js:1595
+msgid "The type of the field '%s' must be a many2many field with a relation to 'ir.attachment' model."
+msgstr "字段类型  '%s' 必须是一个关联到 'ir.attachment'模型的 many2many字段"
+
+#. custom: web
+#: form_widgets.js:1251
+msgid "Could not display the selected image."
+msgstr "不能显示选择的图像。"
+
+#. custom: web
+#: list_common.js:133
+msgid "Can't convert value %s to context"
+msgstr "不能转换值 %s 到上下文context"
+
+#. custom: web
+#: crash_manager.js:170 dialog.js:182 form_common.js:1046 form_upgrade_widgets.js:40 base.xml:0
+msgid "Cancel"
+msgstr "取消"
+
+#. custom: web
+#: list_view.js:1024
+msgid "Could not find id in dataset"
+msgstr "数据集中找不到此 ID"
+
+#. custom: web
+#: form_common.js:1049 base.xml:0
+msgid "Create"
+msgstr "创建"
+
+#. custom: web
+#: list_view.js:1847
+msgid "Download"
+msgstr "下载"
+
+#. custom: web
+#: debug_manager.js:339 base.xml:0
+msgid "Fields View Get"
+msgstr "字段视图获取"
+
+#. custom: web
+#: data.js:1083
+msgid "Unknown field %s in domain %s"
+msgstr "未知字段 %s 在域 %s 中 "
+
+#. custom: web
+#: priority.js:47
+msgid "Normal"
+msgstr "一般"
+
+#. custom: web
+#: sidebar.js:217
+msgid "Do you really want to delete this attachment ?"
+msgstr "你真的要删除此附件？"
+
+#. custom: web
+#: change_password.js:14 base.xml:0
+msgid "Change Password"
+msgstr "更改密码"
+
+#. custom: web
+#: form_common.js:281 form_relational_widgets.js:1080
+msgid "Create: "
+msgstr "创建： "
+
+#. field:Filter.Sort
+msgid "Sort"
 msgstr ""
 
-#. xml:./templates/t/t
+#. custom: web
+#: data.js:1121
+msgid "Unsupported operator %s in domain %s"
+msgstr "不支持的操作符 %s 在领域%s 中 "
+
+#. custom: web
+#: data.js:1138
+msgid "Unnamed"
+msgstr "未命名的"
+
+#. custom: web
+#: base.xml:0
+msgid "Update translations"
+msgstr "更新翻译"
+
+#. custom: web
+#: base.xml:0
+msgid "XML ID:"
+msgstr "XML ID："
+
+#. custom: web
+#: search_inputs.js:698
+msgid "Group By"
+msgstr "分组"
+
+#. custom: web
+#: utils.js:179
+msgid "Could not serialize XML"
+msgstr "不能序列化 XML"
+
+#. custom: web
+#: search_inputs.js:360
+msgid "Search %(field)s at: %(value)s"
+msgstr "搜索 %(field)s ： %(value)s"
+
+#. custom: web
+#: abstract_web_client.js:124 crash_manager.js:123
+msgid "Client Error"
+msgstr "客户端错误"
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "Apply"
+msgstr "应用"
+
+#. custom: web
+#: utils.js:302
+msgid "kMGTPE"
+msgstr ""
+
+#. custom: web
+#: form_common.js:1096 search_menus.js:177
+msgid "Custom Filter"
+msgstr "自定义筛选"
+
+#. custom: web
+#: base.xml:0
+msgid "Saved exports:"
+msgstr "保存的导出："
+
+#. custom: web
+#: form_common.js:211
+msgid "Search More..."
+msgstr "搜索更多..."
+
+#. help:Filter.Action
+msgid "The menu action this filter applies to. When left empty the filter applies to all menus for this model."
+msgstr ""
+
+#. help:Filter.User
+msgid "The user this filter is private to. When left empty the filter is public and available to all users."
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Toggle Timelines"
+msgstr "切换时间表"
+
+#. custom: web
+#: base.xml:0
+msgid "Whoops, you shouldn't have come up to here..."
+msgstr ""
+
+#. custom: web
+#: graph_widget.js:94
+msgid "No data to display"
+msgstr "无数据可供显示"
+
+#. custom: web
+#: misc.js:15
+msgid "Don't leave yet,<br />it's still loading..."
+msgstr "请不要离开，<br />它还在加载中..."
+
+#. custom: web
+#: base.xml:0
+msgid "Year"
+msgstr "年"
+
+#. custom: web
+#: data.js:1075
+msgid "Unknown operator %s in domain %s"
+msgstr "未知操作符 %s 在领域%s 中 "
+
+#. custom: web
+#: form_common.js:281
+msgid "Search: "
+msgstr "搜索： "
+
+#. custom: web
+#: list_view.js:1863
+msgid "Download \\\"%s\\\""
+msgstr ""
+
+#. custom: web
+#: list_view_editable.js:122
+msgid "The line has been modified, your changes will be discarded. Are you sure you want to discard the changes ?"
+msgstr "明细已被修改，你的更改将被丢弃。你确定要放弃更改？"
+
+#. custom: web
+#: loading.js:46
+msgid "Loading"
+msgstr "正在加载"
+
+#. custom: web
+#: misc.js:14
+msgid "Still loading...<br />Please be patient."
+msgstr "仍然在加载中...<br />请稍候...."
+
+#. custom: web
+#: form_relational_widgets.js:1378 base.xml:0
+msgid "Add"
+msgstr "添加"
+
+#. custom: web
+#: list_view.js:543
+msgid "Do you really want to remove these records?"
+msgstr "你真的要删除这些记录？"
+
+#. custom: web
+#: base.xml:0
 msgid ""
 "var $div = $(document.createElement('div')).attr('t-if', this.attr('t-if')).addClass('o_form_field_monetary');\n"
 "        this.clone(true).appendTo($div);\n"
 "        this.replaceWith($div);"
 msgstr ""
 
-#. xml:./templates/t/div/t
+#. custom: web
+#: base_common.xml:0
+msgid "×"
+msgstr ""
+
+#. custom: web
+#: form_view.xml:0
+msgid "e"
+msgstr ""
+
+#. custom: web
+#: form_widgets.js:1131
+msgid "The field is empty, there's nothing to save !"
+msgstr "字段为空，没有需要保存的值！"
+
+#. custom: web
+#: form_widgets.js:641 list_view.js:288
+msgid "Archive"
+msgstr "归档"
+
+#. custom: web
+#: search_inputs.js:551
+msgid "Filter"
+msgstr "筛选"
+
+#. custom: web
+#: form_widgets.js:643 list_view.js:289
+msgid "Unarchive"
+msgstr "取消归档"
+
+#. custom: web
+#: form_common.js:868 base.xml:0 base.xml:0
+msgid "Discard"
+msgstr "丢弃"
+
+#. custom: web
+#: misc.js:13
+msgid "Still loading..."
+msgstr "仍然在加载..."
+
+#. custom: web
+#: form_common.js:868 form_view.js:1127 data_export.js:202
+msgid "Close"
+msgstr "关闭"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Type:"
+msgstr "类型："
+
+#. custom: web
+#: view_manager.js:223 search_menus.js:84 search_menus.js:91
+msgid "Error"
+msgstr "错误"
+
+#. custom: web
+#: form_widgets.js:1251
+msgid "Image"
+msgstr "图像"
+
+#. custom: web
+#: list_view.js:287
+msgid "Export"
+msgstr "导出"
+
+#. custom: web
+#: misc.js:12
+msgid "Loading..."
+msgstr "加载..."
+
+#. custom: web
+#: base.xml:0
+msgid "Save current search"
+msgstr "保存当前搜索"
+
+#. custom: web
+#: misc.js:17
+msgid "Take a minute to get a coffee,<br />because it's loading..."
+msgstr ""
+"稍安勿躁, <br />r\n"
+"\n"
+"大菜烹饪中 : )"
+
+#. custom: web
+#: form_widgets.js:862
+msgid "Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Hexya is displayed according to your field timezone."
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "View Fields"
+msgstr "视图字段"
+
+#. custom: web
+#: pyeval.js:1023
+msgid "Evaluation Error"
+msgstr "评估错误"
+
+#. custom: web
+#: base.xml:0
+msgid "Save as:"
+msgstr "另存为："
+
+#. custom: web
+#: base_common.xml:0
+msgid "Selection:"
+msgstr "选择:"
+
+#. resource:base_ir_filters_view_search
+msgid "Shared"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "console.warn('Unhandled widget', dict.widget);"
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid "Size:"
+msgstr "尺寸："
+
+#. custom: web
+#: form_common.js:1054
+msgid "Select"
+msgstr "选择"
+
+#. custom: web
+#: form_view.js:1125
+msgid "Set Default"
+msgstr "设默认"
+
+#. custom: web
+#: form_view.js:1128
+msgid "Save default"
+msgstr "保存默认"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Special:"
+msgstr "特殊："
+
+#. custom: web
+#: form_view.js:887
+msgid "The following fields are invalid:"
+msgstr "下列字段无效："
+
+#. custom: web
+#: form_relational_widgets.js:1123
+msgid "The o2m record must be saved before an action can be used"
+msgstr "o2m记录必须先保存才能被一个动作使用"
+
+#. custom: web
+#: form_widgets.js:1093
+msgid "The selected file exceed the maximum file size of %s."
+msgstr "所选文件超出了文件的最大值设定：%s"
+
+#. custom: web
+#: view_manager.js:437
+msgid "Failed to evaluate search criterions"
+msgstr "搜索条件评估失败"
+
+#. custom: web
+#: search_menus.js:91
+msgid "Filter with same name already exists."
+msgstr "筛选已经存在。"
+
+#. custom: web
+#: pivot_view.js:831
+msgid "For Excel compatibility, data cannot be exported if there are more than 256 columns.\\n\\nTip: try to flip axis, filter further or reduce the number of measures."
+msgstr ""
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "Measures <span class=\"caret\"/>"
+msgstr ""
+
+#. custom: web
+#: graph_widget.js:208 graph_widget.js:216
+msgid "Invalid data"
+msgstr "无效的数据"
+
+#. custom: web
+#: base.xml:0
+msgid ""
+"Unhandled widget\n"
+"    <t t-js=\"dict\">console.warn('Unhandled widget', dict.widget);</t>"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Upload your file"
+msgstr "上传文件"
+
+#. custom: web
+#: form_relational_widgets.js:740
+msgid "View type '%s' is not supported in X2Many."
+msgstr "视图类型‘%s’不支持X2Many。"
+
+#. custom: web
+#: form_relational_widgets.js:47
+msgid "You are creating a new %s, are you sure it does not exist yet?"
+msgstr "正要创建新的 %s，确认它真的不存在吗？"
+
+#. custom: web
+#: misc.js:18
+msgid "Maybe you should consider reloading the application by pressing F5..."
+msgstr "也许你应该考虑按 F5 键重新加载程序..."
+
+#. custom: web
+#: base.xml:0
+msgid ""
+"You have updated <strong><t t-esc=\"field.string\"/></strong> (<t t-esc=\"lang\"/>).\n"
+"            <a class=\"oe_field_translate\" t-att-name=\"field.name\" href=\"#\">Update translations</a>"
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid ""
+"[<t t-esc=\"option[0]\"/>]\n"
+"                    <t t-if=\"option[1]\"> - </t>\n"
+"                    <t t-esc=\"option[1]\"/>"
+msgstr ""
+
+#. custom: web
+#: list_view.js:676
+msgid "You must select at least one record."
+msgstr "请至少选择一条记录"
+
+#. custom: web
+#: graph_view.js:86 graph_widget.js:21 pivot_view.js:182 base.xml:0 base.xml:0
+msgid "Count"
+msgstr "个数"
+
+#. custom: web
+#: base.xml:0
 msgid ""
 "var message = (d.message !== undefined) ? d.message : d.error.data.message;\n"
 "            d.html_error = context.engine.tools.html_escape(message).replace(/\\n/g, '<br/>');"
 msgstr ""
 
-#. xml:./templates/div/div/div/div/button
-msgid "×"
+#. custom: web
+#: list_view.js:931
+msgid "Setting 'id' attribute on existing record %s"
+msgstr "在已有的记录 %s上设置  'id' 属性"
+
+#. custom: web
+#: priority.js:48
+msgid "Low"
+msgstr "低"
+
+#. custom: web
+#: search_inputs.js:451
+msgid "M2O search fields do not currently handle multiple default values"
+msgstr "M2O搜索字段目前不支持多个默认值"
+
+#. custom: web
+#: utils.js:143
+msgid "Node [%s] is not a JSONified XML node"
 msgstr ""
+
+#. custom: web
+#: form_widgets.js:1114
+msgid "There was a problem while uploading your file"
+msgstr "上传文件时发生了问题"
+
+#. custom: web
+#: progress_bar.js:78
+msgid "Wrong value entered!"
+msgstr "错误值输入!"
+
+#. custom: web
+#: search_inputs.js:192 search_inputs.js:211 search_inputs.js:402
+msgid "Search %(field)s for: %(value)s"
+msgstr "搜索 %(field)s : %(value)s"
+
+#. custom: web
+#: search_menus.js:251
+msgid "This filter is global and will be removed for everybody if you continue."
+msgstr "这是一个所有人都可以使用的全局筛选，如果继续，将会被移除。"
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "Uploading..."
+msgstr "正在上传..."
+
+#. custom: web
+#: dialog.js:40 dialog.js:158 dialog.js:176 base.xml:0
+msgid "Ok"
+msgstr "确定"
+
+#. custom: web
+#: progress_bar.js:78
+msgid "Only Integer Value should be valid."
+msgstr "仅整型数值是合法的。"
+
+#. custom: web
+#: form_relational_widgets.js:153 form_relational_widgets.js:921 form_relational_widgets.js:1104 form_relational_widgets.js:1321
+msgid "Open: "
+msgstr "打开： "
+
+#. custom: web
+#: list_view.js:1086
+msgid "Unknown m2m command %s"
+msgstr "未知的 m2m命令%s"
+
+#. custom: web
+#: crash_manager.js:107 form_view.js:761 list_view.js:676 sidebar.js:131
+msgid "Warning"
+msgstr "警告"
+
+#. custom: web
+#: form_view.js:1304
+msgid "Widget type '%s' is not implemented"
+msgstr "挂件类型 '%s' 尚未实现"
+
+#. custom: web
+#: misc.js:16
+msgid "You may not believe it,<br />but the application is actually loading..."
+msgstr "也许你不相信，<br />但是这个应用真的还在加载...."
+
+#. custom: web
+#: sidebar.js:131
+msgid "You must choose at least one record."
+msgstr "你应至少选择一条记录。"
+
+#. custom: web
+#: form_common.js:874 base.xml:0 base.xml:0 base.xml:0
+msgid "Save"
+msgstr "保存"
+
+#. custom: web
+#: base.xml:0
+msgid "or"
+msgstr "或"
+
+#. custom: web
+#: crash_manager.js:57
+msgid "Your Hexya session expired. Please refresh the current web page."
+msgstr ""
+
+#. custom: web
+#: search_inputs.js:245
+msgid "not a valid number"
+msgstr "不是一个有效的数字"
+
+#. custom: web
+#: graph_widget.js:79 list_view.js:1379 list_view.js:1385 pivot_view.js:508
+msgid "Undefined"
+msgstr "未定义的"
+
+#. custom: web
+#: priority.js:50
+msgid "Very High"
+msgstr "非常高"
 

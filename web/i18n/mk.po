@@ -12,454 +12,470 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
-#. js:form_common.js,874
-msgid " & Close"
-msgstr ""
-
-#. js:search_inputs.js,553
-#. js:search_view.js,205
-msgid " or "
-msgstr ""
-
-#. js:view_manager.js,223
-msgid " view couldn't be loaded"
-msgstr ""
-
-#. xml:./templates/t/t
-msgid "$(this).addClass('o_error');"
-msgstr ""
-
-#. js:debug_manager.js,134
-msgid "%d requests (%d ms) %d queries (%d ms)"
-msgstr ""
-
-#. js:formats.js,187
-msgid "'%s' is not a correct date"
-msgstr "'%s' не е точен датум"
-
-#. js:time.js,192
-msgid "'%s' is not a correct date, datetime nor time"
-msgstr "'%s' не е правилен датум, datetime ниту време"
-
-#. js:formats.js,173
-msgid "'%s' is not a correct datetime"
-msgstr "'%s' не е точно датавреме"
-
-#. js:formats.js,144
-msgid "'%s' is not a correct float"
-msgstr "'%s' не е правилен децимален број"
-
-#. js:formats.js,132
-msgid "'%s' is not a correct integer"
-msgstr "'%s' не е правилен број"
-
-#. js:formats.js,192
-msgid "'%s' is not a correct time"
-msgstr "'%s'  не е точното време"
-
-#. js:time.js,204
-msgid "'%s' is not convertible to date, datetime nor time"
-msgstr "'%s' не може да се претвори во датум, датум-време ниту пак време"
-
-#. js:formats.js,75
-msgid "(%d records)"
-msgstr "(%d записи)"
-
-#. xml:./templates/t/t/div/t/t
-msgid "(no string)"
-msgstr "(нема стринг)"
-
-#. xml:./templates/t/div/t
-msgid "(nolabel)"
-msgstr "(без наслов)"
-
-#. xml:./templates/t/ul/li/ul/li/t
-msgid "-"
-msgstr ""
-
-#. xml:./templates/div/t/div/span/span
-msgid "...Upload in progress..."
-msgstr "...Качувањето е во тек..."
-
-#. xml:./templates/t/t/div/ul/li/t/t
-#. xml:./templates/div/div/t/t
-msgid "/web/binary/upload_attachment"
-msgstr ""
-
-#. xml:./templates/t/div/t
-msgid "99+"
-msgstr ""
-
-#. xml:./templates/t/t/div/t/t
-msgid ":"
-msgstr ""
-
-#. xml:./templates/t/label/span
-#. xml:./templates/t/label/span
-#. xml:./templates/t/label/span
-msgid "?"
-msgstr ""
-
 #. field:Filter.Action
 msgid "Action"
 msgstr "Акција"
 
-#. js:form_relational_widgets.js,1122
-msgid "Action Button"
-msgstr "Копче Акција"
+#. custom: web
+#: base.xml:0
+msgid "$(this).addClass('o_error');"
+msgstr ""
 
-#. xml:./templates/t/t/li/span
-msgid "Action ID:"
-msgstr "ID на акција"
+#. custom: web
+#: base.xml:0
+msgid "...Upload in progress..."
+msgstr "...Качувањето е во тек..."
 
-#. js:form_widgets.js,637
-msgid "Activate"
-msgstr "Активирај"
+#. custom: web
+#: base.xml:0
+msgid "99+"
+msgstr ""
 
-#. xml:./templates/t/li/a
+#. custom: web
+#: base.xml:0
 msgid "Activate Assets Debugging"
 msgstr ""
 
-#. field:Filter.Active
-#. js:form_widgets.js,634
-#. js:form_widgets.js,640
-msgid "Active"
-msgstr "Активно"
-
-#. js:form_relational_widgets.js,1378
-#. xml:./templates/div/div/div/button
-msgid "Add"
-msgstr "Додади"
-
-#. xml:./templates/div/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Add Custom Filter"
 msgstr "Додади рачен филтер"
 
-#. js:form_relational_widgets.js,1018
-msgid "Add an item"
-msgstr "Додади ставка"
-
-#. xml:./templates/div/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Add custom group"
 msgstr ""
 
-#. xml:./templates/t/t/div/ul/li/t/span
+#. custom: web
+#: base.xml:0
 msgid "Add..."
 msgstr "Додади"
 
-#. js:form_relational_widgets.js,1305
-msgid "Add: "
-msgstr "Додади: "
-
-#. js:dialog.js,168
-msgid "Alert"
-msgstr ""
-
-#. xml:./templates/form/table/tr/td/label
+#. custom: web
+#: base.xml:0
 msgid "All users"
 msgstr "Сите корисници"
 
-#. xml:./templates/div/ul/li/button
-#. xml:./templates/t/li/button
-msgid "Apply"
-msgstr "Примени"
-
-#. js:form_widgets.js,641
-#. js:list_view.js,288
-msgid "Archive"
-msgstr "Архива"
-
-#. js:form_widgets.js,642
-msgid "Archived"
-msgstr "Архивирано"
-
-#. js:search_menus.js,252
-msgid "Are you sure that you want to remove this filter?"
-msgstr "Дали сте сигурни дека сакате да го отстраните овој филтер?"
-
-#. xml:./templates/t/t/div/ul/li/t/t/b
+#. custom: web
+#: base.xml:0
 msgid "Attachment :"
 msgstr "Приверзок:"
 
-#. xml:./templates/div/div/div/h4
+#. custom: web
+#: base.xml:0
 msgid "Available fields"
 msgstr "Достапни полиња"
 
-#. xml:./templates/t/t/div/t
+#. custom: web
+#: base.xml:0
+msgid "Clear Events"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Condition:"
+msgstr "Услов:"
+
+#. custom: web
+#: base.xml:0
+msgid "Confirm New Password"
+msgstr ""
+
+#. field:Filter.Context
+msgid "Context"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Created by :"
+msgstr "Креирано од:"
+
+#. custom: web
+#: base.xml:0
+msgid "Creation Date:"
+msgstr "Датум на Креирање:"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Change default:"
+msgstr "Промени стандардно:"
+
+#. custom: web
+#: data_export.js:199
+msgid "Export Data"
+msgstr "Експортирај ги податоците"
+
+#. custom: web
+#: form_common.js:874
+msgid " & Close"
+msgstr ""
+
+#. custom: web
+#: form_widgets.js:1251
+msgid "Could not display the selected image."
+msgstr "Не може да ја прикажеизбраната слика."
+
+#. field:Company.DashboardBackground
+msgid "Dashboard Background"
+msgstr ""
+
+#. field:Filter.IsDefault
+msgid "Default filter"
+msgstr ""
+
+#. field:Filter.Domain
+msgid "Domain"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Creation User:"
+msgstr "Креиран од Корисник:"
+
+#. custom: web
+#: base.xml:0
+msgid "Day"
+msgstr "Ден"
+
+#. custom: web
+#: base.xml:0
+msgid "Default:"
+msgstr "Стандардно:"
+
+#. custom: web
+#: base.xml:0
+msgid "Delete"
+msgstr "Избриши"
+
+#. custom: web
+#: base.xml:0
+msgid "Disable Technical Features"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Edit"
+msgstr "Уреди"
+
+#. custom: web
+#: base_common.xml:0
+msgid "(no string)"
+msgstr "(нема стринг)"
+
+#. custom: web
+#: base_common.xml:0
+msgid "(nolabel)"
+msgstr "(без наслов)"
+
+#. custom: web
+#: base_common.xml:0
+msgid "-"
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid ":"
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid "Action ID:"
+msgstr "ID на акција"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Context:"
+msgstr "Контекст:"
+
+#. custom: web
+#: debug_manager.js:134
+msgid "%d requests (%d ms) %d queries (%d ms)"
+msgstr ""
+
+#. custom: web
+#: dialog.js:193
+msgid "Confirmation"
+msgstr "Потврда"
+
+#. custom: web
+#: form_common.js:236
+msgid "Create and Edit..."
+msgstr "Креирај и уреди..."
+
+#. custom: web
+#: formats.js:187
+msgid "'%s' is not a correct date"
+msgstr "'%s' не е точен датум"
+
+#. custom: web
+#: form_relational_widgets.js:1018
+msgid "Add an item"
+msgstr "Додади ставка"
+
+#. custom: web
+#: formats.js:75
+msgid "(%d records)"
+msgstr "(%d записи)"
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "/web/binary/upload_attachment"
+msgstr ""
+
+#. custom: web
+#: data_export.js:201
+msgid "Export To File"
+msgstr "Извези во Датотека"
+
+#. custom: web
+#: dialog.js:168
+msgid "Alert"
+msgstr ""
+
+#. custom: web
+#: form_widgets.js:642
+msgid "Archived"
+msgstr "Архивирано"
+
+#. custom: web
+#: view_manager.js:223
+msgid " view couldn't be loaded"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid ""
+"This wizard will export all data that matches the current search criteria to a CSV file.\n"
+"        You can export all data or only the fields that can be reimported after modification."
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
 msgid ""
 "Button\n"
 "                <t t-if=\"widget.string\">: </t>\n"
 "                <t t-if=\"!widget.string\"> (no string)</t>"
 msgstr ""
 
-#. xml:./templates/t/t/li/span
+#. custom: web
+#: base_common.xml:0
 msgid "Button Type:"
 msgstr "Тип на копче:"
 
-#. js:utils.js,284
-msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
-msgstr "Бајти ,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
+#. custom: web
+#: formats.js:173
+msgid "'%s' is not a correct datetime"
+msgstr "'%s' не е точно датавреме"
 
-#. js:list_common.js,133
+#. custom: web
+#: form_relational_widgets.js:1122
+msgid "Action Button"
+msgstr "Копче Акција"
+
+#. custom: web
+#: form_relational_widgets.js:1305
+msgid "Add: "
+msgstr "Додади: "
+
+#. custom: web
+#: formats.js:132
+msgid "'%s' is not a correct integer"
+msgstr "'%s' не е правилен број"
+
+#. custom: web
+#: form_widgets.js:637
+msgid "Activate"
+msgstr "Активирај"
+
+#. custom: web
+#: formats.js:144
+msgid "'%s' is not a correct float"
+msgstr "'%s' не е правилен децимален број"
+
+#. custom: web
+#: formats.js:192
+msgid "'%s' is not a correct time"
+msgstr "'%s'  не е точното време"
+
+#. custom: web
+#: list_common.js:133
 msgid "Can't convert value %s to context"
 msgstr "Не може да се конвертира вредност %s во контекст"
 
-#. js:crash_manager.js,170
-#. js:dialog.js,182
-#. js:form_common.js,1046
-#. js:form_upgrade_widgets.js,40
-#. xml:./templates/form/div/button
-msgid "Cancel"
-msgstr "Откажи"
+#. custom: web
+#: search_menus.js:252
+msgid "Are you sure that you want to remove this filter?"
+msgstr "Дали сте сигурни дека сакате да го отстраните овој филтер?"
 
-#. js:change_password.js,14
-#. xml:./templates/form/div/button
-msgid "Change Password"
-msgstr "Промени лозинка"
-
-#. xml:./templates/t/ul/li/span
-msgid "Change default:"
-msgstr "Промени стандардно:"
-
-#. xml:./templates/t/t/li/a
-msgid "Clear Events"
-msgstr ""
-
-#. js:abstract_web_client.js,124
-#. js:crash_manager.js,123
-msgid "Client Error"
-msgstr "Клиентска грешка"
-
-#. js:form_common.js,868
-#. js:form_view.js,1127
-#. js:data_export.js,202
-msgid "Close"
-msgstr "Затвори"
-
-#. xml:./templates/form/table/tr/td/label
-msgid "Condition:"
-msgstr "Услов:"
-
-#. xml:./templates/form/div/table/tr/td/label
-msgid "Confirm New Password"
-msgstr ""
-
-#. js:dialog.js,193
-msgid "Confirmation"
-msgstr "Потврда"
-
-#. field:Filter.Context
-msgid "Context"
-msgstr ""
-
-#. xml:./templates/t/ul/li/span
-msgid "Context:"
-msgstr "Контекст:"
-
-#. js:form_widgets.js,1251
-msgid "Could not display the selected image."
-msgstr "Не може да ја прикажеизбраната слика."
-
-#. js:list_view.js,1024
-msgid "Could not find id in dataset"
-msgstr "Не успеав да најдам id во dataset"
-
-#. js:utils.js,179
-msgid "Could not serialize XML"
-msgstr "Не може да го серијализира XML"
-
-#. js:graph_view.js,86
-#. js:graph_widget.js,21
-#. js:pivot_view.js,182
-#. xml:./templates/t/div/ul/li/a
-#. xml:./templates/t/div/ul/li/a
-msgid "Count"
-msgstr ""
-
-#. js:form_common.js,1049
-#. xml:./templates/t/div/button
-msgid "Create"
-msgstr "Креирај"
-
-#. js:form_relational_widgets.js,25
-msgid "Create a %s"
-msgstr "Креирај %s"
-
-#. js:form_common.js,236
-msgid "Create and Edit..."
-msgstr "Креирај и уреди..."
-
-#. js:form_common.js,281
-#. js:form_relational_widgets.js,1080
-msgid "Create: "
-msgstr "Креирај: "
-
-#. xml:./templates/t/t/div/ul/li/t/t/b
-msgid "Created by :"
-msgstr "Креирано од:"
-
-#. xml:./templates/t/table/tr/th
-msgid "Creation Date:"
-msgstr "Датум на Креирање:"
-
-#. xml:./templates/t/table/tr/th
-msgid "Creation User:"
-msgstr "Креиран од Корисник:"
-
-#. js:form_common.js,1096
-#. js:search_menus.js,177
-msgid "Custom Filter"
-msgstr "Прилагоден филтер"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
-msgid "Day"
-msgstr "Ден"
-
-#. js:form_widgets.js,635
-msgid "Deactivate"
-msgstr "Деактивирај"
-
-#. field:Filter.IsDefault
-msgid "Default filter"
-msgstr ""
-
-#. xml:./templates/form/table/tr/td/label
-msgid "Default:"
-msgstr "Стандардно:"
-
-#. xml:./templates/t/button
-msgid "Delete"
-msgstr "Избриши"
-
-#. xml:./templates/t/li/a/t
-msgid "Disable Technical Features"
-msgstr ""
-
-#. js:form_common.js,868
-#. xml:./templates/t/t/div/button
-#. xml:./templates/t/div/button
-msgid "Discard"
-msgstr "Отфрли"
-
-#. js:sidebar.js,217
-msgid "Do you really want to delete this attachment ?"
-msgstr "Дали сакате да го избришете ова прикачување"
-
-#. js:form_view.js,733
-msgid "Do you really want to delete this record?"
-msgstr "Дали навистина сакате да го отстраните овој запис?"
-
-#. js:list_view.js,543
-msgid "Do you really want to remove these records?"
-msgstr "Дали навистина сакате да ги отстраните овие записи?"
-
-#. field:Filter.Domain
-msgid "Domain"
-msgstr ""
-
-#. xml:./templates/t/ul/li/span
-msgid "Domain:"
-msgstr "Домен:"
-
-#. js:misc.js,15
-msgid "Don't leave yet,<br />it's still loading..."
-msgstr "Не заминувај,<br />се вчитува сеуште..."
-
-#. js:list_view.js,1847
-msgid "Download"
-msgstr "Преземи"
-
-#. js:list_view.js,1863
-msgid "Download \\\"%s\\\""
-msgstr ""
-
-#. xml:./templates/t/div/button
-msgid "Edit"
-msgstr "Уреди"
-
-#. xml:./templates/t/li/a/t
-msgid "Enable Technical Features"
-msgstr ""
-
-#. js:view_manager.js,223
-#. js:search_menus.js,84
-#. js:search_menus.js,91
-msgid "Error"
-msgstr "Грешка"
-
-#. js:pyeval.js,1023
-msgid "Evaluation Error"
-msgstr "Грешка евалуација"
-
-#. js:list_view.js,287
-msgid "Export"
-msgstr "Извоз"
-
-#. js:data_export.js,199
-msgid "Export Data"
-msgstr "Експортирај ги податоците"
-
-#. xml:./templates/div/div/div/label
-msgid "Export Formats :"
-msgstr ""
-
-#. js:data_export.js,201
-msgid "Export To File"
-msgstr "Извези во Датотека"
-
-#. xml:./templates/div/div/div/label
-msgid "Export Type :"
-msgstr ""
-
-#. xml:./templates/div/div/div/div/div/label
+#. custom: web
+#: base.xml:0
 msgid "Export all Data"
 msgstr "Експортирај ги сите податоци"
 
-#. js:view_manager.js,437
-msgid "Failed to evaluate search criterions"
-msgstr "Неуспешен обид за евалуација на пребарувачки критериуми"
+#. custom: web
+#: form_view.js:733
+msgid "Do you really want to delete this record?"
+msgstr "Дали навистина сакате да го отстраните овој запис?"
 
-#. js:form_view.js,1300
+#. custom: web
+#: form_widgets.js:635
+msgid "Deactivate"
+msgstr "Деактивирај"
+
+#. custom: web
+#: time.js:192
+msgid "'%s' is not a correct date, datetime nor time"
+msgstr "'%s' не е правилен датум, datetime ниту време"
+
+#. custom: web
+#: time.js:204
+msgid "'%s' is not convertible to date, datetime nor time"
+msgstr "'%s' не може да се претвори во датум, датум-време ниту пак време"
+
+#. custom: web
+#: list_view.js:1024
+msgid "Could not find id in dataset"
+msgstr "Не успеав да најдам id во dataset"
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "Apply"
+msgstr "Примени"
+
+#. custom: web
+#: form_relational_widgets.js:25
+msgid "Create a %s"
+msgstr "Креирај %s"
+
+#. custom: web
+#: base.xml:0
+msgid "Enable Technical Features"
+msgstr ""
+
+#. custom: web
+#: utils.js:284
+msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
+msgstr "Бајти ,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
+
+#. custom: web
+#: base.xml:0
+msgid "Export Formats :"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Export Type :"
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid "Domain:"
+msgstr "Домен:"
+
+#. custom: web
+#: base.xml:0 base.xml:0 base.xml:0
+msgid "?"
+msgstr ""
+
+#. custom: web
+#: list_view.js:287
+msgid "Export"
+msgstr "Извоз"
+
+#. custom: web
+#: list_view.js:1863
+msgid "Download \\\"%s\\\""
+msgstr ""
+
+#. custom: web
+#: utils.js:179
+msgid "Could not serialize XML"
+msgstr "Не може да го серијализира XML"
+
+#. custom: web
+#: abstract_web_client.js:124 crash_manager.js:123
+msgid "Client Error"
+msgstr "Клиентска грешка"
+
+#. custom: web
+#: list_view.js:1847
+msgid "Download"
+msgstr "Преземи"
+
+#. custom: web
+#: sidebar.js:217
+msgid "Do you really want to delete this attachment ?"
+msgstr "Дали сакате да го избришете ова прикачување"
+
+#. custom: web
+#: form_view.js:1300
 msgid "Field '%s' specified in view could not be found."
 msgstr "Полето '%s' специфицирано во приказот не може да биде пронајдено."
 
-#. xml:./templates/t/ul/li/span
+#. custom: web
+#: base.xml:0
+msgid "Manage Filters"
+msgstr "Управувај ги филтрите"
+
+#. custom: web
+#: base.xml:0
+msgid "Not shown in kanban"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "View Metadata"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Year"
+msgstr "Година"
+
+#. custom: web
+#: list_view.js:543
+msgid "Do you really want to remove these records?"
+msgstr "Дали навистина сакате да ги отстраните овие записи?"
+
+#. custom: web
+#: base_common.xml:0
 msgid "Field:"
 msgstr "Поле:"
 
-#. js:debug_manager.js,339
-#. xml:./templates/t/t/li/a
+#. custom: web
+#: form_relational_widgets.js:1595
+msgid "The type of the field '%s' must be a many2many field with a relation to 'ir.attachment' model."
+msgstr "Типот на полето '%s' мора да биде many2many поле со врска на 'ir.attachment' модел."
+
+#. custom: web
+#: change_password.js:14 base.xml:0
+msgid "Change Password"
+msgstr "Промени лозинка"
+
+#. custom: web
+#: misc.js:15
+msgid "Don't leave yet,<br />it's still loading..."
+msgstr "Не заминувај,<br />се вчитува сеуште..."
+
+#. custom: web
+#: pyeval.js:1023
+msgid "Evaluation Error"
+msgstr "Грешка евалуација"
+
+#. custom: web
+#: view_manager.js:437
+msgid "Failed to evaluate search criterions"
+msgstr "Неуспешен обид за евалуација на пребарувачки критериуми"
+
+#. custom: web
+#: debug_manager.js:339 base.xml:0
 msgid "Fields View Get"
 msgstr "Полиња Види Земи"
-
-#. js:debug_manager.js,241
-msgid "Fields of %s"
-msgstr ""
-
-#. js:form_widgets.js,1114
-msgid "File Upload"
-msgstr "Качување на датотека"
-
-#. js:form_widgets.js,1094
-msgid "File upload"
-msgstr "Качи датотека"
-
-#. js:search_inputs.js,551
-msgid "Filter"
-msgstr "Филтер"
 
 #. field:Filter.Name
 #. resource:base_ir_filters_view_search
 msgid "Filter Name"
 msgstr ""
-
-#. js:search_menus.js,84
-msgid "Filter name is required."
-msgstr "Потребно е име на филтер."
-
-#. js:search_menus.js,91
-msgid "Filter with same name already exists."
-msgstr "Филтерот со истото име веќе постои."
 
 #. resource:base_actions_ir_filters_view
 msgid "Filters"
@@ -477,529 +493,369 @@ msgstr ""
 msgid "Filters visible only for one user"
 msgstr ""
 
-#. js:pivot_view.js,831
-msgid "For Excel compatibility, data cannot be exported if there are more than 256 columns.\\n\\nTip: try to flip axis, filter further or reduce the number of measures."
-msgstr ""
-
-#. js:form_view.js,301
-msgid "Form"
-msgstr "Формулар"
-
-#. resource:base_ir_filters_view_search
-#. js:search_inputs.js,698
-msgid "Group By"
-msgstr "Групирај по"
-
-#. js:form_upgrade_widgets.js,51
-msgid "Hexya Enterprise"
-msgstr ""
-
-#. js:priority.js,49
-msgid "High"
-msgstr "Високо"
-
-#. field:CommonMixin.ID
+#. field:Company.ID
 #. field:Filter.ID
+#. field:User.ID
+#. field:CommonMixin.ID
 msgid "ID"
 msgstr "ID"
-
-#. xml:./templates/t/table/tr/th
-msgid "ID:"
-msgstr "ID:"
-
-#. js:form_widgets.js,1251
-msgid "Image"
-msgstr "Слика"
-
-#. xml:./templates/div/div/div/div/div/label
-msgid "Import-Compatible Export"
-msgstr "Извоз компитабилен за увезување"
-
-#. js:form_widgets.js,636
-msgid "Inactive"
-msgstr "Неактивен"
-
-#. js:graph_widget.js,208
-#. js:graph_widget.js,216
-msgid "Invalid data"
-msgstr "Погрешни информации"
-
-#. js:debug_manager.js,183
-msgid "JS Tests"
-msgstr "JS тестови"
-
-#. xml:./templates/t/table/tr/th
-msgid "Latest Modification Date:"
-msgstr "Датум на последна модификација:"
-
-#. xml:./templates/t/table/tr/th
-msgid "Latest Modification by:"
-msgstr "Последна промена од:"
-
-#. xml:./templates/t/li/a
-msgid "Leave the Developer Tools"
-msgstr ""
-
-#. js:loading.js,46
-msgid "Loading"
-msgstr "Се вчитува"
-
-#. js:loading.js,44
-msgid "Loading (%d)"
-msgstr "Се вчитува (%d)"
-
-#. js:misc.js,12
-msgid "Loading..."
-msgstr "Се вчитува..."
-
-#. js:pyeval.js,1027
-msgid "Local evaluation failure\\n%s\\n\\n%s"
-msgstr ""
-
-#. xml:./templates/t/li/ul/li/a
-msgid "Log out"
-msgstr "Одјава"
-
-#. js:priority.js,48
-msgid "Low"
-msgstr "Ниско"
-
-#. js:search_inputs.js,451
-msgid "M2O search fields do not currently handle multiple default values"
-msgstr "M2O полињата за пребарување моментално не може да се справат со повеќе стандардни вредности"
-
-#. xml:./templates/t/t/t/li/a
-msgid "Manage Filters"
-msgstr "Управувај ги филтрите"
-
-#. js:misc.js,18
-msgid "Maybe you should consider reloading the application by pressing F5..."
-msgstr "Пробајте да ја превчитате апликацијата со претискање на копчето F5..."
-
-#. xml:./templates/t/div/button
-#. xml:./templates/t/div/button
-msgid "Measures <span class=\"caret\"/>"
-msgstr ""
-
-#. js:debug_manager.js,326
-msgid "Metadata (%s)"
-msgstr ""
-
-#. xml:./templates/t/t/li/span
-msgid "Method:"
-msgstr "Метод:"
 
 #. field:Filter.ResModel
 #. resource:base_ir_filters_view_search
 msgid "Model"
 msgstr ""
 
-#. xml:./templates/t/t/div/ul/li/t/t/b
-msgid "Modified by :"
-msgstr "Изменето од:"
-
-#. xml:./templates/t/ul/li/span
-msgid "Modifiers:"
-msgstr "Изменувачи:"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
-msgid "Month"
-msgstr "Месец"
-
-#. xml:./templates/t/t/li/span
-msgid "More"
-msgstr "Повеќе"
-
-#. xml:./templates/div/div/div/button
-msgid "Move Down"
-msgstr ""
-
-#. xml:./templates/div/div/div/button
-msgid "Move Up"
-msgstr ""
-
 #. resource:base_ir_filters_view_search
 msgid "My filters"
 msgstr ""
 
-#. js:form_view.js,315
-msgid "New"
-msgstr "Ново"
+#. custom: web
+#: debug_manager.js:241
+msgid "Fields of %s"
+msgstr ""
 
-#. xml:./templates/form/div/table/tr/td/label
+#. custom: web
+#: base.xml:0
+msgid "ID:"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Import-Compatible Export"
+msgstr "Извоз компитабилен за увезување"
+
+#. custom: web
+#: base.xml:0
+msgid "Latest Modification Date:"
+msgstr "Датум на последна модификација:"
+
+#. custom: web
+#: base.xml:0
+msgid "Latest Modification by:"
+msgstr "Последна промена од:"
+
+#. custom: web
+#: base.xml:0
+msgid "Leave the Developer Tools"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Log out"
+msgstr "Одјава"
+
+#. custom: web
+#: debug_manager.js:326
+msgid "Metadata (%s)"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Modified by :"
+msgstr "Изменето од:"
+
+#. custom: web
+#: base.xml:0
+msgid "Move Up"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
 msgid "New Password"
 msgstr ""
 
-#. js:search_inputs.js,331
-msgid "No"
-msgstr "Не"
+#. custom: web
+#: base.xml:0
+msgid "Please pay attention that all records matching your search filter will be exported. Not only the selected ids."
+msgstr "Забележете дека сите записи што одговараат на пребарувачкиот филтер ќе бидат експортирани. А не само избраните ids."
 
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base_common.xml:0
+msgid "Method:"
+msgstr "Метод:"
+
+#. custom: web
+#: base.xml:0
+msgid "Month"
+msgstr "Месец"
+
+#. custom: web
+#: base.xml:0
+msgid "More"
+msgstr "Повеќе"
+
+#. custom: web
+#: base.xml:0
+msgid "Move Down"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
 msgid "No Update:"
 msgstr "Нема ажурирање:"
 
-#. xml:./templates/div/p
+#. custom: web
+#: base.xml:0
 msgid ""
 "No data available for this pivot table.  Try to add some records, or make sure\n"
 "        that there is at least one measure and no active filter in the search bar."
 msgstr ""
 
-#. js:graph_widget.js,94
-msgid "No data to display"
-msgstr ""
-
-#. xml:./templates/div/p/strong
+#. custom: web
+#: base.xml:0
 msgid "No data to display."
 msgstr "Нема податоци за приказ."
 
-#. js:debug_manager.js,321
-msgid "No metadata available"
-msgstr ""
-
-#. js:form_common.js,245
-msgid "No results to show..."
-msgstr "Нема резултат за приказ..."
-
-#. js:form_relational_widgets.js,327
-msgid "No value found for the field %s for value %s"
-msgstr ""
-
-#. js:utils.js,143
-msgid "Node [%s] is not a JSONified XML node"
-msgstr "Јазолот [%s] не е JSONified XML јазол"
-
-#. js:priority.js,47
-msgid "Normal"
-msgstr "Нормално"
-
-#. js:graph_widget.js,252
-msgid "Not enough data points"
-msgstr ""
-
-#. xml:./templates/t/ul/li
-msgid "Not shown in kanban"
-msgstr ""
-
-#. xml:./templates/t/ul/li/span
-msgid "Object:"
-msgstr "Објект:"
-
-#. js:dialog.js,40
-#. js:dialog.js,158
-#. js:dialog.js,176
-#. xml:./templates/t/button
-msgid "Ok"
-msgstr "Во ред"
-
-#. xml:./templates/form/div/table/tr/td/label
+#. custom: web
+#: base.xml:0
 msgid "Old Password"
 msgstr ""
 
-#. xml:./templates/t/ul/li/span
+#. custom: web
+#: base_common.xml:0
 msgid "On change:"
 msgstr "На промена:"
 
-#. js:progress_bar.js,78
-msgid "Only Integer Value should be valid."
-msgstr "Само вредност на интегер треба да е валидна"
-
-#. xml:./templates/form/table/tr/td/label
+#. custom: web
+#: base.xml:0
 msgid "Only you"
 msgstr "Само ти"
 
-#. js:form_relational_widgets.js,153
-#. js:form_relational_widgets.js,921
-#. js:form_relational_widgets.js,1104
-#. js:form_relational_widgets.js,1321
-msgid "Open: "
-msgstr "Отвори: "
-
-#. js:data_export.js,167
-msgid "Please enter save field list name"
-msgstr "Por favor, entre o nome da lista de campos salva"
-
-#. xml:./templates/p/strong
+#. custom: web
+#: base.xml:0
 msgid "Please note that only the selected ids will be exported."
 msgstr "Забележете дека само избраните ids ќе бидат експортирани."
 
-#. xml:./templates/p/strong
-msgid "Please pay attention that all records matching your search filter will be exported. Not only the selected ids."
-msgstr "Забележете дека сите записи што одговараат на пребарувачкиот филтер ќе бидат експортирани. А не само избраните ids."
-
-#. js:data_export.js,435
-msgid "Please select fields to export..."
-msgstr "Одберете полиња за експорт..."
-
-#. js:data_export.js,421
-msgid "Please select fields to save export list..."
-msgstr "Por favor, selecione os campos para salvar na lista de exportação"
-
-#. xml:./templates/t/li/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Preferences"
 msgstr "Својства"
 
-#. xml:./templates/t/ul/t/t/li/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Quarter"
 msgstr "Четвртина"
 
-#. xml:./templates/t/ul/li/span
-msgid "Relation:"
-msgstr "Врска:"
-
-#. xml:./templates/div/div/div/button
+#. custom: web
+#: base.xml:0
 msgid "Remove"
 msgstr "Одстрани"
 
-#. xml:./templates/div/div/div/button
+#. custom: web
+#: base.xml:0
 msgid "Remove All"
 msgstr "Отстрани сѐ"
 
-#. js:form_relational_widgets.js,326
-msgid "Render"
-msgstr ""
-
-#. xml:./templates/t/li/a
+#. custom: web
+#: base.xml:0
 msgid "Run JS Tests"
 msgstr ""
 
-#. js:form_common.js,874
-#. xml:./templates/t/t/div/button
-#. xml:./templates/t/div/button
-#. xml:./templates/div/ul/li/button
-msgid "Save"
-msgstr "Зачувај"
-
-#. js:form_common.js,889
-msgid "Save & New"
-msgstr "Сочувај и Нов"
-
-#. js:form_widgets.js,1131
-msgid "Save As..."
-msgstr "Зачувај како..."
-
-#. xml:./templates/t/label
+#. custom: web
+#: base.xml:0
 msgid "Save as:"
 msgstr "Сочувај како:"
 
-#. xml:./templates/div/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Save current search"
 msgstr ""
 
-#. js:form_view.js,1128
-msgid "Save default"
-msgstr "Зачувај стандардно"
-
-#. xml:./templates/div/div/div/h4/a
+#. custom: web
+#: base.xml:0
 msgid "Save fields list"
 msgstr "Сочувај ја листата на полиња"
 
-#. xml:./templates/t/label
+#. custom: web
+#: base.xml:0
 msgid "Saved exports:"
 msgstr "Предходно сочувани експорти"
 
-#. js:search_inputs.js,360
-msgid "Search %(field)s at: %(value)s"
-msgstr "Барај %(field)s на: %(value)s"
+#. custom: web
+#: debug_manager.js:183
+msgid "JS Tests"
+msgstr "JS тестови"
 
-#. js:search_inputs.js,192
-#. js:search_inputs.js,211
-#. js:search_inputs.js,402
-msgid "Search %(field)s for: %(value)s"
-msgstr "Барај%(field)s за: %(value)s"
+#. custom: web
+#: base_common.xml:0
+msgid "Modifiers:"
+msgstr "Изменувачи:"
 
-#. js:form_common.js,211
+#. custom: web
+#: base_common.xml:0
+msgid "Object:"
+msgstr "Објект:"
+
+#. custom: web
+#: data_export.js:167
+msgid "Please enter save field list name"
+msgstr "Por favor, entre o nome da lista de campos salva"
+
+#. custom: web
+#: data_export.js:421
+msgid "Please select fields to save export list..."
+msgstr "Por favor, selecione os campos para salvar na lista de exportação"
+
+#. custom: web
+#: debug_manager.js:321
+msgid "No metadata available"
+msgstr ""
+
+#. custom: web
+#: form_common.js:245
+msgid "No results to show..."
+msgstr "Нема резултат за приказ..."
+
+#. custom: web
+#: data_export.js:435
+msgid "Please select fields to export..."
+msgstr "Одберете полиња за експорт..."
+
+#. custom: web
+#: base_common.xml:0
+msgid "Relation:"
+msgstr "Врска:"
+
+#. custom: web
+#: form_common.js:211
 msgid "Search More..."
 msgstr "Пребарувај повеќе..."
 
-#. js:form_common.js,281
+#. custom: web
+#: form_common.js:281
 msgid "Search: "
 msgstr "Барај: "
 
-#. js:form_common.js,1054
-msgid "Select"
-msgstr "Избери"
-
-#. js:form_common.js,1103
-msgid "Selected domain"
-msgstr ""
-
-#. xml:./templates/t/ul/li/span
-msgid "Selection:"
-msgstr "Избор:"
-
-#. js:form_view.js,1125
-msgid "Set Default"
-msgstr "Постави како основни"
-
-#. xml:./templates/t/t/t/li/a
+#. custom: web
+#: base.xml:0
 msgid "Set Defaults"
 msgstr "Подеси стандардно"
 
-#. js:list_view.js,931
-msgid "Setting 'id' attribute on existing record %s"
-msgstr "Поставување на 'id' атрибут на постоен запис %s"
+#. custom: web
+#: search_inputs.js:360
+msgid "Search %(field)s at: %(value)s"
+msgstr "Барај %(field)s на: %(value)s"
+
+#. custom: web
+#: form_common.js:1049 base.xml:0
+msgid "Create"
+msgstr "Креирај"
+
+#. custom: web
+#: utils.js:143
+msgid "Node [%s] is not a JSONified XML node"
+msgstr "Јазолот [%s] не е JSONified XML јазол"
 
 #. resource:base_ir_filters_view_search
 msgid "Shared"
 msgstr ""
 
-#. xml:./templates/t/ul/li/span
-msgid "Size:"
-msgstr "Големина:"
+#. field:User.SidebarVisible
+msgid "Show App Sidebar"
+msgstr ""
 
 #. field:Filter.Sort
 msgid "Sort"
 msgstr ""
 
-#. xml:./templates/t/t/li/span
-msgid "Special:"
-msgstr "Специјално:"
-
-#. js:misc.js,13
-msgid "Still loading..."
-msgstr "Сеуште се вчитува ..."
-
-#. js:misc.js,14
-msgid "Still loading...<br />Please be patient."
-msgstr "Сеуште се вчитува...<br />Трпение."
-
-#. js:misc.js,17
-msgid "Take a minute to get a coffee,<br />because it's loading..."
-msgstr "Трпение, спасение,<br />се вчитува..."
-
-#. xml:./templates/t/t/t/li/a
+#. custom: web
+#: base.xml:0
 msgid "Technical Translation"
 msgstr "Технички превод"
 
-#. js:form_widgets.js,1131
+#. custom: web
+#: form_widgets.js:1114
+msgid "File Upload"
+msgstr "Качување на датотека"
+
+#. custom: web
+#: form_view.js:301
+msgid "Form"
+msgstr "Формулар"
+
+#. custom: web
+#: form_view.js:315
+msgid "New"
+msgstr "Ново"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Selection:"
+msgstr "Избор:"
+
+#. custom: web
+#: base_common.xml:0
+msgid ""
+"[<t t-esc=\"option[0]\"/>]\n"
+"                    <t t-if=\"option[1]\"> - </t>\n"
+"                    <t t-esc=\"option[1]\"/>"
+msgstr ""
+
+#. custom: web
+#: form_view.js:1125
+msgid "Set Default"
+msgstr "Постави како основни"
+
+#. custom: web
+#: misc.js:17
+msgid "Take a minute to get a coffee,<br />because it's loading..."
+msgstr "Трпение, спасение,<br />се вчитува..."
+
+#. custom: web
+#: base.xml:0
+msgid "Update translations"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid ""
+"You have updated <strong><t t-esc=\"field.string\"/></strong> (<t t-esc=\"lang\"/>).\n"
+"            <a class=\"oe_field_translate\" t-att-name=\"field.name\" href=\"#\">Update translations</a>"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "or"
+msgstr "или"
+
+#. custom: web
+#: form_relational_widgets.js:1378 base.xml:0
+msgid "Add"
+msgstr "Додади"
+
+#. custom: web
+#: form_widgets.js:641 list_view.js:288
+msgid "Archive"
+msgstr "Архива"
+
+#. custom: web
+#: form_common.js:1096 search_menus.js:177
+msgid "Custom Filter"
+msgstr "Прилагоден филтер"
+
+#. custom: web
+#: form_widgets.js:1131
 msgid "The field is empty, there's nothing to save !"
 msgstr "Полето е празно. Нема што да се зачува !"
 
-#. js:form_view.js,887
-msgid "The following fields are invalid:"
-msgstr "Следниве полиња се невалидни:"
+#. custom: web
+#: search_inputs.js:330
+msgid "Yes"
+msgstr "Да"
 
-#. js:list_view_editable.js,122
-msgid "The line has been modified, your changes will be discarded. Are you sure you want to discard the changes ?"
-msgstr ""
+#. custom: web
+#: form_common.js:868 base.xml:0 base.xml:0
+msgid "Discard"
+msgstr "Отфрли"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Size:"
+msgstr "Големина:"
 
 #. help:Filter.Action
 msgid "The menu action this filter applies to. When left empty the filter applies to all menus for this model."
 msgstr ""
-
-#. js:form_relational_widgets.js,1123
-msgid "The o2m record must be saved before an action can be used"
-msgstr "o2m записот мора да биде зачуван пред да акцијата да може да се употреби"
-
-#. js:form_view.js,301
-msgid "The record could not be found in the database."
-msgstr "Записот не може да се пронајде во датабазата."
-
-#. js:form_view.js,756
-msgid "The record has been modified, your changes will be discarded. Are you sure you want to leave this page ?"
-msgstr ""
-
-#. js:form_widgets.js,1093
-msgid "The selected file exceed the maximum file size of %s."
-msgstr "Селектираната датотека ја надминува максималната големина на датотеката од %s."
-
-#. js:form_relational_widgets.js,1595
-msgid "The type of the field '%s' must be a many2many field with a relation to 'ir.attachment' model."
-msgstr "Типот на полето '%s' мора да биде many2many поле со врска на 'ir.attachment' модел."
-
-#. help:Filter.User
-msgid "The user this filter is private to. When left empty the filter is public and available to all users."
-msgstr ""
-
-#. js:form_widgets.js,1114
-msgid "There was a problem while uploading your file"
-msgstr "Проблем со вчутување на датотеката"
-
-#. js:search_menus.js,251
-msgid "This filter is global and will be removed for everybody if you continue."
-msgstr "Овој филтер е глобален и ќе биде отстранет за сите доколку продолжите."
-
-#. xml:./templates/div/p
-msgid ""
-"This wizard will export all data that matches the current search criteria to a CSV file.\n"
-"        You can export all data or only the fields that can be reimported after modification."
-msgstr ""
-
-#. js:form_widgets.js,862
-msgid "Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Hexya is displayed according to your field timezone."
-msgstr ""
-
-#. xml:./templates/t/t/li/a
-msgid "Toggle Timelines"
-msgstr ""
-
-#. js:pivot_view.js,526
-#. js:pivot_view.js,555
-msgid "Total"
-msgstr "Вкупно"
-
-#. xml:./templates/t/ul/li/span
-msgid "Type:"
-msgstr "Тип:"
-
-#. js:form_widgets.js,643
-#. js:list_view.js,289
-msgid "Unarchive"
-msgstr "Одархивирај"
-
-#. js:graph_widget.js,79
-#. js:list_view.js,1379
-#. js:list_view.js,1385
-#. js:pivot_view.js,508
-msgid "Undefined"
-msgstr "Недефиниран"
-
-#. xml:./templates/t
-msgid ""
-"Unhandled widget\n"
-"    <t t-js=\"dict\">console.warn('Unhandled widget', dict.widget);</t>"
-msgstr ""
-
-#. js:data.js,1083
-msgid "Unknown field %s in domain %s"
-msgstr "Непознато поле %s во доменот %s"
-
-#. js:list_view.js,1086
-msgid "Unknown m2m command %s"
-msgstr "Непозната m2m команда %s"
-
-#. js:pyeval.js,991
-msgid "Unknown nonliteral type "
-msgstr "Непознат не-литерарен тип "
-
-#. js:data.js,1075
-msgid "Unknown operator %s in domain %s"
-msgstr "Непознат оператор %s во домен %s"
-
-#. js:data.js,1138
-msgid "Unnamed"
-msgstr ""
-
-#. js:data.js,1121
-msgid "Unsupported operator %s in domain %s"
-msgstr "Непподржан оператот %s во домен %s"
-
-#. xml:./templates/t/t/div/a
-msgid "Update translations"
-msgstr ""
-
-#. js:form_upgrade_widgets.js,34
-msgid "Upgrade now"
-msgstr ""
-
-#. xml:./templates/t/div/button
-msgid "Upload your file"
-msgstr ""
-
-#. xml:./templates/t/div/t/div/span
-#. xml:./templates/t/div/span
-msgid "Uploading..."
-msgstr "Качување..."
 
 #. field:Filter.User
 #. resource:base_ir_filters_view_search
@@ -1007,136 +863,488 @@ msgstr "Качување..."
 msgid "User"
 msgstr ""
 
+#. custom: web
+#: graph_view.js:86 graph_widget.js:21 pivot_view.js:182 base.xml:0 base.xml:0
+msgid "Count"
+msgstr ""
+
+#. custom: web
+#: view_manager.js:223 search_menus.js:84 search_menus.js:91
+msgid "Error"
+msgstr "Грешка"
+
+#. custom: web
+#: search_menus.js:84
+msgid "Filter name is required."
+msgstr "Потребно е име на филтер."
+
+#. custom: web
+#: pyeval.js:1027
+msgid "Local evaluation failure\\n%s\\n\\n%s"
+msgstr ""
+
+#. custom: web
+#: list_view_editable.js:122
+msgid "The line has been modified, your changes will be discarded. Are you sure you want to discard the changes ?"
+msgstr ""
+
+#. custom: web
+#: form_relational_widgets.js:1123
+msgid "The o2m record must be saved before an action can be used"
+msgstr "o2m записот мора да биде зачуван пред да акцијата да може да се употреби"
+
+#. help:Filter.User
+msgid "The user this filter is private to. When left empty the filter is public and available to all users."
+msgstr ""
+
+#. custom: web
+#: form_widgets.js:1114
+msgid "There was a problem while uploading your file"
+msgstr "Проблем со вчутување на датотеката"
+
+#. custom: web
+#: base.xml:0
+msgid "Toggle Timelines"
+msgstr ""
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "Measures <span class=\"caret\"/>"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid ""
+"Unhandled widget\n"
+"    <t t-js=\"dict\">console.warn('Unhandled widget', dict.widget);</t>"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Upload your file"
+msgstr ""
+
+#. custom: web
+#: pyeval.js:991
+msgid "Unknown nonliteral type "
+msgstr "Непознат не-литерарен тип "
+
 #. resource:base_menu_ir_filters
 msgid "User-defined Filters"
 msgstr ""
 
-#. js:priority.js,50
-msgid "Very High"
-msgstr "Многу високо"
+#. custom: web
+#: form_view.js:887
+msgid "The following fields are invalid:"
+msgstr "Следниве полиња се невалидни:"
 
-#. xml:./templates/t/t/t/li/a
+#. custom: web
+#: base.xml:0
 msgid "View Fields"
 msgstr "Погледни полиња"
 
-#. xml:./templates/t/t/t/t/li/a
-msgid "View Metadata"
-msgstr ""
-
-#. js:form_relational_widgets.js,740
-msgid "View type '%s' is not supported in X2Many."
-msgstr ""
-
-#. js:crash_manager.js,107
-#. js:form_view.js,761
-#. js:list_view.js,676
-#. js:sidebar.js,131
-msgid "Warning"
-msgstr "Внимание"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Week"
 msgstr "Седмица"
 
-#. xml:./templates/t/div/div
+#. custom: web
+#: priority.js:47
+msgid "Normal"
+msgstr "Нормално"
+
+#. custom: web
+#: base.xml:0
 msgid "Whoops, you shouldn't have come up to here..."
 msgstr ""
 
-#. js:form_view.js,1304
-msgid "Widget type '%s' is not implemented"
-msgstr "Додаток од тип '%s' не е имплементиран"
-
-#. xml:./templates/t/ul/li/span
-msgid "Widget:"
-msgstr "Додаток:"
-
-#. js:progress_bar.js,78
-msgid "Wrong value entered!"
-msgstr "Внесовте погрешна вредност."
-
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base.xml:0
 msgid "XML ID:"
-msgstr "XML ID:"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
-msgid "Year"
-msgstr "Година"
-
-#. js:search_inputs.js,330
-msgid "Yes"
-msgstr "Да"
-
-#. js:form_relational_widgets.js,47
-msgid "You are creating a new %s, are you sure it does not exist yet?"
-msgstr "Креирате нов %s, дали сте сигурни дека веќе не постои?"
-
-#. xml:./templates/t/t/div
-msgid ""
-"You have updated <strong><t t-esc=\"field.string\"/></strong> (<t t-esc=\"lang\"/>).\n"
-"            <a class=\"oe_field_translate\" t-att-name=\"field.name\" href=\"#\">Update translations</a>"
 msgstr ""
 
-#. js:misc.js,16
-msgid "You may not believe it,<br />but the application is actually loading..."
-msgstr "Можеби не ти се верува,<br />но апликацијата навистина се вчитува..."
+#. custom: web
+#: base_common.xml:0
+msgid "Type:"
+msgstr "Тип:"
 
-#. js:sidebar.js,131
-msgid "You must choose at least one record."
-msgstr "Мора да одберете барем еден запис."
-
-#. js:list_view.js,676
-msgid "You must select at least one record."
-msgstr "Мора да изберете барем еден запис."
-
-#. js:crash_manager.js,57
-msgid "Your Hexya session expired. Please refresh the current web page."
+#. custom: web
+#: form_upgrade_widgets.js:34
+msgid "Upgrade now"
 msgstr ""
 
-#. xml:./templates/t/ul/li/ul/li
-msgid ""
-"[<t t-esc=\"option[0]\"/>]\n"
-"                    <t t-if=\"option[1]\"> - </t>\n"
-"                    <t t-esc=\"option[1]\"/>"
-msgstr ""
+#. custom: web
+#: search_menus.js:91
+msgid "Filter with same name already exists."
+msgstr "Филтерот со истото име веќе постои."
 
-#. xml:./templates/t/t
+#. custom: web
+#: misc.js:12
+msgid "Loading..."
+msgstr "Се вчитува..."
+
+#. custom: web
+#: crash_manager.js:170 dialog.js:182 form_common.js:1046 form_upgrade_widgets.js:40 base.xml:0
+msgid "Cancel"
+msgstr "Откажи"
+
+#. custom: web
+#: base.xml:0
 msgid "console.warn('Unhandled widget', dict.widget);"
 msgstr ""
 
-#. js:utils.js,302
-msgid "kMGTPE"
+#. custom: web
+#: form_view.js:301
+msgid "The record could not be found in the database."
+msgstr "Записот не може да се пронајде во датабазата."
+
+#. custom: web
+#: base_common.xml:0
+msgid "Widget:"
+msgstr "Додаток:"
+
+#. custom: web
+#: misc.js:16
+msgid "You may not believe it,<br />but the application is actually loading..."
+msgstr "Можеби не ти се верува,<br />но апликацијата навистина се вчитува..."
+
+#. custom: web
+#: sidebar.js:131
+msgid "You must choose at least one record."
+msgstr "Мора да одберете барем еден запис."
+
+#. custom: web
+#: crash_manager.js:57
+msgid "Your Hexya session expired. Please refresh the current web page."
 msgstr ""
 
-#. js:search_inputs.js,230
-msgid "not a valid integer"
-msgstr "не е валиден број"
+#. custom: web
+#: form_common.js:874 base.xml:0 base.xml:0 base.xml:0
+msgid "Save"
+msgstr "Зачувај"
 
-#. js:search_inputs.js,245
-msgid "not a valid number"
-msgstr "не е валиден број"
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "Uploading..."
+msgstr "Качување..."
 
-#. xml:./templates/t/li/span
-msgid "or"
-msgstr "или"
+#. custom: web
+#: dialog.js:40 dialog.js:158 dialog.js:176 base.xml:0
+msgid "Ok"
+msgstr "Во ред"
 
-#. xml:./templates/t/div/t/t
+#. custom: web
+#: base.xml:0
 msgid "overflow-x: hidden"
 msgstr ""
 
-#. xml:./templates/t/t
+#. custom: web
+#: form_upgrade_widgets.js:51
+msgid "Hexya Enterprise"
+msgstr ""
+
+#. custom: web
+#: form_widgets.js:1094
+msgid "File upload"
+msgstr "Качи датотека"
+
+#. custom: web
+#: pivot_view.js:831
+msgid "For Excel compatibility, data cannot be exported if there are more than 256 columns.\\n\\nTip: try to flip axis, filter further or reduce the number of measures."
+msgstr ""
+
+#. custom: web
+#: priority.js:49
+msgid "High"
+msgstr "Високо"
+
+#. custom: web
+#: loading.js:46
+msgid "Loading"
+msgstr "Се вчитува"
+
+#. custom: web
+#: form_common.js:889
+msgid "Save & New"
+msgstr "Сочувај и Нов"
+
+#. custom: web
+#: form_widgets.js:1251
+msgid "Image"
+msgstr "Слика"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Special:"
+msgstr "Специјално:"
+
+#. custom: web
+#: form_common.js:1054
+msgid "Select"
+msgstr "Избери"
+
+#. custom: web
+#: form_common.js:1103
+msgid "Selected domain"
+msgstr ""
+
+#. custom: web
+#: form_relational_widgets.js:326
+msgid "Render"
+msgstr ""
+
+#. custom: web
+#: graph_widget.js:208 graph_widget.js:216
+msgid "Invalid data"
+msgstr "Погрешни информации"
+
+#. custom: web
+#: form_relational_widgets.js:327
+msgid "No value found for the field %s for value %s"
+msgstr ""
+
+#. custom: web
+#: form_widgets.js:1131
+msgid "Save As..."
+msgstr "Зачувај како..."
+
+#. custom: web
+#: form_view.js:1128
+msgid "Save default"
+msgstr "Зачувај стандардно"
+
+#. custom: web
+#: graph_widget.js:252
+msgid "Not enough data points"
+msgstr ""
+
+#. custom: web
+#: form_view.js:756
+msgid "The record has been modified, your changes will be discarded. Are you sure you want to leave this page ?"
+msgstr ""
+
+#. custom: web
+#: data.js:1083
+msgid "Unknown field %s in domain %s"
+msgstr "Непознато поле %s во доменот %s"
+
+#. custom: web
+#: form_widgets.js:636
+msgid "Inactive"
+msgstr "Неактивен"
+
+#. custom: web
+#: priority.js:48
+msgid "Low"
+msgstr "Ниско"
+
+#. custom: web
+#: misc.js:13
+msgid "Still loading..."
+msgstr "Сеуште се вчитува ..."
+
+#. custom: web
+#: misc.js:18
+msgid "Maybe you should consider reloading the application by pressing F5..."
+msgstr "Пробајте да ја превчитате апликацијата со претискање на копчето F5..."
+
+#. custom: web
+#: form_widgets.js:862
+msgid "Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Hexya is displayed according to your field timezone."
+msgstr ""
+
+#. custom: web
+#: data.js:1075
+msgid "Unknown operator %s in domain %s"
+msgstr "Непознат оператор %s во домен %s"
+
+#. custom: web
+#: data.js:1121
+msgid "Unsupported operator %s in domain %s"
+msgstr "Непподржан оператот %s во домен %s"
+
+#. custom: web
+#: loading.js:44
+msgid "Loading (%d)"
+msgstr "Се вчитува (%d)"
+
+#. custom: web
+#: data.js:1138
+msgid "Unnamed"
+msgstr ""
+
+#. custom: web
+#: form_widgets.js:1093
+msgid "The selected file exceed the maximum file size of %s."
+msgstr "Селектираната датотека ја надминува максималната големина на датотеката од %s."
+
+#. custom: web
+#: graph_widget.js:94
+msgid "No data to display"
+msgstr ""
+
+#. custom: web
+#: list_view.js:931
+msgid "Setting 'id' attribute on existing record %s"
+msgstr "Поставување на 'id' атрибут на постоен запис %s"
+
+#. custom: web
+#: list_view.js:1086
+msgid "Unknown m2m command %s"
+msgstr "Непозната m2m команда %s"
+
+#. custom: web
+#: misc.js:14
+msgid "Still loading...<br />Please be patient."
+msgstr "Сеуште се вчитува...<br />Трпение."
+
+#. custom: web
+#: priority.js:50
+msgid "Very High"
+msgstr "Многу високо"
+
+#. custom: web
+#: form_widgets.js:634 form_widgets.js:640
+msgid "Active"
+msgstr "Активно"
+
+#. custom: web
+#: base_common.xml:0
+msgid "×"
+msgstr ""
+
+#. custom: web
+#: form_relational_widgets.js:47
+msgid "You are creating a new %s, are you sure it does not exist yet?"
+msgstr "Креирате нов %s, дали сте сигурни дека веќе не постои?"
+
+#. custom: web
+#: search_inputs.js:451
+msgid "M2O search fields do not currently handle multiple default values"
+msgstr "M2O полињата за пребарување моментално не може да се справат со повеќе стандардни вредности"
+
+#. custom: web
+#: search_inputs.js:331
+msgid "No"
+msgstr "Не"
+
+#. custom: web
+#: form_relational_widgets.js:740
+msgid "View type '%s' is not supported in X2Many."
+msgstr ""
+
+#. custom: web
+#: form_view.js:1304
+msgid "Widget type '%s' is not implemented"
+msgstr "Додаток од тип '%s' не е имплементиран"
+
+#. custom: web
+#: base.xml:0
+msgid ""
+"var message = (d.message !== undefined) ? d.message : d.error.data.message;\n"
+"            d.html_error = context.engine.tools.html_escape(message).replace(/\\n/g, '<br/>');"
+msgstr ""
+
+#. custom: web
+#: form_common.js:281 form_relational_widgets.js:1080
+msgid "Create: "
+msgstr "Креирај: "
+
+#. custom: web
+#: progress_bar.js:78
+msgid "Only Integer Value should be valid."
+msgstr "Само вредност на интегер треба да е валидна"
+
+#. custom: web
+#: search_inputs.js:230
+msgid "not a valid integer"
+msgstr "не е валиден број"
+
+#. custom: web
+#: search_inputs.js:245
+msgid "not a valid number"
+msgstr "не е валиден број"
+
+#. custom: web
+#: search_inputs.js:551
+msgid "Filter"
+msgstr "Филтер"
+
+#. custom: web
+#: form_widgets.js:643 list_view.js:289
+msgid "Unarchive"
+msgstr "Одархивирај"
+
+#. custom: web
+#: utils.js:302
+msgid "kMGTPE"
+msgstr ""
+
+#. custom: web
+#: search_inputs.js:553 search_view.js:205
+msgid " or "
+msgstr ""
+
+#. custom: web
+#: search_inputs.js:698
+msgid "Group By"
+msgstr "Групирај по"
+
+#. custom: web
+#: list_view.js:676
+msgid "You must select at least one record."
+msgstr "Мора да изберете барем еден запис."
+
+#. custom: web
+#: form_common.js:868 form_view.js:1127 data_export.js:202
+msgid "Close"
+msgstr "Затвори"
+
+#. custom: web
+#: search_inputs.js:192 search_inputs.js:211 search_inputs.js:402
+msgid "Search %(field)s for: %(value)s"
+msgstr "Барај%(field)s за: %(value)s"
+
+#. custom: web
+#: form_relational_widgets.js:153 form_relational_widgets.js:921 form_relational_widgets.js:1104 form_relational_widgets.js:1321
+msgid "Open: "
+msgstr "Отвори: "
+
+#. custom: web
+#: progress_bar.js:78
+msgid "Wrong value entered!"
+msgstr "Внесовте погрешна вредност."
+
+#. custom: web
+#: base.xml:0
 msgid ""
 "var $div = $(document.createElement('div')).attr('t-if', this.attr('t-if')).addClass('o_form_field_monetary');\n"
 "        this.clone(true).appendTo($div);\n"
 "        this.replaceWith($div);"
 msgstr ""
 
-#. xml:./templates/t/div/t
-msgid ""
-"var message = (d.message !== undefined) ? d.message : d.error.data.message;\n"
-"            d.html_error = context.engine.tools.html_escape(message).replace(/\\n/g, '<br/>');"
-msgstr ""
+#. custom: web
+#: search_menus.js:251
+msgid "This filter is global and will be removed for everybody if you continue."
+msgstr "Овој филтер е глобален и ќе биде отстранет за сите доколку продолжите."
 
-#. xml:./templates/div/div/div/div/button
-msgid "×"
+#. custom: web
+#: pivot_view.js:526 pivot_view.js:555
+msgid "Total"
+msgstr "Вкупно"
+
+#. custom: web
+#: graph_widget.js:79 list_view.js:1379 list_view.js:1385 pivot_view.js:508
+msgid "Undefined"
+msgstr "Недефиниран"
+
+#. custom: web
+#: crash_manager.js:107 form_view.js:761 list_view.js:676 sidebar.js:131
+msgid "Warning"
+msgstr "Внимание"
+
+#. custom: web
+#: form_view.xml:0
+msgid "e"
 msgstr ""
 

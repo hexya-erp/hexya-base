@@ -12,83 +12,98 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
-#. xml:./template/t/div/div/button
-#. xml:./template/t/div/button
-msgid "Add"
-msgstr "Tilføj"
-
-#. xml:./template/t/div/div/span
+#. custom: webKanban
+#: web_kanban.xml:0
 msgid "Add new Column"
 msgstr "Tilføj ny kolonne"
 
-#. js:kanban_relational.js,52
-msgid "Add: "
-msgstr "Tilføj: "
+#. custom: webKanban
+#: web_kanban.xml:0 web_kanban.xml:0
+msgid "Add"
+msgstr "Tilføj"
 
-#. xml:./template/t/div/div/span/ul/t/li/a
-msgid "Archive Records"
-msgstr "Arkivér post"
-
-#. js:kanban_column.js,222
-msgid "Are you sure that you want to remove this column ?"
-msgstr "Er du sikker på, at du vil fjerne denne kolonne?"
-
-#. js:kanban_view.js,549
-msgid "Are you sure you want to delete this record ?"
-msgstr "Er du sikker på at du vil slette denne post?"
-
-#. js:kanban_column.js,216
+#. custom: webKanban
+#: kanban_column.js:216
 msgid "Cancel"
 msgstr "Annuller"
 
-#. js:kanban_view.js,724
-msgid "Create"
-msgstr "Opret"
+#. custom: webKanban
+#: kanban_column.js:222
+msgid "Are you sure that you want to remove this column ?"
+msgstr "Er du sikker på, at du vil fjerne denne kolonne?"
 
-#. js:kanban_relational.js,26
-msgid "Create: "
-msgstr "Opret: "
-
-#. xml:./template/t/div/div/span/ul/t/li/a
-msgid "Delete"
-msgstr "Slet"
-
-#. xml:./template/t/div/div/button
-#. xml:./template/t/div/button
-msgid "Discard"
-msgstr "Kassér"
-
-#. js:kanban_column.js,232
+#. custom: webKanban
+#: kanban_column.js:232
 msgid "Edit Column"
 msgstr "Redigér kolonne"
 
-#. xml:./template/t/div/div/span/ul/t/li/a
-msgid "Edit Stage"
-msgstr "Redigér fase"
-
-#. xml:./template/t/div/div/span/ul/li/a
-msgid "Fold"
-msgstr "Fold"
-
-#. xml:./template/t/a
-msgid "Load more... (<t t-esc=\"widget.remaining\"/> remaining)"
-msgstr ""
-
-#. js:kanban_column.js,211
+#. custom: webKanban
+#: kanban_column.js:211
 msgid "Ok"
 msgstr "OK"
 
-#. js:kanban_relational.js,66
+#. custom: webKanban
+#: kanban_relational.js:26
+msgid "Create: "
+msgstr "Opret: "
+
+#. custom: webKanban
+#: kanban_relational.js:52
+msgid "Add: "
+msgstr "Tilføj: "
+
+#. custom: webKanban
+#: kanban_relational.js:66
 msgid "Open: "
 msgstr "Åbn: "
 
-#. xml:./template/t/div/div/span/ul/t/li/a
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Archive Records"
+msgstr "Arkivér post"
+
+#. custom: webKanban
+#: kanban_view.js:549
+msgid "Are you sure you want to delete this record ?"
+msgstr "Er du sikker på at du vil slette denne post?"
+
+#. custom: webKanban
+#: kanban_view.js:724
+msgid "Create"
+msgstr "Opret"
+
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Delete"
+msgstr "Slet"
+
+#. custom: webKanban
+#: web_kanban.xml:0 web_kanban.xml:0
+msgid "Discard"
+msgstr "Kassér"
+
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Edit Stage"
+msgstr "Redigér fase"
+
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Fold"
+msgstr ""
+
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Load more... (<t t-esc=\"widget.remaining\"/> remaining)"
+msgstr ""
+
+#. custom: webKanban
+#: web_kanban.xml:0
 msgid "Unarchive Records"
 msgstr "Annuller arkivering af poster"
 
-#. js:kanban_view.js,239
-#. js:kanban_view.js,254
-#. js:kanban_view.js,261
+#. custom: webKanban
+#: kanban_view.js:239 kanban_view.js:254 kanban_view.js:261
 msgid "Undefined"
 msgstr "Udefineret"
 

@@ -273,6 +273,7 @@ func init() {
 		sess := web.AddGroup("/session")
 		{
 			sess.AddController(http.MethodPost, "/modules", Modules)
+			sess.AddController(http.MethodPost, "/get_session_info", GetSessionInfo)
 			sess.AddController(http.MethodGet, "/logout", Logout)
 			sess.AddController(http.MethodPost, "/change_password", ChangePassword)
 		}

@@ -12,458 +12,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
-#. js:form_common.js,874
-msgid " & Close"
-msgstr "& Sluiten"
-
-#. js:search_inputs.js,553
-#. js:search_view.js,205
-msgid " or "
-msgstr "of"
-
-#. js:view_manager.js,223
-msgid " view couldn't be loaded"
-msgstr "weergave kon niet geladen worden"
-
-#. xml:./templates/t/t
-msgid "$(this).addClass('o_error');"
-msgstr ""
-
-#. js:debug_manager.js,134
-msgid "%d requests (%d ms) %d queries (%d ms)"
-msgstr "%d aanvragen (%d ms) %d queries (%d ms)"
-
-#. js:formats.js,187
-msgid "'%s' is not a correct date"
-msgstr "'%s' is geen correcte datum"
-
-#. js:time.js,192
-msgid "'%s' is not a correct date, datetime nor time"
-msgstr "'%s' is is geen correcte datum, datum/tijd en/of tijd."
-
-#. js:formats.js,173
-msgid "'%s' is not a correct datetime"
-msgstr "'%s' is geen geldige datum/tijd"
-
-#. js:formats.js,144
-msgid "'%s' is not a correct float"
-msgstr "'%s' is geen correcte float"
-
-#. js:formats.js,132
-msgid "'%s' is not a correct integer"
-msgstr "'%s' is geen correct geheel getal (integer)"
-
-#. js:formats.js,192
-msgid "'%s' is not a correct time"
-msgstr "'%s' is geen geldige tijd"
-
-#. js:time.js,204
-msgid "'%s' is not convertible to date, datetime nor time"
-msgstr "'%s' is niet converteerbaar naar een datum, een datum/tijd of een tijd"
-
-#. js:formats.js,75
-msgid "(%d records)"
-msgstr "(%d records)"
-
-#. xml:./templates/t/t/div/t/t
-msgid "(no string)"
-msgstr "(geen string)"
-
-#. xml:./templates/t/div/t
-msgid "(nolabel)"
-msgstr "(geen label)"
-
-#. xml:./templates/t/ul/li/ul/li/t
-msgid "-"
-msgstr ""
-
-#. xml:./templates/div/t/div/span/span
-msgid "...Upload in progress..."
-msgstr "...Upload is bezig..."
-
-#. xml:./templates/t/t/div/ul/li/t/t
-#. xml:./templates/div/div/t/t
-msgid "/web/binary/upload_attachment"
-msgstr ""
-
-#. xml:./templates/t/div/t
-msgid "99+"
-msgstr ""
-
-#. xml:./templates/t/t/div/t/t
-msgid ":"
-msgstr ""
-
-#. xml:./templates/t/label/span
-#. xml:./templates/t/label/span
-#. xml:./templates/t/label/span
-msgid "?"
-msgstr ""
-
 #. field:Filter.Action
 msgid "Action"
 msgstr "Actie"
-
-#. js:form_relational_widgets.js,1122
-msgid "Action Button"
-msgstr "Actie knop"
-
-#. xml:./templates/t/t/li/span
-msgid "Action ID:"
-msgstr "Actie ID:"
-
-#. js:form_widgets.js,637
-msgid "Activate"
-msgstr "Activeer"
-
-#. xml:./templates/t/li/a
-msgid "Activate Assets Debugging"
-msgstr "Activeer assets debugging"
-
-#. field:Filter.Active
-#. js:form_widgets.js,634
-#. js:form_widgets.js,640
-msgid "Active"
-msgstr "Actief"
-
-#. js:form_relational_widgets.js,1378
-#. xml:./templates/div/div/div/button
-msgid "Add"
-msgstr "Toevoegen"
-
-#. xml:./templates/div/ul/li/a
-msgid "Add Custom Filter"
-msgstr "Voeg aangepaste filter toe"
-
-#. js:form_relational_widgets.js,1018
-msgid "Add an item"
-msgstr "Item toevoegen"
-
-#. xml:./templates/div/ul/li/a
-msgid "Add custom group"
-msgstr "Aangepaste groep toevoegen"
-
-#. xml:./templates/t/t/div/ul/li/t/span
-msgid "Add..."
-msgstr "Toevoegen..."
-
-#. js:form_relational_widgets.js,1305
-msgid "Add: "
-msgstr "Toevoegen: "
-
-#. js:dialog.js,168
-msgid "Alert"
-msgstr "Waarschuwing"
-
-#. xml:./templates/form/table/tr/td/label
-msgid "All users"
-msgstr "Alle gebruikers"
-
-#. xml:./templates/div/ul/li/button
-#. xml:./templates/t/li/button
-msgid "Apply"
-msgstr "Toepassen"
-
-#. js:form_widgets.js,641
-#. js:list_view.js,288
-msgid "Archive"
-msgstr "Archiveren"
-
-#. js:form_widgets.js,642
-msgid "Archived"
-msgstr "Gearchiveerd"
-
-#. js:search_menus.js,252
-msgid "Are you sure that you want to remove this filter?"
-msgstr "Bent u zeker dat u deze filter wilt verwijderen?"
-
-#. xml:./templates/t/t/div/ul/li/t/t/b
-msgid "Attachment :"
-msgstr "Bijlage:"
-
-#. xml:./templates/div/div/div/h4
-msgid "Available fields"
-msgstr "Beschikbare velden"
-
-#. xml:./templates/t/t/div/t
-msgid ""
-"Button\n"
-"                <t t-if=\"widget.string\">: </t>\n"
-"                <t t-if=\"!widget.string\"> (no string)</t>"
-msgstr ""
-
-#. xml:./templates/t/t/li/span
-msgid "Button Type:"
-msgstr "Soort knop:"
-
-#. js:utils.js,284
-msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
-msgstr "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
-
-#. js:list_common.js,133
-msgid "Can't convert value %s to context"
-msgstr "Kan waarde %s niet converteren naar context"
-
-#. js:crash_manager.js,170
-#. js:dialog.js,182
-#. js:form_common.js,1046
-#. js:form_upgrade_widgets.js,40
-#. xml:./templates/form/div/button
-msgid "Cancel"
-msgstr "Annuleer"
-
-#. js:change_password.js,14
-#. xml:./templates/form/div/button
-msgid "Change Password"
-msgstr "Wijzig wachtwoord"
-
-#. xml:./templates/t/ul/li/span
-msgid "Change default:"
-msgstr "Wijzig standaard:"
-
-#. xml:./templates/t/t/li/a
-msgid "Clear Events"
-msgstr "Wis evenementen"
-
-#. js:abstract_web_client.js,124
-#. js:crash_manager.js,123
-msgid "Client Error"
-msgstr "Cliënt fout"
-
-#. js:form_common.js,868
-#. js:form_view.js,1127
-#. js:data_export.js,202
-msgid "Close"
-msgstr "Sluiten"
-
-#. xml:./templates/form/table/tr/td/label
-msgid "Condition:"
-msgstr "Voorwaarde:"
-
-#. xml:./templates/form/div/table/tr/td/label
-msgid "Confirm New Password"
-msgstr "Bevestig nieuw wachtwoord"
-
-#. js:dialog.js,193
-msgid "Confirmation"
-msgstr "Bevestiging"
 
 #. field:Filter.Context
 msgid "Context"
 msgstr ""
 
-#. xml:./templates/t/ul/li/span
-msgid "Context:"
-msgstr "Context:"
-
-#. js:form_widgets.js,1251
-msgid "Could not display the selected image."
-msgstr "Kan de geselecteerde afbeelding niet tonen."
-
-#. js:list_view.js,1024
-msgid "Could not find id in dataset"
-msgstr "Het id kan niet worden gevonden in de dataset"
-
-#. js:utils.js,179
-msgid "Could not serialize XML"
-msgstr "Kon XML niet serialiseren"
-
-#. js:graph_view.js,86
-#. js:graph_widget.js,21
-#. js:pivot_view.js,182
-#. xml:./templates/t/div/ul/li/a
-#. xml:./templates/t/div/ul/li/a
-msgid "Count"
-msgstr "Aantal"
-
-#. js:form_common.js,1049
-#. xml:./templates/t/div/button
-msgid "Create"
-msgstr "Aanmaken"
-
-#. js:form_relational_widgets.js,25
-msgid "Create a %s"
-msgstr "Maak een %s aan"
-
-#. js:form_common.js,236
-msgid "Create and Edit..."
-msgstr "Aanmaken en bewerken..."
-
-#. js:form_common.js,281
-#. js:form_relational_widgets.js,1080
-msgid "Create: "
-msgstr "Aanmaken:"
-
-#. xml:./templates/t/t/div/ul/li/t/t/b
-msgid "Created by :"
-msgstr "Aangemaakt door:"
-
-#. xml:./templates/t/table/tr/th
-msgid "Creation Date:"
-msgstr "Aanmaakdatum:"
-
-#. xml:./templates/t/table/tr/th
-msgid "Creation User:"
-msgstr "Aangemaakt door:"
-
-#. js:form_common.js,1096
-#. js:search_menus.js,177
-msgid "Custom Filter"
-msgstr "Aangepaste filter"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
-msgid "Day"
-msgstr "Dag"
-
-#. js:form_widgets.js,635
-msgid "Deactivate"
-msgstr "Deactiveren"
+#. field:Company.DashboardBackground
+msgid "Dashboard Background"
+msgstr ""
 
 #. field:Filter.IsDefault
 msgid "Default filter"
 msgstr ""
 
-#. xml:./templates/form/table/tr/td/label
-msgid "Default:"
-msgstr "Standaard:"
-
-#. xml:./templates/t/button
-msgid "Delete"
-msgstr "Verwijder"
-
-#. xml:./templates/t/li/a/t
-msgid "Disable Technical Features"
-msgstr "Technische mogelijkheden uitschakelen"
-
-#. js:form_common.js,868
-#. xml:./templates/t/t/div/button
-#. xml:./templates/t/div/button
-msgid "Discard"
-msgstr "Annuleren"
-
-#. js:sidebar.js,217
-msgid "Do you really want to delete this attachment ?"
-msgstr "Weet u zeker dat u deze bijlage wilt verwijderen?"
-
-#. js:form_view.js,733
-msgid "Do you really want to delete this record?"
-msgstr "Wilt u dit record werkelijk verwijderen?"
-
-#. js:list_view.js,543
-msgid "Do you really want to remove these records?"
-msgstr "Wilt u deze records werkelijk verwijderen?"
-
 #. field:Filter.Domain
 msgid "Domain"
 msgstr ""
-
-#. xml:./templates/t/ul/li/span
-msgid "Domain:"
-msgstr "Domein:"
-
-#. js:misc.js,15
-msgid "Don't leave yet,<br />it's still loading..."
-msgstr "Nog niet weggaan,<br />het systeem is nog steeds aan het laden..."
-
-#. js:list_view.js,1847
-msgid "Download"
-msgstr "Downloaden"
-
-#. js:list_view.js,1863
-msgid "Download \\\"%s\\\""
-msgstr ""
-
-#. xml:./templates/t/div/button
-msgid "Edit"
-msgstr "Bewerken"
-
-#. xml:./templates/t/li/a/t
-msgid "Enable Technical Features"
-msgstr "Technische mogelijkheden inschakelen"
-
-#. js:view_manager.js,223
-#. js:search_menus.js,84
-#. js:search_menus.js,91
-msgid "Error"
-msgstr "Fout"
-
-#. js:pyeval.js,1023
-msgid "Evaluation Error"
-msgstr "Evaluatie fout"
-
-#. js:list_view.js,287
-msgid "Export"
-msgstr "Exporteren"
-
-#. js:data_export.js,199
-msgid "Export Data"
-msgstr "Gegevens exporteren"
-
-#. xml:./templates/div/div/div/label
-msgid "Export Formats :"
-msgstr "Exporteer formaten:"
-
-#. js:data_export.js,201
-msgid "Export To File"
-msgstr "Exporteer naar bestand"
-
-#. xml:./templates/div/div/div/label
-msgid "Export Type :"
-msgstr "Soort export:"
-
-#. xml:./templates/div/div/div/div/div/label
-msgid "Export all Data"
-msgstr "Alle gegevens exporteren"
-
-#. js:view_manager.js,437
-msgid "Failed to evaluate search criterions"
-msgstr "Fout opgetreden bij zoekcriteria"
-
-#. js:form_view.js,1300
-msgid "Field '%s' specified in view could not be found."
-msgstr "Veld '%s' welke in de weergave is gespecificeerd kon niet worden gevonden."
-
-#. xml:./templates/t/ul/li/span
-msgid "Field:"
-msgstr "Veld:"
-
-#. js:debug_manager.js,339
-#. xml:./templates/t/t/li/a
-msgid "Fields View Get"
-msgstr "Veldweergave 'Get'"
-
-#. js:debug_manager.js,241
-msgid "Fields of %s"
-msgstr "Velden van %s"
-
-#. js:form_widgets.js,1114
-msgid "File Upload"
-msgstr "Bestand uploaden"
-
-#. js:form_widgets.js,1094
-msgid "File upload"
-msgstr "Bestand uploaden"
-
-#. js:search_inputs.js,551
-msgid "Filter"
-msgstr "Filter"
 
 #. field:Filter.Name
 #. resource:base_ir_filters_view_search
 msgid "Filter Name"
 msgstr ""
 
-#. js:search_menus.js,84
-msgid "Filter name is required."
-msgstr "Filternaam is vereist."
-
-#. js:search_menus.js,91
-msgid "Filter with same name already exists."
-msgstr "Filter met dezelfde naam bestaat al."
+#. custom: web
+#: base.xml:0
+msgid "Export Formats :"
+msgstr "Exporteer formaten:"
 
 #. resource:base_actions_ir_filters_view
 msgid "Filters"
-msgstr "Filters"
+msgstr ""
 
 #. resource:base_ir_filters_view_search
 msgid "Filters created by myself"
@@ -477,144 +58,195 @@ msgstr ""
 msgid "Filters visible only for one user"
 msgstr ""
 
-#. js:pivot_view.js,831
-msgid "For Excel compatibility, data cannot be exported if there are more than 256 columns.\\n\\nTip: try to flip axis, filter further or reduce the number of measures."
-msgstr ""
-
-#. js:form_view.js,301
-msgid "Form"
-msgstr "Formulier"
-
-#. resource:base_ir_filters_view_search
-#. js:search_inputs.js,698
-msgid "Group By"
-msgstr "Groepeer op"
-
-#. js:form_upgrade_widgets.js,51
-msgid "Hexya Enterprise"
-msgstr ""
-
-#. js:priority.js,49
-msgid "High"
-msgstr "Hoog"
-
 #. field:CommonMixin.ID
+#. field:Company.ID
 #. field:Filter.ID
+#. field:User.ID
 msgid "ID"
 msgstr "ID"
 
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base.xml:0
+msgid "$(this).addClass('o_error');"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "...Upload in progress..."
+msgstr "...Upload is bezig..."
+
+#. custom: web
+#: base.xml:0
+msgid "99+"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Activate Assets Debugging"
+msgstr "Activeer assets debugging"
+
+#. custom: web
+#: base.xml:0
+msgid "Add Custom Filter"
+msgstr "Voeg aangepaste filter toe"
+
+#. custom: web
+#: base.xml:0
+msgid "Add custom group"
+msgstr "Aangepaste groep toevoegen"
+
+#. custom: web
+#: base.xml:0
+msgid "Add..."
+msgstr "Toevoegen..."
+
+#. custom: web
+#: base.xml:0
+msgid "All users"
+msgstr "Alle gebruikers"
+
+#. custom: web
+#: base.xml:0
+msgid "Attachment :"
+msgstr "Bijlage:"
+
+#. custom: web
+#: base.xml:0
+msgid "Available fields"
+msgstr "Beschikbare velden"
+
+#. custom: web
+#: base.xml:0
+msgid "Clear Events"
+msgstr "Wis evenementen"
+
+#. custom: web
+#: base.xml:0
+msgid "Condition:"
+msgstr "Voorwaarde:"
+
+#. custom: web
+#: base.xml:0
+msgid "Confirm New Password"
+msgstr "Bevestig nieuw wachtwoord"
+
+#. custom: web
+#: base.xml:0
+msgid "Created by :"
+msgstr "Aangemaakt door:"
+
+#. custom: web
+#: base.xml:0
+msgid "Creation Date:"
+msgstr "Aanmaakdatum:"
+
+#. custom: web
+#: base.xml:0
+msgid "Creation User:"
+msgstr "Aangemaakt door:"
+
+#. custom: web
+#: base.xml:0
+msgid "Day"
+msgstr "Dag"
+
+#. custom: web
+#: base.xml:0
+msgid "Default:"
+msgstr "Standaard:"
+
+#. custom: web
+#: base.xml:0
+msgid "Delete"
+msgstr "Verwijder"
+
+#. custom: web
+#: base.xml:0
+msgid "Disable Technical Features"
+msgstr "Technische mogelijkheden uitschakelen"
+
+#. custom: web
+#: base.xml:0
+msgid "Edit"
+msgstr "Bewerken"
+
+#. custom: web
+#: base.xml:0
+msgid "Enable Technical Features"
+msgstr "Technische mogelijkheden inschakelen"
+
+#. custom: web
+#: base.xml:0
+msgid "Export Type :"
+msgstr "Soort export:"
+
+#. custom: web
+#: base.xml:0
+msgid "Export all Data"
+msgstr "Alle gegevens exporteren"
+
+#. custom: web
+#: base.xml:0
 msgid "ID:"
-msgstr "ID:"
+msgstr ""
 
-#. js:form_widgets.js,1251
-msgid "Image"
-msgstr "Afbeelding"
-
-#. xml:./templates/div/div/div/div/div/label
+#. custom: web
+#: base.xml:0
 msgid "Import-Compatible Export"
 msgstr "Import Compatibele Export"
 
-#. js:form_widgets.js,636
-msgid "Inactive"
-msgstr "Inactief"
-
-#. js:graph_widget.js,208
-#. js:graph_widget.js,216
-msgid "Invalid data"
-msgstr "Invalide data"
-
-#. js:debug_manager.js,183
-msgid "JS Tests"
-msgstr "JS Testen"
-
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base.xml:0
 msgid "Latest Modification Date:"
 msgstr "Laatst datum aangepast:"
 
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base.xml:0
 msgid "Latest Modification by:"
 msgstr "Laatst aangepast door:"
-
-#. xml:./templates/t/li/a
-msgid "Leave the Developer Tools"
-msgstr "Verlaat de ontwikkelaars tools"
-
-#. js:loading.js,46
-msgid "Loading"
-msgstr "Laden"
-
-#. js:loading.js,44
-msgid "Loading (%d)"
-msgstr "Laden (%d)"
-
-#. js:misc.js,12
-msgid "Loading..."
-msgstr "Laden..."
-
-#. js:pyeval.js,1027
-msgid "Local evaluation failure\\n%s\\n\\n%s"
-msgstr ""
-
-#. xml:./templates/t/li/ul/li/a
-msgid "Log out"
-msgstr "Afmelden"
-
-#. js:priority.js,48
-msgid "Low"
-msgstr "Laag"
-
-#. js:search_inputs.js,451
-msgid "M2O search fields do not currently handle multiple default values"
-msgstr "M2O zoek velden kunnen momenteel geen meerdere standaard waardes aan"
-
-#. xml:./templates/t/t/t/li/a
-msgid "Manage Filters"
-msgstr "Filters beheren"
-
-#. js:misc.js,18
-msgid "Maybe you should consider reloading the application by pressing F5..."
-msgstr "Misschien kan je overwegen de applicatie te herladen door F5 te drukken..."
-
-#. xml:./templates/t/div/button
-#. xml:./templates/t/div/button
-msgid "Measures <span class=\"caret\"/>"
-msgstr ""
-
-#. js:debug_manager.js,326
-msgid "Metadata (%s)"
-msgstr "Metadata (%s)"
-
-#. xml:./templates/t/t/li/span
-msgid "Method:"
-msgstr "Methode:"
 
 #. field:Filter.ResModel
 #. resource:base_ir_filters_view_search
 msgid "Model"
 msgstr ""
 
-#. xml:./templates/t/t/div/ul/li/t/t/b
+#. custom: web
+#: base.xml:0
+msgid "Leave the Developer Tools"
+msgstr "Verlaat de ontwikkelaars tools"
+
+#. custom: web
+#: base.xml:0
+msgid "Log out"
+msgstr "Afmelden"
+
+#. custom: web
+#: base.xml:0
+msgid "Manage Filters"
+msgstr "Filters beheren"
+
+#. custom: web
+#: base.xml:0
 msgid "Modified by :"
 msgstr "Aangepast door:"
 
-#. xml:./templates/t/ul/li/span
-msgid "Modifiers:"
-msgstr "Modificatoren:"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Month"
 msgstr "Maand"
 
-#. xml:./templates/t/t/li/span
+#. custom: web
+#: base.xml:0
 msgid "More"
 msgstr "Meer"
 
-#. xml:./templates/div/div/div/button
+#. custom: web
+#: base.xml:0
 msgid "Move Down"
 msgstr "Omlaag"
 
-#. xml:./templates/div/div/div/button
+#. custom: web
+#: base.xml:0
 msgid "Move Up"
 msgstr "Omhoog"
 
@@ -622,23 +254,18 @@ msgstr "Omhoog"
 msgid "My filters"
 msgstr ""
 
-#. js:form_view.js,315
-msgid "New"
-msgstr "Nieuw"
-
-#. xml:./templates/form/div/table/tr/td/label
+#. custom: web
+#: base.xml:0
 msgid "New Password"
 msgstr "Nieuw wachtwoord"
 
-#. js:search_inputs.js,331
-msgid "No"
-msgstr "Nee"
-
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base.xml:0
 msgid "No Update:"
 msgstr "Geen update:"
 
-#. xml:./templates/div/p
+#. custom: web
+#: base.xml:0
 msgid ""
 "No data available for this pivot table.  Try to add some records, or make sure\n"
 "        that there is at least one measure and no active filter in the search bar."
@@ -646,364 +273,88 @@ msgstr ""
 "Geen gegevens voor deze draaitabel. Probeer eens om gegevens toe te voegen of kijk goed\n"
 "dat er ten minste een maateenheid is en er geen filter actief is in de zoekbalk."
 
-#. js:graph_widget.js,94
-msgid "No data to display"
-msgstr "Geen data om te tonen"
-
-#. xml:./templates/div/p/strong
+#. custom: web
+#: base.xml:0
 msgid "No data to display."
 msgstr "Geen gegevens om weer te geven."
 
-#. js:debug_manager.js,321
-msgid "No metadata available"
-msgstr "Geen metadata beschikbaar"
-
-#. js:form_common.js,245
-msgid "No results to show..."
-msgstr "Geen resultaten om te tonen..."
-
-#. js:form_relational_widgets.js,327
-msgid "No value found for the field %s for value %s"
-msgstr "Geen waarde gevonden voor het veld %s voor de waarde %s"
-
-#. js:utils.js,143
-msgid "Node [%s] is not a JSONified XML node"
-msgstr ""
-
-#. js:priority.js,47
-msgid "Normal"
-msgstr "Normaal"
-
-#. js:graph_widget.js,252
-msgid "Not enough data points"
-msgstr "Niet genoeg datapunten"
-
-#. xml:./templates/t/ul/li
+#. custom: web
+#: base.xml:0
 msgid "Not shown in kanban"
 msgstr "Niet getoond in kanban"
 
-#. xml:./templates/t/ul/li/span
-msgid "Object:"
-msgstr "Object:"
-
-#. js:dialog.js,40
-#. js:dialog.js,158
-#. js:dialog.js,176
-#. xml:./templates/t/button
-msgid "Ok"
-msgstr "Ok"
-
-#. xml:./templates/form/div/table/tr/td/label
+#. custom: web
+#: base.xml:0
 msgid "Old Password"
 msgstr "Oud wachtwoord"
 
-#. xml:./templates/t/ul/li/span
-msgid "On change:"
-msgstr "Bij wijziging:"
-
-#. js:progress_bar.js,78
-msgid "Only Integer Value should be valid."
-msgstr "Alleen gehele getallen zijn geldig."
-
-#. xml:./templates/form/table/tr/td/label
+#. custom: web
+#: base.xml:0
 msgid "Only you"
 msgstr "Alleen u"
 
-#. js:form_relational_widgets.js,153
-#. js:form_relational_widgets.js,921
-#. js:form_relational_widgets.js,1104
-#. js:form_relational_widgets.js,1321
-msgid "Open: "
-msgstr "Open: "
-
-#. js:data_export.js,167
-msgid "Please enter save field list name"
-msgstr "Geef aub 'opslaan veldenlijst' naam in"
-
-#. xml:./templates/p/strong
+#. custom: web
+#: base.xml:0
 msgid "Please note that only the selected ids will be exported."
 msgstr "Merk op dat alleen de geselecteerde id's worden geëxporteerd."
 
-#. xml:./templates/p/strong
+#. custom: web
+#: base.xml:0
 msgid "Please pay attention that all records matching your search filter will be exported. Not only the selected ids."
 msgstr "Let op dat alle records die overeenkomen met uw zoekfilter worden geëxporteerd en niet alleen de geselecteerde id's."
 
-#. js:data_export.js,435
-msgid "Please select fields to export..."
-msgstr "Selecteer velden om te exporteren..."
-
-#. js:data_export.js,421
-msgid "Please select fields to save export list..."
-msgstr "Selecteer velden voor opslaan export lijst..."
-
-#. xml:./templates/t/li/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Preferences"
 msgstr "Voorkeuren"
 
-#. xml:./templates/t/ul/t/t/li/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Quarter"
 msgstr "Kwartaal"
 
-#. xml:./templates/t/ul/li/span
-msgid "Relation:"
-msgstr "Relatie:"
-
-#. xml:./templates/div/div/div/button
+#. custom: web
+#: base.xml:0
 msgid "Remove"
 msgstr "Verwijderen"
 
-#. xml:./templates/div/div/div/button
+#. custom: web
+#: base.xml:0
 msgid "Remove All"
 msgstr "Alles verwijderen"
 
-#. js:form_relational_widgets.js,326
-msgid "Render"
-msgstr "Renderen"
-
-#. xml:./templates/t/li/a
+#. custom: web
+#: base.xml:0
 msgid "Run JS Tests"
 msgstr "JS testen uitvoeren"
 
-#. js:form_common.js,874
-#. xml:./templates/t/t/div/button
-#. xml:./templates/t/div/button
-#. xml:./templates/div/ul/li/button
-msgid "Save"
-msgstr "Opslaan"
-
-#. js:form_common.js,889
-msgid "Save & New"
-msgstr "Opslaan & Nieuw"
-
-#. js:form_widgets.js,1131
-msgid "Save As..."
-msgstr "Opslaan als..."
-
-#. xml:./templates/t/label
+#. custom: web
+#: base.xml:0
 msgid "Save as:"
 msgstr "Opslaan als:"
 
-#. xml:./templates/div/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Save current search"
 msgstr "Bewaar huidige zoekopdracht"
 
-#. js:form_view.js,1128
-msgid "Save default"
-msgstr "Opslaan als standaard"
-
-#. xml:./templates/div/div/div/h4/a
+#. custom: web
+#: base.xml:0
 msgid "Save fields list"
 msgstr "Veldenlijst opslaan"
 
-#. xml:./templates/t/label
+#. custom: web
+#: base.xml:0
 msgid "Saved exports:"
 msgstr "Opgeslagen exports:"
-
-#. js:search_inputs.js,360
-msgid "Search %(field)s at: %(value)s"
-msgstr "Zoek %(field)s bij: %(value)s"
-
-#. js:search_inputs.js,192
-#. js:search_inputs.js,211
-#. js:search_inputs.js,402
-msgid "Search %(field)s for: %(value)s"
-msgstr "Zoek %(field)s naar: %(value)s"
-
-#. js:form_common.js,211
-msgid "Search More..."
-msgstr "Zoek meer..."
-
-#. js:form_common.js,281
-msgid "Search: "
-msgstr "Zoeken: "
-
-#. js:form_common.js,1054
-msgid "Select"
-msgstr "Selecteer"
-
-#. js:form_common.js,1103
-msgid "Selected domain"
-msgstr "Geselecteerd domein"
-
-#. xml:./templates/t/ul/li/span
-msgid "Selection:"
-msgstr "Selectie:"
-
-#. js:form_view.js,1125
-msgid "Set Default"
-msgstr "Als standaard instellen"
-
-#. xml:./templates/t/t/t/li/a
-msgid "Set Defaults"
-msgstr "Instellen standaardwaarden"
-
-#. js:list_view.js,931
-msgid "Setting 'id' attribute on existing record %s"
-msgstr "Instellen van 'id' attribuut op bestaand record %s"
 
 #. resource:base_ir_filters_view_search
 msgid "Shared"
 msgstr ""
 
-#. xml:./templates/t/ul/li/span
-msgid "Size:"
-msgstr "Grootte:"
-
-#. field:Filter.Sort
-msgid "Sort"
+#. field:User.SidebarVisible
+msgid "Show App Sidebar"
 msgstr ""
-
-#. xml:./templates/t/t/li/span
-msgid "Special:"
-msgstr "Speciaal:"
-
-#. js:misc.js,13
-msgid "Still loading..."
-msgstr "Nog steeds aan het laden..."
-
-#. js:misc.js,14
-msgid "Still loading...<br />Please be patient."
-msgstr "Nog bezig met laden...<br />Even geduld aub."
-
-#. js:misc.js,17
-msgid "Take a minute to get a coffee,<br />because it's loading..."
-msgstr "Neem een minuutje om koffie te halen,<br />want Odoo is aan het laden..."
-
-#. xml:./templates/t/t/t/li/a
-msgid "Technical Translation"
-msgstr "Technische vertaling"
-
-#. js:form_widgets.js,1131
-msgid "The field is empty, there's nothing to save !"
-msgstr "Het veld is leeg. Er is niets om op te slaan!"
-
-#. js:form_view.js,887
-msgid "The following fields are invalid:"
-msgstr "De volgende velden zijn ongeldig:"
-
-#. js:list_view_editable.js,122
-msgid "The line has been modified, your changes will be discarded. Are you sure you want to discard the changes ?"
-msgstr "De regel is aangepast. De wijzigingen worden niet opgeslagen. Weet u zeker dat u deze pagina wilt verlaten?"
-
-#. help:Filter.Action
-msgid "The menu action this filter applies to. When left empty the filter applies to all menus for this model."
-msgstr ""
-
-#. js:form_relational_widgets.js,1123
-msgid "The o2m record must be saved before an action can be used"
-msgstr "Het o2m record dient opgeslagen te worden alvorens een actie kan worden gebruikt"
-
-#. js:form_view.js,301
-msgid "The record could not be found in the database."
-msgstr "Het record kan niet worden gevonden in de database."
-
-#. js:form_view.js,756
-msgid "The record has been modified, your changes will be discarded. Are you sure you want to leave this page ?"
-msgstr "Het record is aangepast. De wijzigingen worden niet opgeslagen. Weet u zeker dat u deze pagina wilt verlaten?"
-
-#. js:form_widgets.js,1093
-msgid "The selected file exceed the maximum file size of %s."
-msgstr "Het geselecteerde bestand overschreed de maximum toegelaten grootte van %s."
-
-#. js:form_relational_widgets.js,1595
-msgid "The type of the field '%s' must be a many2many field with a relation to 'ir.attachment' model."
-msgstr "Het type van het veld '%s' moet een many2many veld zijn met een relatie naar het 'ir.attachment' model."
-
-#. help:Filter.User
-msgid "The user this filter is private to. When left empty the filter is public and available to all users."
-msgstr ""
-
-#. js:form_widgets.js,1114
-msgid "There was a problem while uploading your file"
-msgstr "Er is een probleem met het uploaden van uw bestand."
-
-#. js:search_menus.js,251
-msgid "This filter is global and will be removed for everybody if you continue."
-msgstr "Dit filter is voor iedereen en zal dus ook voor iedereen worden verwijderd als u doorgaat."
-
-#. xml:./templates/div/p
-msgid ""
-"This wizard will export all data that matches the current search criteria to a CSV file.\n"
-"        You can export all data or only the fields that can be reimported after modification."
-msgstr ""
-"Deze wizard zal alle data naar een CSV bestand exporteren die overeenkomt met de huidige zoekcriteria.\n"
-"U kan alle data exporteren of enkel de velden die opnieuw kunnen geïmporteerd worden na wijzigingen."
-
-#. js:form_widgets.js,862
-msgid "Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Hexya is displayed according to your field timezone."
-msgstr ""
-
-#. xml:./templates/t/t/li/a
-msgid "Toggle Timelines"
-msgstr "Wissel tijdlijnen"
-
-#. js:pivot_view.js,526
-#. js:pivot_view.js,555
-msgid "Total"
-msgstr "Totaal"
-
-#. xml:./templates/t/ul/li/span
-msgid "Type:"
-msgstr "Soort:"
-
-#. js:form_widgets.js,643
-#. js:list_view.js,289
-msgid "Unarchive"
-msgstr "Dearchiveren"
-
-#. js:graph_widget.js,79
-#. js:list_view.js,1379
-#. js:list_view.js,1385
-#. js:pivot_view.js,508
-msgid "Undefined"
-msgstr "Niet gedefinieerd"
-
-#. xml:./templates/t
-msgid ""
-"Unhandled widget\n"
-"    <t t-js=\"dict\">console.warn('Unhandled widget', dict.widget);</t>"
-msgstr ""
-
-#. js:data.js,1083
-msgid "Unknown field %s in domain %s"
-msgstr "Onbekend veld %s in domein %s"
-
-#. js:list_view.js,1086
-msgid "Unknown m2m command %s"
-msgstr "Onbekend m2m commando %s"
-
-#. js:pyeval.js,991
-msgid "Unknown nonliteral type "
-msgstr "Onbekend nonliteral type "
-
-#. js:data.js,1075
-msgid "Unknown operator %s in domain %s"
-msgstr "Onbekend operator %s in domein %s"
-
-#. js:data.js,1138
-msgid "Unnamed"
-msgstr "Naamloos"
-
-#. js:data.js,1121
-msgid "Unsupported operator %s in domain %s"
-msgstr "Niet ondersteunde operator %s in domein %s"
-
-#. xml:./templates/t/t/div/a
-msgid "Update translations"
-msgstr "Update vertalingen"
-
-#. js:form_upgrade_widgets.js,34
-msgid "Upgrade now"
-msgstr "Upgrade nu"
-
-#. xml:./templates/t/div/button
-msgid "Upload your file"
-msgstr "Upload uw bestand"
-
-#. xml:./templates/t/div/t/div/span
-#. xml:./templates/t/div/span
-msgid "Uploading..."
-msgstr "Uploaden..."
 
 #. field:Filter.User
 #. resource:base_ir_filters_view_search
@@ -1011,136 +362,993 @@ msgstr "Uploaden..."
 msgid "User"
 msgstr ""
 
+#. custom: web
+#: base.xml:0
+msgid "Set Defaults"
+msgstr "Instellen standaardwaarden"
+
+#. field:Filter.Sort
+msgid "Sort"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Technical Translation"
+msgstr "Technische vertaling"
+
+#. custom: web
+#: base.xml:0
+msgid "Toggle Timelines"
+msgstr "Wissel tijdlijnen"
+
+#. custom: web
+#: base.xml:0
+msgid "View Fields"
+msgstr "Weergeven velden"
+
+#. custom: web
+#: base_common.xml:0
+msgid ":"
+msgstr ""
+
+#. custom: web
+#: form_view.js:887
+msgid "The following fields are invalid:"
+msgstr "De volgende velden zijn ongeldig:"
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "Apply"
+msgstr "Toepassen"
+
+#. help:Filter.Action
+msgid "The menu action this filter applies to. When left empty the filter applies to all menus for this model."
+msgstr ""
+
+#. help:Filter.User
+msgid "The user this filter is private to. When left empty the filter is public and available to all users."
+msgstr ""
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "Measures <span class=\"caret\"/>"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid ""
+"This wizard will export all data that matches the current search criteria to a CSV file.\n"
+"        You can export all data or only the fields that can be reimported after modification."
+msgstr ""
+"Deze wizard zal alle data naar een CSV bestand exporteren die overeenkomt met de huidige zoekcriteria.\n"
+"U kan alle data exporteren of enkel de velden die opnieuw kunnen geïmporteerd worden na wijzigingen."
+
+#. custom: web
+#: base.xml:0
+msgid ""
+"Unhandled widget\n"
+"    <t t-js=\"dict\">console.warn('Unhandled widget', dict.widget);</t>"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Update translations"
+msgstr "Update vertalingen"
+
 #. resource:base_menu_ir_filters
 msgid "User-defined Filters"
 msgstr ""
 
-#. js:priority.js,50
-msgid "Very High"
-msgstr "Zeer hoog"
+#. custom: web
+#: base.xml:0
+msgid "Upload your file"
+msgstr "Upload uw bestand"
 
-#. xml:./templates/t/t/t/li/a
-msgid "View Fields"
-msgstr "Weergeven velden"
-
-#. xml:./templates/t/t/t/t/li/a
+#. custom: web
+#: base.xml:0
 msgid "View Metadata"
 msgstr "Bekijk medata"
 
-#. js:form_relational_widgets.js,740
-msgid "View type '%s' is not supported in X2Many."
-msgstr "Weergave type '%s' is niet ondersteund in X2Many."
-
-#. js:crash_manager.js,107
-#. js:form_view.js,761
-#. js:list_view.js,676
-#. js:sidebar.js,131
-msgid "Warning"
-msgstr "Waarschuwing"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Week"
-msgstr "Week"
+msgstr ""
 
-#. xml:./templates/t/div/div
+#. custom: web
+#: base.xml:0
 msgid "Whoops, you shouldn't have come up to here..."
 msgstr ""
 
-#. js:form_view.js,1304
-msgid "Widget type '%s' is not implemented"
-msgstr "Widget type '%s' is niet geïmplementeerd"
+#. custom: web
+#: misc.js:15
+msgid "Don't leave yet,<br />it's still loading..."
+msgstr "Nog niet weggaan,<br />het systeem is nog steeds aan het laden..."
 
-#. xml:./templates/t/ul/li/span
-msgid "Widget:"
-msgstr "Widget:"
+#. custom: web
+#: graph_widget.js:79 list_view.js:1379 list_view.js:1385 pivot_view.js:508
+msgid "Undefined"
+msgstr "Niet gedefinieerd"
 
-#. js:progress_bar.js,78
-msgid "Wrong value entered!"
-msgstr "Verkeerde waarde ingevoerd!"
-
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base.xml:0
 msgid "XML ID:"
-msgstr "XML ID:"
+msgstr ""
 
-#. xml:./templates/t/ul/t/t/li/ul/li/a
+#. custom: web
+#: base_common.xml:0
+msgid "(no string)"
+msgstr "(geen string)"
+
+#. custom: web
+#: base_common.xml:0
+msgid "(nolabel)"
+msgstr "(geen label)"
+
+#. custom: web
+#: base_common.xml:0
+msgid "-"
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid "Action ID:"
+msgstr "Actie ID:"
+
+#. custom: web
+#: base_common.xml:0
+msgid ""
+"Button\n"
+"                <t t-if=\"widget.string\">: </t>\n"
+"                <t t-if=\"!widget.string\"> (no string)</t>"
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid "Button Type:"
+msgstr "Soort knop:"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Change default:"
+msgstr "Wijzig standaard:"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Context:"
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid "Domain:"
+msgstr "Domein:"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Field:"
+msgstr "Veld:"
+
+#. custom: web
+#: debug_manager.js:134
+msgid "%d requests (%d ms) %d queries (%d ms)"
+msgstr "%d aanvragen (%d ms) %d queries (%d ms)"
+
+#. custom: web
+#: data_export.js:199
+msgid "Export Data"
+msgstr "Gegevens exporteren"
+
+#. custom: web
+#: dialog.js:193
+msgid "Confirmation"
+msgstr "Bevestiging"
+
+#. custom: web
+#: data_export.js:201
+msgid "Export To File"
+msgstr "Exporteer naar bestand"
+
+#. custom: web
+#: search_menus.js:84
+msgid "Filter name is required."
+msgstr "Filternaam is vereist."
+
+#. custom: web
+#: data_export.js:435
+msgid "Please select fields to export..."
+msgstr "Selecteer velden om te exporteren..."
+
+#. custom: web
+#: data_export.js:421
+msgid "Please select fields to save export list..."
+msgstr "Selecteer velden voor opslaan export lijst..."
+
+#. custom: web
+#: debug_manager.js:183
+msgid "JS Tests"
+msgstr "JS Testen"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Method:"
+msgstr "Methode:"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Modifiers:"
+msgstr "Modificatoren:"
+
+#. custom: web
+#: form_common.js:236
+msgid "Create and Edit..."
+msgstr "Aanmaken en bewerken..."
+
+#. custom: web
+#: debug_manager.js:241
+msgid "Fields of %s"
+msgstr "Velden van %s"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Object:"
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid "On change:"
+msgstr "Bij wijziging:"
+
+#. custom: web
+#: form_common.js:874
+msgid " & Close"
+msgstr "& Sluiten"
+
+#. custom: web
+#: dialog.js:168
+msgid "Alert"
+msgstr "Waarschuwing"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Relation:"
+msgstr "Relatie:"
+
+#. custom: web
+#: debug_manager.js:326
+msgid "Metadata (%s)"
+msgstr ""
+
+#. custom: web
+#: data_export.js:167
+msgid "Please enter save field list name"
+msgstr "Geef aub 'opslaan veldenlijst' naam in"
+
+#. custom: web
+#: debug_manager.js:321
+msgid "No metadata available"
+msgstr "Geen metadata beschikbaar"
+
+#. custom: web
+#: form_common.js:245
+msgid "No results to show..."
+msgstr "Geen resultaten om te tonen..."
+
+#. custom: web
+#: form_common.js:889
+msgid "Save & New"
+msgstr "Opslaan & Nieuw"
+
+#. custom: web
+#: form_relational_widgets.js:1122
+msgid "Action Button"
+msgstr "Actie knop"
+
+#. custom: web
+#: form_relational_widgets.js:1018
+msgid "Add an item"
+msgstr "Item toevoegen"
+
+#. custom: web
+#: form_widgets.js:637
+msgid "Activate"
+msgstr "Activeer"
+
+#. custom: web
+#: form_relational_widgets.js:1305
+msgid "Add: "
+msgstr "Toevoegen: "
+
+#. custom: web
+#: form_widgets.js:642
+msgid "Archived"
+msgstr "Gearchiveerd"
+
+#. custom: web
+#: form_widgets.js:1251
+msgid "Could not display the selected image."
+msgstr "Kan de geselecteerde afbeelding niet tonen."
+
+#. custom: web
+#: form_common.js:211
+msgid "Search More..."
+msgstr "Zoek meer..."
+
+#. custom: web
+#: formats.js:144
+msgid "'%s' is not a correct float"
+msgstr "'%s' is geen correcte float"
+
+#. custom: web
+#: formats.js:75
+msgid "(%d records)"
+msgstr ""
+
+#. custom: web
+#: form_relational_widgets.js:25
+msgid "Create a %s"
+msgstr "Maak een %s aan"
+
+#. custom: web
+#: form_widgets.js:636
+msgid "Inactive"
+msgstr "Inactief"
+
+#. custom: web
+#: graph_widget.js:252
+msgid "Not enough data points"
+msgstr "Niet genoeg datapunten"
+
+#. custom: web
+#: priority.js:47
+msgid "Normal"
+msgstr "Normaal"
+
+#. custom: web
+#: form_relational_widgets.js:326
+msgid "Render"
+msgstr "Renderen"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Selection:"
+msgstr "Selectie:"
+
+#. custom: web
+#: form_widgets.js:635
+msgid "Deactivate"
+msgstr "Deactiveren"
+
+#. custom: web
+#: list_common.js:133
+msgid "Can't convert value %s to context"
+msgstr "Kan waarde %s niet converteren naar context"
+
+#. custom: web
+#: list_view.js:1863
+msgid "Download \\\"%s\\\""
+msgstr ""
+
+#. custom: web
+#: list_view.js:287
+msgid "Export"
+msgstr "Exporteren"
+
+#. custom: web
+#: form_common.js:281
+msgid "Search: "
+msgstr "Zoeken: "
+
+#. custom: web
+#: form_common.js:1054
+msgid "Select"
+msgstr "Selecteer"
+
+#. custom: web
+#: form_view.js:301
+msgid "Form"
+msgstr "Formulier"
+
+#. custom: web
+#: form_view.js:733
+msgid "Do you really want to delete this record?"
+msgstr "Wilt u dit record werkelijk verwijderen?"
+
+#. custom: web
+#: form_relational_widgets.js:327
+msgid "No value found for the field %s for value %s"
+msgstr "Geen waarde gevonden voor het veld %s voor de waarde %s"
+
+#. custom: web
+#: form_common.js:1103
+msgid "Selected domain"
+msgstr "Geselecteerd domein"
+
+#. custom: web
+#: form_upgrade_widgets.js:51
+msgid "Hexya Enterprise"
+msgstr ""
+
+#. custom: web
+#: form_view.js:315
+msgid "New"
+msgstr "Nieuw"
+
+#. custom: web
+#: form_view.js:756
+msgid "The record has been modified, your changes will be discarded. Are you sure you want to leave this page ?"
+msgstr "Het record is aangepast. De wijzigingen worden niet opgeslagen. Weet u zeker dat u deze pagina wilt verlaten?"
+
+#. custom: web
+#: form_view.js:1125
+msgid "Set Default"
+msgstr "Als standaard instellen"
+
+#. custom: web
+#: form_view.js:301
+msgid "The record could not be found in the database."
+msgstr "Het record kan niet worden gevonden in de database."
+
+#. custom: web
+#: list_view.js:1847
+msgid "Download"
+msgstr "Downloaden"
+
+#. custom: web
+#: form_view.js:1300
+msgid "Field '%s' specified in view could not be found."
+msgstr "Veld '%s' welke in de weergave is gespecificeerd kon niet worden gevonden."
+
+#. custom: web
+#: base_common.xml:0
+msgid "Size:"
+msgstr "Grootte:"
+
+#. custom: web
+#: formats.js:187
+msgid "'%s' is not a correct date"
+msgstr "'%s' is geen correcte datum"
+
+#. custom: web
+#: formats.js:132
+msgid "'%s' is not a correct integer"
+msgstr "'%s' is geen correct geheel getal (integer)"
+
+#. custom: web
+#: form_widgets.js:1114
+msgid "File Upload"
+msgstr "Bestand uploaden"
+
+#. custom: web
+#: formats.js:173
+msgid "'%s' is not a correct datetime"
+msgstr "'%s' is geen geldige datum/tijd"
+
+#. custom: web
+#: formats.js:192
+msgid "'%s' is not a correct time"
+msgstr "'%s' is geen geldige tijd"
+
+#. custom: web
+#: list_view.js:1024
+msgid "Could not find id in dataset"
+msgstr "Het id kan niet worden gevonden in de dataset"
+
+#. custom: web
+#: list_view.js:543
+msgid "Do you really want to remove these records?"
+msgstr "Wilt u deze records werkelijk verwijderen?"
+
+#. custom: web
+#: form_widgets.js:1094
+msgid "File upload"
+msgstr "Bestand uploaden"
+
+#. custom: web
+#: form_widgets.js:1251
+msgid "Image"
+msgstr "Afbeelding"
+
+#. custom: web
+#: loading.js:46
+msgid "Loading"
+msgstr "Laden"
+
+#. custom: web
+#: misc.js:12
+msgid "Loading..."
+msgstr "Laden..."
+
+#. custom: web
+#: base_common.xml:0
+msgid "Special:"
+msgstr "Speciaal:"
+
+#. custom: web
+#: misc.js:17
+msgid "Take a minute to get a coffee,<br />because it's loading..."
+msgstr "Neem een minuutje om koffie te halen,<br />want Odoo is aan het laden..."
+
+#. custom: web
+#: list_view_editable.js:122
+msgid "The line has been modified, your changes will be discarded. Are you sure you want to discard the changes ?"
+msgstr "De regel is aangepast. De wijzigingen worden niet opgeslagen. Weet u zeker dat u deze pagina wilt verlaten?"
+
+#. custom: web
+#: data.js:1083
+msgid "Unknown field %s in domain %s"
+msgstr "Onbekend veld %s in domein %s"
+
+#. custom: web
+#: form_relational_widgets.js:1595
+msgid "The type of the field '%s' must be a many2many field with a relation to 'ir.attachment' model."
+msgstr "Het type van het veld '%s' moet een many2many veld zijn met een relatie naar het 'ir.attachment' model."
+
+#. custom: web
+#: form_widgets.js:862
+msgid "Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Hexya is displayed according to your field timezone."
+msgstr ""
+
+#. custom: web
+#: misc.js:16
+msgid "You may not believe it,<br />but the application is actually loading..."
+msgstr "Je zou het haast niet geloven,<br />maar Odoo is wel degelijk aan het laden..."
+
+#. custom: web
+#: pivot_view.js:831
+msgid "For Excel compatibility, data cannot be exported if there are more than 256 columns.\\n\\nTip: try to flip axis, filter further or reduce the number of measures."
+msgstr ""
+
+#. custom: web
+#: priority.js:49
+msgid "High"
+msgstr "Hoog"
+
+#. custom: web
+#: form_widgets.js:1131
+msgid "Save As..."
+msgstr "Opslaan als..."
+
+#. custom: web
+#: base_common.xml:0
+msgid "Type:"
+msgstr "Soort:"
+
+#. custom: web
+#: loading.js:44
+msgid "Loading (%d)"
+msgstr "Laden (%d)"
+
+#. custom: web
+#: priority.js:48
+msgid "Low"
+msgstr "Laag"
+
+#. custom: web
+#: graph_widget.js:94
+msgid "No data to display"
+msgstr "Geen data om te tonen"
+
+#. custom: web
+#: form_view.js:1128
+msgid "Save default"
+msgstr "Opslaan als standaard"
+
+#. custom: web
+#: form_widgets.js:1114
+msgid "There was a problem while uploading your file"
+msgstr "Er is een probleem met het uploaden van uw bestand."
+
+#. custom: web
+#: list_view.js:931
+msgid "Setting 'id' attribute on existing record %s"
+msgstr "Instellen van 'id' attribuut op bestaand record %s"
+
+#. custom: web
+#: form_relational_widgets.js:1123
+msgid "The o2m record must be saved before an action can be used"
+msgstr "Het o2m record dient opgeslagen te worden alvorens een actie kan worden gebruikt"
+
+#. custom: web
+#: form_widgets.js:1093
+msgid "The selected file exceed the maximum file size of %s."
+msgstr "Het geselecteerde bestand overschreed de maximum toegelaten grootte van %s."
+
+#. custom: web
+#: misc.js:13
+msgid "Still loading..."
+msgstr "Nog steeds aan het laden..."
+
+#. custom: web
+#: misc.js:14
+msgid "Still loading...<br />Please be patient."
+msgstr "Nog bezig met laden...<br />Even geduld aub."
+
+#. custom: web
+#: misc.js:18
+msgid "Maybe you should consider reloading the application by pressing F5..."
+msgstr "Misschien kan je overwegen de applicatie te herladen door F5 te drukken..."
+
+#. custom: web
+#: progress_bar.js:78
+msgid "Only Integer Value should be valid."
+msgstr "Alleen gehele getallen zijn geldig."
+
+#. custom: web
+#: form_widgets.js:1131
+msgid "The field is empty, there's nothing to save !"
+msgstr "Het veld is leeg. Er is niets om op te slaan!"
+
+#. custom: web
+#: list_view.js:1086
+msgid "Unknown m2m command %s"
+msgstr "Onbekend m2m commando %s"
+
+#. custom: web
+#: pyeval.js:991
+msgid "Unknown nonliteral type "
+msgstr "Onbekend nonliteral type "
+
+#. custom: web
+#: data.js:1121
+msgid "Unsupported operator %s in domain %s"
+msgstr "Niet ondersteunde operator %s in domein %s"
+
+#. custom: web
+#: base.xml:0
 msgid "Year"
 msgstr "Jaar"
 
-#. js:search_inputs.js,330
+#. custom: web
+#: list_view.js:676
+msgid "You must select at least one record."
+msgstr "U dient tenminste één record te selecteren."
+
+#. custom: web
+#: time.js:204
+msgid "'%s' is not convertible to date, datetime nor time"
+msgstr "'%s' is niet converteerbaar naar een datum, een datum/tijd of een tijd"
+
+#. custom: web
+#: view_manager.js:223
+msgid " view couldn't be loaded"
+msgstr "weergave kon niet geladen worden"
+
+#. custom: web
+#: search_inputs.js:553 search_view.js:205
+msgid " or "
+msgstr "of"
+
+#. custom: web
+#: form_relational_widgets.js:740
+msgid "View type '%s' is not supported in X2Many."
+msgstr "Weergave type '%s' is niet ondersteund in X2Many."
+
+#. custom: web
+#: pyeval.js:1023
+msgid "Evaluation Error"
+msgstr "Evaluatie fout"
+
+#. custom: web
+#: search_menus.js:252
+msgid "Are you sure that you want to remove this filter?"
+msgstr "Bent u zeker dat u deze filter wilt verwijderen?"
+
+#. custom: web
+#: sidebar.js:217
+msgid "Do you really want to delete this attachment ?"
+msgstr "Weet u zeker dat u deze bijlage wilt verwijderen?"
+
+#. custom: web
+#: time.js:192
+msgid "'%s' is not a correct date, datetime nor time"
+msgstr "'%s' is is geen correcte datum, datum/tijd en/of tijd."
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "/web/binary/upload_attachment"
+msgstr ""
+
+#. custom: web
+#: utils.js:284
+msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
+msgstr ""
+
+#. custom: web
+#: abstract_web_client.js:124 crash_manager.js:123
+msgid "Client Error"
+msgstr "Cliënt fout"
+
+#. custom: web
+#: utils.js:179
+msgid "Could not serialize XML"
+msgstr "Kon XML niet serialiseren"
+
+#. custom: web
+#: view_manager.js:437
+msgid "Failed to evaluate search criterions"
+msgstr "Fout opgetreden bij zoekcriteria"
+
+#. custom: web
+#: change_password.js:14 base.xml:0
+msgid "Change Password"
+msgstr "Wijzig wachtwoord"
+
+#. custom: web
+#: debug_manager.js:339 base.xml:0
+msgid "Fields View Get"
+msgstr "Veldweergave 'Get'"
+
+#. custom: web
+#: search_inputs.js:330
 msgid "Yes"
 msgstr "Ja"
 
-#. js:form_relational_widgets.js,47
-msgid "You are creating a new %s, are you sure it does not exist yet?"
-msgstr "U maakt een nieuwe %s aan, weet u dit zeker als deze nog niet bestaat?"
+#. custom: web
+#: form_relational_widgets.js:1378 base.xml:0
+msgid "Add"
+msgstr "Toevoegen"
 
-#. xml:./templates/t/t/div
+#. custom: web
+#: base.xml:0 base.xml:0 base.xml:0
+msgid "?"
+msgstr ""
+
+#. custom: web
+#: search_inputs.js:360
+msgid "Search %(field)s at: %(value)s"
+msgstr "Zoek %(field)s bij: %(value)s"
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "Uploading..."
+msgstr "Uploaden..."
+
+#. custom: web
+#: form_widgets.js:634 form_widgets.js:640
+msgid "Active"
+msgstr "Actief"
+
+#. custom: web
+#: form_widgets.js:641 list_view.js:288
+msgid "Archive"
+msgstr "Archiveren"
+
+#. custom: web
+#: pivot_view.js:526 pivot_view.js:555
+msgid "Total"
+msgstr "Totaal"
+
+#. custom: web
+#: form_common.js:868 form_view.js:1127 data_export.js:202
+msgid "Close"
+msgstr "Sluiten"
+
+#. custom: web
+#: search_inputs.js:551
+msgid "Filter"
+msgstr ""
+
+#. custom: web
+#: search_menus.js:91
+msgid "Filter with same name already exists."
+msgstr "Filter met dezelfde naam bestaat al."
+
+#. custom: web
+#: pyeval.js:1027
+msgid "Local evaluation failure\\n%s\\n\\n%s"
+msgstr ""
+
+#. custom: web
+#: search_inputs.js:331
+msgid "No"
+msgstr "Nee"
+
+#. custom: web
+#: search_inputs.js:451
+msgid "M2O search fields do not currently handle multiple default values"
+msgstr "M2O zoek velden kunnen momenteel geen meerdere standaard waardes aan"
+
+#. custom: web
+#: search_inputs.js:698
+msgid "Group By"
+msgstr "Groepeer op"
+
+#. custom: web
+#: utils.js:143
+msgid "Node [%s] is not a JSONified XML node"
+msgstr ""
+
+#. custom: web
+#: priority.js:50
+msgid "Very High"
+msgstr "Zeer hoog"
+
+#. custom: web
+#: base.xml:0
 msgid ""
 "You have updated <strong><t t-esc=\"field.string\"/></strong> (<t t-esc=\"lang\"/>).\n"
 "            <a class=\"oe_field_translate\" t-att-name=\"field.name\" href=\"#\">Update translations</a>"
 msgstr ""
 
-#. js:misc.js,16
-msgid "You may not believe it,<br />but the application is actually loading..."
-msgstr "Je zou het haast niet geloven,<br />maar Odoo is wel degelijk aan het laden..."
+#. custom: web
+#: form_common.js:1096 search_menus.js:177
+msgid "Custom Filter"
+msgstr "Aangepaste filter"
 
-#. js:sidebar.js,131
-msgid "You must choose at least one record."
-msgstr "U moet tenminste één record kiezen."
+#. custom: web
+#: base.xml:0
+msgid ""
+"var message = (d.message !== undefined) ? d.message : d.error.data.message;\n"
+"            d.html_error = context.engine.tools.html_escape(message).replace(/\\n/g, '<br/>');"
+msgstr ""
 
-#. js:list_view.js,676
-msgid "You must select at least one record."
-msgstr "U dient tenminste één record te selecteren."
+#. custom: web
+#: data.js:1075
+msgid "Unknown operator %s in domain %s"
+msgstr "Onbekend operator %s in domein %s"
 
-#. js:crash_manager.js,57
+#. custom: web
+#: data.js:1138
+msgid "Unnamed"
+msgstr "Naamloos"
+
+#. custom: web
+#: form_upgrade_widgets.js:34
+msgid "Upgrade now"
+msgstr "Upgrade nu"
+
+#. custom: web
+#: form_view.js:1304
+msgid "Widget type '%s' is not implemented"
+msgstr "Widget type '%s' is niet geïmplementeerd"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Widget:"
+msgstr ""
+
+#. custom: web
+#: crash_manager.js:57
 msgid "Your Hexya session expired. Please refresh the current web page."
 msgstr ""
 
-#. xml:./templates/t/ul/li/ul/li
+#. custom: web
+#: base_common.xml:0
 msgid ""
 "[<t t-esc=\"option[0]\"/>]\n"
 "                    <t t-if=\"option[1]\"> - </t>\n"
 "                    <t t-esc=\"option[1]\"/>"
 msgstr ""
 
-#. xml:./templates/t/t
+#. custom: web
+#: progress_bar.js:78
+msgid "Wrong value entered!"
+msgstr "Verkeerde waarde ingevoerd!"
+
+#. custom: web
+#: graph_widget.js:208 graph_widget.js:216
+msgid "Invalid data"
+msgstr "Invalide data"
+
+#. custom: web
+#: crash_manager.js:170 dialog.js:182 form_common.js:1046 form_upgrade_widgets.js:40 base.xml:0
+msgid "Cancel"
+msgstr "Annuleer"
+
+#. custom: web
+#: form_relational_widgets.js:47
+msgid "You are creating a new %s, are you sure it does not exist yet?"
+msgstr "U maakt een nieuwe %s aan, weet u dit zeker als deze nog niet bestaat?"
+
+#. custom: web
+#: form_common.js:1049 base.xml:0
+msgid "Create"
+msgstr "Aanmaken"
+
+#. custom: web
+#: base.xml:0
 msgid "console.warn('Unhandled widget', dict.widget);"
 msgstr ""
 
-#. js:utils.js,302
-msgid "kMGTPE"
-msgstr "kMGTPE"
+#. custom: web
+#: form_view.xml:0
+msgid "e"
+msgstr ""
 
-#. js:search_inputs.js,230
+#. custom: web
+#: search_inputs.js:230
 msgid "not a valid integer"
 msgstr "geen geldig getal"
 
-#. js:search_inputs.js,245
-msgid "not a valid number"
-msgstr "geen geldig getal"
+#. custom: web
+#: base_common.xml:0
+msgid "×"
+msgstr ""
 
-#. xml:./templates/t/li/span
+#. custom: web
+#: form_common.js:281 form_relational_widgets.js:1080
+msgid "Create: "
+msgstr "Aanmaken:"
+
+#. custom: web
+#: form_common.js:868 base.xml:0 base.xml:0
+msgid "Discard"
+msgstr "Annuleren"
+
+#. custom: web
+#: graph_view.js:86 graph_widget.js:21 pivot_view.js:182 base.xml:0 base.xml:0
+msgid "Count"
+msgstr "Aantal"
+
+#. custom: web
+#: base.xml:0
 msgid "or"
 msgstr "of"
 
-#. xml:./templates/t/div/t/t
-msgid "overflow-x: hidden"
-msgstr ""
-
-#. xml:./templates/t/t
+#. custom: web
+#: base.xml:0
 msgid ""
 "var $div = $(document.createElement('div')).attr('t-if', this.attr('t-if')).addClass('o_form_field_monetary');\n"
 "        this.clone(true).appendTo($div);\n"
 "        this.replaceWith($div);"
 msgstr ""
 
-#. xml:./templates/t/div/t
-msgid ""
-"var message = (d.message !== undefined) ? d.message : d.error.data.message;\n"
-"            d.html_error = context.engine.tools.html_escape(message).replace(/\\n/g, '<br/>');"
+#. custom: web
+#: search_inputs.js:192 search_inputs.js:211 search_inputs.js:402
+msgid "Search %(field)s for: %(value)s"
+msgstr "Zoek %(field)s naar: %(value)s"
+
+#. custom: web
+#: view_manager.js:223 search_menus.js:84 search_menus.js:91
+msgid "Error"
+msgstr "Fout"
+
+#. custom: web
+#: dialog.js:40 dialog.js:158 dialog.js:176 base.xml:0
+msgid "Ok"
 msgstr ""
 
-#. xml:./templates/div/div/div/div/button
-msgid "×"
+#. custom: web
+#: form_relational_widgets.js:153 form_relational_widgets.js:921 form_relational_widgets.js:1104 form_relational_widgets.js:1321
+msgid "Open: "
+msgstr ""
+
+#. custom: web
+#: form_common.js:874 base.xml:0 base.xml:0 base.xml:0
+msgid "Save"
+msgstr "Opslaan"
+
+#. custom: web
+#: search_inputs.js:245
+msgid "not a valid number"
+msgstr "geen geldig getal"
+
+#. custom: web
+#: search_menus.js:251
+msgid "This filter is global and will be removed for everybody if you continue."
+msgstr "Dit filter is voor iedereen en zal dus ook voor iedereen worden verwijderd als u doorgaat."
+
+#. custom: web
+#: sidebar.js:131
+msgid "You must choose at least one record."
+msgstr "U moet tenminste één record kiezen."
+
+#. custom: web
+#: utils.js:302
+msgid "kMGTPE"
+msgstr ""
+
+#. custom: web
+#: form_widgets.js:643 list_view.js:289
+msgid "Unarchive"
+msgstr "Dearchiveren"
+
+#. custom: web
+#: crash_manager.js:107 form_view.js:761 list_view.js:676 sidebar.js:131
+msgid "Warning"
+msgstr "Waarschuwing"
+
+#. custom: web
+#: base.xml:0
+msgid "overflow-x: hidden"
 msgstr ""
 

@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/hexya-erp/hexya-base/web/scripts"
 	"github.com/hexya-erp/hexya/hexya/i18n"
 	"github.com/hexya-erp/hexya/hexya/menus"
 	"github.com/hexya-erp/hexya/hexya/models"
@@ -45,7 +46,7 @@ func BootstrapTranslations(c *server.Context) {
 	c.BindRPCParams(&params)
 	res := gin.H{
 		"lang_parameters": i18n.GetLangParameters(params.Lang),
-		"modules":         i18n.ListModuleTranslations(params.Lang),
+		"modules":         scripts.ListModuleTranslations(params.Lang),
 		"multi_lang":      true,
 	}
 	c.RPC(http.StatusOK, res)
@@ -164,7 +165,7 @@ func WebClient(c *server.Context) {
 		HasChildren: true,
 	}
 
-	siBytes, err := json.Marshal(GetSessionInfo(c.Session()))
+	siBytes, err := json.Marshal(GetSessionInfoStruct(c.Session()))
 	if err != nil {
 		c.Error(err)
 		return

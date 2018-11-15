@@ -15,20 +15,75 @@ import (
 	"github.com/hexya-erp/hexya/hexya/tools/strutils"
 )
 
-func addToTranslationMap(messages translations.MessageMap, lang, moduleName, value, extractedCmt string) translations.MessageMap {
+// A customMessage holds the custom translation string for the given ID
+type customMessage struct {
+	ID     string `json:"id"`
+	String string `json:"string"`
+}
+
+// A moduleCustomMessageList is the list of all custom translations of a module
+type moduleCustomMessageList struct {
+	Messages []customMessage `json:"messages"`
+}
+
+// A LangCustomMaps holds custom translations for all modules for a given language
+type LangCustomMaps map[string]moduleCustomMessageList
+
+// A customTranslationsMaps holds all custom translations for all modules and all languages
+type customTranslationsMaps map[string]LangCustomMaps
+
+// langModuleTranslationsMap is the memory cache for custom translations
+var langModuleTranslationsMap customTranslationsMaps
+
+// loadCustomTranslationsMap populates a customTranslationsMaps for this application.
+func loadCustomTranslationsMap() customTranslationsMaps {
+	out := make(customTranslationsMaps)
+	allTrans := i18n.GetAllCustomTranslations()
+	for lang, entry := range allTrans {
+		if out[lang] == nil {
+			out[lang] = make(LangCustomMaps)
+		}
+		for module, trans := range entry {
+			for k, v := range trans {
+				msg := customMessage{
+					ID:     k,
+					String: v,
+				}
+				list := out[lang][module]
+				list.Messages = append(list.Messages, msg)
+				out[lang][module] = list
+			}
+		}
+	}
+	return out
+}
+
+// ListModuleTranslations returns a map containing all custom translations of a module for the given language
+func ListModuleTranslations(lang string) LangCustomMaps {
+	if langModuleTranslationsMap == nil {
+		langModuleTranslationsMap = loadCustomTranslationsMap()
+	}
+	return langModuleTranslationsMap[lang]
+}
+
+func addToTranslationMap(messages translations.MessageMap, lang, moduleName, value, refFile string, refLine int) translations.MessageMap {
 	translated := i18n.TranslateCustom(lang, value, moduleName)
 	if translated == value {
 		translated = ""
 	}
 	msgRef := translations.MessageRef{MsgId: value}
 	msg := translations.GetOrCreateMessage(messages, msgRef, translated)
-	msg.ExtractedComment += extractedCmt
+	msg.ExtractedComment = fmt.Sprintf("custom: %s", moduleName)
+	if refFile != "" {
+		msg.ReferenceFile = append(msg.ReferenceFile, refFile)
+		msg.ReferenceLine = append(msg.ReferenceLine, refLine)
+	}
 	messages[msgRef] = msg
 	return messages
 }
 
-func updateFuncJS(messages translations.MessageMap, lang, path, moduleName string) translations.MessageMap {
-	content, err := ioutil.ReadFile(path)
+func updateFuncJS(messages translations.MessageMap, lang, filePath, moduleName string) translations.MessageMap {
+	content, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return messages
 	}
@@ -42,7 +97,7 @@ func updateFuncJS(messages translations.MessageMap, lang, path, moduleName strin
 		case rxT.MatchString(line):
 			matches := rxT.FindAllStringSubmatch(line, -1)
 			for _, match := range matches {
-				addToTranslationMap(messages, lang, moduleName, match[1], fmt.Sprintf("js:%s,%d\n", filepath.Base(path), i))
+				addToTranslationMap(messages, lang, moduleName, match[1], filepath.Base(filePath), i)
 			}
 		case rxTVar.MatchString(line):
 			matches := rxTVar.FindStringSubmatch(line)
@@ -73,24 +128,24 @@ func walk(nodes []Node, f func(Node, string) (bool, string), str string) {
 	}
 }
 
-func updateFuncXML(messages translations.MessageMap, lang, xmlPath, moduleName string) translations.MessageMap {
-	data, err := ioutil.ReadFile(xmlPath)
+func updateFuncXML(messages translations.MessageMap, lang, filePath, moduleName string) translations.MessageMap {
+	data, err := ioutil.ReadFile(filePath)
 	buf := bytes.NewBuffer(data)
 	dec := xml.NewDecoder(buf)
 	var n Node
 	err = dec.Decode(&n)
 	if err != nil {
-		panic(fmt.Errorf("unable to read file %s: %s", xmlPath, err))
+		panic(fmt.Errorf("unable to read file %s: %s", filePath, err))
 	}
 	walk([]Node{n}, func(n Node, xmlPath string) (bool, string) {
 		content := strings.TrimSpace(string(n.Content))
 		for _, attr := range n.Attrs {
 			if strutils.IsInStringSlice(attr.Name.Local, []string{`title`, `alt`, `label`, `placeholder`}) && len(attr.Value) > 0 {
-				addToTranslationMap(messages, lang, moduleName, attr.Value, fmt.Sprintf("xml:%s\n", path.Join(xmlPath, n.XMLName.Local)))
+				addToTranslationMap(messages, lang, moduleName, attr.Value, filepath.Base(filePath), 0)
 			}
 		}
 		if len(content) > 0 && !strings.HasPrefix(content, "<") {
-			addToTranslationMap(messages, lang, moduleName, content, fmt.Sprintf("xml:%s\n", path.Join(xmlPath, n.XMLName.Local)))
+			addToTranslationMap(messages, lang, moduleName, content, filepath.Base(filePath), 0)
 		}
 		return true, path.Join(xmlPath, n.XMLName.Local)
 	}, ".")

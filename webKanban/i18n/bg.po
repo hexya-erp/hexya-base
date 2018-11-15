@@ -12,83 +12,98 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
-#. xml:./template/t/div/div/button
-#. xml:./template/t/div/button
-msgid "Add"
-msgstr "Добавете"
-
-#. xml:./template/t/div/div/span
-msgid "Add new Column"
-msgstr "Добавете нова колона"
-
-#. js:kanban_relational.js,52
-msgid "Add: "
-msgstr "Добавете: "
-
-#. xml:./template/t/div/div/span/ul/t/li/a
-msgid "Archive Records"
-msgstr "Архивни записи"
-
-#. js:kanban_column.js,222
-msgid "Are you sure that you want to remove this column ?"
-msgstr "Сигурни ли сте, че желаете да премахнете тази колона?"
-
-#. js:kanban_view.js,549
-msgid "Are you sure you want to delete this record ?"
-msgstr "Сигурни ли сте, че искате да изтриете този запис?"
-
-#. js:kanban_column.js,216
-msgid "Cancel"
-msgstr "Откажете"
-
-#. js:kanban_view.js,724
-msgid "Create"
-msgstr "Създайте"
-
-#. js:kanban_relational.js,26
+#. custom: webKanban
+#: kanban_relational.js:26
 msgid "Create: "
 msgstr "Създаване: "
 
-#. xml:./template/t/div/div/span/ul/t/li/a
-msgid "Delete"
-msgstr "Изтрийте"
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Add new Column"
+msgstr "Добавете нова колона"
 
-#. xml:./template/t/div/div/button
-#. xml:./template/t/div/button
-msgid "Discard"
+#. custom: webKanban
+#: kanban_relational.js:52
+msgid "Add: "
+msgstr "Добавете: "
+
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Archive Records"
+msgstr "Архивни записи"
+
+#. custom: webKanban
+#: kanban_column.js:216
+msgid "Cancel"
 msgstr "Откажете"
 
-#. js:kanban_column.js,232
-msgid "Edit Column"
-msgstr "Редактирайте колона"
+#. custom: webKanban
+#: kanban_column.js:222
+msgid "Are you sure that you want to remove this column ?"
+msgstr "Сигурни ли сте, че желаете да премахнете тази колона?"
 
-#. xml:./template/t/div/div/span/ul/t/li/a
-msgid "Edit Stage"
-msgstr "Редактирайте етап"
+#. custom: webKanban
+#: kanban_view.js:549
+msgid "Are you sure you want to delete this record ?"
+msgstr "Сигурни ли сте, че искате да изтриете този запис?"
 
-#. xml:./template/t/div/div/span/ul/li/a
-msgid "Fold"
-msgstr "Сгънете"
-
-#. xml:./template/t/a
-msgid "Load more... (<t t-esc=\"widget.remaining\"/> remaining)"
-msgstr ""
-
-#. js:kanban_column.js,211
-msgid "Ok"
-msgstr "Ok"
-
-#. js:kanban_relational.js,66
+#. custom: webKanban
+#: kanban_relational.js:66
 msgid "Open: "
 msgstr "Отвори: "
 
-#. xml:./template/t/div/div/span/ul/t/li/a
+#. custom: webKanban
+#: kanban_view.js:724
+msgid "Create"
+msgstr "Създайте"
+
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Delete"
+msgstr "Изтрийте"
+
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Edit Stage"
+msgstr "Редактирайте етап"
+
+#. custom: webKanban
+#: web_kanban.xml:0
 msgid "Unarchive Records"
 msgstr ""
 
-#. js:kanban_view.js,239
-#. js:kanban_view.js,254
-#. js:kanban_view.js,261
+#. custom: webKanban
+#: web_kanban.xml:0 web_kanban.xml:0
+msgid "Add"
+msgstr "Добавете"
+
+#. custom: webKanban
+#: web_kanban.xml:0 web_kanban.xml:0
+msgid "Discard"
+msgstr "Откажете"
+
+#. custom: webKanban
+#: kanban_column.js:211
+msgid "Ok"
+msgstr ""
+
+#. custom: webKanban
+#: kanban_column.js:232
+msgid "Edit Column"
+msgstr "Редактирайте колона"
+
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Fold"
+msgstr "Сгънете"
+
+#. custom: webKanban
+#: web_kanban.xml:0
+msgid "Load more... (<t t-esc=\"widget.remaining\"/> remaining)"
+msgstr ""
+
+#. custom: webKanban
+#: kanban_view.js:239 kanban_view.js:254 kanban_view.js:261
 msgid "Undefined"
 msgstr "Неопределен"
 

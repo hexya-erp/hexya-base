@@ -12,454 +12,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
-#. js:form_common.js,874
-msgid " & Close"
-msgstr "& Chiudi"
-
-#. js:search_inputs.js,553
-#. js:search_view.js,205
-msgid " or "
-msgstr "o"
-
-#. js:view_manager.js,223
-msgid " view couldn't be loaded"
-msgstr "la vista non può esser caricata"
-
-#. xml:./templates/t/t
-msgid "$(this).addClass('o_error');"
-msgstr ""
-
-#. js:debug_manager.js,134
-msgid "%d requests (%d ms) %d queries (%d ms)"
-msgstr "%d richieste (%d ms) %d interrogazioni (%d ms)"
-
-#. js:formats.js,187
-msgid "'%s' is not a correct date"
-msgstr "'%s' non è una data corretta"
-
-#. js:time.js,192
-msgid "'%s' is not a correct date, datetime nor time"
-msgstr "\"%s\" non è una data corretta, datetime e neppure orario"
-
-#. js:formats.js,173
-msgid "'%s' is not a correct datetime"
-msgstr "'%s' non è una data-ora corretta"
-
-#. js:formats.js,144
-msgid "'%s' is not a correct float"
-msgstr "'%s' non è un float corretto"
-
-#. js:formats.js,132
-msgid "'%s' is not a correct integer"
-msgstr "'%s' non è un intero corretto"
-
-#. js:formats.js,192
-msgid "'%s' is not a correct time"
-msgstr "'%s' non è un orario corretto"
-
-#. js:time.js,204
-msgid "'%s' is not convertible to date, datetime nor time"
-msgstr "\"%s\" non è convertibile ad una data, datetime o orario"
-
-#. js:formats.js,75
-msgid "(%d records)"
-msgstr "(%d records)"
-
-#. xml:./templates/t/t/div/t/t
-msgid "(no string)"
-msgstr "(no string)"
-
-#. xml:./templates/t/div/t
-msgid "(nolabel)"
-msgstr "(senza etichetta)"
-
-#. xml:./templates/t/ul/li/ul/li/t
-msgid "-"
-msgstr ""
-
-#. xml:./templates/div/t/div/span/span
-msgid "...Upload in progress..."
-msgstr "...Caricamento in corso..."
-
-#. xml:./templates/t/t/div/ul/li/t/t
-#. xml:./templates/div/div/t/t
-msgid "/web/binary/upload_attachment"
-msgstr ""
-
-#. xml:./templates/t/div/t
-msgid "99+"
-msgstr ""
-
-#. xml:./templates/t/t/div/t/t
-msgid ":"
-msgstr ""
-
-#. xml:./templates/t/label/span
-#. xml:./templates/t/label/span
-#. xml:./templates/t/label/span
-msgid "?"
-msgstr ""
-
 #. field:Filter.Action
 msgid "Action"
 msgstr "Azione"
-
-#. js:form_relational_widgets.js,1122
-msgid "Action Button"
-msgstr "Pulsante Esegui"
-
-#. xml:./templates/t/t/li/span
-msgid "Action ID:"
-msgstr "Action ID:"
-
-#. js:form_widgets.js,637
-msgid "Activate"
-msgstr "Attiva"
-
-#. xml:./templates/t/li/a
-msgid "Activate Assets Debugging"
-msgstr "Attiva il Debug delle Risorse"
-
-#. field:Filter.Active
-#. js:form_widgets.js,634
-#. js:form_widgets.js,640
-msgid "Active"
-msgstr "Attivo"
-
-#. js:form_relational_widgets.js,1378
-#. xml:./templates/div/div/div/button
-msgid "Add"
-msgstr "Aggiungi"
-
-#. xml:./templates/div/ul/li/a
-msgid "Add Custom Filter"
-msgstr "Crea filtro personalizzato"
-
-#. js:form_relational_widgets.js,1018
-msgid "Add an item"
-msgstr "Aggiungi una riga"
-
-#. xml:./templates/div/ul/li/a
-msgid "Add custom group"
-msgstr "Crea raggruppamento personalizzato"
-
-#. xml:./templates/t/t/div/ul/li/t/span
-msgid "Add..."
-msgstr "Aggiungi..."
-
-#. js:form_relational_widgets.js,1305
-msgid "Add: "
-msgstr "Aggiungi: "
-
-#. js:dialog.js,168
-msgid "Alert"
-msgstr "Avviso"
-
-#. xml:./templates/form/table/tr/td/label
-msgid "All users"
-msgstr "Tutti gli utenti"
-
-#. xml:./templates/div/ul/li/button
-#. xml:./templates/t/li/button
-msgid "Apply"
-msgstr "Salva"
-
-#. js:form_widgets.js,641
-#. js:list_view.js,288
-msgid "Archive"
-msgstr "Archivio"
-
-#. js:form_widgets.js,642
-msgid "Archived"
-msgstr "Archiviato"
-
-#. js:search_menus.js,252
-msgid "Are you sure that you want to remove this filter?"
-msgstr "Sei sicuro di voler rimuovere questo filtro?"
-
-#. xml:./templates/t/t/div/ul/li/t/t/b
-msgid "Attachment :"
-msgstr "Allegato:"
-
-#. xml:./templates/div/div/div/h4
-msgid "Available fields"
-msgstr "Campi disponibili"
-
-#. xml:./templates/t/t/div/t
-msgid ""
-"Button\n"
-"                <t t-if=\"widget.string\">: </t>\n"
-"                <t t-if=\"!widget.string\"> (no string)</t>"
-msgstr ""
-
-#. xml:./templates/t/t/li/span
-msgid "Button Type:"
-msgstr "Tipo Pulsante:"
-
-#. js:utils.js,284
-msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
-msgstr "Bytes, Kb, Mb, Gb, Tb, Pb, Eb, Zb, Yb"
-
-#. js:list_common.js,133
-msgid "Can't convert value %s to context"
-msgstr "Non è possibile convertire il valore %s a context"
-
-#. js:crash_manager.js,170
-#. js:dialog.js,182
-#. js:form_common.js,1046
-#. js:form_upgrade_widgets.js,40
-#. xml:./templates/form/div/button
-msgid "Cancel"
-msgstr "Annulla"
-
-#. js:change_password.js,14
-#. xml:./templates/form/div/button
-msgid "Change Password"
-msgstr "Cambia Password"
-
-#. xml:./templates/t/ul/li/span
-msgid "Change default:"
-msgstr "Cambia default:"
-
-#. xml:./templates/t/t/li/a
-msgid "Clear Events"
-msgstr "Cancella Eventi"
-
-#. js:abstract_web_client.js,124
-#. js:crash_manager.js,123
-msgid "Client Error"
-msgstr "Errore Client"
-
-#. js:form_common.js,868
-#. js:form_view.js,1127
-#. js:data_export.js,202
-msgid "Close"
-msgstr "Chiudi"
-
-#. xml:./templates/form/table/tr/td/label
-msgid "Condition:"
-msgstr "Condizione:"
-
-#. xml:./templates/form/div/table/tr/td/label
-msgid "Confirm New Password"
-msgstr "Conferma Nuova Password"
-
-#. js:dialog.js,193
-msgid "Confirmation"
-msgstr "Conferma"
 
 #. field:Filter.Context
 msgid "Context"
 msgstr ""
 
-#. xml:./templates/t/ul/li/span
-msgid "Context:"
-msgstr "Context:"
-
-#. js:form_widgets.js,1251
-msgid "Could not display the selected image."
-msgstr "Impossibile visualizzare l'immagine selezionata."
-
-#. js:list_view.js,1024
-msgid "Could not find id in dataset"
-msgstr "Non è possibile trovare l'id nel set di dati"
-
-#. js:utils.js,179
-msgid "Could not serialize XML"
-msgstr "Non è possibile serializzare l'XML"
-
-#. js:graph_view.js,86
-#. js:graph_widget.js,21
-#. js:pivot_view.js,182
-#. xml:./templates/t/div/ul/li/a
-#. xml:./templates/t/div/ul/li/a
-msgid "Count"
-msgstr "Conteggio"
-
-#. js:form_common.js,1049
-#. xml:./templates/t/div/button
-msgid "Create"
-msgstr "Crea"
-
-#. js:form_relational_widgets.js,25
-msgid "Create a %s"
-msgstr "Crea un %s"
-
-#. js:form_common.js,236
-msgid "Create and Edit..."
-msgstr "Crea e Modifica..."
-
-#. js:form_common.js,281
-#. js:form_relational_widgets.js,1080
-msgid "Create: "
-msgstr "Crea: "
-
-#. xml:./templates/t/t/div/ul/li/t/t/b
-msgid "Created by :"
-msgstr "Creato da:"
-
-#. xml:./templates/t/table/tr/th
-msgid "Creation Date:"
-msgstr "Data Creazione:"
-
-#. xml:./templates/t/table/tr/th
-msgid "Creation User:"
-msgstr "Creazione Utente:"
-
-#. js:form_common.js,1096
-#. js:search_menus.js,177
-msgid "Custom Filter"
-msgstr "Filtro Personalizzato"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
-msgid "Day"
-msgstr "Giorno"
-
-#. js:form_widgets.js,635
-msgid "Deactivate"
-msgstr "Disattiva"
+#. field:Company.DashboardBackground
+msgid "Dashboard Background"
+msgstr ""
 
 #. field:Filter.IsDefault
 msgid "Default filter"
 msgstr ""
 
-#. xml:./templates/form/table/tr/td/label
-msgid "Default:"
-msgstr "Default:"
-
-#. xml:./templates/t/button
-msgid "Delete"
-msgstr "Elimina"
-
-#. xml:./templates/t/li/a/t
-msgid "Disable Technical Features"
-msgstr "Disabilita Funzionalità Tecniche"
-
-#. js:form_common.js,868
-#. xml:./templates/t/t/div/button
-#. xml:./templates/t/div/button
-msgid "Discard"
-msgstr "Annulla"
-
-#. js:sidebar.js,217
-msgid "Do you really want to delete this attachment ?"
-msgstr "Volete veramente cancellare questo allegato?"
-
-#. js:form_view.js,733
-msgid "Do you really want to delete this record?"
-msgstr "Vuoi veramente eliminare questo record?"
-
-#. js:list_view.js,543
-msgid "Do you really want to remove these records?"
-msgstr "Vuoi veramente cancellare questi record?"
-
 #. field:Filter.Domain
 msgid "Domain"
 msgstr ""
-
-#. xml:./templates/t/ul/li/span
-msgid "Domain:"
-msgstr "Domain:"
-
-#. js:misc.js,15
-msgid "Don't leave yet,<br />it's still loading..."
-msgstr "Non abbandonare ora, <br />caricamento in corso..."
-
-#. js:list_view.js,1847
-msgid "Download"
-msgstr "Download"
-
-#. js:list_view.js,1863
-msgid "Download \\\"%s\\\""
-msgstr ""
-
-#. xml:./templates/t/div/button
-msgid "Edit"
-msgstr "Modifica"
-
-#. xml:./templates/t/li/a/t
-msgid "Enable Technical Features"
-msgstr "Abilita Funzionalità Tecniche"
-
-#. js:view_manager.js,223
-#. js:search_menus.js,84
-#. js:search_menus.js,91
-msgid "Error"
-msgstr "Errore"
-
-#. js:pyeval.js,1023
-msgid "Evaluation Error"
-msgstr "Errore valutazione"
-
-#. js:list_view.js,287
-msgid "Export"
-msgstr "Esportazione"
-
-#. js:data_export.js,199
-msgid "Export Data"
-msgstr "Esporta Dati"
-
-#. xml:./templates/div/div/div/label
-msgid "Export Formats :"
-msgstr "Formati Esportazione :"
-
-#. js:data_export.js,201
-msgid "Export To File"
-msgstr "Esporta in un file"
-
-#. xml:./templates/div/div/div/label
-msgid "Export Type :"
-msgstr "Tipo Esportazione :"
-
-#. xml:./templates/div/div/div/div/div/label
-msgid "Export all Data"
-msgstr "Esporta tutti i dati"
-
-#. js:view_manager.js,437
-msgid "Failed to evaluate search criterions"
-msgstr "Impossibile valutare i criteri di ricerca"
-
-#. js:form_view.js,1300
-msgid "Field '%s' specified in view could not be found."
-msgstr "Il campo '%s' specificato nella vista non può essere trovato."
-
-#. xml:./templates/t/ul/li/span
-msgid "Field:"
-msgstr "Campo:"
-
-#. js:debug_manager.js,339
-#. xml:./templates/t/t/li/a
-msgid "Fields View Get"
-msgstr "Fields View Get"
-
-#. js:debug_manager.js,241
-msgid "Fields of %s"
-msgstr "Campi di %s"
-
-#. js:form_widgets.js,1114
-msgid "File Upload"
-msgstr "Caricamento file"
-
-#. js:form_widgets.js,1094
-msgid "File upload"
-msgstr "Caricamento file"
-
-#. js:search_inputs.js,551
-msgid "Filter"
-msgstr "Filtro"
 
 #. field:Filter.Name
 #. resource:base_ir_filters_view_search
 msgid "Filter Name"
 msgstr ""
-
-#. js:search_menus.js,84
-msgid "Filter name is required."
-msgstr "Il nome del filtro è richiesto."
-
-#. js:search_menus.js,91
-msgid "Filter with same name already exists."
-msgstr "Esiste già un filtro con lo stesso nome."
 
 #. resource:base_actions_ir_filters_view
 msgid "Filters"
@@ -469,537 +45,341 @@ msgstr "Filtri"
 msgid "Filters created by myself"
 msgstr ""
 
+#. custom: web
+#: base.xml:0
+msgid "$(this).addClass('o_error');"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "...Upload in progress..."
+msgstr "...Caricamento in corso..."
+
+#. custom: web
+#: base.xml:0
+msgid "99+"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Activate Assets Debugging"
+msgstr "Attiva il Debug delle Risorse"
+
+#. custom: web
+#: base.xml:0
+msgid "Add Custom Filter"
+msgstr "Crea filtro personalizzato"
+
+#. custom: web
+#: base.xml:0
+msgid "Add custom group"
+msgstr "Crea raggruppamento personalizzato"
+
+#. custom: web
+#: base.xml:0
+msgid "Add..."
+msgstr "Aggiungi..."
+
+#. custom: web
+#: base.xml:0
+msgid "All users"
+msgstr "Tutti gli utenti"
+
+#. custom: web
+#: base.xml:0
+msgid "Attachment :"
+msgstr "Allegato:"
+
+#. custom: web
+#: base.xml:0
+msgid "Available fields"
+msgstr "Campi disponibili"
+
+#. custom: web
+#: base.xml:0
+msgid "Clear Events"
+msgstr "Cancella Eventi"
+
+#. custom: web
+#: base.xml:0
+msgid "Condition:"
+msgstr "Condizione:"
+
+#. custom: web
+#: base.xml:0
+msgid "Confirm New Password"
+msgstr "Conferma Nuova Password"
+
+#. custom: web
+#: base.xml:0
+msgid "Created by :"
+msgstr "Creato da:"
+
+#. custom: web
+#: base.xml:0
+msgid "Creation Date:"
+msgstr "Data Creazione:"
+
+#. custom: web
+#: base.xml:0
+msgid "Creation User:"
+msgstr "Creazione Utente:"
+
+#. custom: web
+#: base.xml:0
+msgid "Day"
+msgstr "Giorno"
+
+#. custom: web
+#: base.xml:0
+msgid "Default:"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Delete"
+msgstr "Elimina"
+
+#. custom: web
+#: base.xml:0
+msgid "Disable Technical Features"
+msgstr "Disabilita Funzionalità Tecniche"
+
+#. custom: web
+#: base.xml:0
+msgid "Edit"
+msgstr "Modifica"
+
+#. custom: web
+#: base.xml:0
+msgid "Enable Technical Features"
+msgstr "Abilita Funzionalità Tecniche"
+
+#. custom: web
+#: base.xml:0
+msgid "Export Formats :"
+msgstr "Formati Esportazione :"
+
+#. custom: web
+#: base.xml:0
+msgid "Export Type :"
+msgstr "Tipo Esportazione :"
+
 #. resource:base_ir_filters_view_search
 msgid "Filters shared with all users"
 msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Export all Data"
+msgstr "Esporta tutti i dati"
 
 #. resource:base_ir_filters_view_search
 msgid "Filters visible only for one user"
 msgstr ""
 
-#. js:pivot_view.js,831
-msgid "For Excel compatibility, data cannot be exported if there are more than 256 columns.\\n\\nTip: try to flip axis, filter further or reduce the number of measures."
-msgstr ""
-
-#. js:form_view.js,301
-msgid "Form"
-msgstr "Modulo"
-
-#. resource:base_ir_filters_view_search
-#. js:search_inputs.js,698
-msgid "Group By"
-msgstr "Raggruppa per"
-
-#. js:form_upgrade_widgets.js,51
-msgid "Hexya Enterprise"
-msgstr ""
-
-#. js:priority.js,49
-msgid "High"
-msgstr "Alta"
-
-#. field:Filter.ID
 #. field:CommonMixin.ID
+#. field:Company.ID
+#. field:Filter.ID
+#. field:User.ID
 msgid "ID"
 msgstr "ID"
 
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base.xml:0
 msgid "ID:"
-msgstr "ID:"
+msgstr ""
 
-#. js:form_widgets.js,1251
-msgid "Image"
-msgstr "Immagine"
-
-#. xml:./templates/div/div/div/div/div/label
+#. custom: web
+#: base.xml:0
 msgid "Import-Compatible Export"
 msgstr "Esportazione compatile alla successiva importazione"
 
-#. js:form_widgets.js,636
-msgid "Inactive"
-msgstr "Inattivo"
-
-#. js:graph_widget.js,208
-#. js:graph_widget.js,216
-msgid "Invalid data"
-msgstr "Dati non validi"
-
-#. js:debug_manager.js,183
-msgid "JS Tests"
-msgstr "Test JS"
-
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base.xml:0
 msgid "Latest Modification Date:"
 msgstr "Data Ultima Modifica:"
 
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base.xml:0
 msgid "Latest Modification by:"
 msgstr "Ultima Modifica fatta da:"
 
-#. xml:./templates/t/li/a
+#. custom: web
+#: base.xml:0
 msgid "Leave the Developer Tools"
 msgstr "Lascia gli Strumenti per Sviluppatori"
 
-#. js:loading.js,46
-msgid "Loading"
-msgstr "Caricamento"
-
-#. js:loading.js,44
-msgid "Loading (%d)"
-msgstr "Caricamento (%d)"
-
-#. js:misc.js,12
-msgid "Loading..."
-msgstr "Caricamento..."
-
-#. js:pyeval.js,1027
-msgid "Local evaluation failure\\n%s\\n\\n%s"
+#. custom: web
+#: base.xml:0
+msgid "Log out"
 msgstr ""
 
-#. xml:./templates/t/li/ul/li/a
-msgid "Log out"
-msgstr "Log out"
-
-#. js:priority.js,48
-msgid "Low"
-msgstr "Bassa"
-
-#. js:search_inputs.js,451
-msgid "M2O search fields do not currently handle multiple default values"
-msgstr "I campi di ricerca M2O non supportano attualmente valori predefiniti multipli"
-
-#. xml:./templates/t/t/t/li/a
+#. custom: web
+#: base.xml:0
 msgid "Manage Filters"
 msgstr "Gestisci Filtri"
-
-#. js:misc.js,18
-msgid "Maybe you should consider reloading the application by pressing F5..."
-msgstr "Probabilmente dovreste effettuare un reload dell'applicazione premendo il tasto F5..."
-
-#. xml:./templates/t/div/button
-#. xml:./templates/t/div/button
-msgid "Measures <span class=\"caret\"/>"
-msgstr ""
-
-#. js:debug_manager.js,326
-msgid "Metadata (%s)"
-msgstr "Metadata (%s)"
-
-#. xml:./templates/t/t/li/span
-msgid "Method:"
-msgstr "Metodo:"
 
 #. field:Filter.ResModel
 #. resource:base_ir_filters_view_search
 msgid "Model"
 msgstr ""
 
-#. xml:./templates/t/t/div/ul/li/t/t/b
+#. custom: web
+#: base.xml:0
 msgid "Modified by :"
 msgstr "Modificato da:"
 
-#. xml:./templates/t/ul/li/span
-msgid "Modifiers:"
-msgstr "Modificatori:"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Month"
 msgstr "Mese"
 
-#. xml:./templates/t/t/li/span
+#. custom: web
+#: base.xml:0
 msgid "More"
 msgstr "Altro"
 
-#. xml:./templates/div/div/div/button
+#. custom: web
+#: base_common.xml:0
+msgid "Button Type:"
+msgstr "Tipo Pulsante:"
+
+#. custom: web
+#: form_relational_widgets.js:25
+msgid "Create a %s"
+msgstr "Crea un %s"
+
+#. custom: web
+#: base.xml:0
 msgid "Move Down"
 msgstr "Muovi Giù"
-
-#. xml:./templates/div/div/div/button
-msgid "Move Up"
-msgstr "Muovi Su"
 
 #. resource:base_ir_filters_view_search
 msgid "My filters"
 msgstr ""
 
-#. js:form_view.js,315
-msgid "New"
-msgstr "Nuovo"
+#. custom: web
+#: base.xml:0
+msgid "Move Up"
+msgstr "Muovi Su"
 
-#. xml:./templates/form/div/table/tr/td/label
+#. custom: web
+#: base_common.xml:0
+msgid "Domain:"
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid "Field:"
+msgstr "Campo:"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Method:"
+msgstr "Metodo:"
+
+#. custom: web
+#: base.xml:0
 msgid "New Password"
 msgstr "Nuova Password"
 
-#. js:search_inputs.js,331
-msgid "No"
-msgstr "N°"
-
-#. xml:./templates/t/table/tr/th
+#. custom: web
+#: base.xml:0
 msgid "No Update:"
 msgstr "Non aggiornare:"
 
-#. xml:./templates/div/p
+#. custom: web
+#: data_export.js:199
+msgid "Export Data"
+msgstr "Esporta Dati"
+
+#. custom: web
+#: debug_manager.js:241
+msgid "Fields of %s"
+msgstr "Campi di %s"
+
+#. custom: web
+#: base.xml:0
 msgid ""
 "No data available for this pivot table.  Try to add some records, or make sure\n"
 "        that there is at least one measure and no active filter in the search bar."
 msgstr ""
 
-#. js:graph_widget.js,94
-msgid "No data to display"
-msgstr "Nessun dato da visualizzare"
+#. custom: web
+#: base_common.xml:0
+msgid ":"
+msgstr ""
 
-#. xml:./templates/div/p/strong
+#. custom: web
+#: base.xml:0
 msgid "No data to display."
 msgstr "Nessun dato da visualizzare."
 
-#. js:debug_manager.js,321
-msgid "No metadata available"
-msgstr "Nessun metadata disponibile"
-
-#. js:form_common.js,245
-msgid "No results to show..."
-msgstr "Nessun risultato da mostrare..."
-
-#. js:form_relational_widgets.js,327
-msgid "No value found for the field %s for value %s"
-msgstr "Nessun valore trovato per il campo %s per il valore %s"
-
-#. js:utils.js,143
-msgid "Node [%s] is not a JSONified XML node"
+#. custom: web
+#: base_common.xml:0
+msgid "(no string)"
 msgstr ""
 
-#. js:priority.js,47
-msgid "Normal"
-msgstr "Normale"
+#. custom: web
+#: base_common.xml:0
+msgid "(nolabel)"
+msgstr "(senza etichetta)"
 
-#. js:graph_widget.js,252
-msgid "Not enough data points"
-msgstr "Dati non sufficienti"
-
-#. xml:./templates/t/ul/li
-msgid "Not shown in kanban"
-msgstr "Non visibile nel kanban"
-
-#. xml:./templates/t/ul/li/span
-msgid "Object:"
-msgstr "Oggetto:"
-
-#. js:dialog.js,40
-#. js:dialog.js,158
-#. js:dialog.js,176
-#. xml:./templates/t/button
-msgid "Ok"
-msgstr "Ok"
-
-#. xml:./templates/form/div/table/tr/td/label
-msgid "Old Password"
-msgstr "Vecchia Password"
-
-#. xml:./templates/t/ul/li/span
-msgid "On change:"
-msgstr "On change:"
-
-#. js:progress_bar.js,78
-msgid "Only Integer Value should be valid."
-msgstr "Sono validi solo numeri interi."
-
-#. xml:./templates/form/table/tr/td/label
-msgid "Only you"
-msgstr "Solo tu"
-
-#. js:form_relational_widgets.js,153
-#. js:form_relational_widgets.js,921
-#. js:form_relational_widgets.js,1104
-#. js:form_relational_widgets.js,1321
-msgid "Open: "
-msgstr "Apri: "
-
-#. js:data_export.js,167
-msgid "Please enter save field list name"
-msgstr "Inserire il nome per la lista salvata"
-
-#. xml:./templates/p/strong
-msgid "Please note that only the selected ids will be exported."
-msgstr "Ricorda che solo gli id selezionati saranno esportati."
-
-#. xml:./templates/p/strong
-msgid "Please pay attention that all records matching your search filter will be exported. Not only the selected ids."
-msgstr "Fai attenzione al fatto che tutti i campi che corrispondono al criterio di ricerca inserito saranno esportati. Non solo gli id selezionati."
-
-#. js:data_export.js,435
-msgid "Please select fields to export..."
-msgstr "Selezionare i campi da esportare..."
-
-#. js:data_export.js,421
-msgid "Please select fields to save export list..."
-msgstr "Selezionare l'elenco dei campi da esportare..."
-
-#. xml:./templates/t/li/ul/li/a
-msgid "Preferences"
-msgstr "Preferenze"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
-msgid "Quarter"
-msgstr "Trimestre"
-
-#. xml:./templates/t/ul/li/span
-msgid "Relation:"
-msgstr "Relazione:"
-
-#. xml:./templates/div/div/div/button
-msgid "Remove"
-msgstr "Rimuovi"
-
-#. xml:./templates/div/div/div/button
+#. custom: web
+#: base.xml:0
 msgid "Remove All"
 msgstr "Rimuovi tutto"
 
-#. js:form_relational_widgets.js,326
-msgid "Render"
-msgstr "Raffigura"
-
-#. xml:./templates/t/li/a
-msgid "Run JS Tests"
-msgstr "Esegui Test JS"
-
-#. js:form_common.js,874
-#. xml:./templates/t/t/div/button
-#. xml:./templates/t/div/button
-#. xml:./templates/div/ul/li/button
-msgid "Save"
-msgstr "Salva"
-
-#. js:form_common.js,889
-msgid "Save & New"
-msgstr "Salva & Nuovo"
-
-#. js:form_widgets.js,1131
-msgid "Save As..."
-msgstr "Salva come..."
-
-#. xml:./templates/t/label
-msgid "Save as:"
-msgstr "Salva come:"
-
-#. xml:./templates/div/ul/li/a
-msgid "Save current search"
-msgstr "Salva la ricerca corrente"
-
-#. js:form_view.js,1128
-msgid "Save default"
-msgstr "Salva Default"
-
-#. xml:./templates/div/div/div/h4/a
-msgid "Save fields list"
-msgstr "Salva l'elenco dei campi"
-
-#. xml:./templates/t/label
-msgid "Saved exports:"
-msgstr "Esportazioni salvate:"
-
-#. js:search_inputs.js,360
-msgid "Search %(field)s at: %(value)s"
-msgstr "Ricerca %(field)s al: %(value)s"
-
-#. js:search_inputs.js,192
-#. js:search_inputs.js,211
-#. js:search_inputs.js,402
-msgid "Search %(field)s for: %(value)s"
-msgstr "Cerca %(field)s per: %(value)s"
-
-#. js:form_common.js,211
-msgid "Search More..."
-msgstr "Cerca ancora..."
-
-#. js:form_common.js,281
-msgid "Search: "
-msgstr "Cerca: "
-
-#. js:form_common.js,1054
-msgid "Select"
-msgstr "Seleziona"
-
-#. js:form_common.js,1103
-msgid "Selected domain"
-msgstr "Dominio selezionato"
-
-#. xml:./templates/t/ul/li/span
-msgid "Selection:"
-msgstr "Selezione:"
-
-#. js:form_view.js,1125
-msgid "Set Default"
-msgstr "Imposta Default"
-
-#. xml:./templates/t/t/t/li/a
-msgid "Set Defaults"
-msgstr "Imposta predefiniti"
-
-#. js:list_view.js,931
-msgid "Setting 'id' attribute on existing record %s"
-msgstr "Imposta l'attributo 'id' su record esistente %s"
-
-#. resource:base_ir_filters_view_search
-msgid "Shared"
+#. custom: web
+#: base_common.xml:0
+msgid "-"
 msgstr ""
 
-#. xml:./templates/t/ul/li/span
-msgid "Size:"
-msgstr "Dimensione:"
-
-#. field:Filter.Sort
-msgid "Sort"
+#. custom: web
+#: base_common.xml:0
+msgid "Action ID:"
 msgstr ""
 
-#. xml:./templates/t/t/li/span
-msgid "Special:"
-msgstr "Speciale:"
+#. custom: web
+#: base_common.xml:0
+msgid "Change default:"
+msgstr "Cambia default:"
 
-#. js:misc.js,13
-msgid "Still loading..."
-msgstr "Ancora in caricamento..."
-
-#. js:misc.js,14
-msgid "Still loading...<br />Please be patient."
-msgstr "Caricamento in corso...<br />Attendere prego."
-
-#. js:misc.js,17
-msgid "Take a minute to get a coffee,<br />because it's loading..."
-msgstr "Un attimo di pazienza,<br />il sistema sta caricando..."
-
-#. xml:./templates/t/t/t/li/a
-msgid "Technical Translation"
-msgstr "Traduzione tecnica"
-
-#. js:form_widgets.js,1131
-msgid "The field is empty, there's nothing to save !"
-msgstr "Questo campo è vuoto, non c'è nulla da salvare!"
-
-#. js:form_view.js,887
-msgid "The following fields are invalid:"
-msgstr "I seguenti campi non sono validi"
-
-#. js:list_view_editable.js,122
-msgid "The line has been modified, your changes will be discarded. Are you sure you want to discard the changes ?"
-msgstr "La riga è stata modificata, le modifiche non salvate andranno perdute. Sei sicuro di voler annullare le modifiche?"
-
-#. help:Filter.Action
-msgid "The menu action this filter applies to. When left empty the filter applies to all menus for this model."
+#. custom: web
+#: debug_manager.js:326
+msgid "Metadata (%s)"
 msgstr ""
 
-#. js:form_relational_widgets.js,1123
-msgid "The o2m record must be saved before an action can be used"
-msgstr "I record o2m devono essere salvati prima che l'azione possa essere usata"
+#. custom: web
+#: base_common.xml:0
+msgid "Modifiers:"
+msgstr "Modificatori:"
 
-#. js:form_view.js,301
-msgid "The record could not be found in the database."
-msgstr "Il record non può essere trovato nel database"
+#. custom: web
+#: base_common.xml:0
+msgid "Object:"
+msgstr "Oggetto:"
 
-#. js:form_view.js,756
-msgid "The record has been modified, your changes will be discarded. Are you sure you want to leave this page ?"
-msgstr "Il record è stato modificato, le modifiche non salvate andranno perdute. Sei sicuro di voler abbandonare la pagina?"
+#. custom: web
+#: dialog.js:168
+msgid "Alert"
+msgstr "Avviso"
 
-#. js:form_widgets.js,1093
-msgid "The selected file exceed the maximum file size of %s."
-msgstr "Il file selezionato eccede la massima dimensione possibile di %s."
+#. custom: web
+#: base.xml:0
+msgid "Not shown in kanban"
+msgstr "Non visibile nel kanban"
 
-#. js:form_relational_widgets.js,1595
-msgid "The type of the field '%s' must be a many2many field with a relation to 'ir.attachment' model."
-msgstr "Il tipo del campo \"%s\" deve essere: \"molti a molti\" con una relazione al modello \"ir.attachment\"."
+#. custom: web
+#: base.xml:0
+msgid "Old Password"
+msgstr "Vecchia Password"
 
-#. help:Filter.User
-msgid "The user this filter is private to. When left empty the filter is public and available to all users."
-msgstr ""
-
-#. js:form_widgets.js,1114
-msgid "There was a problem while uploading your file"
-msgstr "C'è stato un problema durante il caricamento del vostro file"
-
-#. js:search_menus.js,251
-msgid "This filter is global and will be removed for everybody if you continue."
-msgstr "Questo filtro è globale, e sarà rimosso per tutti gli utenti, se continui."
-
-#. xml:./templates/div/p
-msgid ""
-"This wizard will export all data that matches the current search criteria to a CSV file.\n"
-"        You can export all data or only the fields that can be reimported after modification."
-msgstr ""
-
-#. js:form_widgets.js,862
-msgid "Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Hexya is displayed according to your field timezone."
-msgstr ""
-
-#. xml:./templates/t/t/li/a
-msgid "Toggle Timelines"
-msgstr ""
-
-#. js:pivot_view.js,526
-#. js:pivot_view.js,555
-msgid "Total"
-msgstr "Totale"
-
-#. xml:./templates/t/ul/li/span
-msgid "Type:"
-msgstr "Tipo:"
-
-#. js:form_widgets.js,643
-#. js:list_view.js,289
-msgid "Unarchive"
-msgstr "Non archiviato"
-
-#. js:graph_widget.js,79
-#. js:list_view.js,1379
-#. js:list_view.js,1385
-#. js:pivot_view.js,508
-msgid "Undefined"
-msgstr "Non definito"
-
-#. xml:./templates/t
-msgid ""
-"Unhandled widget\n"
-"    <t t-js=\"dict\">console.warn('Unhandled widget', dict.widget);</t>"
-msgstr ""
-
-#. js:data.js,1083
-msgid "Unknown field %s in domain %s"
-msgstr "Campo %s sconosciuto nel dominio %s"
-
-#. js:list_view.js,1086
-msgid "Unknown m2m command %s"
-msgstr "Comando m2m sconosciuto %s"
-
-#. js:pyeval.js,991
-msgid "Unknown nonliteral type "
-msgstr "Tipo non letterale sconosciuto "
-
-#. js:data.js,1075
-msgid "Unknown operator %s in domain %s"
-msgstr "Operatore %s sconosciuto nel dominio %s"
-
-#. js:data.js,1138
-msgid "Unnamed"
-msgstr "Senza nome"
-
-#. js:data.js,1121
-msgid "Unsupported operator %s in domain %s"
-msgstr "Operatore %s non supportato nel dominio %s"
-
-#. xml:./templates/t/t/div/a
-msgid "Update translations"
-msgstr "Aggiorna traduzioni"
-
-#. js:form_upgrade_widgets.js,34
-msgid "Upgrade now"
-msgstr "Aggiorna adesso"
-
-#. xml:./templates/t/div/button
-msgid "Upload your file"
-msgstr "Carica il tuo file"
-
-#. xml:./templates/t/div/t/div/span
-#. xml:./templates/t/div/span
-msgid "Uploading..."
-msgstr "Caricamento in corso..."
+#. custom: web
+#: form_common.js:874
+msgid " & Close"
+msgstr "& Chiudi"
 
 #. field:Filter.User
 #. resource:base_ir_filters_view_search
@@ -1007,136 +387,964 @@ msgstr "Caricamento in corso..."
 msgid "User"
 msgstr ""
 
+#. custom: web
+#: base.xml:0
+msgid "Only you"
+msgstr "Solo tu"
+
+#. custom: web
+#: base.xml:0
+msgid "Preferences"
+msgstr "Preferenze"
+
+#. custom: web
+#: base.xml:0
+msgid "Quarter"
+msgstr "Trimestre"
+
+#. custom: web
+#: base.xml:0
+msgid "Remove"
+msgstr "Rimuovi"
+
+#. custom: web
+#: base_common.xml:0
+msgid ""
+"Button\n"
+"                <t t-if=\"widget.string\">: </t>\n"
+"                <t t-if=\"!widget.string\"> (no string)</t>"
+msgstr ""
+
+#. custom: web
+#: dialog.js:193
+msgid "Confirmation"
+msgstr "Conferma"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Context:"
+msgstr ""
+
+#. custom: web
+#: debug_manager.js:183
+msgid "JS Tests"
+msgstr "Test JS"
+
+#. custom: web
+#: debug_manager.js:321
+msgid "No metadata available"
+msgstr "Nessun metadata disponibile"
+
+#. custom: web
+#: base_common.xml:0
+msgid "On change:"
+msgstr ""
+
+#. custom: web
+#: debug_manager.js:134
+msgid "%d requests (%d ms) %d queries (%d ms)"
+msgstr "%d richieste (%d ms) %d interrogazioni (%d ms)"
+
+#. custom: web
+#: form_common.js:236
+msgid "Create and Edit..."
+msgstr "Crea e Modifica..."
+
+#. custom: web
+#: base.xml:0
+msgid "Please note that only the selected ids will be exported."
+msgstr "Ricorda che solo gli id selezionati saranno esportati."
+
+#. custom: web
+#: form_common.js:245
+msgid "No results to show..."
+msgstr "Nessun risultato da mostrare..."
+
+#. custom: web
+#: data_export.js:167
+msgid "Please enter save field list name"
+msgstr "Inserire il nome per la lista salvata"
+
+#. custom: web
+#: base.xml:0
+msgid "Please pay attention that all records matching your search filter will be exported. Not only the selected ids."
+msgstr "Fai attenzione al fatto che tutti i campi che corrispondono al criterio di ricerca inserito saranno esportati. Non solo gli id selezionati."
+
+#. custom: web
+#: base_common.xml:0
+msgid "Relation:"
+msgstr "Relazione:"
+
+#. custom: web
+#: data_export.js:201
+msgid "Export To File"
+msgstr "Esporta in un file"
+
+#. custom: web
+#: data_export.js:435
+msgid "Please select fields to export..."
+msgstr "Selezionare i campi da esportare..."
+
+#. custom: web
+#: data_export.js:421
+msgid "Please select fields to save export list..."
+msgstr "Selezionare l'elenco dei campi da esportare..."
+
+#. custom: web
+#: form_relational_widgets.js:326
+msgid "Render"
+msgstr "Raffigura"
+
+#. custom: web
+#: form_relational_widgets.js:1122
+msgid "Action Button"
+msgstr "Pulsante Esegui"
+
+#. custom: web
+#: form_relational_widgets.js:1018
+msgid "Add an item"
+msgstr "Aggiungi una riga"
+
+#. resource:base_ir_filters_view_search
+msgid "Shared"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Technical Translation"
+msgstr "Traduzione tecnica"
+
+#. custom: web
+#: form_relational_widgets.js:1305
+msgid "Add: "
+msgstr "Aggiungi: "
+
+#. custom: web
+#: form_widgets.js:635
+msgid "Deactivate"
+msgstr "Disattiva"
+
+#. custom: web
+#: form_view.js:733
+msgid "Do you really want to delete this record?"
+msgstr "Vuoi veramente eliminare questo record?"
+
+#. custom: web
+#: form_view.js:1300
+msgid "Field '%s' specified in view could not be found."
+msgstr "Il campo '%s' specificato nella vista non può essere trovato."
+
+#. custom: web
+#: form_upgrade_widgets.js:51
+msgid "Hexya Enterprise"
+msgstr ""
+
+#. custom: web
+#: formats.js:192
+msgid "'%s' is not a correct time"
+msgstr "'%s' non è un orario corretto"
+
+#. custom: web
+#: list_view.js:1863
+msgid "Download \\\"%s\\\""
+msgstr ""
+
+#. custom: web
+#: form_view.js:301
+msgid "Form"
+msgstr "Modulo"
+
+#. custom: web
+#: form_widgets.js:636
+msgid "Inactive"
+msgstr "Inattivo"
+
+#. custom: web
+#: formats.js:132
+msgid "'%s' is not a correct integer"
+msgstr "'%s' non è un intero corretto"
+
+#. custom: web
+#: formats.js:144
+msgid "'%s' is not a correct float"
+msgstr "'%s' non è un float corretto"
+
+#. custom: web
+#: formats.js:75
+msgid "(%d records)"
+msgstr ""
+
+#. custom: web
+#: form_widgets.js:637
+msgid "Activate"
+msgstr "Attiva"
+
+#. custom: web
+#: form_widgets.js:642
+msgid "Archived"
+msgstr "Archiviato"
+
+#. custom: web
+#: formats.js:187
+msgid "'%s' is not a correct date"
+msgstr "'%s' non è una data corretta"
+
+#. custom: web
+#: formats.js:173
+msgid "'%s' is not a correct datetime"
+msgstr "'%s' non è una data-ora corretta"
+
+#. custom: web
+#: list_common.js:133
+msgid "Can't convert value %s to context"
+msgstr "Non è possibile convertire il valore %s a context"
+
+#. custom: web
+#: form_widgets.js:1251
+msgid "Could not display the selected image."
+msgstr "Impossibile visualizzare l'immagine selezionata."
+
+#. custom: web
+#: list_view.js:543
+msgid "Do you really want to remove these records?"
+msgstr "Vuoi veramente cancellare questi record?"
+
+#. custom: web
+#: form_widgets.js:1114
+msgid "File Upload"
+msgstr "Caricamento file"
+
+#. custom: web
+#: form_view.js:315
+msgid "New"
+msgstr "Nuovo"
+
+#. custom: web
+#: abstract_web_client.js:124 crash_manager.js:123
+msgid "Client Error"
+msgstr "Errore Client"
+
+#. custom: web
+#: form_widgets.js:1094
+msgid "File upload"
+msgstr "Caricamento file"
+
+#. custom: web
+#: list_view.js:1024
+msgid "Could not find id in dataset"
+msgstr "Non è possibile trovare l'id nel set di dati"
+
+#. custom: web
+#: misc.js:15
+msgid "Don't leave yet,<br />it's still loading..."
+msgstr "Non abbandonare ora, <br />caricamento in corso..."
+
+#. custom: web
+#: form_widgets.js:1251
+msgid "Image"
+msgstr "Immagine"
+
+#. custom: web
+#: graph_widget.js:94
+msgid "No data to display"
+msgstr "Nessun dato da visualizzare"
+
+#. custom: web
+#: list_view.js:1847
+msgid "Download"
+msgstr ""
+
+#. custom: web
+#: list_view.js:287
+msgid "Export"
+msgstr "Esportazione"
+
+#. custom: web
+#: pivot_view.js:831
+msgid "For Excel compatibility, data cannot be exported if there are more than 256 columns.\\n\\nTip: try to flip axis, filter further or reduce the number of measures."
+msgstr ""
+
+#. custom: web
+#: loading.js:46
+msgid "Loading"
+msgstr "Caricamento"
+
+#. custom: web
+#: loading.js:44
+msgid "Loading (%d)"
+msgstr "Caricamento (%d)"
+
+#. custom: web
+#: misc.js:18
+msgid "Maybe you should consider reloading the application by pressing F5..."
+msgstr "Probabilmente dovreste effettuare un reload dell'applicazione premendo il tasto F5..."
+
+#. custom: web
+#: list_view.js:1086
+msgid "Unknown m2m command %s"
+msgstr "Comando m2m sconosciuto %s"
+
+#. custom: web
+#: misc.js:12
+msgid "Loading..."
+msgstr "Caricamento..."
+
+#. custom: web
+#: search_menus.js:91
+msgid "Filter with same name already exists."
+msgstr "Esiste già un filtro con lo stesso nome."
+
+#. custom: web
+#: form_relational_widgets.js:327
+msgid "No value found for the field %s for value %s"
+msgstr "Nessun valore trovato per il campo %s per il valore %s"
+
+#. custom: web
+#: priority.js:47
+msgid "Normal"
+msgstr "Normale"
+
+#. custom: web
+#: priority.js:48
+msgid "Low"
+msgstr "Bassa"
+
+#. custom: web
+#: graph_widget.js:252
+msgid "Not enough data points"
+msgstr "Dati non sufficienti"
+
+#. custom: web
+#: priority.js:49
+msgid "High"
+msgstr "Alta"
+
+#. custom: web
+#: pyeval.js:1027
+msgid "Local evaluation failure\\n%s\\n\\n%s"
+msgstr ""
+
+#. custom: web
+#: search_inputs.js:331
+msgid "No"
+msgstr "N°"
+
+#. custom: web
+#: base.xml:0
+msgid "Run JS Tests"
+msgstr "Esegui Test JS"
+
+#. custom: web
+#: form_common.js:889
+msgid "Save & New"
+msgstr "Salva & Nuovo"
+
+#. custom: web
+#: base.xml:0
+msgid "Save as:"
+msgstr "Salva come:"
+
+#. custom: web
+#: base.xml:0
+msgid "Save current search"
+msgstr "Salva la ricerca corrente"
+
+#. custom: web
+#: base.xml:0
+msgid "Save fields list"
+msgstr "Salva l'elenco dei campi"
+
+#. custom: web
+#: form_view.js:1128
+msgid "Save default"
+msgstr "Salva Default"
+
+#. custom: web
+#: base.xml:0
+msgid "Saved exports:"
+msgstr "Esportazioni salvate:"
+
+#. custom: web
+#: progress_bar.js:78
+msgid "Only Integer Value should be valid."
+msgstr "Sono validi solo numeri interi."
+
+#. custom: web
+#: form_widgets.js:1131
+msgid "Save As..."
+msgstr "Salva come..."
+
+#. custom: web
+#: pyeval.js:1023
+msgid "Evaluation Error"
+msgstr "Errore valutazione"
+
+#. custom: web
+#: form_common.js:874 base.xml:0 base.xml:0 base.xml:0
+msgid "Save"
+msgstr "Salva"
+
+#. custom: web
+#: base.xml:0
+msgid ""
+"This wizard will export all data that matches the current search criteria to a CSV file.\n"
+"        You can export all data or only the fields that can be reimported after modification."
+msgstr ""
+
+#. custom: web
+#: search_inputs.js:360
+msgid "Search %(field)s at: %(value)s"
+msgstr "Ricerca %(field)s al: %(value)s"
+
+#. help:Filter.User
+msgid "The user this filter is private to. When left empty the filter is public and available to all users."
+msgstr ""
+
+#. custom: web
+#: view_manager.js:223
+msgid " view couldn't be loaded"
+msgstr "la vista non può esser caricata"
+
+#. custom: web
+#: data.js:1138
+msgid "Unnamed"
+msgstr "Senza nome"
+
 #. resource:base_menu_ir_filters
 msgid "User-defined Filters"
 msgstr ""
 
-#. js:priority.js,50
-msgid "Very High"
-msgstr "Molto alta"
-
-#. xml:./templates/t/t/t/li/a
-msgid "View Fields"
-msgstr "Campi Vista"
-
-#. xml:./templates/t/t/t/t/li/a
-msgid "View Metadata"
-msgstr "Visualizza Metadata"
-
-#. js:form_relational_widgets.js,740
-msgid "View type '%s' is not supported in X2Many."
-msgstr "La vista di tipo '%s' non è supportata in X2Many."
-
-#. js:crash_manager.js,107
-#. js:form_view.js,761
-#. js:list_view.js,676
-#. js:sidebar.js,131
-msgid "Warning"
-msgstr "Attenzione"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
-msgid "Week"
-msgstr "Settimana"
-
-#. xml:./templates/t/div/div
-msgid "Whoops, you shouldn't have come up to here..."
-msgstr ""
-
-#. js:form_view.js,1304
-msgid "Widget type '%s' is not implemented"
-msgstr "Il widget di tipo '%s' non è implementato"
-
-#. xml:./templates/t/ul/li/span
-msgid "Widget:"
-msgstr "Widget:"
-
-#. js:progress_bar.js,78
-msgid "Wrong value entered!"
-msgstr "È stato inserito un valore errato!"
-
-#. xml:./templates/t/table/tr/th
-msgid "XML ID:"
-msgstr "XML ID:"
-
-#. xml:./templates/t/ul/t/t/li/ul/li/a
+#. custom: web
+#: base.xml:0
 msgid "Year"
 msgstr "Anno"
 
-#. js:search_inputs.js,330
-msgid "Yes"
-msgstr "Si"
+#. custom: web
+#: form_view.js:756
+msgid "The record has been modified, your changes will be discarded. Are you sure you want to leave this page ?"
+msgstr "Il record è stato modificato, le modifiche non salvate andranno perdute. Sei sicuro di voler abbandonare la pagina?"
 
-#. js:form_relational_widgets.js,47
-msgid "You are creating a new %s, are you sure it does not exist yet?"
-msgstr "Stai creando un nuovo %s, sei sicuro non sia già esistente?"
+#. custom: web
+#: pyeval.js:991
+msgid "Unknown nonliteral type "
+msgstr "Tipo non letterale sconosciuto "
 
-#. xml:./templates/t/t/div
+#. custom: web
+#: time.js:192
+msgid "'%s' is not a correct date, datetime nor time"
+msgstr "\"%s\" non è una data corretta, datetime e neppure orario"
+
+#. custom: web
+#: base_common.xml:0
+msgid "×"
+msgstr ""
+
+#. custom: web
+#: time.js:204
+msgid "'%s' is not convertible to date, datetime nor time"
+msgstr "\"%s\" non è convertibile ad una data, datetime o orario"
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "/web/binary/upload_attachment"
+msgstr ""
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "Apply"
+msgstr "Salva"
+
+#. custom: web
+#: search_menus.js:252
+msgid "Are you sure that you want to remove this filter?"
+msgstr "Sei sicuro di voler rimuovere questo filtro?"
+
+#. custom: web
+#: utils.js:179
+msgid "Could not serialize XML"
+msgstr "Non è possibile serializzare l'XML"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Type:"
+msgstr "Tipo:"
+
+#. custom: web
+#: utils.js:284
+msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
+msgstr "Bytes, Kb, Mb, Gb, Tb, Pb, Eb, Zb, Yb"
+
+#. custom: web
+#: change_password.js:14 base.xml:0
+msgid "Change Password"
+msgstr "Cambia Password"
+
+#. custom: web
+#: form_common.js:281 form_relational_widgets.js:1080
+msgid "Create: "
+msgstr "Crea: "
+
+#. custom: web
+#: base.xml:0 base.xml:0 base.xml:0
+msgid "?"
+msgstr ""
+
+#. custom: web
+#: sidebar.js:217
+msgid "Do you really want to delete this attachment ?"
+msgstr "Volete veramente cancellare questo allegato?"
+
+#. custom: web
+#: form_widgets.js:634 form_widgets.js:640
+msgid "Active"
+msgstr "Attivo"
+
+#. custom: web
+#: form_relational_widgets.js:1378 base.xml:0
+msgid "Add"
+msgstr "Aggiungi"
+
+#. field:User.SidebarVisible
+msgid "Show App Sidebar"
+msgstr ""
+
+#. custom: web
+#: form_widgets.js:641 list_view.js:288
+msgid "Archive"
+msgstr "Archivio"
+
+#. custom: web
+#: search_inputs.js:553 search_view.js:205
+msgid " or "
+msgstr "o"
+
+#. custom: web
+#: form_common.js:1049 base.xml:0
+msgid "Create"
+msgstr "Crea"
+
+#. custom: web
+#: form_common.js:868 form_view.js:1127 data_export.js:202
+msgid "Close"
+msgstr "Chiudi"
+
+#. custom: web
+#: form_common.js:1096 search_menus.js:177
+msgid "Custom Filter"
+msgstr "Filtro Personalizzato"
+
+#. custom: web
+#: form_common.js:868 base.xml:0 base.xml:0
+msgid "Discard"
+msgstr "Annulla"
+
+#. custom: web
+#: base.xml:0
+msgid "console.warn('Unhandled widget', dict.widget);"
+msgstr ""
+
+#. custom: web
+#: search_inputs.js:230
+msgid "not a valid integer"
+msgstr "intero non valido"
+
+#. custom: web
+#: view_manager.js:223 search_menus.js:84 search_menus.js:91
+msgid "Error"
+msgstr "Errore"
+
+#. custom: web
+#: search_inputs.js:698
+msgid "Group By"
+msgstr "Raggruppa per"
+
+#. custom: web
+#: graph_view.js:86 graph_widget.js:21 pivot_view.js:182 base.xml:0 base.xml:0
+msgid "Count"
+msgstr "Conteggio"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Selection:"
+msgstr "Selezione:"
+
+#. custom: web
+#: form_common.js:211
+msgid "Search More..."
+msgstr "Cerca ancora..."
+
+#. custom: web
+#: form_common.js:281
+msgid "Search: "
+msgstr "Cerca: "
+
+#. custom: web
+#: form_common.js:1054
+msgid "Select"
+msgstr "Seleziona"
+
+#. help:Filter.Action
+msgid "The menu action this filter applies to. When left empty the filter applies to all menus for this model."
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Toggle Timelines"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid ""
+"Unhandled widget\n"
+"    <t t-js=\"dict\">console.warn('Unhandled widget', dict.widget);</t>"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "Update translations"
+msgstr "Aggiorna traduzioni"
+
+#. custom: web
+#: data.js:1075
+msgid "Unknown operator %s in domain %s"
+msgstr "Operatore %s sconosciuto nel dominio %s"
+
+#. custom: web
+#: data.js:1083
+msgid "Unknown field %s in domain %s"
+msgstr "Campo %s sconosciuto nel dominio %s"
+
+#. custom: web
+#: data.js:1121
+msgid "Unsupported operator %s in domain %s"
+msgstr "Operatore %s non supportato nel dominio %s"
+
+#. custom: web
+#: form_common.js:1103
+msgid "Selected domain"
+msgstr "Dominio selezionato"
+
+#. custom: web
+#: base.xml:0
+msgid "Set Defaults"
+msgstr "Imposta predefiniti"
+
+#. field:Filter.Sort
+msgid "Sort"
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid "Size:"
+msgstr "Dimensione:"
+
+#. custom: web
+#: base_common.xml:0
+msgid "Special:"
+msgstr "Speciale:"
+
+#. custom: web
+#: form_relational_widgets.js:1123
+msgid "The o2m record must be saved before an action can be used"
+msgstr "I record o2m devono essere salvati prima che l'azione possa essere usata"
+
+#. custom: web
+#: form_relational_widgets.js:1595
+msgid "The type of the field '%s' must be a many2many field with a relation to 'ir.attachment' model."
+msgstr "Il tipo del campo \"%s\" deve essere: \"molti a molti\" con una relazione al modello \"ir.attachment\"."
+
+#. custom: web
+#: form_upgrade_widgets.js:34
+msgid "Upgrade now"
+msgstr "Aggiorna adesso"
+
+#. custom: web
+#: search_inputs.js:451
+msgid "M2O search fields do not currently handle multiple default values"
+msgstr "I campi di ricerca M2O non supportano attualmente valori predefiniti multipli"
+
+#. custom: web
+#: base.xml:0
+msgid "Week"
+msgstr "Settimana"
+
+#. custom: web
+#: search_inputs.js:551
+msgid "Filter"
+msgstr "Filtro"
+
+#. custom: web
+#: search_menus.js:84
+msgid "Filter name is required."
+msgstr "Il nome del filtro è richiesto."
+
+#. custom: web
+#: search_menus.js:251
+msgid "This filter is global and will be removed for everybody if you continue."
+msgstr "Questo filtro è globale, e sarà rimosso per tutti gli utenti, se continui."
+
+#. custom: web
+#: utils.js:143
+msgid "Node [%s] is not a JSONified XML node"
+msgstr ""
+
+#. custom: web
+#: crash_manager.js:170 dialog.js:182 form_common.js:1046 form_upgrade_widgets.js:40 base.xml:0
+msgid "Cancel"
+msgstr "Annulla"
+
+#. custom: web
+#: base.xml:0
+msgid "View Fields"
+msgstr "Campi Vista"
+
+#. custom: web
+#: base.xml:0
+msgid "View Metadata"
+msgstr "Visualizza Metadata"
+
+#. custom: web
+#: base.xml:0
+msgid "Whoops, you shouldn't have come up to here..."
+msgstr ""
+
+#. custom: web
+#: base_common.xml:0
+msgid "Widget:"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
+msgid "XML ID:"
+msgstr ""
+
+#. custom: web
+#: base.xml:0
 msgid ""
 "You have updated <strong><t t-esc=\"field.string\"/></strong> (<t t-esc=\"lang\"/>).\n"
 "            <a class=\"oe_field_translate\" t-att-name=\"field.name\" href=\"#\">Update translations</a>"
 msgstr ""
 
-#. js:misc.js,16
-msgid "You may not believe it,<br />but the application is actually loading..."
-msgstr "Potrai anche non crederci,<br />ma l'applicazione sta ancora caricando..."
+#. custom: web
+#: form_relational_widgets.js:47
+msgid "You are creating a new %s, are you sure it does not exist yet?"
+msgstr "Stai creando un nuovo %s, sei sicuro non sia già esistente?"
 
-#. js:sidebar.js,131
-msgid "You must choose at least one record."
-msgstr "È necessario selezionare almeno un record."
-
-#. js:list_view.js,676
-msgid "You must select at least one record."
-msgstr "È necessario selezionare almeno un record."
-
-#. js:crash_manager.js,57
+#. custom: web
+#: crash_manager.js:57
 msgid "Your Hexya session expired. Please refresh the current web page."
 msgstr ""
 
-#. xml:./templates/t/ul/li/ul/li
-msgid ""
-"[<t t-esc=\"option[0]\"/>]\n"
-"                    <t t-if=\"option[1]\"> - </t>\n"
-"                    <t t-esc=\"option[1]\"/>"
-msgstr ""
+#. custom: web
+#: form_widgets.js:1131
+msgid "The field is empty, there's nothing to save !"
+msgstr "Questo campo è vuoto, non c'è nulla da salvare!"
 
-#. xml:./templates/t/t
-msgid "console.warn('Unhandled widget', dict.widget);"
-msgstr ""
+#. custom: web
+#: list_view.js:931
+msgid "Setting 'id' attribute on existing record %s"
+msgstr "Imposta l'attributo 'id' su record esistente %s"
 
-#. js:utils.js,302
-msgid "kMGTPE"
-msgstr "kMGTPE"
-
-#. js:search_inputs.js,230
-msgid "not a valid integer"
-msgstr "intero non valido"
-
-#. js:search_inputs.js,245
-msgid "not a valid number"
-msgstr "numero non valido"
-
-#. xml:./templates/t/li/span
+#. custom: web
+#: base.xml:0
 msgid "or"
 msgstr "o"
 
-#. xml:./templates/t/div/t/t
+#. custom: web
+#: misc.js:13
+msgid "Still loading..."
+msgstr "Ancora in caricamento..."
+
+#. custom: web
+#: misc.js:14
+msgid "Still loading...<br />Please be patient."
+msgstr "Caricamento in corso...<br />Attendere prego."
+
+#. custom: web
+#: form_relational_widgets.js:740
+msgid "View type '%s' is not supported in X2Many."
+msgstr "La vista di tipo '%s' non è supportata in X2Many."
+
+#. custom: web
+#: view_manager.js:437
+msgid "Failed to evaluate search criterions"
+msgstr "Impossibile valutare i criteri di ricerca"
+
+#. custom: web
+#: form_view.js:301
+msgid "The record could not be found in the database."
+msgstr "Il record non può essere trovato nel database"
+
+#. custom: web
+#: form_widgets.js:862
+msgid "Timezone Mismatch : The timezone of your browser doesn't match the selected one. The time in Hexya is displayed according to your field timezone."
+msgstr ""
+
+#. custom: web
+#: form_view.xml:0
+msgid "e"
+msgstr ""
+
+#. custom: web
+#: form_widgets.js:1093
+msgid "The selected file exceed the maximum file size of %s."
+msgstr "Il file selezionato eccede la massima dimensione possibile di %s."
+
+#. custom: web
+#: list_view.js:676
+msgid "You must select at least one record."
+msgstr "È necessario selezionare almeno un record."
+
+#. custom: web
+#: priority.js:50
+msgid "Very High"
+msgstr "Molto alta"
+
+#. custom: web
+#: base.xml:0
 msgid "overflow-x: hidden"
 msgstr ""
 
-#. xml:./templates/t/t
+#. custom: web
+#: graph_widget.js:208 graph_widget.js:216
+msgid "Invalid data"
+msgstr "Dati non validi"
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "Measures <span class=\"caret\"/>"
+msgstr ""
+
+#. custom: web
+#: progress_bar.js:78
+msgid "Wrong value entered!"
+msgstr "È stato inserito un valore errato!"
+
+#. custom: web
+#: search_inputs.js:245
+msgid "not a valid number"
+msgstr "numero non valido"
+
+#. custom: web
+#: base.xml:0
 msgid ""
 "var $div = $(document.createElement('div')).attr('t-if', this.attr('t-if')).addClass('o_form_field_monetary');\n"
 "        this.clone(true).appendTo($div);\n"
 "        this.replaceWith($div);"
 msgstr ""
 
-#. xml:./templates/t/div/t
+#. custom: web
+#: sidebar.js:131
+msgid "You must choose at least one record."
+msgstr "È necessario selezionare almeno un record."
+
+#. custom: web
+#: utils.js:302
+msgid "kMGTPE"
+msgstr ""
+
+#. custom: web
+#: base.xml:0 base.xml:0
+msgid "Uploading..."
+msgstr "Caricamento in corso..."
+
+#. custom: web
+#: debug_manager.js:339 base.xml:0
+msgid "Fields View Get"
+msgstr ""
+
+#. custom: web
+#: form_widgets.js:643 list_view.js:289
+msgid "Unarchive"
+msgstr "Non archiviato"
+
+#. custom: web
+#: form_view.js:1304
+msgid "Widget type '%s' is not implemented"
+msgstr "Il widget di tipo '%s' non è implementato"
+
+#. custom: web
+#: search_inputs.js:192 search_inputs.js:211 search_inputs.js:402
+msgid "Search %(field)s for: %(value)s"
+msgstr "Cerca %(field)s per: %(value)s"
+
+#. custom: web
+#: base.xml:0
+msgid "Upload your file"
+msgstr "Carica il tuo file"
+
+#. custom: web
+#: base_common.xml:0
+msgid ""
+"[<t t-esc=\"option[0]\"/>]\n"
+"                    <t t-if=\"option[1]\"> - </t>\n"
+"                    <t t-esc=\"option[1]\"/>"
+msgstr ""
+
+#. custom: web
+#: form_view.js:1125
+msgid "Set Default"
+msgstr "Imposta Default"
+
+#. custom: web
+#: base.xml:0
 msgid ""
 "var message = (d.message !== undefined) ? d.message : d.error.data.message;\n"
 "            d.html_error = context.engine.tools.html_escape(message).replace(/\\n/g, '<br/>');"
 msgstr ""
 
-#. xml:./templates/div/div/div/div/button
-msgid "×"
+#. custom: web
+#: form_view.js:887
+msgid "The following fields are invalid:"
+msgstr "I seguenti campi non sono validi"
+
+#. custom: web
+#: list_view_editable.js:122
+msgid "The line has been modified, your changes will be discarded. Are you sure you want to discard the changes ?"
+msgstr "La riga è stata modificata, le modifiche non salvate andranno perdute. Sei sicuro di voler annullare le modifiche?"
+
+#. custom: web
+#: form_widgets.js:1114
+msgid "There was a problem while uploading your file"
+msgstr "C'è stato un problema durante il caricamento del vostro file"
+
+#. custom: web
+#: misc.js:16
+msgid "You may not believe it,<br />but the application is actually loading..."
+msgstr "Potrai anche non crederci,<br />ma l'applicazione sta ancora caricando..."
+
+#. custom: web
+#: dialog.js:40 dialog.js:158 dialog.js:176 base.xml:0
+msgid "Ok"
 msgstr ""
+
+#. custom: web
+#: form_relational_widgets.js:153 form_relational_widgets.js:921 form_relational_widgets.js:1104 form_relational_widgets.js:1321
+msgid "Open: "
+msgstr "Apri: "
+
+#. custom: web
+#: misc.js:17
+msgid "Take a minute to get a coffee,<br />because it's loading..."
+msgstr "Un attimo di pazienza,<br />il sistema sta caricando..."
+
+#. custom: web
+#: search_inputs.js:330
+msgid "Yes"
+msgstr "Si"
+
+#. custom: web
+#: pivot_view.js:526 pivot_view.js:555
+msgid "Total"
+msgstr "Totale"
+
+#. custom: web
+#: graph_widget.js:79 list_view.js:1379 list_view.js:1385 pivot_view.js:508
+msgid "Undefined"
+msgstr "Non definito"
+
+#. custom: web
+#: crash_manager.js:107 form_view.js:761 list_view.js:676 sidebar.js:131
+msgid "Warning"
+msgstr "Attenzione"
 

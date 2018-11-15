@@ -29,8 +29,8 @@ type SessionInfo struct {
 	Name        string                 `json:"name"`
 }
 
-// GetSessionInfo returns a map with information about the given session
-func GetSessionInfo(sess sessions.Session) *SessionInfo {
+// GetSessionInfoStruct returns a struct with information about the given session
+func GetSessionInfoStruct(sess sessions.Session) *SessionInfo {
 	var (
 		userContext *types.Context
 		companyID   int64
@@ -54,6 +54,11 @@ func GetSessionInfo(sess sessions.Session) *SessionInfo {
 		}
 	}
 	return nil
+}
+
+// GetSessionInfo returns the session information to the client
+func GetSessionInfo(c *server.Context) {
+	c.RPC(http.StatusOK, GetSessionInfoStruct(c.Session()))
 }
 
 // Modules returns the list of installed modules to the client
