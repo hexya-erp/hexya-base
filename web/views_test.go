@@ -49,7 +49,8 @@ func TestViewModifiers(t *testing.T) {
 	Convey("Testing correct modifiers injection in views", t, func() {
 		models.SimulateInNewEnvironment(security.SuperUserID, func(env models.Environment) {
 			Convey("'invisible', 'required' and 'readonly' field attributes should be set in modifiers", func() {
-				view := h.User().NewSet(env).ProcessView(xmlutils.XMLToElement(viewDef1), viewFieldInfos1)
+				v, _ := xmlutils.XMLToElement(viewDef1)
+				view := h.User().NewSet(env).ProcessView(v, viewFieldInfos1)
 				So(view, ShouldEqual, `<view id="my_id" name="My View" model="ResUSers">
 	<form>
 		<group>
@@ -60,7 +61,8 @@ func TestViewModifiers(t *testing.T) {
 </view>`)
 			})
 			Convey("attrs should be set in modifiers", func() {
-				view := h.User().NewSet(env).ProcessView(xmlutils.XMLToElement(viewDef2), viewFieldInfos1)
+				v, _ := xmlutils.XMLToElement(viewDef2)
+				view := h.User().NewSet(env).ProcessView(v, viewFieldInfos1)
 				So(view, ShouldEqual, `<view id="my_id" name="My View" model="ResUSers">
 	<form>
 		<group>
@@ -71,7 +73,8 @@ func TestViewModifiers(t *testing.T) {
 </view>`)
 			})
 			Convey("'Readonly' and 'Required' field data should be taken into account", func() {
-				view := h.User().NewSet(env).ProcessView(xmlutils.XMLToElement(viewDef2), viewFieldInfos2)
+				v, _ := xmlutils.XMLToElement(viewDef2)
+				view := h.User().NewSet(env).ProcessView(v, viewFieldInfos2)
 				So(view, ShouldEqual, `<view id="my_id" name="My View" model="ResUSers">
 	<form>
 		<group>
