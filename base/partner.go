@@ -109,11 +109,6 @@ func init() {
 		"Children": models.One2ManyField{RelationModel: h.Partner(),
 			ReverseFK: "Parent", Filter: q.Partner().Active().Equals(true)},
 		"Ref": models.CharField{String: "Internal Reference", Index: true},
-		//"Lang": models.CharField{String: "Language",
-		//	Default: func(env models.Environment) interface{} {
-		//		return env.Context().GetString("lang")
-		//	}, Help: `If the selected language is loaded in the system, all documents related to
-		//this contact will be printed in this language. If not, it will be English.`},
 		"Lang": models.SelectionField{
 			String: "Language",
 			Default: func(env models.Environment) interface{} {
