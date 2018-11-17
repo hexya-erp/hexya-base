@@ -305,6 +305,7 @@ gap in the sequence (while they are possible in the former).`},
 					q.Sequence().Company().In(companies).Or().Company().IsNull()))
 			if seqs.IsEmpty() {
 				log.Debug("No Sequence has been found for this code", "code", sequenceCode, "companies", companies)
+				return "False"
 			}
 			forceCompanyID := rs.Env().Context().GetInteger("force_company")
 			if forceCompanyID == 0 {
