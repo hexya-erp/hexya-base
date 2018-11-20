@@ -4,16 +4,12 @@ import (
 	"fmt"
 	"time"
 
-	"errors"
 	"reflect"
 
 	"encoding/json"
 
-	"strconv"
-
 	"strings"
 
-	"github.com/hexya-erp/hexya-base/base/workerMechanics"
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/security"
 	"github.com/hexya-erp/hexya/hexya/models/types"
@@ -28,120 +24,87 @@ func init() {
 	h.Worker().DeclareModel()
 	h.Worker().AddFields(map[string]models.FieldDefinition{
 		"Name": models.CharField{
-			String: "Worker",
-			Unique: true},
+			String:   "Worker",
+			Unique:   true,
+			Required: true},
 		"MaxThreads": models.IntegerField{
-			String: "Threads"},
+			String:   "Threads",
+			Required: true,
+			Default:  models.DefaultValue(1)},
 		"JobsInQueue": models.IntegerField{
-			String:  "Jobs in Queue",
-			Compute: h.Worker().Methods().GetJobsInQueueCount()},
+			String:   "Jobs in Queue",
+			Compute:  h.Worker().Methods().GetJobsInQueueCount(),
+			ReadOnly: true},
 		"PauseTime": models.IntegerField{},
-		"IsRunning": models.BooleanField{},
+		"IsRunning": models.BooleanField{
+			ReadOnly: true},
+		"MaxHistoryEntries": models.IntegerField{
+			Default:  models.DefaultValue(200),
+			Required: true},
+		"MaxHistoryAmmount": models.IntegerField{
+			Default:  models.DefaultValue(1),
+			Required: true},
+		"MaxHistorySelection": models.SelectionField{
+			Selection: types.Selection{
+				`month`: `Months`,
+				`day`:   `Days`,
+				`hour`:  `Hours`},
+			Default:  models.DefaultValue("hour"),
+			Required: true},
 	})
 
-	h.Worker().Methods().DummyFunc().DeclareMethod(
+	//will be removed after testings
+	h.Worker().Methods().Println().DeclareMethod(
 		``,
-		func(rs h.WorkerSet, str string) {
-			fmt.Println("lel ", str)
-			time.Sleep(2 * time.Second)
+		func(rs h.WorkerSet, args ...interface{}) {
+			fmt.Println(args...)
 		})
 
-	h.Worker().Methods().DummyFuncPanic().DeclareMethod(
+	//will be made
+	h.Worker().Methods().CLeanJobHistory().DeclareMethod(
 		``,
 		func(rs h.WorkerSet) {
-			panic("PAAAAAAANIC")
-		})
-
-	h.Worker().Methods().DummyFuncSingleReturn().DeclareMethod(
-		``,
-		func(rs h.WorkerSet) string {
-			return "hoy"
-		})
-
-	h.Worker().Methods().DummyFuncMult().DeclareMethod(
-		``,
-		func(rs h.WorkerSet, a, b float64) (float64, float64, float64) {
-			return a, b, float64(a * b)
+			//h.WorkerJobHistory().Search(rs.Env(), q.WorkerJobHistory().Status().Equals("done"))
 		})
 
 	h.Worker().Methods().GetJobsInQueueCount().DeclareMethod(
 		`returns the ammount of jobs currently in worker queue`,
 		func(rs h.WorkerSet) *h.WorkerData {
 			QSize := h.WorkerJob().Search(rs.Env(), q.WorkerJob().ParentWorkerName().Equals(rs.Name())).Len()
-			if QSize == 0 {
-				for i := 0; i < 20; i++ {
-					switch {
-					case i%3 == 0:
-						rs.Enqueue(h.Worker().Methods().DummyFuncSingleReturn())
-					case i%5 == 0:
-						rs.Enqueue(h.Worker().Methods().DummyFuncPanic())
-					case i%7 == 0:
-						rs.WithParams(i, i+2).Enqueue(h.Worker().Methods().DummyFuncMult())
-					default:
-						rs.WithWorker("Main").WithParams(strconv.Itoa(i)).Enqueue(h.Worker().Methods().DummyFunc())
-					}
-				}
-			}
 			return &h.WorkerData{JobsInQueue: int64(QSize)}
 		})
 
-	h.Worker().Methods().CreateAndRegisterNewWorker().DeclareMethod(
+	h.Worker().Methods().Create().Extend(
 		``,
-		func(rs h.WorkerSet, wo workerMechanics.Worker) *workerMechanics.Worker {
-			w := rs.CreateNewWorker(wo)
-			rs.RegisterWorker(w)
-			return w
-		})
-
-	h.Worker().Methods().CreateRegisterStartNewWorker().DeclareMethod(
-		``,
-		func(rs h.WorkerSet, wo workerMechanics.Worker) *workerMechanics.Worker {
-			w := rs.CreateAndRegisterNewWorker(wo)
-			rs.StartWorker(w)
-			return w
-		})
-
-	h.Worker().Methods().CreateNewWorker().DeclareMethod(
-		``,
-		func(rs h.WorkerSet, w workerMechanics.Worker) *workerMechanics.Worker {
-			var out *workerMechanics.Worker
-			models.ExecuteInNewEnvironment(rs.Env().Uid(), func(env models.Environment) {
-				out = workerMechanics.CreateNewWorker(w)
-			})
-			return out
-		})
-
-	h.Worker().Methods().RegisterWorker().DeclareMethod(
-		``,
-		func(rs h.WorkerSet, w *workerMechanics.Worker) {
-			models.ExecuteInNewEnvironment(rs.Env().Uid(), func(env models.Environment) {
-				err := registerWorker(w, rs)
-				if err != nil {
-					log.Error(fmt.Sprintf("%v", err))
-				}
-			})
+		func(set h.WorkerSet, data *h.WorkerData, namer ...models.FieldNamer) h.WorkerSet {
+			rs := set.Super().Create(data, namer...)
+			rs.StartWorker(data)
+			return rs
 		})
 
 	h.Worker().Methods().StartWorker().DeclareMethod(
 		``,
-		func(rs h.WorkerSet, w *workerMechanics.Worker) {
+		func(rs h.WorkerSet, w *h.WorkerData) {
 			models.ExecuteInNewEnvironment(rs.Env().Uid(), func(env models.Environment) {
-				err := w.StartWorker(rs.Env())
-				if err != nil {
-					log.Error(fmt.Sprintf("%v", err))
-				} else {
-					go rs.WorkerLoop(w)
-					for i := 0; i < w.MaxThreads; i++ {
-						w.Threadschan <- true
-					}
+				go rs.WorkerLoop(w)
+				if _, ok := threadsChanMap[w.Name]; !ok {
+					threadsChanMap[w.Name] = make(chan bool, w.MaxThreads)
+				}
+				for i := 0; i < int(w.MaxThreads); i++ {
+					threadsChanMap[w.Name] <- true
 				}
 			})
 		})
 
 	h.Worker().Methods().GetWorker().DeclareMethod(
 		``,
-		func(rs h.WorkerSet, str string) *workerMechanics.Worker {
-			return workerMechanics.Worker{}.Get(str)
+		func(rs h.WorkerSet, str string) *h.WorkerData {
+			set := h.Worker().Search(rs.Env(), q.Worker().Name().Equals(str))
+			if set.Len() == 0 {
+				return nil
+			}
+			data := set.First()
+			return &data
 		})
 
 	h.Worker().Methods().LoadWorkers().DeclareMethod(
@@ -149,34 +112,21 @@ func init() {
 		func(rs h.WorkerSet) {
 			set := h.Worker().Search(rs.Env(), q.Worker().ID().Greater(-1))
 			for _, s := range set.All() {
-				neww := workerMechanics.CreateNewWorker(workerMechanics.Worker{
-					Name:       s.Name,
-					PauseTime:  time.Duration(s.PauseTime) * time.Second,
-					MaxThreads: int(s.MaxThreads),
-				})
-				workerMechanics.EndRegistration(neww)
-				go rs.WorkerLoop(neww)
-				for i := 0; i < neww.MaxThreads; i++ {
-					neww.Threadschan <- true
-				}
+				rs.StartWorker(s)
 			}
 			if rs.GetWorker("Main") == nil {
-				rs.CreateRegisterStartNewWorker(workerMechanics.Worker{
-					Name:       "Main",
-					PauseTime:  1 * time.Second,
-					MaxThreads: 1,
+				rs.Create(&h.WorkerData{
+					Name: "Main",
 				})
-				rs.WithWorker("Main").WithParams("hey").Enqueue(h.Worker().Methods().DummyFunc())
-
 			}
 		})
 
 	h.Worker().Methods().WorkerLoop().DeclareMethod(
 		``,
-		func(rs h.WorkerSet, w *workerMechanics.Worker) bool {
+		func(rs h.WorkerSet, w *h.WorkerData) bool {
 			for {
 				select {
-				case <-w.Threadschan:
+				case <-threadsChanMap[w.Name]:
 					var hadJob bool
 					models.ExecuteInNewEnvironment(security.SuperUserID, func(env2 models.Environment) {
 						set := h.WorkerJob().Search(env2, q.WorkerJob().ParentWorkerName().Equals(w.Name))
@@ -193,18 +143,18 @@ func init() {
 						}
 					})
 					if !hadJob {
-						w.Threadschan <- true
-						time.Sleep(w.PauseTime)
+						threadsChanMap[w.Name] <- true
+						time.Sleep(time.Duration(w.PauseTime) * time.Second)
 					}
 				default:
-					time.Sleep(w.PauseTime)
+					time.Sleep(time.Duration(w.PauseTime) * time.Second)
 				}
 			}
 		})
 
 	h.Worker().Methods().Execute().DeclareMethod(
 		``,
-		func(rs h.WorkerSet, w *workerMechanics.Worker, res *h.WorkerJobData) {
+		func(rs h.WorkerSet, w *h.WorkerData, res *h.WorkerJobData) {
 			models.ExecuteInNewEnvironment(security.SuperUserID, func(env3 models.Environment) {
 				historyEntry := h.WorkerJobHistory().Search(env3, q.WorkerJobHistory().TaskUUID().Equals(res.TaskUUID))
 				historyEntry.SetStatus("running")
@@ -215,7 +165,7 @@ func init() {
 				if _, ok := models.Registry.Get(res.ModelName); !ok {
 					historyEntry.SetStatus("fail")
 					historyEntry.SetMethodOutput(fmt.Sprintf("error: no Model known as '%s'", res.ModelName))
-					w.Threadschan <- true
+					threadsChanMap[w.Name] <- true
 					return
 				}
 				rc := env2.Pool(res.ModelName)
@@ -223,7 +173,7 @@ func init() {
 				if !ok {
 					historyEntry.SetStatus("fail")
 					historyEntry.SetMethodOutput(fmt.Sprintf("error: no method known as '%s' in model '%s'", res.Method, res.ModelName))
-					w.Threadschan <- true
+					threadsChanMap[w.Name] <- true
 					return
 				}
 				json.Unmarshal([]byte(res.Method), &method)
@@ -251,7 +201,7 @@ func init() {
 					}
 					historyEntry.SetMethodOutput(outStr)
 				}
-				w.Threadschan <- true
+				threadsChanMap[w.Name] <- true
 			})
 		})
 
@@ -425,23 +375,7 @@ func init() {
 		})
 }
 
-func registerWorker(w *workerMechanics.Worker, rs h.WorkerSet) error {
-	if w.Registered() == false {
-		if rs.Search(q.Worker().Name().Equals(w.Name)).Len() > 0 {
-			return errors.New(fmt.Sprintf(`Could not register worker "%s". another worker with this name is already registered`, w.Name))
-		}
-		if w.PauseTime.Seconds() < 1 {
-			w.PauseTime = 1 * time.Second
-		}
-		rs.Create(&h.WorkerData{
-			Name:       w.Name,
-			MaxThreads: int64(w.MaxThreads),
-			PauseTime:  int64(w.PauseTime / time.Second),
-		})
-		workerMechanics.EndRegistration(w)
-	}
-	return nil
-}
+var threadsChanMap map[string]chan bool
 
 func interfaceSlice(slice interface{}) []interface{} {
 	s := reflect.ValueOf(slice)

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hexya>
+    <data>
+        <view id="base_view_cron_tree" model="Cron">
+            <tree string="Workers">
+                <field name="Name"/>
+                <field name="ModelMethodStr"/>
+                <field name="ExecuteNET"/>
+                <field name="Status" invisible="1"/>
+                <button name="ButtonRefresh" string="Syncronize crons" type="object" icon="fa-refresh"/>
+                <button name="ButtonRun" string="Manual Run" type="object" icon="fa-share"/>
+                <button name="ButtonSuspend" string="Suspend" type="object" icon="fa-pause text-danger" attrs="{'invisible': [('status', '=', False)]}"/>
+                <button name="ButtonResume" string="Resume" type="object" icon="fa-eject fa-rotate-90 text-success" attrs="{'invisible': [('status', '=', True)]}"/>
+            </tree>
+        </view>
+
+        <view id="base_view_cron_form" model="Cron" delete="false">
+            <form string="Crons">
+                <sheet>
+                    <h1>
+                        <field name="Name" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="TargetWorker"/>
+                            <field name="TargetModel"/>
+                            <field name="TargetMethod"/>
+                            <field name="TargetParams"/>
+                        </group>
+                        <group>
+                            <!--<field name="Status" widget="boolean_button"/>-->
+                            <field name="ExecuteNET"/>
+                            <field name="ExecuteCount"/>
+                        </group>
+                    </group>
+                    <group>
+                        <div style="display:flex;">
+                            <div style="width: 25%;  float:left">
+                                <div style="width:10%; float:left">
+                                    <label string="At"/>
+                                </div>
+                                <div style="width:60%; float:left">
+                                    <field nolabel="1" name="TimeAtDate"/>
+                                </div>
+                            </div>
+                            <div style="width: 25%; float:left">
+                                <div style="float: left;margin-left: 40px">
+                                    <field name="RepeatBool"/>
+                                    <label string="Repeat"/>
+                                </div>
+                                <div style="float: left; margin-left: 10px; width; 200px" attrs="{'invisible': [('repeat_bool', '=', False)]}">
+                                    <div>
+                                        <label string="Every"/>
+                                        <field name="RepeatLapseAmmount" style="width:30px"/>
+                                        <field name="RepeatLapseSelection" style="width:53%"/>
+                                    </div>
+                                    <div>
+                                        <field name="RepeatAmmountBool"/>
+                                        <label string="Only"/>
+                                        <field name="RepeatAmmount" style="width:30px"/>
+                                        <label string="Times"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 25%; float:left">
+                                <div style="float: left;">
+                                    <field name="Catchup"/>
+                                    <label string="Catch-up"/>
+                                </div>
+                            </div>
+                            <div style="width: 25%; float:left">
+                                <div style="margin-left: 10px; width: 100%">
+                                    <label string="With Mask"/>
+                                    <field name="MaskBool"/>
+                                </div>
+                                <div style=" margin-left: 10px; width: 100%">
+                                    <field name="Mask" attrs="{'invisible': [('mask_bool', '=', False)]}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </group>
+                </sheet>
+            </form>
+        </view>
+
+<!--
+<notebook colspan="4">
+<page string="Schedule" autofocus="autofocus">
+    <div style="width:700px">
+        <div style="width:260px">
+            <div style="width:60px;float: left;padding:20px">
+                <label string="At"/>
+            </div>
+            <div style="width:170px; float: left">
+                <div style="padding: 20px">
+                    <field nolabel="1" name="TimeAtDate"/>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div style="float: left;margin-left: 40px;margin-top:20px">
+                <field name="RepeatBool"/>
+                <label string="Repeat"/>
+            </div>
+            <div style="float: left;margin-top: 18px; margin-left: 10px; width; 200px" attrs="{'invisible': [('repeat_bool', '=', False)]}">
+                <div>
+                    <label string="Every"/>
+                    <field name="RepeatLapseAmmount" style="width:30px"/>
+                    <field name="RepeatLapseSelection" style="width:53%"/>
+                </div>
+                <div>
+                    <field name="RepeatAmmountBool"/>
+                    <label string="Only"/>
+                    <field name="RepeatAmmount" style="width:30px"/>
+                    <label string="Times"/>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div style="float: left;padding:20px">
+                <field name="Catchup"/>
+                <label string="Catch-up"/>
+            </div>
+        </div>
+    </div>
+</page>
+<page string="Time Masks">
+    <div style="margin-top: 18px; margin-left: 10px; width: 100%">
+        <label string="With Mask"/>
+        <field name="MaskBool"/>
+    </div>
+    <div style=" margin-left: 10px; width: 100%">
+        <field name="Masks" attrs="{'invisible': [('mask_bool', '=', False)]}"/>
+    </div>
+</page>
+</notebook>
+        </sheet>
+        </form>
+        </view>-->
+
+        <view id="base_view_cron_time_mask_form" model="CronTimeMask">
+            <form string="TimeMaskCreation">
+                <h1>
+                    <field name="Name" class="oe_inline"/>
+                </h1>
+                <div style="margin-bottom: 18px; margin-top: 18px; width:100%; float: left">
+                    ≡
+                    <field name="MonthBool"/>
+                    <label string="Month"/>
+                </div>
+                <div style="magin-left: 18px;margin-top: 18px; margin-bottom: 18px; width: 100%" attrs="{'invisible': [('month_bool', '=', False)]}">
+                    <div style="margin-top: 9px; width: 100%">
+                        <div style=" width: 16%; float: left">
+                            <div style="width:100%">
+                                <label string="January"/>
+                            </div>
+                            <div style="width:100%">
+                                <field name="Jan"/>
+                            </div>
+                        </div>
+                        <div style=" width: 16%; float: left">
+                            <div style="width:100%">
+                                <label string="Febuary"/>
+                            </div>
+                            <div style="width:100%">
+                                <field name="Feb"/>
+                            </div>
+                        </div>
+                        <div style=" width: 16%; float: left">
+                            <div style="width:100%">
+                                <label string="March"/>
+                            </div>
+                            <div style="width:100%">
+                                <field name="Mar"/>
+                            </div>
+                        </div>
+                        <div style=" width: 16%; float: left">
+                            <div style="width:100%">
+                                <label string="April"/>
+                            </div>
+                            <div style="width:100%">
+                                <field name="Apr"/>
+                            </div>
+                        </div>
+                        <div style=" width: 16%; float: left">
+                            <div style="width:100%">
+                                <label string="May"/>
+                            </div>
+                            <div style="width:100%">
+                                <field name="May"/>
+                            </div>
+                        </div>
+                        <div style=" width: 16%; float: left">
+                            <div style="width:100%">
+                                <label string="June"/>
+                            </div>
+                            <div style="width:100%">
+                                <field name="Jun"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 9px; width: 100%">
+                        <div style=" width: 16%; float: left">
+                            <div style="width:100%">
+                                <label string="July"/>
+                            </div>
+                            <div style="width:100%">
+                                <field name="Jul"/>
+                            </div>
+                        </div>
+                        <div style=" width: 16%; float: left">
+                            <div style="width:100%">
+                                <label string="August"/>
+                            </div>
+                            <div style="width:100%">
+                                <field name="Aug"/>
+                            </div>
+                        </div>
+                        <div style=" width: 16%; float: left">
+                            <div style="width:100%">
+                                <label string="September"/>
+                            </div>
+                            <div style="width:100%">
+                                <field name="Sep"/>
+                            </div>
+                        </div>
+                        <div style=" width: 16%; float: left">
+                            <div style="width:100%">
+                                <label string="October"/>
+                            </div>
+                            <div style="width:100%">
+                                <field name="Oct"/>
+                            </div>
+                        </div>
+                        <div style=" width: 16%; float: left">
+                            <div style="width:100%">
+                                <label string="November"/>
+                            </div>
+                            <div style="width:100%">
+                                <field name="Nov"/>
+                            </div>
+                        </div>
+                        <div style=" width: 16%; float: left">
+                            <div style="width:100%">
+                                <label string="December"/>
+                            </div>
+                            <div style="width:100%">
+                                <field name="Dec"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-bottom: 18px; margin-top: 18px; width:100%; float: left">
+                    ≡
+                    <field name="WeekDayBool"/>
+                    <label string="Week Day"/>
+                </div>
+                <div style="magin-left: 18px margin-top: 18px; margin-bottom: 18px; width: 100%" attrs="{'invisible': [('week_day_bool', '=', False)]}">
+                    <div style=" width: 14%; float: left">
+                        <div style="width:100%">
+                            <label string="Monday"/>
+                        </div>
+                        <div style="width:100%">
+                            <field name="Mon"/>
+                        </div>
+                    </div>
+                    <div style=" width: 14%; float: left">
+                        <div style="width:100%">
+                            <label string="Tuesday"/>
+                        </div>
+                        <div style="width:100%">
+                            <field name="Tue"/>
+                        </div>
+                    </div>
+                    <div style=" width: 14%; float: left">
+                        <div style="width:100%">
+                            <label string="Wednesday"/>
+                        </div>
+                        <div style="width:100%">
+                            <field name="Wed"/>
+                        </div>
+                    </div>
+                    <div style=" width: 14%; float: left">
+                        <div style="width:100%">
+                            <label string="Thursday"/>
+                        </div>
+                        <div style="width:100%">
+                            <field name="Thu"/>
+                        </div>
+                    </div>
+                    <div style=" width: 14%; float: left">
+                        <div style="width:100%">
+                            <label string="Friday"/>
+                        </div>
+                        <div style="width:100%">
+                            <field name="fri"/>
+                        </div>
+                    </div>
+                    <div style=" width: 14%; float: left">
+                        <div style="width:100%">
+                            <label string="Saturday"/>
+                        </div>
+                        <div style="width:100%">
+                            <field name="Sat"/>
+                        </div>
+                    </div>
+                    <div style=" width: 14%; float: left">
+                        <div style="width:100%">
+                            <label string="Sunday"/>
+                        </div>
+                        <div style="width:100%">
+                            <field name="Sun"/>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-bottom: 18px; margin-top: 18px; width:100%; float: left">
+                    ≡
+                    <field name="DayBool"/>
+                    <label string="Day"/>
+                </div>
+                <div style="margin-bottom: 18px;margin-top: 18px; width: 100%" attrs="{'invisible': [('day_bool', '=', False)]}">
+                    <label string="Day Number list"/>
+                    <field name="DayStr"/>
+                </div>
+                <div style="margin-bottom: 18px; margin-top: 18px; width:100%; float: left">
+                    ≡
+                    <field name="HourBool"/>
+                    <label string="Hour"/>
+                </div>
+                <div style="margin-bottom: 18px;margin-top: 18px; width: 100%" attrs="{'invisible': [('hour_bool', '=', False)]}">
+                    <label string="Hour Number List"/>
+                    <field name="HourStr"/>
+                </div>
+
+                <div style="margin-bottom: 18px; margin-top: 18px; width:100%; float: left">
+                    ≡
+                    <field name="MinuteBool"/>
+                    <label string="Minute"/>
+                </div>
+                <div style=" margin-bottom: 18px;margin-top: 18px; width: 100%" attrs="{'invisible': [('minute_bool', '=', False)]}">
+                    <label string="Minute Number list"/>
+                    <field name="MinuteStr"/>
+                </div>
+            </form>
+        </view>
+
+        <action id="base_action_cron" name="Crons" type="ir.actions.act_window" model="Cron"
+                view_mode="tree, form"/>
+        <menuitem id="base_menu_action_cron" name="Crons" sequence="6" action="base_action_cron"
+                  parent="base_menu_crons_and_workers"/>
+    </data>
+</hexya>
