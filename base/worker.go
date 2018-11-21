@@ -62,7 +62,6 @@ func init() {
 			fmt.Println(args...)
 		})
 
-	//will be made
 	h.Worker().Methods().CleanJobHistory().DeclareMethod(
 		``,
 		func(rs h.WorkerSet) string {
@@ -103,7 +102,7 @@ func init() {
 	h.Worker().Methods().GetJobsInQueueCount().DeclareMethod(
 		`returns the ammount of jobs currently in worker queue`,
 		func(rs h.WorkerSet) *h.WorkerData {
-			QSize := h.WorkerJob().Search(rs.Env(), q.WorkerJob().ParentWorkerName().Equals(rs.Name())).Len()
+			QSize := h.WorkerJobHistory().Search(rs.Env(), q.WorkerJobHistory().WorkerName().Equals(rs.Name()).And().Status().Equals("pending")).Len()
 			return &h.WorkerData{JobsInQueue: int64(QSize)}
 		})
 
@@ -132,13 +131,8 @@ func init() {
 
 	h.Worker().Methods().GetWorker().DeclareMethod(
 		``,
-		func(rs h.WorkerSet, str string) *h.WorkerData {
-			set := h.Worker().Search(rs.Env(), q.Worker().Name().Equals(str))
-			if set.Len() == 0 {
-				return nil
-			}
-			data := set.First()
-			return &data
+		func(rs h.WorkerSet, str string) h.WorkerSet {
+			return h.Worker().Search(rs.Env(), q.Worker().Name().Equals(str))
 		})
 
 	h.Worker().Methods().LoadWorkers().DeclareMethod(
@@ -148,7 +142,7 @@ func init() {
 			for _, s := range set.Records() {
 				s.StartWorker()
 			}
-			if rs.GetWorker("Main") == nil {
+			if rs.GetWorker("Main").Len() == 0 {
 				rs.Create(&h.WorkerData{
 					Name: "Main",
 				})
@@ -240,18 +234,6 @@ func init() {
 			})
 		})
 
-	h.WorkerJob().DeclareModel()
-	h.WorkerJob().AddFields(map[string]models.FieldDefinition{
-		"Name": models.CharField{
-			String: "name",
-		},
-		"Method":           models.CharField{},
-		"ModelName":        models.CharField{},
-		"ParamsJson":       models.CharField{},
-		"ParentWorkerName": models.CharField{},
-		"TaskUUID":         models.CharField{},
-	})
-
 	h.WorkerJobHistory().DeclareModel()
 	h.WorkerJobHistory().AddFields(map[string]models.FieldDefinition{
 		"Name": models.CharField{
@@ -337,14 +319,6 @@ func init() {
 			} else if rs.Status() == "" {
 				panic("Please finish creating the job before trying to requeue it")
 			}
-			h.WorkerJob().Create(rs.Env(), &h.WorkerJobData{
-				Name:             rs.Name(),
-				Method:           rs.MethodName(),
-				ModelName:        rs.ModelName(),
-				ParamsJson:       rs.ParamsJson(),
-				ParentWorkerName: rs.WorkerName(),
-				TaskUUID:         rs.TaskUUID(),
-			})
 			rs.SetStatus("pending")
 			rs.SetQueuedDate(dates.Now())
 			rs.SetExcInfo("")
@@ -359,14 +333,6 @@ func init() {
 			if data.WorkerName == "" {
 				data.WorkerName = "Main"
 			}
-			h.WorkerJob().Create(set.Env(), &h.WorkerJobData{
-				Name:             data.Name,
-				Method:           data.MethodName,
-				ModelName:        data.ModelName,
-				ParamsJson:       data.ParamsJson,
-				ParentWorkerName: data.WorkerName,
-				TaskUUID:         data.TaskUUID,
-			})
 			data.Status = "pending"
 			data.QueuedDate = dates.Now()
 			return set.Super().Create(data, namer...)

@@ -57,14 +57,8 @@ func init() {
 			String:  "Parameters",
 			Default: models.DefaultValue("[]")},
 		/* ---------------------------------------------------------------------------------------------------------- */
-		"TimeAtSelector": models.SelectionField{
-			String: "At",
-			Selection: types.Selection{
-				"time": "time",
-				"date": "date"},
-			Default: models.DefaultValue("date")},
 		"TimeAtDate": models.DateTimeField{
-			Default: models.DefaultValue(dates.Now())},
+			Default: models.DefaultValue(dates.Now().UTC())},
 		"Catchup": models.BooleanField{},
 		/* ---------------------------------------------------------------------------------------------------------- */
 		"RepeatBool": models.BooleanField{},
@@ -94,7 +88,7 @@ func init() {
 		``,
 		func(rs h.CronSet) {
 			var out string
-			if h.Worker().NewSet(rs.Env()).GetWorker(rs.TargetWorker().Name()) == nil {
+			if h.Worker().NewSet(rs.Env()).GetWorker(rs.TargetWorker().Name()).Len() == 0 {
 				out += fmt.Sprintf("No Worker found with name '%s'\n", rs.TargetWorker())
 			}
 			model, ok := models.Registry.Get(rs.TargetModel())
@@ -123,7 +117,6 @@ func init() {
 	h.Cron().Methods().ComputeModelMethodStr().DeclareMethod(
 		``,
 		func(rs h.CronSet) h.CronData {
-			rs.TimeAtSelector()
 			return h.CronData{ModelMethodStr: fmt.Sprintf("%s - %s", rs.TargetModel(), rs.TargetMethod())}
 		})
 

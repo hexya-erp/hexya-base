@@ -17,6 +17,7 @@ package base
 import (
 	"github.com/hexya-erp/hexya/hexya/models"
 	"github.com/hexya-erp/hexya/hexya/models/security"
+	"github.com/hexya-erp/hexya/hexya/models/types/dates"
 	"github.com/hexya-erp/hexya/hexya/server"
 	"github.com/hexya-erp/hexya/hexya/tools/logging"
 	"github.com/hexya-erp/hexya/pool/h"
@@ -39,6 +40,17 @@ func init() {
 				h.Group().NewSet(env).ReloadGroups()
 				h.Worker().NewSet(env).LoadWorkers()
 				h.Cron().NewSet(env).StartScheduler()
+				h.Cron().Create(env, &h.CronData{
+					Name:                 "Removal of old finished Jobs",
+					TargetWorker:         h.Worker().NewSet(env).GetWorker("Main"),
+					TargetModel:          "Worker",
+					TargetMethod:         "CleanJobHistory",
+					TargetParams:         "[]",
+					TimeAtDate:           dates.ParseDateTime("2000-01-01 00:00:00"),
+					RepeatBool:           true,
+					RepeatLapseAmmount:   1,
+					RepeatLapseSelection: "day",
+				})
 			})
 			if err != nil {
 				log.Panic("Error while initializing", "error", err)
