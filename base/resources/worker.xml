@@ -18,6 +18,7 @@
                     <group>
                         <field name="MaxThreads"/>
                         <field name="MaxHistoryEntries"/>
+                        <field name="PauseTime"/>
                     </group>
                     <group>
                         <div>

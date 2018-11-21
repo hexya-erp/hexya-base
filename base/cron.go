@@ -130,7 +130,7 @@ func init() {
 	h.Cron().Methods().ComputeExecuteNET().DeclareMethod(
 		``,
 		func(rs h.CronSet) h.CronData {
-			etaDateTime := rs.TimeAtDate().UTC().Sub(dates.Now().UTC())
+			etaDateTime := rs.TimeAtDate().Sub(dates.Now())
 			if etaDateTime.Seconds() == 0 {
 				return h.CronData{ExecuteNET: "ASAP"}
 			}
@@ -155,7 +155,7 @@ func init() {
 				}
 			}
 			outStr := strings.TrimSpace(string(out))
-			if outStr == "" {
+			if outStr == "" || strings.Contains(outStr, "-") {
 				outStr = "Now"
 			}
 			return h.CronData{ExecuteNET: string(outStr)}
@@ -213,7 +213,9 @@ func init() {
 	h.Cron().Methods().StartScheduler().DeclareMethod(
 		``,
 		func(rs h.CronSet) {
-			go rs.SchedulerLoop(15 * time.Second)
+			go rs.SchedulerLoop(15 * time.Minute)
+			time.Sleep(50 * time.Millisecond)
+			schedulerUpdateChan <- true
 		})
 
 	h.Cron().Methods().SchedulerLoop().DeclareMethod(
@@ -279,12 +281,15 @@ func init() {
 				for _, rec := range h.Cron().Search(env, q.Cron().Status().Equals(true)).Records() {
 					data := rec.First()
 					funcExecuted := false
-					for (data.TimeAtDate.LowerEqual(dates.Now().UTC().Add(time.Second)) || !rs.CheckTimeMask(data)) && data.Status {
+					for (data.TimeAtDate.LowerEqual(dates.Now().Add(time.Second)) || !rs.CheckTimeMask(data)) && data.Status {
 						if !funcExecuted && rs.CheckTimeMask(data) {
 							var param interface{}
 							json.Unmarshal([]byte(data.TargetParams), &param)
 							params := interfaceSlice(param)
 							h.Worker().NewSet(env).WithWorker(data.TargetWorker.Name()).WithParams(params...).Enqueue(models.Registry.MustGet(data.TargetModel).Methods().MustGet(data.TargetMethod))
+							if !data.RepeatBool {
+								data.Status = false
+							}
 							if !data.Catchup {
 								funcExecuted = true
 							}
