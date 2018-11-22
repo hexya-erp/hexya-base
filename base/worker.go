@@ -87,7 +87,7 @@ func init() {
 				i := -1
 				toDelete := set.Filtered(func(set h.WorkerJobHistorySet) bool {
 					i++
-					fmt.Println(int64(setLen-i) > workerData.MaxHistoryEntries, deltaDur, set.CreateDate().Add(deltaDur).Time, dates.Now().UTC().Time, set.CreateDate().Add(deltaDur).Before(dates.Now().UTC().Time))
+					fmt.Println(int64(setLen-i) > workerData.MaxHistoryEntries, deltaDur, set.CreateDate().Add(deltaDur).Time, dates.Now().Time, set.CreateDate().Add(deltaDur).Before(dates.Now().Time))
 					if int64(setLen-i) > workerData.MaxHistoryEntries || set.CreateDate().Add(deltaDur).LowerEqual(dates.Now()) {
 						return true
 					}
@@ -183,7 +183,7 @@ func init() {
 		``,
 		func(rs h.WorkerSet, w *h.WorkerData, res h.WorkerJobHistorySet) {
 			writeIn := h.WorkerJobHistoryData{
-				StartDate: dates.Now().UTC(),
+				StartDate: dates.Now(),
 				Status:    "running"}
 
 			if _, ok := models.Registry.Get(res.ModelName()); !ok {
@@ -215,7 +215,7 @@ func init() {
 						out = method.CallMulti(env3.Pool(res.ModelName()), interfaceSlice(params)...)
 					}
 				})
-				writeOut := h.WorkerJobHistoryData{ReturnDate: dates.Now().UTC()}
+				writeOut := h.WorkerJobHistoryData{ReturnDate: dates.Now()}
 				if err != nil {
 					writeOut.Status = "fail"
 					split := strings.Split(err.Error(), "\n----------------------------------\n")
@@ -371,7 +371,7 @@ func init() {
 				ModelName:  rs.ModelName(),
 				MethodName: method.Underlying().Name(),
 				ParamsJson: rs.Params(),
-				QueuedDate: dates.Now().UTC(),
+				QueuedDate: dates.Now(),
 			})
 		})
 }

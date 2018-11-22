@@ -58,7 +58,7 @@ func init() {
 			Default: models.DefaultValue("[]")},
 		/* ---------------------------------------------------------------------------------------------------------- */
 		"TimeAtDate": models.DateTimeField{
-			Default: models.DefaultValue(dates.Now().UTC())},
+			Default: models.DefaultValue(dates.Now())},
 		"Catchup": models.BooleanField{},
 		/* ---------------------------------------------------------------------------------------------------------- */
 		"RepeatBool": models.BooleanField{},
@@ -206,6 +206,19 @@ func init() {
 	h.Cron().Methods().StartScheduler().DeclareMethod(
 		``,
 		func(rs h.CronSet) {
+			if h.Cron().Search(rs.Env(), q.Cron().Name().Equals("Removal of old finished Jobs")).IsEmpty() {
+				h.Cron().Create(rs.Env(), &h.CronData{
+					Name:                 "Removal of old finished Jobs",
+					TargetWorker:         h.Worker().NewSet(rs.Env()).GetWorker("Main"),
+					TargetModel:          "Worker",
+					TargetMethod:         "CleanJobHistory",
+					TargetParams:         "[]",
+					TimeAtDate:           dates.ParseDateTime("2000-01-01 00:00:00"),
+					RepeatBool:           true,
+					RepeatLapseAmmount:   1,
+					RepeatLapseSelection: "day",
+				})
+			}
 			go rs.SchedulerLoop(15 * time.Minute)
 			time.Sleep(50 * time.Millisecond)
 			schedulerUpdateChan <- true
