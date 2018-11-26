@@ -55,7 +55,7 @@ func init() {
 		})
 
 	h.CommonMixin().Methods().WithWorker().DeclareMethod(
-		`WithWorker`,
+		`WithWorker sets the JobsArgs' Worker to a worker corresponding to the given name. ('Main' by default)`,
 		func(rs h.CommonMixinSet, workerName string) h.JobArgsSet {
 			out := h.JobArgs().NewSet(rs.Env()).Create(&h.JobArgsData{})
 			out.SetModelName(rs.Collection().ModelName())
@@ -64,7 +64,7 @@ func init() {
 		})
 
 	h.CommonMixin().Methods().WithParams().DeclareMethod(
-		`WithParams`,
+		`WithParams gives the current JobArg some parameters. (no parameters by default)`,
 		func(rs h.CommonMixinSet, params ...interface{}) h.JobArgsSet {
 			out := h.JobArgs().NewSet(rs.Env()).Create(&h.JobArgsData{})
 			out.SetModelName(rs.Collection().ModelName())
@@ -74,10 +74,16 @@ func init() {
 		})
 
 	h.CommonMixin().Methods().Enqueue().DeclareMethod(
-		`EnqueueJob`,
+		`Enqueue creates and pushes to queue the given JobArg created using WithParams and WithWorker or a default one`,
 		func(rs h.CommonMixinSet, method models.Methoder) {
 			out := h.JobArgs().NewSet(rs.Env()).Create(&h.JobArgsData{})
 			out.SetModelName(rs.Collection().ModelName())
 			out.Enqueue(method)
+		})
+
+	h.CommonMixin().Methods().PollCancel().DeclareMethod(
+		`PollCancel panics if rs was called to be canceled. Meant to be used in methods called by a Worker`,
+		func(rs h.CommonMixinSet) {
+			h.Worker().NewSet(rs.Env()).PollCancel()
 		})
 }

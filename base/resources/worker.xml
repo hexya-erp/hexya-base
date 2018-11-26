@@ -38,13 +38,15 @@
                     decoration-danger="status=='fail'"
                     decoration-bf="status=='fail'"
                     decoration-primary="status=='running'"
-                    decoration-muted="status=='abort', status=='cancel'"
-                    decoration-it="status=='abort', status=='cancel'">
-                <field name="TaskUUID"/>
+                    decoration-muted="status=='cancel', status=='abort'"
+                    decoration-it="status=='cancel', status=='abort'">
                 <field name="Name"/>
                 <field name="StartDate"/>
                 <field name="ReturnDate"/>
                 <field name="Status"/>
+                <button name="ButtonCancel" type="object" string="Cancel / Abort" icon="fa-times-circle text-danger" attrs="{'invisible': [('status', 'not in', ['pending', 'running'])]}"/>
+                <button name="Requeue" type="object" string="Requeue" icon="fa-share text-primary" attrs="{'invisible': [('status', 'not in', ['done', 'cancel', 'abort', 'fail'])]}"/>
+                <button name="ButtonDone" type="object" string="Mark as Done" icon="fa-check-square text-success" attrs="{'invisible': [('status', 'not in', ['cancel', 'abort', 'fail'])]}"/>
             </tree>
         </view>
 
@@ -87,11 +89,17 @@
             </form>
         </view>
 
+        <view id="base_view_jobs_history_search" model="WorkerJobHistory">
+            <search>
+                <filter string="All Jobs not marked as Done" name="jobs_not_done" domain="[('Status', '!=', 'done')]"/>
+            </search>
+        </view>
+
         <action id="base_action_workers" name="Workers" type="ir.actions.act_window" model="Worker"
                 view_mode="tree, form"/>
 
         <action id="base_action_jobs_history" name="Jobs" type="ir.actions.act_window" model="WorkerJobHistory"
-                view_mode="tree, form"/>
+                view_mode="tree, form" context="{&quot;search_default_jobs_not_done&quot;: 1}"/>
 
         <menuitem id="base_menu_action_workers" name="Workers" sequence="3" action="base_action_workers"
                   parent="base_menu_crons_and_workers"/>

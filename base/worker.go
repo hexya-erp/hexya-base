@@ -41,29 +41,23 @@ func init() {
 		"IsRunning": models.BooleanField{
 			ReadOnly: true},
 		"MaxHistoryEntries": models.IntegerField{
-			Default:  models.DefaultValue(200),
+			Default:  models.DefaultValue(500),
 			Required: true},
 		"MaxHistoryAmmount": models.IntegerField{
-			Default:  models.DefaultValue(1),
+			Default:  models.DefaultValue(3),
 			Required: true},
 		"MaxHistorySelection": models.SelectionField{
 			Selection: types.Selection{
 				`month`: `Months`,
 				`day`:   `Days`,
 				`hour`:  `Hours`},
-			Default:  models.DefaultValue("hour"),
+			Default:  models.DefaultValue("days"),
 			Required: true},
 	})
 
-	//will be removed after testings
-	h.Worker().Methods().Println().DeclareMethod(
-		``,
-		func(rs h.WorkerSet, args ...interface{}) {
-			fmt.Println(args...)
-		})
-
 	h.Worker().Methods().CleanJobHistory().DeclareMethod(
-		``,
+		`CleanJobHistory goes though the job list and removes any entries marked as done and following the Worker rules.
+				If worker rules as default: removes all jobs marked as done, older than 3 days or until the total ammount is below 500`,
 		func(rs h.WorkerSet) string {
 			var deleteLen int
 			for _, workerData := range h.Worker().NewSet(rs.Env()).SearchAll().All() {
@@ -74,6 +68,7 @@ func init() {
 					}
 					return false
 				})
+				rs.PollCancel()
 				deltaDur := time.Duration(workerData.MaxHistoryAmmount)
 				switch workerData.MaxHistorySelection {
 				case "month":
@@ -87,27 +82,27 @@ func init() {
 				i := -1
 				toDelete := set.Filtered(func(set h.WorkerJobHistorySet) bool {
 					i++
-					fmt.Println(int64(setLen-i) > workerData.MaxHistoryEntries, deltaDur, set.CreateDate().Add(deltaDur).Time, dates.Now().Time, set.CreateDate().Add(deltaDur).Before(dates.Now().Time))
 					if int64(setLen-i) > workerData.MaxHistoryEntries || set.CreateDate().Add(deltaDur).LowerEqual(dates.Now()) {
 						return true
 					}
 					return false
 				})
 				deleteLen += toDelete.Len()
+				rs.PollCancel()
 				toDelete.Unlink()
 			}
 			return fmt.Sprintf("%d Records Unlinked.", deleteLen)
 		})
 
 	h.Worker().Methods().GetJobsInQueueCount().DeclareMethod(
-		`returns the ammount of jobs currently in worker queue`,
+		`GetJobsInQueueCount returns the ammount of jobs currently in a worker's queue`,
 		func(rs h.WorkerSet) *h.WorkerData {
 			QSize := h.WorkerJobHistory().Search(rs.Env(), q.WorkerJobHistory().WorkerName().Equals(rs.Name()).And().Status().Equals("pending")).Len()
 			return &h.WorkerData{JobsInQueue: int64(QSize)}
 		})
 
 	h.Worker().Methods().Create().Extend(
-		``,
+		`Create creates and initialize a new Worker`,
 		func(set h.WorkerSet, data *h.WorkerData, namer ...models.FieldNamer) h.WorkerSet {
 			rs := set.Super().Create(data, namer...)
 			rs.StartWorker()
@@ -115,7 +110,7 @@ func init() {
 		})
 
 	h.Worker().Methods().StartWorker().DeclareMethod(
-		``,
+		`StartWorker starts the goroutine of a specified worker`,
 		func(rs h.WorkerSet) {
 			models.ExecuteInNewEnvironment(rs.Env().Uid(), func(env models.Environment) {
 				w := rs.First()
@@ -130,13 +125,14 @@ func init() {
 		})
 
 	h.Worker().Methods().GetWorker().DeclareMethod(
-		``,
+		`GetWorker returns the worker correspoding to the given name`,
 		func(rs h.WorkerSet, str string) h.WorkerSet {
 			return h.Worker().Search(rs.Env(), q.Worker().Name().Equals(str))
 		})
 
 	h.Worker().Methods().LoadWorkers().DeclareMethod(
-		``,
+		`LoadWorkers reads into database and starts every worker. it also creates the Main worker if it doesn't exist
+				Meant to be called only once after server start`,
 		func(rs h.WorkerSet) {
 			set := h.Worker().Search(rs.Env(), q.Worker().ID().Greater(-1))
 			for _, s := range set.Records() {
@@ -147,10 +143,11 @@ func init() {
 					Name: "Main",
 				})
 			}
+			cancelChans = make(map[string]chan bool)
 		})
 
 	h.Worker().Methods().WorkerLoop().DeclareMethod(
-		``,
+		`WorkerLoop is the neverending loop of a worker's goroutine. Should not be directly called. Usage of StartWorker is advised`,
 		func(rs h.WorkerSet, w *h.WorkerData) bool {
 			for {
 				select {
@@ -180,7 +177,7 @@ func init() {
 		})
 
 	h.Worker().Methods().Execute().DeclareMethod(
-		``,
+		`Execute launches a Worker method specified by the given res`,
 		func(rs h.WorkerSet, w *h.WorkerData, res h.WorkerJobHistorySet) {
 			writeIn := h.WorkerJobHistoryData{
 				StartDate: dates.Now(),
@@ -208,19 +205,25 @@ func init() {
 				var params interface{}
 				json.Unmarshal([]byte(res.ParamsJson()), &params)
 				var out []interface{}
+				cancelChans[res.TaskUUID()] = make(chan bool)
 				err := models.ExecuteInNewEnvironment(security.SuperUserID, func(env3 models.Environment) {
 					if params == nil {
-						out = method.CallMulti(env3.Pool(res.ModelName()))
+						out = method.CallMulti(env3.Pool(res.ModelName()).WithContext("cancelChanId", res.TaskUUID()))
 					} else {
-						out = method.CallMulti(env3.Pool(res.ModelName()), interfaceSlice(params)...)
+						out = method.CallMulti(env3.Pool(res.ModelName()).WithContext("cancelChanId", res.TaskUUID()), interfaceSlice(params)...)
 					}
 				})
+				delete(cancelChans, res.TaskUUID())
 				writeOut := h.WorkerJobHistoryData{ReturnDate: dates.Now()}
 				if err != nil {
 					writeOut.Status = "fail"
 					split := strings.Split(err.Error(), "\n----------------------------------\n")
-					writeOut.MethodOutput = fmt.Sprintf("error: %s", split[0])
-					writeOut.ExcInfo = split[1]
+					if split[0] == "ABORT" {
+						writeOut.Status = "abort"
+					} else {
+						writeOut.MethodOutput = fmt.Sprintf("error: %s", split[0])
+						writeOut.ExcInfo = split[1]
+					}
 				} else {
 					writeOut.Status = "done"
 					outStr := ""
@@ -296,7 +299,7 @@ func init() {
 	h.WorkerJobHistory().Fields().CreateDate().SetReadOnly(true)
 
 	h.WorkerJobHistory().Methods().ButtonDone().DeclareMethod(
-		``,
+		`ButtonDone Sets the current rs as done`,
 		func(rs h.WorkerJobHistorySet) {
 			switch rs.Status() {
 			case "":
@@ -312,20 +315,39 @@ func init() {
 		})
 
 	h.WorkerJobHistory().Methods().Requeue().DeclareMethod(
-		``,
+		`Requeue pushes the given rs back to the worker queue`,
 		func(rs h.WorkerJobHistorySet) {
 			if rs.Status() == "pending" {
 				panic("You can't requeue a job that is already queued")
 			} else if rs.Status() == "" {
 				panic("Please finish creating the job before trying to requeue it")
 			}
-			rs.SetStatus("pending")
-			rs.SetQueuedDate(dates.Now())
-			rs.SetExcInfo("")
+			rs.Write(&h.WorkerJobHistoryData{
+				Status:     "pending",
+				QueuedDate: dates.Now(),
+				ExcInfo:    "",
+			})
+		})
+
+	h.WorkerJobHistory().Methods().ButtonCancel().DeclareMethod(
+		`ButtonCancel cancels the given job`,
+		func(rs h.WorkerJobHistorySet) {
+			switch rs.Status() {
+			case "pending":
+				rs.SetStatus("cancel")
+			case "running":
+				rs.CancelJob()
+			}
+		})
+
+	h.WorkerJobHistory().Methods().CancelJob().DeclareMethod(
+		`CancelJob marks the given rs to be cancelled. Usage of method h.Worker.PollCancel is required in the worker method`,
+		func(rs h.WorkerJobHistorySet) {
+			cancelChans[rs.TaskUUID()] <- true
 		})
 
 	h.WorkerJobHistory().Methods().Create().Extend(
-		``,
+		`Create creates a new Job entry`,
 		func(set h.WorkerJobHistorySet, data *h.WorkerJobHistoryData, namer ...models.FieldNamer) h.WorkerJobHistorySet {
 			if data.TaskUUID == "" {
 				data.TaskUUID = uuid.New().String()
@@ -347,7 +369,7 @@ func init() {
 	})
 
 	h.JobArgs().Methods().WithParams().DeclareMethod(
-		``,
+		`WithParams gives the current JobArg some parameters. (no parameters by default)`,
 		func(rs h.JobArgsSet, params ...interface{}) h.JobArgsSet {
 			paramsJson, _ := json.Marshal(params)
 			rs.SetParams(string(paramsJson))
@@ -355,14 +377,14 @@ func init() {
 		})
 
 	h.JobArgs().Methods().WithWorker().DeclareMethod(
-		``,
+		`WithWorker sets the JobsArgs' Worker to a worker corresponding to the given name. ('Main' by default)`,
 		func(rs h.JobArgsSet, workerName string) h.JobArgsSet {
 			rs.SetWorkerName(workerName)
 			return rs
 		})
 
 	h.JobArgs().Methods().Enqueue().DeclareMethod(
-		``,
+		`Enqueue creates and pushes to queue the given JobArg created using WithParams and WithWorker`,
 		func(rs h.JobArgsSet, method models.Methoder) {
 			h.WorkerJobHistory().Create(rs.Env(), &h.WorkerJobHistoryData{
 				Name:       method.Underlying().Name(),
@@ -375,6 +397,8 @@ func init() {
 			})
 		})
 }
+
+var cancelChans map[string]chan bool
 
 var threadsChanMap map[string]chan bool
 
