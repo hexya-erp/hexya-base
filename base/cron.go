@@ -85,7 +85,7 @@ func init() {
 	})
 
 	h.Cron().Methods().ConstraintCronCreation().DeclareMethod(
-		``,
+		`ConstrantCronCreation verifies Cron's field to be valid`,
 		func(rs h.CronSet) {
 			var out string
 			if h.Worker().NewSet(rs.Env()).GetWorker(rs.TargetWorker().Name()).Len() == 0 {
@@ -115,13 +115,14 @@ func init() {
 		})
 
 	h.Cron().Methods().ComputeModelMethodStr().DeclareMethod(
-		``,
+		`ComputeModelMethodStr returns a string with format "<Model> - <Method>". Mainly Used in Cron views`,
 		func(rs h.CronSet) h.CronData {
 			return h.CronData{ModelMethodStr: fmt.Sprintf("%s - %s", rs.TargetModel(), rs.TargetMethod())}
 		})
 
 	h.Cron().Methods().ComputeExecuteNET().DeclareMethod(
-		``,
+		`ComputeExecuteNET calculates when the Cron will be called next and
+				returns a CronData with its ExecuteNET filled with result string`,
 		func(rs h.CronSet) h.CronData {
 			etaDateTime := rs.TimeAtDate().Sub(dates.Now())
 			if etaDateTime.Seconds() == 0 {
@@ -155,27 +156,21 @@ func init() {
 		})
 
 	h.Cron().Methods().ButtonResume().DeclareMethod(
-		``,
+		`ButtonResume sets rs status as active and syncronize`,
 		func(rs h.CronSet) {
 			rs.SetStatus(true)
-			go func() {
-				time.Sleep(50 * time.Millisecond)
-				schedulerUpdateChan <- true
-			}()
+			rs.ButtonRefresh()
 		})
 
 	h.Cron().Methods().ButtonSuspend().DeclareMethod(
-		``,
+		`ButtonSuspend sets rs status as inactive and syncronize`,
 		func(rs h.CronSet) {
 			rs.SetStatus(false)
-			go func() {
-				time.Sleep(50 * time.Millisecond)
-				schedulerUpdateChan <- true
-			}()
+			rs.ButtonRefresh()
 		})
 
 	h.Cron().Methods().ButtonRun().DeclareMethod(
-		``,
+		`ButtonRun pushes the pointed job it's worker's queue`,
 		func(rs h.CronSet) {
 			var param interface{}
 			json.Unmarshal([]byte(rs.TargetParams()), &param)
@@ -184,7 +179,7 @@ func init() {
 		})
 
 	h.Cron().Methods().ButtonRefresh().DeclareMethod(
-		``,
+		`ButtonRefresh syncronizes the cron`,
 		func(rs h.CronSet) {
 			go func() {
 				time.Sleep(50 * time.Millisecond)
@@ -193,18 +188,15 @@ func init() {
 		})
 
 	h.Cron().Methods().Create().Extend(
-		``,
+		`Create creates a new Cron entry`,
 		func(rs h.CronSet, data *h.CronData, namer ...models.FieldNamer) h.CronSet {
 			out := rs.Super().Create(data, namer...)
-			go func() {
-				time.Sleep(50 * time.Millisecond)
-				schedulerUpdateChan <- true
-			}()
+			rs.ButtonRefresh()
 			return out
 		})
 
 	h.Cron().Methods().StartScheduler().DeclareMethod(
-		``,
+		`StartScheduler starts the Cron. Meant to be used once after server init`,
 		func(rs h.CronSet) {
 			if h.Cron().Search(rs.Env(), q.Cron().Name().Equals("Removal of old finished Jobs")).IsEmpty() {
 				h.Cron().Create(rs.Env(), &h.CronData{
@@ -225,7 +217,7 @@ func init() {
 		})
 
 	h.Cron().Methods().SchedulerLoop().DeclareMethod(
-		``,
+		`SchedulerLoop starts the cron main loop. Shouldn't be directly called. Use StartScheduler instead'`,
 		func(rs h.CronSet, next time.Duration) {
 			def := next
 			schedulerUpdateChan = make(chan bool)
@@ -242,7 +234,7 @@ func init() {
 		})
 
 	h.Cron().Methods().CheckTimeMask().DeclareMethod(
-		``,
+		`CheckTimeMask returns true if the given cron entry's next call follows the entry's time mask`,
 		func(rs h.CronSet, data h.CronData) bool {
 			if data.MaskBool {
 				if data.Mask.MonthBool() {
@@ -280,7 +272,7 @@ func init() {
 		})
 
 	h.Cron().Methods().Sync().DeclareMethod(
-		``,
+		`Sync launches all entries running late and calculates the next sync call time`,
 		func(rs h.CronSet) time.Duration {
 			out := float64(15 * 60)
 			models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
@@ -371,7 +363,7 @@ func init() {
 	})
 
 	h.CronTimeMask().Methods().Create().Extend(
-		``,
+		`Create creates a new CronTimeMask`,
 		func(rs h.CronTimeMaskSet, data *h.CronTimeMaskData, namer ...models.FieldNamer) h.CronTimeMaskSet {
 			data.DayStr = rs.CompileNbStr(data.DayStr, 1, 31)
 			data.HourStr = rs.CompileNbStr(data.HourStr, 0, 23)
@@ -381,7 +373,7 @@ func init() {
 		})
 
 	h.CronTimeMask().Methods().CompileNbStr().DeclareMethod(
-		``,
+		`CompuleNbStr transforms the given NbStr to a generic readable one. errors poorly handled`,
 		func(rs h.CronTimeMaskSet, str string, min, max int) string {
 			spl := strings.Split(str, ",")
 			intSl := []int{}

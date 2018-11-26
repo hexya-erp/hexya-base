@@ -28,7 +28,6 @@
                             <field name="TargetParams"/>
                         </group>
                         <group>
-                            <!--<field name="Status" widget="boolean_button"/>-->
                             <field name="ExecuteNET"/>
                             <field name="ExecuteCount"/>
                         </group>
