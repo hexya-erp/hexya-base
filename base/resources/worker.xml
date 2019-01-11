@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hexya>
+    <data>
+        <view id="base_view_workers_tree" model="Worker">
+            <tree string="Workers">
+                <field name="Name"/>
+                <field name="JobsInQueue"/>
+                <field name="MaxThreads"/>
+            </tree>
+        </view>
+
+        <view id="vase_view_workers_form" model="Worker">
+            <form string="Workers">
+                <sheet>
+                    <h1>
+                        <field name="Name" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <field name="MaxThreads"/>
+                        <field name="MaxHistoryEntries"/>
+                        <field name="PauseTime"/>
+                    </group>
+                    <group>
+                        <div>
+                            <label string="Max History Date"/>
+                            <field name="MaxHistoryAmmount" style="width:30px"/>
+                            <field name="MaxHistorySelection" style="width:53%"/>
+                        </div>
+                    </group>
+                </sheet>
+            </form>
+        </view>
+
+        <view id="base_view_jobs_history_tree" model="WorkerJobHistory">
+            <tree   string="Job History"
+                    decoration-success="status=='done'"
+                    decoration-warning="status=='pending'"
+                    decoration-danger="status=='fail'"
+                    decoration-bf="status=='fail'"
+                    decoration-primary="status=='running'"
+                    decoration-muted="status=='cancel', status=='abort'"
+                    decoration-it="status=='cancel', status=='abort'">
+                <field name="Name"/>
+                <field name="StartDate"/>
+                <field name="ReturnDate"/>
+                <field name="Status"/>
+                <button name="ButtonCancel" type="object" string="Cancel / Abort" icon="fa-times-circle text-danger" attrs="{'invisible': [('status', 'not in', ['pending', 'running'])]}"/>
+                <button name="Requeue" type="object" string="Requeue" icon="fa-share text-primary" attrs="{'invisible': [('status', 'not in', ['done', 'cancel', 'abort', 'fail'])]}"/>
+                <button name="ButtonDone" type="object" string="Mark as Done" icon="fa-check-square text-success" attrs="{'invisible': [('status', 'not in', ['cancel', 'abort', 'fail'])]}"/>
+            </tree>
+        </view>
+
+        <view id="base_view_jobs_history_form" model="WorkerJobHistory" delete="false">
+            <form   string="Job History">
+                <header>
+                    <field name="Status" widget="statusbar"
+                           statusbar_visible="pending,running"/>
+                    <button name="requeue" class="oe_highlight" string="Requeue Job" type="object"/>
+                    <button name="button_done" class="oe_highlight" string="Set to 'Done'" type="object"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="Name" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <field name="WorkerName"/>
+                        <field name="ModelName"/>
+                        <field name="MethodName"/>
+                        <field name="ParamsJson"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="TaskUUID"/>
+                        </group>
+                        <group>
+                            <field name="CreateDate"/>
+                            <field name="QueuedDate"/>
+                            <field name="StartDate"/>
+                            <field name="ReturnDate"/>
+                        </group>
+                    </group>
+                    <group name="method_output" string="Method Result" attrs="{'invisible': [('method_output', '=', False)]}">
+                        <field nolabel="1" name="MethodOutput"/>
+                    </group>
+                    <group name="exc_info" string="Exception Information" attrs="{'invisible': [('exc_info', '=', False)]}">
+                        <field nolabel="1" name="ExcInfo"/>
+                    </group>
+                </sheet>
+            </form>
+        </view>
+
+        <view id="base_view_jobs_history_search" model="WorkerJobHistory">
+            <search>
+                <filter string="All Jobs not marked as Done" name="jobs_not_done" domain="[('Status', '!=', 'done')]"/>
+            </search>
+        </view>
+
+        <action id="base_action_workers" name="Workers" type="ir.actions.act_window" model="Worker"
+                view_mode="tree, form"/>
+
+        <action id="base_action_jobs_history" name="Jobs" type="ir.actions.act_window" model="WorkerJobHistory"
+                view_mode="tree, form" context="{&quot;search_default_jobs_not_done&quot;: 1}"/>
+
+        <menuitem id="base_menu_action_workers" name="Workers" sequence="3" action="base_action_workers"
+                  parent="base_menu_crons_and_workers"/>
+        <menuitem id="base_menu_action_jobs_history" name="Jobs" sequence="5" action="base_action_jobs_history"
+                  parent="base_menu_crons_and_workers"/>
+    </data>
+</hexya>

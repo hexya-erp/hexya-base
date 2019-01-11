@@ -35,7 +35,10 @@ func init() {
 		Name: MODULE_NAME,
 		PostInit: func() {
 			err := models.ExecuteInNewEnvironment(security.SuperUserID, func(env models.Environment) {
+				threadsChanMap = make(map[string]chan bool)
 				h.Group().NewSet(env).ReloadGroups()
+				h.Worker().NewSet(env).LoadWorkers()
+				h.Cron().NewSet(env).StartScheduler()
 			})
 			if err != nil {
 				log.Panic("Error while initializing", "error", err)
